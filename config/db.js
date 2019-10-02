@@ -11,4 +11,7 @@ const db = new Sequelize('circles', 'root', 'root', {
         idle: 10000
     }
 });
-db.authenticate().then(() => console.log('Db connected')).catch(err => console.log('Err: ' + err));
+db.authenticate()
+.then(() => console.log('Db connected'))
+.catch(err => console.log('Err: ' + err));
+module.exports={db};

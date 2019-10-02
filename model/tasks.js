@@ -29,11 +29,15 @@
 //   // });
 // });
 const Sequelize= require ('sequelize');
-const db= require ('../config/db');
+const db= require ('../config/db').db;
 
 const User = db.define('user', {
   id:{
-    type:Sequelize.INTEGER
+    type:Sequelize.INTEGER,
+    unique: true,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true
   },
   name:{
     type:Sequelize.TEXT
