@@ -1,3 +1,0 @@
-# SomeAppApi
-backend for SomeApp
-
