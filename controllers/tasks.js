@@ -1,4 +1,4 @@
-var Task = require("../model/tasks");
+var Task = require("../model/User");
 
 exports.getTasks = function (req, res) {
     res.send  ("Getting all tasks");
