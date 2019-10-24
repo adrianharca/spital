@@ -24,7 +24,16 @@ const Member = db.define('member', {
   },
   image:{
     type:Sequelize.BLOB
-  }
+  }},{
+  timestamps:true,
+freezeTableName: true,
+paranoid:true
 
 })
+Member.associate = (models)=> {
+  Member.belongsToMany(models.Circle)
+}
+Member.associate = (models)=>{
+  Member.belongsTo(models.User)
+}
 module.exports= Member;

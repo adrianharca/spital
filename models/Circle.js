@@ -13,6 +13,9 @@ const Circle = db.define('circle', {
   theme:{
     type:Sequelize.TEXT
   },
+  description:{
+    type:Sequelize.TEXT
+  },
   keywords:{
     type:Sequelize.TEXT
   },
@@ -49,7 +52,15 @@ const Circle = db.define('circle', {
   },
   spotType:{
     type:Sequelize.TEXT
-  }
-
-})
+  }},
+  {timestamps:true,
+  freezeTableName: true,
+  paranoid:true}
+)
+Circle.associate = (models)=>{
+  Circle.hasMany(models.Member)
+}
+Circle.associate = (models) =>{
+  Circle.hasMany (models.Vote)
+}
 module.exports= Circle;

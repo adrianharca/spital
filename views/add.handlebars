@@ -1,0 +1,33 @@
+   
+<section id="add" class="container">
+    <div class="form-wrap">
+      <h1>Add circle</h1>
+      {{#each errors}}
+        <div class="error">
+          <p>{{text}}</p>
+        </div>
+      {{/each}}
+      <form action="/circles/add" method="POST">
+        <div class="input-group">
+          <label for="theme"> Theme</label>
+          <input type="text" name="theme" id="theme" class="input-box" placeholder="eg. Small Wordpress website, React developer"
+            maxlength="100" value={{theme}}>
+        </div>
+        <div class="input-group">
+          <label for="initiatorid">init </label>
+          <input type="text" name="initiatorid" id="initiatorid" class="input-box" placeholder="eg. javascript, react, PHP"
+          maxlength="100" value={{initiatorid}}>
+        </div>
+        <div class="input-group">
+          <label for="description"> Description</label>
+          <textarea name="description" id="description" class="input-box" placeholder="Describe the details of the gig"
+            rows="10">{{description}}</textarea>
+        </div>
+        {{!-- <div class="input-group">
+          <label for="budget">Contact Email</label>
+          <input type="email" name="contact_email" id="contactemail" class="input-box" placeholder="Enter an email" value={{contact_email}}>
+        </div> --}}
+        <input type="submit" value="Add Gig" class="btn btn-reverse">
+      </form>
+    </div>
+  </section>

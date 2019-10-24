@@ -46,9 +46,14 @@ const User = db.define('user', {
   },
   gender:{
     type:Sequelize.TEXT
-  }
-
+  }},{
+  timestamps:true,
+  freezeTableName: true,
+  paranoid:true
 })
+User.associate= (models)=>{
+  User.hasMany(models.Member)
+}
 module.exports= User;
 // const mariadb = require('mariadb');
 // mariadb.createConnection({
