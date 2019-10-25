@@ -52,7 +52,9 @@ const User = db.define('user', {
   paranoid:true
 })
 User.associate= (models)=>{
-  User.hasMany(models.Member)
+  User.hasMany(models.Member, {
+    as:"Member", foreignKey:"userId"
+  })
 }
 module.exports= User;
 // const mariadb = require('mariadb');

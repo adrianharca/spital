@@ -41,9 +41,13 @@ const Vote = db.define('Vote', {
   paranoid: true
 })
 Vote.associate = (models) => {
-  Vote.belongsTo(models.Member)
+  Vote.belongsTo(models.Member,{
+    as:"Member", foreignKey:"memberId"
+  })
 }
 Vote.associate = (models) => {
-  Vote.belongsTo(models.Circle)
+  Vote.belongsTo(models.Circle,{
+    as:"Circle", foreignKey:"circleId"
+  })
 }
 module.exports = Vote;

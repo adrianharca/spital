@@ -27,14 +27,12 @@ app.get('/',(req,res)=>res.render('index',{layout:'landing'}));
 // app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use("/circles", require('./routes/circles'));
 
-
-var router = express.Router();
-
-
+//var router = express.Router();
 //Routes
 //var taskController=require("./controllers/tasks");
-app.use("/circles", require('./routes/circles'));
+
 // app.use("/api", router);
 // router.route("/tasks").get(taskController.getTasks);
 // router.route("/task").get(taskController.getTask);

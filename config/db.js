@@ -22,7 +22,7 @@ db.authenticate()
 .then(() => console.log('Db connected'))
 .catch(err => console.log('Err: ' + err));
 
-//Do following to autosync db to model. init maybe?
+//Do following to autosync db to model. Eg. for init purposes
 
 // console.log("Db sync and destroy about to start:");
 // db.sync({ force: true })

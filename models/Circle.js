@@ -58,9 +58,13 @@ const Circle = db.define('circle', {
   paranoid:true}
 )
 Circle.associate = (models)=>{
-  Circle.hasMany(models.Member)
+  Circle.hasMany(models.Member,{
+    as:"Member", foreignKey:"circleId"
+  })
 }
 Circle.associate = (models) =>{
-  Circle.hasMany (models.Vote)
+  Circle.hasMany (models.Vote,{
+    as:"Options",foreignKey:"circleId"
+  })
 }
 module.exports= Circle;

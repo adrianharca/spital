@@ -31,9 +31,13 @@ paranoid:true
 
 })
 Member.associate = (models)=> {
-  Member.belongsToMany(models.Circle)
+  Member.belongsToMany(models.Circle,{
+    as:"Circle", foreignKey:"circleId"
+  })
 }
 Member.associate = (models)=>{
-  Member.belongsTo(models.User)
+  Member.belongsTo(models.User,{
+    as:"User", foreignKey:"userid"
+  })
 }
 module.exports= Member;

@@ -3,28 +3,31 @@ const router = express.Router();
 const db = require('../config/db');
 const Sequelize = require('sequelize');
 const Circle = require('../models/Circle');
-
+var taskController=require("../controllers/tasks");
 const Op = Sequelize.Op;
 
 
-console.log("routes/circles.js")
+console.log("routes/circles.js");
+//this file should only contain routemap then the implementations should be in corresponding files 
+router.route('/demoadd').get(taskController.demoadd);
 
+// router.route("/tasks").get(taskController.getTasks);
 //test data for insert
-router.get('/demoadd', (req, res) => {
-  const data = {
-    theme: 'sex',
-    description: 'have',
-    initiatorid: '0',
-  }
-  let { theme, description, initiatorid } = data;
-  Circle.create({
-    theme, description, initiatorid
-  }).then(a => {
-    console.log('created cirlce ' + theme);
-    res.redirect('/circles')
-  })
-    .catch(err => console.log(err));
-})
+// router.get('/demoadd', (req, res) => {
+//   const data = {
+//     theme: 'sex',
+//     description: 'have',
+//     initiatorid: '0',
+//   }
+//   let { theme, description, initiatorid } = data;
+//   Circle.create({
+//     theme, description, initiatorid
+//   }).then(a => {
+//     console.log('created cirlce ' + theme);
+//     res.redirect('/circles')
+//   })
+//     .catch(err => console.log(err));
+// })
 
 
 // Get circle list
