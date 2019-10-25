@@ -4,8 +4,11 @@ const exphbs= require ('express-handlebars');
 const  path= require("path");
 
 
-var taskController=require("./controllers/tasks");
+
+
+//do this once only
 console.log('server.js');
+
 var app= express();
 //Handlebars
 app.engine('handlebars',exphbs({
@@ -20,6 +23,8 @@ app.use(express.static(path.join(__dirname,'public')));
 //Index route
 app.get('/',(req,res)=>res.render('index',{layout:'landing'}));
 // Body Parser
+// support parsing of application/json type post data
+// app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
@@ -28,6 +33,7 @@ var router = express.Router();
 
 
 //Routes
+//var taskController=require("./controllers/tasks");
 app.use("/circles", require('./routes/circles'));
 // app.use("/api", router);
 // router.route("/tasks").get(taskController.getTasks);
