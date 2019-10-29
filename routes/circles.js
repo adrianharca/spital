@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../config/db');
 const Sequelize = require('sequelize');
 const Circle = require('../models/Circle');
-var taskController=require("../controllers/tasks");
+var taskController = require("../controllers/tasks");
 const Op = Sequelize.Op;
 
 
@@ -36,17 +36,37 @@ router.get('/', (req, res) => {
   Circle.findAll()
     .then(c => {
       res.render('circles', { c });
-      console.log('theme: '+ c.theme + ' ');
+      console.log('theme: ' + c.theme + ' ');
     })
     .catch(err => console.log(err));
 });
+
+
+router.get('/json', (req, res) => {
+  res.contentType('application/json');
+  res.removeHeader;
+  var result=[];
+  Circle.findAll()
+    .then(
+      c => {
+        
+      
+      //res.send(JSON.stringify(c));
+       res.json({c})
+    
+      console.log('result: ' + result + ' ');
+    })
+  
+    .catch(err => console.log(err));
+});
+
 
 // // Display add gig form
 router.get('/add', (req, res) => res.render('add'));
 
 // Add a gig
 router.post('/add', (req, res) => {
-  let { theme, description, initiatorid} = req.body;
+  let { theme, description, initiatorid } = req.body;
   let errors = [];
 
   // Validate Fields
@@ -65,21 +85,24 @@ router.post('/add', (req, res) => {
   if (errors.length > 0) {
     res.render('add', {
       errors,
-      theme, description,  initiatorid });
+      theme, description, initiatorid
+    });
   } else {
-    
+
 
     // Make lowercase and remove space after comma
     //  technologies = technologies.toLowerCase().replace(/, /g, ',');
 
     // Insert into table
     Circle.create({
-      theme, description,  initiatorid    })
-      .then(a => { 
+      theme, description, initiatorid
+    })
+      .then(a => {
         console.log('success');
-        res.redirect('/circles')})
+        res.redirect('/circles')
+      })
       .catch(err => console.log(err));
-     
+
   }
 });
 

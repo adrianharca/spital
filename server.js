@@ -10,6 +10,9 @@ const  path= require("path");
 console.log('server.js');
 
 var app= express();
+
+
+app.set('json spaces', 40);
 //Handlebars
 app.engine('handlebars',exphbs({
     extname: 'handlebars',
