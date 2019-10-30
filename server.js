@@ -29,6 +29,7 @@ app.get('/',(req,res)=>res.render('index',{layout:'landing'}));
 app.use(bodyParser.urlencoded({ extended: false }));
 //Routes for interface:
 app.use("/circles", require('./routes/circles'));
+app.use("/users", require('./routes/users'));
 
 
 //move these into routemap app.use("/users", require('./routes/users'));
