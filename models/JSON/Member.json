@@ -1,0 +1,34 @@
+{
+    "title": "Member",
+    "type": "object",
+    "description": "model for member data",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "circleid": {
+        "type": "integer"
+      },
+      "age": {
+        "type": "integer"
+      },
+      "userid": {
+        "type": "integer"
+      },
+      "nickname": {
+        "type": "string"
+      },
+      "image": {
+        "type": "string"
+      },
+      "createdat": {
+        "type": "string"
+      },
+      "updatedat": {
+        "type": "string"
+      },
+      "deletedat": {
+        "type": "string"
+      }
+    }
+  }

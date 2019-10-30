@@ -1,0 +1,55 @@
+{
+    "title": "Circle",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "theme ": {
+        "type": "string"
+      },
+      "description ": {
+        "type": "string"
+      },
+      "keywords ": {
+        "type": "string"
+      },
+      "status ": {
+        "type": "integer"
+      },
+      "initiatorid ": {
+        "type": "integer"
+      },
+      "image ": {
+        "type": "string"
+      },
+      "privacy": {
+        "type": "integer"
+      },
+      "date": {
+        "type": "integer"
+      },
+      "enddate": {
+        "type": "integer"
+      },
+      "location": {
+        "type": "string"
+      },
+      "placename": {
+        "type": "string"
+      },
+      "createdat": {
+        "type": "string"
+      },
+      "updatedat": {
+        "type": "string"
+      },
+      "deletedat": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "theme "
+    ]
+  }

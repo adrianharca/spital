@@ -1,0 +1,30 @@
+   
+<section id="adduser" class="container">
+    <div class="form-wrap">
+      <h1>Add user</h1>
+      {{#each errors}}
+        <div class="error">
+          <p>{{text}}</p>
+        </div>
+      {{/each}}
+      <form action="/users/add" method="POST">
+        <div class="input-group">
+          <label for="firstname">First name</label>
+          <input type="text" name="firstname" id="firstname" class="input-box" placeholder="first name"
+            maxlength="100" value={{theme}}>
+        </div>
+        <div class="input-group">
+          <label for="lastname">Last name</label>
+          <input type="text" name="lastname" id="lastname" class="input-box" placeholder="last name"
+          maxlength="100" value={{lastname}}>
+        </div>
+        <div class="input-group">
+          <label for="email">E-mail</label>
+          <textarea name="email" id="email" class="input-box" placeholder="E-mail"
+            rows="10">{{email}}</textarea>
+        </div>
+       
+        <input type="submit" value="Add User" class="btn btn-reverse">
+      </form>
+    </div>
+  </section>

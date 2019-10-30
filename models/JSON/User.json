@@ -1,0 +1,60 @@
+{
+    "title": "User",
+    "type": "object",
+    "x-examples": {
+      "example-1": {}
+    },
+    "properties": {
+      "id": {
+        "type": [
+          "string",
+          "integer"
+        ]
+      },
+      "nickname": {
+        "type": "string"
+      },
+      "firstname": {
+        "type": "string"
+      },
+      "lastname": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string"
+      },
+      "acctype": {
+        "type": "string"
+      },
+      "bday": {
+        "type": "integer"
+      },
+      "pass": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "interests": {
+        "type": "string"
+      },
+      "trustscore": {
+        "type": "string"
+      },
+      "img": {
+        "type": "string"
+      },
+      "gender": {
+        "type": "string"
+      },
+      "createdat": {
+        "type": "string"
+      },
+      "updatedat": {
+        "type": "string"
+      },
+      "deletedat": {
+        "type": "string"
+      }
+    }
+  }

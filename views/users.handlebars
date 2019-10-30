@@ -1,0 +1,17 @@
+<section id="users" class="container">
+    <h1>All Users</h1>
+    {{#each c}}
+
+
+    <div class="users">
+        <h3>Name: {{firstname}} {{lastname}}</h3>
+        <p>First name: {{firstname}}</p>
+        <p>Last name: {{lastname}}</p>
+        <p>E-mail: {{email}}</p>
+        <p>Account type: {{acctype}}</p>
+    </div>
+
+    {{else}}
+    <p>No users in db</p>
+    {{/each}}
+</section>

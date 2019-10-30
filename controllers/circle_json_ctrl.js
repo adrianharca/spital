@@ -1,52 +1,47 @@
-var Circle = require('../models/Circle');
-var router = require('express').Router();
+ var Circle = require("../models/Circle");
+
+//var router= require('../server')
+
+console.log("circle_json_ctrl");
+
+exports.demoadd=function(req,res){
+    const data = {
+        theme: 'bich',
+        description: 'b cray',
+        initiatorid: '0',
+      }
+      let { theme, description, initiatorid } = data;
+      
+      Circle.create({
+        data
+      }).then(a => {
+        console.log('created circle ' + theme);
+        res.redirect('/circles')
+      })
+        .catch(err => console.log(err));
+}
 
 
 
-console.log("routes/circles.js");
-//this file should only contain routemap then the implementations should be in corresponding files 
-// router.route('/demoadd').get(taskController.demoadd);
-// router.route('/')
-
-// router.route("/tasks").get(taskController.getTasks);
-//test data for insert
-// router.get('/demoadd', (req, res) => {
-//   const data = {
-//     theme: 'sex',
-//     description: 'have',
-//     initiatorid: '0',
-//   }
-//   let { theme, description, initiatorid } = data;
-//   Circle.create({
-//     theme, description, initiatorid
-//   }).then(a => {
-//     console.log('created cirlce ' + theme);
-//     res.redirect('/circles')
-//   })
-//     .catch(err => console.log(err));
-// })
-
-
-// Get circle list
-router.get('/', (req, res) => {
-
+exports.getAll=function(req,res){
+  
+  res.contentType('application/json');
+  res.removeHeader;
+  var result=[];
   Circle.findAll()
-    .then(c => {
-      res.render('circles', { c });
-      console.log('theme: ' + c.theme + ' ');
+    .then(
+      c => {
+        
+      
+      //res.send(JSON.stringify(c));
+       res.json({c})
+    
+      console.log('result: ' + result + ' ');
     })
+  
     .catch(err => console.log(err));
-});
-
-
-
-
-
-// // Display add gig form
-router.get('/add', (req, res) => res.render('add'));
-
-// Add a gig
-router.post('/add', (req, res) => {
+}
+exports.addOne=function(req,res){
   let { theme, description, initiatorid } = req.body;
   let errors = [];
 
@@ -85,7 +80,21 @@ router.post('/add', (req, res) => {
       .catch(err => console.log(err));
 
   }
-});
+}
+exports.delete= function(req,res){
+  console.log('deleted');
+}
+exports.getByid= function(req,res){
+  console.log('getbyid');
+}
+exports.updatebyId=function(req,res){
+  console.log('updatebyid');
+}
+exports.deleteByid=function(req,res){
+  console.log('delbyid');
+}
+
+
 
 // // Search for gigs
 // router.get('/search', (req, res) => {
@@ -98,5 +107,3 @@ router.post('/add', (req, res) => {
 //     .then(gigs => res.render('gigs', { gigs }))
 //     .catch(err => console.log(err));
 // });
-
-module.exports = router;
