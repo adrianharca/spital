@@ -1,5 +1,4 @@
  var Circle = require("../models/Circle");
-
 //var router= require('../server')
 
 console.log("circle_json_ctrl");
@@ -41,7 +40,7 @@ exports.getAll=function(req,res){
   
     .catch(err => console.log(err));
 }
-exports.addOne=function(req,res){
+exports.addByThemeDescriptionAndInit=function(req,res){
   let { theme, description, initiatorid } = req.body;
   let errors = [];
 
@@ -93,7 +92,21 @@ exports.updatebyId=function(req,res){
 exports.deleteByid=function(req,res){
   console.log('delbyid');
 }
-
+exports.addOne= function(req,res){
+  let {theme, description,keywords, 
+        status, initiatorid,date, enddate, placename}=req.body;
+  console.log(req.body);
+let str= keywords.join();
+  Circle.create(
+    {//data
+      theme, description, str,
+    status, initiatorid,date, enddate, placename
+  }) .then(a => {
+    console.log('success');
+    res.body=a;
+  })
+  .catch(err => console.log(err));
+}
 
 
 // // Search for gigs

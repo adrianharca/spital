@@ -38,6 +38,9 @@
       "placename": {
         "type": "string"
       },
+      "spottype":{
+        "type":"string"
+      },
       "createdat": {
         "type": "string"
       },
