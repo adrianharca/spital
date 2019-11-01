@@ -35,8 +35,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 //Routes for interface:
-// app.use("/circles", require('./routes/circles'));
-// app.use("/users", require('./routes/users'));
+app.use("/circles", require('./routes/circles'));
+ app.use("/users", require('./routes/users'));
 //JSON routes
 app.use("/json", router);
 //default route:
@@ -53,4 +53,4 @@ var server=app.listen(3000,function(){
     var port=server.address().port;
     console.log("Server listening at :%s on port %s", host,port);
 });
-module.exports = router;
+module.exports = router,bodyParser;

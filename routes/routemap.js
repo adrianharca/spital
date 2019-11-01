@@ -1,5 +1,4 @@
 var express = require('express');
-const bodyparser=require('body-parser');
 var router = express.Router();
 
 //this file should only contain routemap then the implementations should be in corresponding files 

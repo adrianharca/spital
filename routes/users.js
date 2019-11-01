@@ -6,7 +6,7 @@ const User = require('../models/User');
 var taskController = require("../controllers/circle_json_ctrl");
 const Op = Sequelize.Op;
 
-
+//Use this class for interface functions & put ur json api in controllers/users_json_ctrl
 console.log("routes/users.js");
 router.route('/demoadd').get(taskController.demoadd);
 
@@ -41,7 +41,7 @@ router.get('/json', (req, res) => {
 
 
 // // Display add user form
-router.get('/adduser', (req, res) => res.render('add'));
+router.get('/adduser', (req, res) => res.render('adduser'));
 
 // Add a gig
 router.post('/adduser', (req, res) => {
@@ -51,7 +51,7 @@ router.post('/adduser', (req, res) => {
 
   // Check for errors
   if (errors.length > 0) {
-    res.render('add', {
+    res.render('adduser', {
       errors,
       firstname, lastname, email
     });

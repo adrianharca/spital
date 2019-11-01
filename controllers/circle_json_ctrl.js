@@ -103,7 +103,7 @@ let str= keywords.join();
     status, initiatorid,date, enddate, placename
   }) .then(a => {
     console.log('success');
-    res.body=a;
+    res.json({a});
   })
   .catch(err => console.log(err));
 }

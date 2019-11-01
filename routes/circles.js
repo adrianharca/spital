@@ -26,7 +26,6 @@ console.log("routes/circles.js");
 //     .catch(err => console.log(err));
 // })
 
-
 // Get circle list
 router.get('/', (req, res) => {
 
