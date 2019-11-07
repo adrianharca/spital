@@ -10,10 +10,10 @@ var circleController = require("../controllers/circle_json_ctrl");
 //prefix /json/circles/etc
 // router.use(bodyparser.json);
 router.route("/circles").get(circleController.getAll).
-    post(circleController.addOne) .
+    post(circleController.addOne).
     delete(circleController.delete);
 router.route("/circles/:id").get(circleController.getByid).
-    post(circleController.updatebyId).
+    put(circleController.updatebyId).
     delete(circleController.deleteByid);
 // router.route("/circles/:id/members/").get(circleController.getAllMembersBycircle);
 // router.route("/circles/:id/members/:memberid").get(circleController.getMemberById).

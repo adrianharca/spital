@@ -21,25 +21,6 @@ exports.demoadd=function(req,res){
 }
 
 
-
-exports.getAll=function(req,res){
-  
-  res.contentType('application/json');
-  res.removeHeader;
-  var result=[];
-  Circle.findAll()
-    .then(
-      c => {
-        
-      
-      //res.send(JSON.stringify(c));
-       res.json({c})
-    
-      console.log('result: ' + result + ' ');
-    })
-  
-    .catch(err => console.log(err));
-}
 exports.addByThemeDescriptionAndInit=function(req,res){
   let { theme, description, initiatorid } = req.body;
   let errors = [];
@@ -84,26 +65,103 @@ exports.delete= function(req,res){
   console.log('deleted');
 }
 exports.getByid= function(req,res){
-  console.log('getbyid');
+ 
+  idS = Number(req.params.id);
+  console.log('getbyid' +idS);
+  circless = Circle.findAll({where: {id: idS}}).then(function (circleFound) {
+    res.send(circleFound);
+
+}).error(function (err) {
+    console.log("Error:" + err);
+});
 }
-exports.updatebyId=function(req,res){
-  console.log('updatebyid');
+
+
+exports.getAll=function(req,res){
+  console.log('performing fetch all');
+  res.contentType('application/json');
+  res.removeHeader;
+  var result=[];
+  Circle.findAll()
+  .map(l=> {container={};
+    container=l;
+    container.keywords=l.keywords.split(",");
+    container.creationDate = new Date(l.creationDate);
+    container.date = new Date(l.date);
+    //container.image = undefined;
+    container.image = l.data;
+    container.endDate = new Date(l.endDate);
+    return container;})
+    .then(
+      c => {
+    
+      res.json({c});
+    
+      console.log('result: ' + result + ' ');
+    })
+  
+    .catch(err => console.log(err));
 }
+exports.updatebyId=function (req, res) {
+    console.log("update by Id");
+    Circle.update(
+      {image: req.body.image},
+        {where: {id: req.body.id}}
+    )
+    .then(function() {
+      console.log("Project with id " + req.body.id + " updated successfully!");
+  
+  }).catch(function(e) {
+    
+    console.log("Project update failed ! " + e);
+      res.send(e);
+  })
+  res.send();
+   };
+    
 exports.deleteByid=function(req,res){
   console.log('delbyid');
 }
 exports.addOne= function(req,res){
-  let {theme, description,keywords, 
-        status, initiatorid,date, enddate, placename}=req.body;
-  console.log(req.body);
-let str= keywords.join();
+  console.log('adding one '+ req);
+  let {theme, description,keywords, creationDate, invitationOnly, numberOfPeople, openToAnyone,
+        status, initiatorid,date, endDate,when, where}=req.body;
+        var isflexibleVar = null;
+        var dateVar = null;
+        var endDateVar = null;
+        var creationDateVar = null;
+        var keywordsVar = null;
+        var timeofdayVar = null;
+        var locationVar = null;
+        var placenameVar = null;
+        var spottypeVar = null;
+
+        if (when!=undefined){
+            isflexibleVar = when.isFlexible;
+            dateVar = Date.parse(when.date);
+            endDateVar = Date.parse(when.endDate);
+            creationDateVar = Date.parse(creationDate);
+        }
+        if (keywords!=undefined){
+          keywordsVar = keywords.toString();
+        }
+        //where is not a thing in the answer. 
+        if (where!=undefined){
+            timeofdayVar = when.timeOfDay;
+            locationVar = where.location;
+            placenameVar = where.placename;
+            spottypeVar = where.spottype;
+        }
   Circle.create(
     {//data
-      theme, description, str,
-    status, initiatorid,date, enddate, placename
+      theme, description, isFlexible: isflexibleVar, timeofday:timeofdayVar, 
+      creationDate: creationDateVar, invitationOnly, numberOfPeople, 
+      openToAnyone, keywords: keywordsVar, location: locationVar,
+      status, initiatorid, date: dateVar, endDate: endDateVar, 
+      placename: placenameVar, spotType: spottypeVar
   }) .then(a => {
     console.log('success');
-    res.json({a});
+    res.json(a.id);
   })
   .catch(err => console.log(err));
 }

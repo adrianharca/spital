@@ -17,7 +17,7 @@ app.engine('handlebars',exphbs({
     layoutsDir: __dirname + '/views/layouts/'
 }));
 app.set('view engine','handlebars');
-// Set static folder
+console.log(__dirname);
 app.use(express.static(path.join(__dirname,'public')));
 
 

@@ -23,31 +23,36 @@ const Circle = db.define('circle', {
     type:Sequelize.INTEGER
   },
   initiatorid:{
-    type:Sequelize.INTEGER,
+    type:Sequelize.INTEGER
   },
   image:{
     type:Sequelize.BLOB
   },
   creationDate:{
-    type:Sequelize.INTEGER
+    type:Sequelize.STRING
   },
   invitationOnly:{
-    type:Sequelize.INTEGER
+    type:Sequelize.BOOLEAN
   },
   openToAnyone:{
-    type:Sequelize.INTEGER
+    type:Sequelize.BOOLEAN
   },
   date:{
-    type:Sequelize.INTEGER
+    type:Sequelize.STRING
   },
   endDate:{
-    type:Sequelize.INTEGER
+    type:Sequelize.STRING
   },
   placename:{ 
    type:Sequelize.TEXT
   },
- 
+  isFlexible:{
+    type: Sequelize.BOOLEAN
+  },
   location:{
+    type:Sequelize.JSON
+  },
+  timeofday:{
     type:Sequelize.TEXT
   },
   spotType:{

@@ -5,40 +5,46 @@
       "id": {
         "type": "integer"
       },
-      "theme ": {
+      "theme": {
         "type": "string"
       },
-      "description ": {
+      "description": {
         "type": "string"
       },
-      "keywords ": {
+      "keywords": {
         "type": "string"
       },
-      "status ": {
+      "status": {
         "type": "integer"
       },
-      "initiatorid ": {
+      "initiatorid": {
         "type": "integer"
       },
-      "image ": {
+      "image": {
         "type": "string"
       },
       "privacy": {
         "type": "integer"
       },
       "date": {
-        "type": "integer"
+        "type": "string"
       },
       "enddate": {
-        "type": "integer"
+        "type": "string"
+      },
+      "isflexible":{
+        "type":"integer"
       },
       "location": {
-        "type": "string"
+        "type": "object"
       },
       "placename": {
         "type": "string"
       },
       "spottype":{
+        "type":"string"
+      },
+      "timeofday":{
         "type":"string"
       },
       "createdat": {
