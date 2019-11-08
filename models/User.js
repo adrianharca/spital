@@ -51,10 +51,6 @@ const User = db.define('user', {
   freezeTableName: true,
   paranoid:true
 })
-User.associate= (models)=>{
-  User.hasMany(models.Member, {
-    as:"Member", foreignKey:"userId"
-  })
-}
+
 module.exports= User;
 

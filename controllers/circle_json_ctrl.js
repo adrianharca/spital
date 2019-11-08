@@ -39,9 +39,8 @@ exports.addByThemeDescriptionAndInit=function(req,res){
 
   // Check for errors
   if (errors.length > 0) {
-    res.render('add', {
-      errors,
-      theme, description, initiatorid
+    res.put('err', {
+      errors
     });
   } else {
 
@@ -68,8 +67,18 @@ exports.getByid= function(req,res){
  
   idS = Number(req.params.id);
   console.log('getbyid' +idS);
-  circless = Circle.findAll({where: {id: idS}}).then(function (circleFound) {
-    res.send(circleFound);
+  circless = Circle.findOne({where: {id: idS}})
+  
+    .then(function (circleFound) {
+    container={};
+    container=circleFound;
+    container.keywords=circleFound.keywords.split(",");
+    container.creationDate = new Date(circleFound.creationDate);
+    container.date = new Date(circleFound.date);
+    //container.image = undefined;
+    container.image = circleFound.data;
+    container.endDate = new Date(circleFound.endDate);
+    res.send(container);
 
 }).error(function (err) {
     console.log("Error:" + err);
@@ -102,8 +111,58 @@ exports.getAll=function(req,res){
   
     .catch(err => console.log(err));
 }
+exports.getImage=function(req,res){
+  idS = Number(req.params.id);
+  console.log("get image");
+  circless = Circle.findOne({where: {id: idS}})
+  
+  .then(function (circleFound) {
+  container={};
+  container=circleFound;
+  var data = container.image;
+  res.send(data);
+
+}).error(function (err) {
+  console.log("Error:" + err);
+});
+};
+decodeArrayBuffer = function(buffer) {
+  var mime;
+  var a = new Uint8Array(buffer);
+  var nb = a.length;
+  if (nb < 4)
+      return null;
+  var b0 = a[0];
+  var b1 = a[1];
+  var b2 = a[2];
+  var b3 = a[3];
+  if (b0 == 0x89 && b1 == 0x50 && b2 == 0x4E && b3 == 0x47)
+      mime = 'image/png';
+  else if (b0 == 0xff && b1 == 0xd8)
+      mime = 'image/jpeg';
+  else if (b0 == 0x47 && b1 == 0x49 && b2 == 0x46)
+      mime = 'image/gif';
+  else
+      return null;
+  var binary = "";
+  for (var i = 0; i < nb; i++)
+      binary += String.fromCharCode(a[i]);
+  var base64 = window.btoa(binary);
+  var image = new Image();
+  image.src = 'data:' + mime + ';base64,' + base64;
+  return image;
+};
 exports.updatebyId=function (req, res) {
     console.log("update by Id");
+    const fs = require('fs');
+    var path = require('path');
+var appDir = path.dirname(require.main.filename);
+      
+var imgsrc = new Buffer(req.body.image, 'binary').toString('base64');
+      var name= appDir  + "\\public\\img\\circles\\"+ req.body.theme+ ".jpg";
+      console.log(name);
+      fs.writeFileSync(name, imgsrc);
+    
     Circle.update(
       {image: req.body.image},
         {where: {id: req.body.id}}
@@ -145,7 +204,7 @@ exports.addOne= function(req,res){
         if (keywords!=undefined){
           keywordsVar = keywords.toString();
         }
-        //where is not a thing in the answer. 
+       
         if (where!=undefined){
             timeofdayVar = when.timeOfDay;
             locationVar = where.location;

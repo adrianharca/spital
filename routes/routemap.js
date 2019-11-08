@@ -12,7 +12,9 @@ var circleController = require("../controllers/circle_json_ctrl");
 router.route("/circles").get(circleController.getAll).
     post(circleController.addOne).
     delete(circleController.delete);
+router.route("/circles/:id/image").get(circleController.getImage);
 router.route("/circles/:id").get(circleController.getByid).
+    post(circleController.addOne).
     put(circleController.updatebyId).
     delete(circleController.deleteByid);
 // router.route("/circles/:id/members/").get(circleController.getAllMembersBycircle);

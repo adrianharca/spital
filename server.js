@@ -7,7 +7,7 @@ console.log('server.js');
 
 //do this once only
 var app= express();
-
+const associations= require ('./models/associations')();
 app.set('json spaces', 40);
 //Handlebars
 app.engine('handlebars',exphbs({

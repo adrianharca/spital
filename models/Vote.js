@@ -34,20 +34,14 @@ const Vote = db.define('Vote', {
   },
   spotType: {
     type: Sequelize.TEXT
+  },
+  numberofpeople: {
+    type: Sequelize.INTEGER
   }
 }, {
   timestamps: true,
   freezeTableName: true,
   paranoid: true
 })
-Vote.associate = (models) => {
-  Vote.belongsTo(models.Member,{
-    as:"Member", foreignKey:"memberId"
-  })
-}
-Vote.associate = (models) => {
-  Vote.belongsTo(models.Circle,{
-    as:"Circle", foreignKey:"circleId"
-  })
-}
+
 module.exports = Vote;
