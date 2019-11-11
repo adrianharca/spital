@@ -6,12 +6,7 @@ const Vote= require('./Vote');
 console.log('associations.js ')
 module.exports=  ()=>
 {
-  User.hasMany(Member, {
-    as:"Member", 
-    // foreignKey:"userId",
-    // foreignKeyConstraint:true 
-        constraints:false
-  });
+ -
 
 //   Member.associate = (models)=>
     Member.belongsTo(User,{
