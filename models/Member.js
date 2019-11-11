@@ -23,7 +23,7 @@ const Member = db.define('member', {
     type:Sequelize.TEXT,
   },
   image:{
-    type:Sequelize.BLOB
+    type:Sequelize.TEXT
   }},{
   timestamps:true,
 freezeTableName: true,

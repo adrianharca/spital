@@ -24,7 +24,7 @@ db.authenticate()
 
 //Do following to autosync db to model. Eg. for init purposes
 
-// console.log("Db sync and destroy about to start:");
+console.log("Db sync and destroy about to start:");
 // db.sync({ force: true })
 //   .then(() => {
 //     console.log(`Database & tables created!`)

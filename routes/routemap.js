@@ -7,6 +7,7 @@ var router = express.Router();
 
 //Routes
 var circleController = require("../controllers/circle_json_ctrl");
+var userController = require("../controllers/users_json_ctrl");
 //prefix /json/circles/etc
 // router.use(bodyparser.json);
 router.route("/circles").get(circleController.getAll).
@@ -22,8 +23,12 @@ router.route("/circles/:id").get(circleController.getByid).
 //                                                 put(circleController.addMember);
 // router.route("/circles/:id/votes/:voteid").get(circleController.getVotesByCircle);
 
-//router.route("/users").get(userController.getAll);
-
+router.route("/users").get(userController.getAllUsers)
+                      .post(userController.createUser)
+                      .delete(userController.delete);
+router.route("/users/byName=:name").get(userController.getUserByName);
+router.route("/users/byId=:id").get(userController.getUserById);
+router.route("/users/byEmail=:email").get(userController.getUserByEmail);
 // router.route("/members");
 //INTERFACE
 // router.use("/circles", require('./circles'));
