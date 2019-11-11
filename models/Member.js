@@ -20,7 +20,10 @@ const Member = db.define('member', {
     type:Sequelize.INTEGER
   },
   nickname:{
-    type:Sequelize.TEXT,
+    type:Sequelize.TEXT
+  },
+  motivation:{
+    type:Sequelize.TEXT
   },
   image:{
     type:Sequelize.BLOB

@@ -26,7 +26,7 @@ const Circle = db.define('circle', {
     type: Sequelize.INTEGER
   },
   image: {
-    type: Sequelize.BLOB
+    type: Sequelize.TEXT
   },
   creationDate: {
     type: Sequelize.STRING
