@@ -27,7 +27,10 @@ router.route("/users").get(userController.getAllUsers)
                       .post(userController.createUser)
                       .delete(userController.delete);
 router.route("/users/byName=:name").get(userController.getUserByName);
-router.route("/users/byId=:id").get(userController.getUserById);
+
+router.route("/users/byId=:id").get(userController.getUserById)
+                            .post(userController.createUser)
+                            .put(userController.updateUserById);
 router.route("/users/byEmail=:email").get(userController.getUserByEmail);
 // router.route("/members");
 //INTERFACE
