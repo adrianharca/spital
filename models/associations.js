@@ -18,7 +18,7 @@ module.exports=  ()=>
 
 
 //   Circle.associate = (models)=>
-  Circle.belongsTo(User,{
+  Circle.belongsTo(Member,{
     as:"Initiator",
     // targetKey: "initiatorid"
     foreignKey:"initiatorid"
@@ -86,5 +86,10 @@ Member.hasMany(Vote,{
     // foreignKey: "circleId",
     // foreignKeyConstraint:true 
   });
+
+// Circle.belongsToMany(User, {through: 'Member'});
+// User.belongsToMany(Circle,{through:'Member'});
+
+
   console.log('assocations r made')
 }

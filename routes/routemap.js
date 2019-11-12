@@ -7,20 +7,25 @@ var router = express.Router();
 
 //Routes
 var circleController = require("../controllers/circle_json_ctrl");
+var memberController= require ("../controllers/membas_json_ctrl")
 var userController = require("../controllers/users_json_ctrl");
 //prefix /json/circles/etc
 // router.use(bodyparser.json);
 router.route("/circles").get(circleController.getAll).
     post(circleController.addOne).
     delete(circleController.delete);
-router.route("/circles/:id/image").get(circleController.getImage);
-router.route("/circles/:id").get(circleController.getByid).
+router.route("/circles/:id/image").get(circleController.getImageById);
+router.route("/circles/:id").get(circleController.getCircleByid).
     post(circleController.addOne).
     put(circleController.updatebyId).
     delete(circleController.deleteByid);
-// router.route("/circles/:id/members/").get(circleController.getAllMembersBycircle);
-// router.route("/circles/:id/members/:memberid").get(circleController.getMemberById).
-//                                                 put(circleController.addMember);
+
+router.route("/circles/:id/members/").get(memberController.getAllMembersByCircle);
+router.route("/members/:memberid").get(memberController.getMemberById).
+    post(memberController.createMember).
+    put(memberController.updateMember).delete(memberController.deleteMember);
+
+    
 // router.route("/circles/:id/votes/:voteid").get(circleController.getVotesByCircle);
 
 router.route("/users").get(userController.getAllUsers)
