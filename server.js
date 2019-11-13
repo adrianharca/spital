@@ -40,6 +40,7 @@ app.use("/circles", require('./routes/circles'));
 //JSON routes
 app.use("/json", router);
 //default route:
+
 app.get('*', (req, res) => res.status(200).send({
     message: 'Welcome to the void',
     }));

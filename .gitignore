@@ -107,7 +107,4 @@ node_modules/nodemon/lib/utils/log.js
 node_modules/nodemon/lib/utils/merge.js
 node_modules/body-parser/lib/read.js
 node_modules/nodemon/lib/rules/parse.js
-public/img/circles/55555.jpg
-public/img/circles/344444.jpg
-public/img/circles/Tttt.jpg
-public/img/circles/2222.jpg
+public

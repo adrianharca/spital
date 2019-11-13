@@ -15,6 +15,7 @@ router.route("/circles").get(circleController.getAll).
     post(circleController.addOne).
     delete(circleController.delete);
 router.route("/circles/:id/image").get(circleController.getImageById);
+router.route("/circles/:id/image/download").get(circleController.downloadImageById);
 router.route("/circles/:id").get(circleController.getCircleByid).
     post(circleController.addOne).
     put(circleController.updatebyId).
@@ -36,6 +37,10 @@ router.route("/users/byName=:name").get(userController.getUserByName);
 router.route("/users/byId=:id").get(userController.getUserById)
                             .post(userController.createUser)
                             .put(userController.updateUserById);
+                            
+router.route("/users/byId=:id/image").get(userController.getImageById);
+
+
 router.route("/users/byEmail=:email").get(userController.getUserByEmail);
 // router.route("/members");
 //INTERFACE

@@ -42,7 +42,7 @@ const User = db.define('user', {
    type:Sequelize.DOUBLE
   },
   img:{
-    type:Sequelize.BLOB
+    type:Sequelize.TEXT
   },
   gender:{
     type:Sequelize.TEXT
