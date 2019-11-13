@@ -72,8 +72,7 @@ exports.getImageById = function (req,res){
     });
 }
 exports.getAllUsers =function(req,res){
-     User.findAll()--
-.map(l=> {container={};
+     User.findAll().map(l=> {container={};
   container=l;
   container.interests = l.interests.split(",");
   return container;})
