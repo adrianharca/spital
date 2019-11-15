@@ -12,6 +12,7 @@ exports.getAllMembersByCircle = (req, res) => {
         })
 
 };
+
 exports.getMemberById = (req, res) => {
     idS = Number(req.params.id);
     console.log('getbyid' + idS);
@@ -35,26 +36,29 @@ exports.getMemberById = (req, res) => {
 };
 exports.createMember = (req, res) => {
     let { circleId, userId, nickname, motivation } = req.body;
-    Circle.findOne({ where: { id: circleId } }).
-        addMember(Member.
+    console.log('request for to create member ' + circleId + ' ' + nickname);
+    Circle.findOne({ where: { id: circleId } }).then(c =>
+        c.addMember(Member.
             create({
                 circleId, userId, nickname, motivation
-            })).then(a=>{
+            })).then(a => {
                 console.log('success');
-                res.send(a.id);
-            }).error(err=>console.log(err));
+                res.json(a.id);
+            }).error(err => console.log(err)))
+        .error(err => console.log(err));
 
 };
 exports.updateMember = (req, res) => {
-    let {id, circleId, userId, nickname, motivation } = req.body;
-   Member.findOne({where:{id:Number(id)}}.update({
-                circleId, userId, nickname, motivation
-            })).then(a=>{
-                console.log('success');
-                res.send(a.id);
-            }).error(err=>console.log(err));
+    idS = Number(req.params.id);
+    let { circleId, userId, nickname, motivation } = req.body;
+    Member.findOne({ where: { id: Number(idS) } }.update({
+        circleId, userId, nickname, motivation
+    })).then(a => {
+        console.log('success');
+        res.send(a.id);
+    }).error(err => console.log(err));
 
 };
 exports.deleteMember = (req, res) => {
-console.log('deletion is happening');
+    console.log('deletion is happening');
 };

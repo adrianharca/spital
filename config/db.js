@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 console.log('config/db.js');
 
+
 const db = new Sequelize('circles', 'root', 'root', {
     host: 'localhost',
     port: '3308',
@@ -23,6 +24,7 @@ db.authenticate()
 .catch(err => console.log('Err: ' + err));
 
 //Do following to autosync db to model. Eg. for init purposes
+
 
 console.log("Db sync and destroy about to start:");
 // db.sync({ force: true })

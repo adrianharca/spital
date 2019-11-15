@@ -21,10 +21,10 @@ router.route("/circles/:id").get(circleController.getCircleByid).
     delete(circleController.deleteByid);
 
 router.route("/circles/:id/members/").get(memberController.getAllMembersByCircle);
-router.route("/members/:memberid").get(memberController.getMemberById).
+router.route("/members").get(memberController.getMemberById).
     post(memberController.createMember).
-    put(memberController.updateMember).delete(memberController.deleteMember);
-
+    delete(memberController.deleteMember);
+router.route("/members/:id").put(memberController.updateMember);
     
 // router.route("/circles/:id/votes/:voteid").get(circleController.getVotesByCircle);
 
