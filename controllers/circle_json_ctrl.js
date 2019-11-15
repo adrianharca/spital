@@ -85,6 +85,31 @@ exports.getCircleByid = function (req, res) {
     });
 }
 
+exports.downloadImageById = function (req, res) {
+
+  idS = Number(req.params.id);
+  console.log('getbyid' + idS);
+  var mainPath = __dirname + "\\.." + "\\public\\img\\";
+  var path = mainPath + "circles";
+  var pathC = require("path");
+  var shell = require('shelljs');
+
+  circless = Circle.findOne({ where: { id: idS } }).then(function (circleFound) {
+
+    if (circleFound != null) {
+      var file = fs.readFileSync(pathC.resolve(circleFound.image), 'binary');
+      res.setHeader('Content-Length', file.length);
+      res.write(file, 'binary');
+      res.end();
+    }
+    else {
+      res.send("null");
+    }
+  }).error(function (err) {
+    console.log("Error:" + "no image found");
+    res.send(err);
+  });
+}
 
 exports.getAll = function (req, res) {
   console.log('performing fetch all');
@@ -123,31 +148,16 @@ exports.getImageById = function (req, res) {
 
   circless = Circle.findOne({ where: { id: idS } }).then(function (circleFound) {
     if (circleFound != null) {
-      res.send(circleFound.image);
+      res.sendFile(pathC.resolve(circleFound.image));
     }
     else {
       res.send("null");
     }
   }).error(function (err) {
-    console.log("Error:" + err);
+    console.log("Error:" + "no image found");
     res.send(err);
   });
 }
-exports.getImage = function (req, res) {
-  idS = Number(req.params.id);
-  console.log("get image");
-  circless = Circle.findOne({ where: { id: idS } })
-
-    .then(function (circleFound) {
-      container = {};
-      container = circleFound;
-      var data = container.image;
-      res.send(data);
-
-    }).error(function (err) {
-      console.log("Error:" + err);
-    });
-};
 
 
 exports.updatebyId = function (req, res) {

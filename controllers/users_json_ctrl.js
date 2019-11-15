@@ -3,15 +3,22 @@ const User = require('../models/User');
 console.log("user_json_ctrl");
 
 exports.updateUserById= function(req,res){
-   console.log("update user by Id");
+   console.log("update user by Id: ");
    interestsVar = null;
    birthdayVar = null;
    if (req.body.interests!=null)
         interestsVar =  req.body.interests.toString();
    if (req.body.birthday!=null)
         birthdayVar = Date.parse(req.body.birthday);
+
+    var mainPath = __dirname + "\\.." + "\\public\\img\\";
+    var path = mainPath + "users";
+    var pathC = require("path");
+    var shell = require('shelljs');
+    const fs = require('fs');
+    var filename = path + "\\" + req.body.firstName + "_" + req.body.lastName + "-" + req.body.email + ".jpg";
     User.update(
-      {image: req.body.image,
+      {img: filename,
         name: req.body.name,
         firstname: req.body.firstName,
         lastname: req.body.lastName,
@@ -25,6 +32,17 @@ exports.updateUserById= function(req,res){
         {where: {id: req.body.id}}
     )
     .then(function() {
+        if (req.body.image != undefined) {
+            
+
+            if (!fs.existsSync(path)) {
+              shell.mkdir('-p', path);
+            }
+            var rawImg = req.body.image;
+            let buffer = Buffer.from(rawImg);
+            
+            fs.writeFile(filename, buffer, 'base64', function (err) { });
+        }
       console.log("Project with id " + req.body.id + " updated successfully!");
       res.send("Project with id " + req.body.id + " updated successfully!");
   }).catch(function(e) {
@@ -33,9 +51,28 @@ exports.updateUserById= function(req,res){
       res.send(e);
   })
 }
+exports.getImageById = function (req,res){
+    idS = Number(req.params.id);
+    console.log('getbyid' + idS);
+    var mainPath = __dirname + "\\.." + "\\public\\img\\";
+    var path = mainPath + "users";
+    var pathC = require("path");
+    var shell = require('shelljs');
+    
+    circless = User.findOne({ where: { id: idS } }).then(function (userFound) {
+      if (userFound != null) {
+        res.sendFile(pathC.resolve(userFound.img));
+      }
+      else {
+        res.send("null");
+      }
+    }).error(function (err) {
+      console.log("Error:" + "no image found for user");
+      res.send(err);
+    });
+}
 exports.getAllUsers =function(req,res){
-     User.findAll()
-.map(l=> {container={};
+     User.findAll().map(l=> {container={};
   container=l;
   container.interests = l.interests.split(",");
   return container;})
@@ -64,6 +101,7 @@ exports.delete= function(req,res){
        }else{
         container={};
         container=userFound;
+        container.image = userFound.img;
         container.lastName = userFound.lastname;
         container.firstName = userFound.firstname;
        container.birthday = userFound.bday;
@@ -86,6 +124,7 @@ exports.delete= function(req,res){
                 res.send("user not found");
            }else{
             container={};
+            container.image = userFound.img;
             container.name = userFound.name;
             container.email = userFound.email;
             container.acctype = userFound.acctype;
@@ -116,13 +155,13 @@ exports.delete= function(req,res){
                }else{
                 container={};
                 container=userFound;
+                container.image = userFound.img;
                 container.interests=userFound.interests.split(",");
                 container.lastName = userFound.lastname;
                 container.firstName = userFound.firstname;
                 container.birthday = userFound.bday;
                 res.send(container);
                }
-            
             }).error(function (err) {
                 console.log("Error:" + err);
             });
