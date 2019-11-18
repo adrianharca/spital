@@ -27,7 +27,7 @@ db.authenticate()
 
 
 console.log("Db sync and destroy about to start:");
-// db.sync({ force: true })
+// db.sync({ alter: true,force:true })
 //   .then(() => {
 //     console.log(`Database & tables created!`)
 //   });

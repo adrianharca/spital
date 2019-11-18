@@ -50,7 +50,16 @@ const User = db.define('user', {
   timestamps:true,
   freezeTableName: true,
   paranoid:true
-})
-
+});
+User.associate=(models)=>{
+  User.hasMany(models.Member, {
+        // as: "Member",
+        constraints: false
+    //     // foreignKey: "circleId",
+    //     // foreignKeyConstraint:true 
+    
+      });
+    
+};
 module.exports= User;
 

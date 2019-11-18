@@ -33,6 +33,17 @@ const Member = db.define('member', {
   freezeTableName: true,
   paranoid: true
 
-})
-
+});
+Member.associate=(models)=>{
+Member.belongsTo(models.User, {
+  as: "User",
+  //   constraints:false
+  foreignKey: "userid"
+});
+Member.belongsTo(models.Circle, {
+  as: "Circle",
+  //   constraints:false
+  foreignKey: "circleId"
+});
+};
 module.exports = Member;

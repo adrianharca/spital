@@ -64,23 +64,29 @@ const Circle = db.define('circle', {
     freezeTableName: true,
     paranoid: true
   }
-)
-Circle.associate = (models) => 
+);
+Circle.associate = (models) => {
   Circle.hasMany(models.Member, {
-    as: "Member", 
-    foreignKey: "circleId"
-  })
+    as: "Member",
+    constraints: false
+    // foreignKey: "circleId",
+    // foreignKeyConstraint:true 
 
-Circle.associate = (models) => 
+  });
+
+
   Circle.hasMany(models.Vote, {
-    as: "Options",
-    foreignKey: "circleId"
-  }
-  )
+    as: "Votes",
+    constraints: false
+    // foreignKey: "circleId",
+    // foreignKeyConstraint:true 
+  });
 
-Circle.associate = ()=>Circle.belongsTo(User,{
-  as:"Initiator",
-  constraints:false
-})
-
+  Circle.hasOne(models.Member, {
+    as: "Initiator",
+    // targetKey: "initiatorid"
+    foreignKey: "initiatorid"
+    // constraints:false
+  });
+};
 module.exports = Circle;

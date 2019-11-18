@@ -70,9 +70,11 @@ exports.getCircleByid = function (req, res) {
   circless = Circle.findOne({ where: { id: idS } })
 
     .then(function (circleFound) {
+      res.contentType('application/json');
       container = {};
       container = circleFound;
-      container.keywords = circleFound.keywords.split(",");
+      container.keywords =[];
+      container.keywords= circleFound.keywords.split(",");
       container.creationDate = new Date(circleFound.creationDate);
       container.date = new Date(circleFound.date);
       //container.image = undefined;
@@ -113,14 +115,17 @@ exports.downloadImageById = function (req, res) {
 
 exports.getAll = function (req, res) {
   console.log('performing fetch all');
-  res.contentType('application/json');
+
   res.removeHeader;
   var result = [];
   Circle.findAll()
     .map(l => {
-      container = {};
+     var container = {};
       container = l;
-      container.keywords = l.keywords.split(",");
+     var keywords =[];
+     keywords=l.keywords;
+      container.keywords =keywords.split(",");
+      // container.json(container.keywords);
       container.creationDate = new Date(l.creationDate);
       container.date = new Date(l.date);
       //container.image = undefined;
@@ -130,7 +135,7 @@ exports.getAll = function (req, res) {
     })
     .then(
       c => {
-
+        res.contentType('application/json');
         res.json({ c });
 
         console.log('result: ' + result + ' ');
@@ -200,8 +205,8 @@ exports.deleteByid = function (req, res) {
 }
 exports.addOne = function (req, res) {
   console.log('adding one ' + req);
-  let { theme, description, keywords, creationDate, invitationOnly, numberOfPeople, openToAnyone,
-    status, initiatorid, date, endDate, when, where } = req.body;
+  let { theme, description, keywords, invitationOnly, numberOfPeople, openToAnyone,
+    status, initiatorid, when, where } = req.body;
   var isflexibleVar = null;
   var dateVar = null;
   var endDateVar = null;
@@ -217,7 +222,7 @@ exports.addOne = function (req, res) {
     dateVar = Date.parse(when.date);
     if (!isNaN(when.endDate) && !isNaN(Date.parse(when.endDate)))
       endDateVar = Date.parse(when.endDate);
-    creationDateVar = Date.parse(creationDate);
+    // creationDateVar = Date.parse(creationDate);
   }
   if (keywords != undefined) {
     keywordsVar = keywords.toString();
@@ -231,8 +236,7 @@ exports.addOne = function (req, res) {
   }
   Circle.create(
     {//data
-      theme, description, isFlexible: isflexibleVar, timeofday: timeofdayVar,
-      creationDate: creationDateVar, invitationOnly, numberOfPeople,
+      theme, description, isFlexible: isflexibleVar, timeofday: timeofdayVar, invitationOnly, numberOfPeople,
       openToAnyone, keywords: keywordsVar, location: locationVar,
       status, initiatorid, date: dateVar, endDate: endDateVar,
       placename: placenameVar, spotType: spottypeVar

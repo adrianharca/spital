@@ -41,8 +41,9 @@ exports.createMember = (req, res) => {
         c.addMember(Member.
             create({
                 circleId, userId, nickname, motivation
-            })).then(a => {
-                console.log('success');
+            }))
+         .then(a => {
+                console.log('success created memba '+a);
                 res.json(a.id);
             }).error(err => console.log(err)))
         .error(err => console.log(err));
