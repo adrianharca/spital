@@ -16,7 +16,14 @@ const db = new Sequelize('circles', 'root', 'root', {
         min: 0,
         acquire: 30000,
         idle: 10000
-    }
+    },
+    dialectOptions: {
+        // useUTC: false, //for reading from database
+        dateStrings: true,
+        typeCast: true,
+        timezone: '+02:00'
+  },
+  timezone: '+02:00' //for writing to database
 });
 
 db.authenticate()
@@ -26,9 +33,10 @@ db.authenticate()
 //Do following to autosync db to model. Eg. for init purposes
 
 
-console.log("Db sync and destroy about to start:");
+// console.log("Db sync and destroy about to start:");
 // db.sync({ alter: true,force:true })
 //   .then(() => {
 //     console.log(`Database & tables created!`)
 //   });
+
 module.exports={db};

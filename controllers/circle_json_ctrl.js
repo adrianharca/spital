@@ -20,6 +20,39 @@ exports.demoadd = function (req, res) {
     .catch(err => console.log(err));
 }
 
+function renderCircle(c) {
+  var container = new Object();
+  // Object.assign(container, c); is di proper way to clone objs in js
+  const fields = ['id', 'theme', 'description', 'status',
+    'initiatorid', 'image', ' invitationOnly', 'openToAnyone',
+    'createdAt', 'updatedAt', 'deletedAt'];
+  fields.forEach((item,k)=>{
+    console.log(item, ' ',k,' ',c[item]);
+    container[item]=c[item];
+  })
+  container.keywords = [];
+  container.keywords = c.keywords.split(",");
+  // container.creationDate = new Date(circleFound.creationDate);
+
+  if (c.date != undefined) {
+    var when = {};
+    when.date =new Date(c.date,);
+    when.endDate = new Date(c.endDate);
+    when.timeofday = c.timeOfDay;
+    container.when = when;
+  }
+  if (c.location != null) {
+    var where = {};
+    where.location = c.location;
+    where.placename = c.placename;
+    where.spottype = c.spotType;
+    container.where = where;
+  }
+
+  //container.image = undefined;
+  container.image = c.data;
+  return container;
+}
 
 exports.addByThemeDescriptionAndInit = function (req, res) {
   let { theme, description, initiatorid } = req.body;
@@ -69,19 +102,33 @@ exports.getCircleByid = function (req, res) {
   console.log('getbyid' + idS);
   circless = Circle.findOne({ where: { id: idS } })
 
-    .then(function (circleFound) {
-      res.contentType('application/json');
-      container = {};
-      container = circleFound;
-      container.keywords =[];
-      container.keywords= circleFound.keywords.split(",");
-      container.creationDate = new Date(circleFound.creationDate);
-      container.date = new Date(circleFound.date);
-      //container.image = undefined;
-      container.image = circleFound.data;
-      container.endDate = new Date(circleFound.endDate);
-      res.send(container);
+    .then(function (c) {
+      res.setHeader('Content-Type', 'application/json');
+      console.log('Circle found ');
+      var container = renderCircle(c);
+      // Object.assign(container, c);
+      // container.keywords =[];
+      // container.keywords= c.keywords.split(",");
+      // // container.creationDate = new Date(circleFound.creationDate);
+      // container.when={};
+      // container.when.date = new Date(c.date);
+      // container.when.endDate = new Date(c.endDate);
+      // container.when.timeofday= c.timeOfDay;
 
+      // container.where={};
+      // container.where.location=c.location;
+      // container.where.placename=c.placename;
+      // container.where.spottype=c.spotType
+
+
+      // //container.image = undefined;
+      // container.image = c.data;
+      console.log(container);
+
+      // res.send(container);
+      // res.contentType('application/json');
+      // res.json(JSON.parse(JSON.stringify(container)));]
+      res.json({ container });
     }).error(function (err) {
       console.log("Error:" + err);
     });
@@ -120,18 +167,19 @@ exports.getAll = function (req, res) {
   var result = [];
   Circle.findAll()
     .map(l => {
-     var container = {};
-      container = l;
-     var keywords =[];
-     keywords=l.keywords;
-      container.keywords =keywords.split(",");
-      // container.json(container.keywords);
-      container.creationDate = new Date(l.creationDate);
-      container.date = new Date(l.date);
-      //container.image = undefined;
-      container.image = l.data;
-      container.endDate = new Date(l.endDate);
-      return container;
+      // var container = {};
+      // container = l;
+      // var keywords = [];
+      // keywords = l.keywords;
+      // container.keywords = keywords.split(",");
+      // // container.json(container.keywords);
+      // container.creationDate = new Date(l.creationDate);
+      // container.date = new Date(l.date);
+      // //container.image = undefined;
+      // container.image = l.data;
+      // container.endDate = new Date(l.endDate);
+      // return container;
+      return renderCircle(l);
     })
     .then(
       c => {
@@ -219,6 +267,7 @@ exports.addOne = function (req, res) {
 
   if (when != undefined) {
     isflexibleVar = when.isFlexible;
+    timeofdayVar = when.timeOfDay;
     dateVar = Date.parse(when.date);
     if (!isNaN(when.endDate) && !isNaN(Date.parse(when.endDate)))
       endDateVar = Date.parse(when.endDate);
@@ -229,7 +278,7 @@ exports.addOne = function (req, res) {
   }
 
   if (where != undefined) {
-    timeofdayVar = when.timeOfDay;
+
     locationVar = where.location;
     placenameVar = where.placename;
     spottypeVar = where.spottype;

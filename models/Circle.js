@@ -28,9 +28,6 @@ const Circle = db.define('circle', {
   image: {
     type: Sequelize.TEXT
   },
-  creationDate: {
-    type: Sequelize.STRING
-  },
   invitationOnly: {
     type: Sequelize.BOOLEAN
   },
