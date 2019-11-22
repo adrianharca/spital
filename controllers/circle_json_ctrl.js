@@ -1,6 +1,5 @@
 var Circle = require("../models/Circle");
 //var router= require('../server')
-
 console.log("circle_json_ctrl");
 
 exports.demoadd = function (req, res) {
@@ -26,9 +25,9 @@ function renderCircle(c) {
   const fields = ['id', 'theme', 'description', 'status',
     'initiatorid', 'image', ' invitationOnly', 'openToAnyone',
     'createdAt', 'updatedAt', 'deletedAt'];
-  fields.forEach((item,k)=>{
-    console.log(item, ' ',k,' ',c[item]);
-    container[item]=c[item];
+  fields.forEach((item, k) => {
+    console.log(item, ' ', k, ' ', c[item]);
+    container[item] = c[item];
   })
   container.keywords = [];
   container.keywords = c.keywords.split(",");
@@ -36,24 +35,37 @@ function renderCircle(c) {
 
   if (c.date != undefined) {
     var when = {};
-    when.date =new Date(c.date,);
+    when.date = new Date(c.date);
     when.endDate = new Date(c.endDate);
     when.timeofday = c.timeOfDay;
     container.when = when;
   }
   if (c.location != null) {
     var where = {};
-    where.location = c.location;
-    where.placename = c.placename;
-    where.spottype = c.spotType;
-    container.where = where;
+    if (Array.isArray(c.location)){
+      where.location = [];
+    c.location.forEach(a => where.location.push(new Place(a.latitude, a.longitude)));
   }
-
-  //container.image = undefined;
-  container.image = c.data;
-  return container;
+  else where.location = new Array(new Place(c.location));
+  where.placename = c.placename;
+  where.spottype = c.spotType;
+  container.where = where;
 }
 
+//container.image = undefined;
+container.image = c.data;
+return container;
+};
+function Where(placename, spottype, location) {
+  this.placename = placename;
+  this.spottype = spottype;
+
+  location.forEach(a => this.location.push(new Place(a.latitude, a.longitude)));
+}
+function Place(latitude, longitude) {
+  this.latitude = latitude;
+  this.longitude = longitude;
+}
 exports.addByThemeDescriptionAndInit = function (req, res) {
   let { theme, description, initiatorid } = req.body;
   let errors = [];
@@ -92,10 +104,10 @@ exports.addByThemeDescriptionAndInit = function (req, res) {
       .catch(err => console.log(err));
 
   }
-}
+};
 exports.delete = function (req, res) {
   console.log('deleted');
-}
+};
 exports.getCircleByid = function (req, res) {
 
   idS = Number(req.params.id);
@@ -132,7 +144,7 @@ exports.getCircleByid = function (req, res) {
     }).error(function (err) {
       console.log("Error:" + err);
     });
-}
+};
 
 exports.downloadImageById = function (req, res) {
 
@@ -158,7 +170,7 @@ exports.downloadImageById = function (req, res) {
     console.log("Error:" + "no image found");
     res.send(err);
   });
-}
+};
 
 exports.getAll = function (req, res) {
   console.log('performing fetch all');
@@ -190,7 +202,7 @@ exports.getAll = function (req, res) {
       })
 
     .catch(err => console.log(err));
-}
+};
 exports.getImageById = function (req, res) {
   idS = Number(req.params.id);
   console.log('getbyid' + idS);
@@ -210,7 +222,7 @@ exports.getImageById = function (req, res) {
     console.log("Error:" + "no image found");
     res.send(err);
   });
-}
+};
 
 
 exports.updatebyId = function (req, res) {
@@ -250,7 +262,7 @@ exports.updatebyId = function (req, res) {
 
 exports.deleteByid = function (req, res) {
   console.log('delbyid');
-}
+};
 exports.addOne = function (req, res) {
   console.log('adding one ' + req);
   let { theme, description, keywords, invitationOnly, numberOfPeople, openToAnyone,
@@ -294,7 +306,7 @@ exports.addOne = function (req, res) {
       res.json(a.id);
     })
     .catch(err => console.log(err));
-}
+};
 
 
 // // Search for gigs
