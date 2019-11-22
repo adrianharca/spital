@@ -36,7 +36,7 @@ function renderCircle(c) {
 
   if (c.date != undefined) {
     var when = {};
-    when.date =new Date(c.date,);
+    when.date =new Date(c.date);
     when.endDate = new Date(c.endDate);
     when.timeofday = c.timeOfDay;
     container.when = when;
