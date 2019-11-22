@@ -101,7 +101,8 @@ exports.delete= function(req,res){
        }else{
         container={};
         container=userFound;
-        container.image = userFound.img;
+        //container.image = userFound.img;
+        //container.image = undefined;
         container.lastName = userFound.lastname;
         container.firstName = userFound.firstname;
        container.birthday = userFound.bday;
@@ -124,7 +125,7 @@ exports.delete= function(req,res){
                 res.send("user not found");
            }else{
             container={};
-            container.image = userFound.img;
+            //container.image = userFound.img;
             container.name = userFound.name;
             container.email = userFound.email;
             container.acctype = userFound.acctype;
