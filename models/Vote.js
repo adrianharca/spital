@@ -1,8 +1,12 @@
 
 const Sequelize = require('sequelize');
-const db = require('../config/db').db;
+// const db = require('../config/db').db;
 
-const Vote = db.define('vote', {
+//  Vote = db.define('vote', {
+  class Vote extends Sequelize.Model{
+  // Vote.init({
+    static init (sequelize,Sequelize){
+      return super.init({
   id: {
     type: Sequelize.INTEGER,
     unique: true,
@@ -39,22 +43,25 @@ const Vote = db.define('vote', {
     type: Sequelize.INTEGER
   }
 }, {
+  sequelize,
+  modelName:'vote',
   timestamps: true,
   freezeTableName: true,
   paranoid: true
-});
+});}
 // Vote.associate=(models)=>{
-  Vote.belongsTo(Member, {
+  static associate(models){
+    this.fkMb=this.belongsTo(models.Member, {
     as: "Member",
     //   constraints:false
     foreignKey: "memberId"
   });
-  Vote.belongsTo(Circle, {
+  this.fkCircle=this.belongsTo(models.Circle, {
     as: "Circle",
 
     //    foreignKey:"circleId"
     foreignKey: "circleId"
   });
-// };
-
+};
+}
 module.exports = Vote;

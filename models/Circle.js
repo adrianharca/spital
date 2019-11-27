@@ -1,8 +1,13 @@
 
-const Sequelize = require('sequelize');
-const db = require('../config/db').db;
+const Sequelize  = require('sequelize');
+// const sequelize = require('../config/db').db;
+// const Model = Sequelize.Model;
 
-const Circle = db.define('circle', {
+class  Circle extends Sequelize.Model{
+  // Circle.init({
+// Circle = db.define('circle', {
+static init (sequelize,Sequelize){
+  return super.init({
   id: {
     type: Sequelize.INTEGER,
     unique: true,
@@ -57,14 +62,16 @@ const Circle = db.define('circle', {
   }
 },
   {
-    timestamps: true,
+    sequelize,
+    modelName:'circle',
+        timestamps: true,
     freezeTableName: true,
     paranoid: true
   }
-);
-Circle.associate = (models) => {
-  Circle.hasMany(models.Member, {
-    as: "Member",
+);} static associate(models){
+// Circle.associate = (models) => {
+  this. nk_members=this.hasMany(models.Member, {
+    // as: "Member",
     constraints: false
     // foreignKey: "circleId",
     // foreignKeyConstraint:true 
@@ -72,18 +79,18 @@ Circle.associate = (models) => {
   });
 
 
-  Circle.hasMany(models.Vote, {
-    as: "Votes",
-    constraints: false
-    // foreignKey: "circleId",
-    // foreignKeyConstraint:true 
-  });
+  // Circle.hasMany(models.Vote, {
+  //   as: "Votes",
+  //   constraints: false
+  //   // foreignKey: "circleId",
+  //   // foreignKeyConstraint:true 
+  // });
 
-  Circle.hasOne(models.Member, {
+  this.fkInit=Circle.hasOne(models.Member, {
     as: "Initiator",
     // targetKey: "initiatorid"
     foreignKey: "initiatorid"
     // constraints:false
-  });
-};
+  });}}
+// };}}
 module.exports = Circle;

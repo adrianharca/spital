@@ -35,26 +35,26 @@ function renderCircle(c) {
 
   if (c.date != undefined) {
     var when = {};
-    when.date =new Date(c.date);
+    when.date = new Date(c.date);
     when.endDate = new Date(c.endDate);
     when.timeofday = c.timeOfDay;
     container.when = when;
   }
   if (c.location != null) {
     var where = {};
-    if (Array.isArray(c.location)){
+    if (Array.isArray(c.location)) {
       where.location = [];
-    c.location.forEach(a => where.location.push(new Place(a.latitude, a.longitude)));
+      c.location.forEach(a => where.location.push(new Place(a.latitude, a.longitude)));
+    }
+    else where.location = new Array(new Place(c.location));
+    where.placename = c.placename;
+    where.spottype = c.spotType;
+    container.where = where;
   }
-  else where.location = new Array(new Place(c.location));
-  where.placename = c.placename;
-  where.spottype = c.spotType;
-  container.where = where;
-}
 
-//container.image = undefined;
-container.image = c.data;
-return container;
+  //container.image = undefined;
+  container.image = c.data;
+  return container;
 };
 function Where(placename, spottype, location) {
   this.placename = placename;
@@ -245,7 +245,7 @@ exports.updatebyId = function (req, res) {
     var rawImg = req.body.image;
     let buffer = Buffer.from(rawImg);
     var filename = path + "\\" + req.body.theme + "-" + req.body.description + ".jpg";
-    fs.writeFile(filename, buffer, 'base64', function (err) { });
+    fs.writeFile(filename, buffer, 'base64', function (err) { console.log(err); });
 
     Circle.update(
       { image: filename },

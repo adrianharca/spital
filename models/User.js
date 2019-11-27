@@ -1,9 +1,13 @@
 
 const Sequelize= require ('sequelize');
-const db= require ('../config/db').db;
+// const sequelize= require ('../config/db').db;
 
-const User = db.define('user', {
-  id:{
+//  User = db.define('user', {
+  class User extends Sequelize.Model{
+  // User.init({ 
+    static init (sequelize,Sequelize){
+      return super.init({
+id:{
     type:Sequelize.INTEGER,
     unique: true,
     allowNull: false,
@@ -47,19 +51,17 @@ const User = db.define('user', {
   gender:{
     type:Sequelize.TEXT
   }},{
+    sequelize,
+  modelName:'user',
   timestamps:true,
   freezeTableName: true,
   paranoid:true
-});
-User.associate=(models)=>{
-  User.hasMany(models.Member, {
-        // as: "Member",
-        constraints: false
-    //     // foreignKey: "circleId",
-    //     // foreignKeyConstraint:true 
+});}}
+// User.associate=(models)=>{
+//   User.hasMany(models.Member, {
+//         constraints: false
+//       });
     
-      });
-    
-};
+// };
 module.exports= User;
 

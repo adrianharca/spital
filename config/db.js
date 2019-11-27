@@ -1,8 +1,13 @@
-const Sequelize = require("sequelize");
+ const Sequelize = require("sequelize");
 console.log('config/db.js');
+const Circle = require("../models/Circle");
+const Member = require("../models/Member");
+const User = require("../models/User");
+const Vote = require("../models/Vote");
 
 
-const db = new Sequelize('circles', 'root', 'root', {
+
+const sequelize = new Sequelize('circles', 'root', 'root', {
     host: 'localhost',
     port: '3308',
     dialect: 'mysql',
@@ -10,7 +15,7 @@ const db = new Sequelize('circles', 'root', 'root', {
     //     timestamps:false
     // },
     operatorAliases: false,
-  
+    logging:  (...msg) => console.log(msg) ,
     pool: {
         max: 5,
         min: 0,
@@ -25,18 +30,29 @@ const db = new Sequelize('circles', 'root', 'root', {
   },
   timezone: '+02:00' //for writing to database
 });
+const models = {
+    Circle: Circle.init(sequelize, Sequelize),
+    Member: Member.init(sequelize, Sequelize),
+    User: User.init(sequelize, Sequelize),
+    Vote: Vote.init(sequelize, Sequelize)
+};
+Object.values(models)
+    .filter(model => typeof model.associate == "function")
+    .forEach(element => {
+        element.associate(models)
+    });
 
-db.authenticate()
+sequelize.authenticate()
 .then(() => console.log('Db connected'))
 .catch(err => console.log('Err: ' + err));
 
 //Do following to autosync db to model. Eg. for init purposes
 
 
-// console.log("Db sync and destroy about to start:");
-// db.sync({ alter: true,force:true })
-//   .then(() => {
-//     console.log(`Database & tables created!`)
-//   });
+console.log("Db sync and destroy about to start:");
+sequelize.sync({ alter: true })//,force:true
+  .then(() => {
+    console.log(`Database & tables created!`)
+  });
 
-module.exports={db};
+module.exports={db: sequelize,models};

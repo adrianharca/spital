@@ -4,19 +4,30 @@ var Member = require("../models/Member");
 
 
 exports.getAllMembersByCircle = (req, res) => {
-    circleId = Number(req.params.circleId);
-    membas = Circle.findOne({ where: { id: circleId } }).getMembers().
-        then(mbs => {
-            res.json({ mbs });
+    circleId = Number(req.params.id);
+    membas = Circle.findByPk(circleId).then(c=>
+        
+            c.getMembers()
+        
+        ).error(console.log).
+        then(mbs => {container=[]
+            k=0;
+            mbs.array.forEach(element => {
+                console.log(element);
+                k++;
+          container[k]=[JSON.parse(element)];
+        });
+        res.contentType('application/json');
+            res.json({ container });
             console.log('members for circle ' + circleId + ' ' + res);
-        })
+        }).error(e=>res.send(e));
 
 };
 
 exports.getMemberById = (req, res) => {
     idS = Number(req.params.id);
     console.log('getbyid' + idS);
-    circless = Member.findOne({ where: { id: idS } })
+    circless = Member.findByPk( idS)
 
         .then(function (mb) {
             container = {};

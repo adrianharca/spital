@@ -1,8 +1,12 @@
 
 const Sequelize = require('sequelize');
-const db = require('../config/db').db;
+// const sequelize = require('../config/db').db;
 
-const Member = db.define('member', {
+//  Member  = db.define('member', {
+  class Member extends Sequelize.Model{
+  // Member.init({
+    static init (sequelize,Sequelize){
+      return super.init({
   id: {
     type: Sequelize.INTEGER,
     unique: true,
@@ -29,21 +33,29 @@ const Member = db.define('member', {
     type: Sequelize.TEXT
   }
 }, {
+  sequelize,
+  modelName:'member',
   timestamps: true,
   freezeTableName: true,
   paranoid: true
 
-});
-Member.associate=(models)=>{
-Member.belongsTo(models.User, {
-  as: "User",
-  //   constraints:false
-  foreignKey: "userid"
-});
-Member.belongsTo(models.Circle, {
-  as: "Circle",
+});}
+// Member.associate=(models)=>{
+  static associate(models){
+
+this.fkCircle=this.belongsTo(models.Circle, {
+  // as: "Circle",
   //   constraints:false
   foreignKey: "circleId"
 });
-};
+// this.fkInitiator=this.hasOne(models.Circle,{
+//   as:"Initiator",
+//   foreignKey:"initiatorid"
+// })
+this.fkuser=this.belongsTo(models.User, {
+  // as: "User",
+  //   constraints:false
+  foreignKey: "userId"
+});
+};}
 module.exports = Member;

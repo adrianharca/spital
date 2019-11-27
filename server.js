@@ -3,6 +3,7 @@ var bodyParser = require("body-parser");
 const exphbs = require('express-handlebars');
 const path = require("path");
 const router = require("./routes/routemap");
+
 console.log('server.js');
 
 //do this once only
@@ -66,9 +67,6 @@ app.get('*', (req, res) => res.status(200).send({
 //     .filter(onlyModels)
 //     .forEach(importModel)
 // Object.keys(db).forEach(assoc)
-
-
-
 
 var server = app.listen(3000, function () {
     var host = server.address().address;
