@@ -28,7 +28,7 @@ function renderCircle(c) {
   fields.forEach((item, k) => {
     console.log(item, ' ', k, ' ', c[item]);
     container[item] = c[item];
-  })
+  });
   container.keywords = [];
   container.keywords = c.keywords.split(",");
   // container.creationDate = new Date(circleFound.creationDate);
@@ -41,15 +41,15 @@ function renderCircle(c) {
     container.when = when;
   }
   if (c.location != null) {
-    var where = {};
-    if (Array.isArray(c.location)) {
-      where.location = [];
-      c.location.forEach(a => where.location.push(new Place(a.latitude, a.longitude)));
-    }
-    else where.location = new Array(new Place(c.location));
-    where.placename = c.placename;
-    where.spottype = c.spotType;
-    container.where = where;
+
+    // if (Array.isArray(c.location)) {
+    //   where.location = [];
+    //   c.location.forEach(a => where.location.push(new Place(a.latitude, a.longitude)));
+    // }
+    // else where.location = new Array(new Place(c.location));
+    // where.placename = c.placename;
+    // where.spottype = c.spotType;
+    container.where = new Where(c.placename, c.spotType,c.location);
   }
 
   //container.image = undefined;
@@ -59,8 +59,14 @@ function renderCircle(c) {
 function Where(placename, spottype, location) {
   this.placename = placename;
   this.spottype = spottype;
-
-  location.forEach(a => this.location.push(new Place(a.latitude, a.longitude)));
+  this.location =[];
+  if (Array.isArray(location)) {
+    location.forEach(
+      a =>{ if(a!=null)
+      
+      this.location.push(new Place(a['latitude'], a['longitude']));
+  });}
+  else this.location = new Array(new Place(location['latitude'],location['longitude']));
 }
 function Place(latitude, longitude) {
   this.latitude = latitude;
@@ -179,18 +185,6 @@ exports.getAll = function (req, res) {
   var result = [];
   Circle.findAll()
     .map(l => {
-      // var container = {};
-      // container = l;
-      // var keywords = [];
-      // keywords = l.keywords;
-      // container.keywords = keywords.split(",");
-      // // container.json(container.keywords);
-      // container.creationDate = new Date(l.creationDate);
-      // container.date = new Date(l.date);
-      // //container.image = undefined;
-      // container.image = l.data;
-      // container.endDate = new Date(l.endDate);
-      // return container;
       return renderCircle(l);
     })
     .then(

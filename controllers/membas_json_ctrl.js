@@ -1,33 +1,44 @@
 var Circle = require("../models/Circle");
 var Member = require("../models/Member");
 
+function renderMember(m) {
+    var holder = new Object();
+    const fields = ['id',
+        'circleId',
+        'age',
+        'userId',
+        'nickname',
+        'motivation',
+        'image',
+        'createdAt',
+        'updatedAt',
+        'deletedAt',
+        'initiatorid'];
+    // Object.values(m).forEach(i => holder[i] = m[i]);
+    fields.forEach((item, k) => {
+        console.log(item, ' ', k, ' ', m[item]);
+        holder[item] = m[item];
+      });
+    return holder;
 
+}
 
 exports.getAllMembersByCircle = (req, res) => {
     circleId = Number(req.params.id);
-    membas = Circle.findByPk(circleId).then(c=>
-        
-            c.getMembers()
-        
-        ).error(console.log).
-        then(mbs => {container=[]
-            k=0;
-            mbs.array.forEach(element => {
-                console.log(element);
-                k++;
-          container[k]=[JSON.parse(element)];
-        });
-        res.contentType('application/json');
-            res.json({ container });
+    membas = Circle.findByPk(circleId).then(c =>
+       c.getMembers().map(m => renderMember(m)) )
+        .then(mbs => {
+            res.contentType('application/json');
+            res.json({ mbs });
             console.log('members for circle ' + circleId + ' ' + res);
-        }).error(e=>res.send(e));
+        }).catch(e => console.log(e));
 
 };
 
 exports.getMemberById = (req, res) => {
     idS = Number(req.params.id);
     console.log('getbyid' + idS);
-    circless = Member.findByPk( idS)
+    circless = Member.findByPk(idS)
 
         .then(function (mb) {
             container = {};
@@ -53,8 +64,8 @@ exports.createMember = (req, res) => {
             create({
                 circleId, userId, nickname, motivation
             }))
-         .then(a => {
-                console.log('success created memba '+a);
+            .then(a => {
+                console.log('success created memba ' + a);
                 res.json(a.id);
             }).error(err => console.log(err)))
         .error(err => console.log(err));
@@ -68,7 +79,7 @@ exports.updateMember = (req, res) => {
     })).then(a => {
         console.log('success');
         res.send(a.id);
-    }).error(err => console.log(err));
+    }).catch(err => console.log(err));
 
 };
 exports.deleteMember = (req, res) => {

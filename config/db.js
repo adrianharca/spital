@@ -49,10 +49,9 @@ sequelize.authenticate()
 //Do following to autosync db to model. Eg. for init purposes
 
 
-console.log("Db sync and destroy about to start:");
-sequelize.sync({ alter: true })//,force:true
-  .then(() => {
-    console.log(`Database & tables created!`)
-  });
+// sequelize.sync({ force:true,alter:true })//,force:true
+//   .then(() => {
+//     console.log(`Database & tables created!`)
+//   }).catch(console.log);
 
-module.exports={db: sequelize,models};
+module.exports={ sequelize};

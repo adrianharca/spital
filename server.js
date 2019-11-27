@@ -48,7 +48,7 @@ app.get('*', (req, res) => res.status(200).send({
 // const fs = require('fs')
 // const basename = path.basename(module.filename)
 // const assoc = require('./models/associations')();
-// const db=require('./config/db')
+const db=require('./config/db');
 // const onlyModels = file =>
 //     file.indexOf('.') !== 0 &&
 //     file !== basename &&
