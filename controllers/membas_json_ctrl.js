@@ -26,7 +26,7 @@ function renderMember(m) {
 exports.getAllMembersByCircle = (req, res) => {
     circleId = Number(req.params.id);
     membas = Circle.findByPk(circleId).then(c =>
-       c.getMembers().map(m => renderMember(m)) )
+       c.getMembers().map(renderMember) )
         .then(mbs => {
             res.contentType('application/json');
             res.json({ mbs });
@@ -59,16 +59,20 @@ exports.getMemberById = (req, res) => {
 exports.createMember = (req, res) => {
     let { circleId, userId, nickname, motivation } = req.body;
     console.log('request for to create member ' + circleId + ' ' + nickname);
-    Circle.findOne({ where: { id: circleId } }).then(c =>
+    Circle.findByPk(circleId)
+   // Circle.findOne({ where: { id: circleId } })
+    .then(c =>
         c.addMember(Member.
             create({
                 circleId, userId, nickname, motivation
             }))
+            .catch(console.log)
             .then(a => {
                 console.log('success created memba ' + a);
                 res.json(a.id);
-            }).error(err => console.log(err)))
-        .error(err => console.log(err));
+            })
+            .catch(console.log))
+        .catch(err => console.log(err));
 
 };
 exports.updateMember = (req, res) => {
