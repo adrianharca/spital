@@ -57,9 +57,10 @@ exports.getMemberById = (req, res) => {
 
 };
 exports.createMember = (req, res) => {
+    var circId=Number(req.params.circleId);
     let { circleId, userId, nickname, motivation } = req.body;
     console.log('request for to create member ' + circleId + ' ' + nickname);
-    Circle.findByPk(circleId)
+    Circle.findByPk(Number(circleId))
    // Circle.findOne({ where: { id: circleId } })
     .then(c =>
         c.addMember(Member.

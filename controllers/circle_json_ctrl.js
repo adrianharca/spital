@@ -26,17 +26,17 @@ function renderCircle(c) {
     'initiatorid', 'image', ' invitationOnly', 'openToAnyone',
     'createdAt', 'updatedAt', 'deletedAt'];
   fields.forEach((item, k) => {
-    console.log(item, ' ', k, ' ', c[item]);
+    console.log(item, ' ', c[item]);
     container[item] = c[item];
   });
   container.keywords = [];
-  container.keywords = c.keywords.split(",");
+  container.keywords = c.keywords==null?[]:c.keywords.split(",");
   // container.creationDate = new Date(circleFound.creationDate);
 
   if (c.date != undefined) {
     var when = {};
-    when.date = new Date(c.date);
-    when.endDate = new Date(c.endDate);
+    when.date = Date.parse(c.date);
+    when.endDate = Date.parse(c.endDate);
     when.timeofday = c.timeOfDay;
     container.when = when;
   }
@@ -190,7 +190,7 @@ exports.getAll = function (req, res) {
     .then(
       c => {
         res.contentType('application/json');
-        res.json({ c });
+        res.json( c );
 
         console.log('result: ' + result + ' ');
       })
@@ -260,16 +260,16 @@ exports.deleteByid = function (req, res) {
 exports.addOne = function (req, res) {
   console.log('adding one ' + req);
   let { theme, description, keywords, invitationOnly, numberOfPeople, openToAnyone,
-    status, initiatorid, when, where } = req.body;
+    status, initiatorId, when, where } = req.body;
   var isflexibleVar = null;
   var dateVar = null;
   var endDateVar = null;
-  var creationDateVar = null;
   var keywordsVar = null;
   var timeofdayVar = null;
   var locationVar = null;
   var placenameVar = null;
   var spottypeVar = null;
+var initiatoridVar = null;
 
   if (when != undefined) {
     isflexibleVar = when.isFlexible;
@@ -289,11 +289,13 @@ exports.addOne = function (req, res) {
     placenameVar = where.placename;
     spottypeVar = where.spottype;
   }
+  if(initiatorId!=undefined)
+  initiatoridVar=initiatorId;
   Circle.create(
     {//data
       theme, description, isFlexible: isflexibleVar, timeofday: timeofdayVar, invitationOnly, numberOfPeople,
       openToAnyone, keywords: keywordsVar, location: locationVar,
-      status, initiatorid, date: dateVar, endDate: endDateVar,
+      status, initiatoridVar, date: dateVar, endDate: endDateVar,
       placename: placenameVar, spotType: spottypeVar
     }).then(a => {
       console.log('success');
