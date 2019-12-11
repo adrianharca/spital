@@ -33,12 +33,11 @@ function renderCircle(c) {
   container.keywords = c.keywords==null?[]:c.keywords.split(",");
   // container.creationDate = new Date(circleFound.creationDate);
 
-  if (c.date != undefined) {
-    var when = {};
-    when.date = Date.parse(c.date);
-    when.endDate = Date.parse(c.endDate);
-    when.timeofday = c.timeOfDay;
-    container.when = when;
+  if (c.date != null) {
+    container.when = new When(c.date, c.endDate, c.timeOfDay);
+  }
+  else{
+    container.when = "mumu";
   }
   if (c.location != null) {
 
@@ -55,6 +54,14 @@ function renderCircle(c) {
   //container.image = undefined;
   container.image = c.data;
   return container;
+};
+function When(startDate, endDate, timeOfDay){
+this.timeOfDay = timeOfDay;
+this.date = new Date(+startDate);
+if (endDate!=null)
+  this.endDate = new Date(+endDate);
+else
+  this.endDate = null;
 };
 function Where(placename, spottype, location) {
   this.placename = placename;
