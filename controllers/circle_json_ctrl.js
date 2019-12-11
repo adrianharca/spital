@@ -258,7 +258,7 @@ exports.deleteByid = function (req, res) {
   console.log('delbyid');
 };
 exports.addOne = function (req, res) {
-  console.log('adding one ' + req);
+  
   let { theme, description, keywords, invitationOnly, numberOfPeople, openToAnyone,
     status, initiatorId, when, where } = req.body;
   var isflexibleVar = null;
@@ -275,7 +275,8 @@ var initiatoridVar = null;
     isflexibleVar = when.isFlexible;
     timeofdayVar = when.timeOfDay;
     dateVar = Date.parse(when.date);
-    if (!isNaN(when.endDate) && !isNaN(Date.parse(when.endDate)))
+    endDateVar = null;
+    if (when.endDate!=null)
       endDateVar = Date.parse(when.endDate);
     // creationDateVar = Date.parse(creationDate);
   }
