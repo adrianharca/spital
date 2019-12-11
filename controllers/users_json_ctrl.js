@@ -8,9 +8,17 @@ exports.updateUserById= function(req,res){
    birthdayVar = null;
    if (req.body.interests!=null)
         interestsVar =  req.body.interests.toString();
-   if (req.body.birthday!=null)
-        birthdayVar = Date.parse(req.body.birthday);
-
+   if (req.body.birthday!=null){
+               /*if (req.body.birthday.indexOf("T")>0){
+                console.log("update one " + req.body.birthday.split("T")[0]);
+                birthdayVar = Date.parse(req.body.birthday.split("T")[0]);
+               }
+         else{
+            console.log("update two");*/{
+            birthdayVar = Date.parse(req.body.birthday);
+         }
+   }
+   console.log(req.body.email + " with bday " + birthdayVar + "has been updated");
     var mainPath = __dirname + "\\.." + "\\public\\img\\";
     var path = mainPath + "users";
     var pathC = require("path");
@@ -20,11 +28,11 @@ exports.updateUserById= function(req,res){
     User.update(
       {img: filename,
         name: req.body.name,
-        firstname: req.body.firstName,
+        firstname: req.body.firstName +"A",
         lastname: req.body.lastName,
         email: req.body.email,
         acctype: req.body.acctype,
-        bday: birthdayVar,
+        bday: birthdayVar.toString(),
         description: req.body.description,
         interests: interestsVar,
         gender: req.body.gender
@@ -43,8 +51,8 @@ exports.updateUserById= function(req,res){
             
             fs.writeFile(filename, buffer, 'base64', function (err) { });
         }
-      console.log("Project with id " + req.body.id + " updated successfully!");
-      res.send("Project with id " + req.body.id + " updated successfully!");
+      console.log("User with id " + req.body.id + " updated successfully!");
+      res.send("User with id " + req.body.id + " updated successfully!");
   }).catch(function(e) {
     
     console.log("User update failed ! " + e);
@@ -179,7 +187,7 @@ exports.createUser = function (req, res) {
         });
     } else {
         emailS = email;
-        console.log('getbyemail: ' +emailS);
+        console.log('getbyemail: ' +emailS + " with bday " +bday);
         user = User.findOne({where: {email: emailS}}).then(function(entries){
             if (entries==null){
                 interestsVar = null;

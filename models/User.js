@@ -30,8 +30,8 @@ class User extends Sequelize.Model {
         type: Sequelize.TEXT
       },
       bday: {
-        type: Sequelize.INTEGER
-      },
+        type: Sequelize.STRING
+      }, 
       pass: {
         type: Sequelize.TEXT
       },

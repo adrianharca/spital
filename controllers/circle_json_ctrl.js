@@ -269,7 +269,7 @@ exports.addOne = function (req, res) {
   var locationVar = null;
   var placenameVar = null;
   var spottypeVar = null;
-var initiatoridVar = null;
+  var initiatoridVar = null;
 
   if (when != undefined) {
     isflexibleVar = when.isFlexible;
@@ -277,9 +277,10 @@ var initiatoridVar = null;
     dateVar = Date.parse(when.date);
     endDateVar = null;
     if (when.endDate!=null)
-      endDateVar = Date.parse(when.endDate);
+        endDateVar = Date.parse(when.endDate);
     // creationDateVar = Date.parse(creationDate);
   }
+  console.log ("dates: " + when.date + " " +  when.endDate);
   if (keywords != undefined) {
     keywordsVar = keywords.toString();
   }

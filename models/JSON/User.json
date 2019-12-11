@@ -27,7 +27,7 @@
         "type": "string"
       },
       "bday": {
-        "type": "integer"
+        "type": "string"
       },
       "pass": {
         "type": "string"
