@@ -56,12 +56,12 @@ function renderCircle(c) {
   return container;
 };
 function When(startDate, endDate, timeOfDay){
-this.timeOfDay = timeOfDay;
-this.date = new Date(+startDate);
-if (endDate!=null)
-  this.endDate = new Date(+endDate);
-else
-  this.endDate = null;
+  this.timeOfDay = timeOfDay;
+  this.date = new Date(+startDate);
+  if (endDate!=null)
+    this.endDate = new Date(+endDate);
+  else
+    this.endDate = null;
 };
 function Where(placename, spottype, location) {
   this.placename = placename;
@@ -286,8 +286,9 @@ exports.addOne = function (req, res) {
     if (when.endDate!=null)
         endDateVar = Date.parse(when.endDate);
     // creationDateVar = Date.parse(creationDate);
-  }
+    
   console.log ("dates: " + when.date + " " +  when.endDate);
+  }
   if (keywords != undefined) {
     keywordsVar = keywords.toString();
   }
