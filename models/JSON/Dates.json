@@ -1,0 +1,13 @@
+{
+    "properties": {
+        "createdat": {
+          "type": "string"
+        },
+        "updatedat": {
+          "type": "string"
+        },
+        "deletedat": {
+          "type": "string"
+        }
+    }
+}

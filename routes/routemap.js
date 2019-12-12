@@ -11,6 +11,7 @@ var memberController= require ("../controllers/membas_json_ctrl")
 var userController = require("../controllers/users_json_ctrl");
 //prefix /json/circles/etc
 // router.use(bodyparser.json);
+
 router.route("/circles").get(circleController.getAll).
     post(circleController.addOne).
     delete(circleController.delete);

@@ -1,0 +1,31 @@
+{"allOf": [
+    {
+        "$ref": "#/definitions/Dates"
+    },
+{
+    "title": "ImageEntity",
+    "type": "object",
+    "description": "model for image data",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "entityid": {
+        "type": "integer"
+      },
+      "path": {
+        "type": "string"
+      },
+      "entityType": {
+          "type": "string"
+      }
+
+    },
+    "required": [
+      "id",
+      "entityid",
+      "path"
+    ]
+}
+]
+}

@@ -1,9 +1,10 @@
- const Sequelize = require("sequelize");
+const Sequelize = require("sequelize");
 console.log('config/db.js');
 const Circle = require("../models/Circle");
 const Member = require("../models/Member");
 const User = require("../models/User");
 const Vote = require("../models/Vote");
+const ImageEntity = require("../models/ImageEntity");
 
 
 
@@ -32,6 +33,7 @@ const sequelize = new Sequelize('circles', 'root', 'root', {
 });
 const models = {
     Circle: Circle.init(sequelize, Sequelize),
+    ImageEntity: ImageEntity.init(sequelize, Sequelize),
     Member: Member.init(sequelize, Sequelize),
     User: User.init(sequelize, Sequelize),
     Vote: Vote.init(sequelize, Sequelize)
@@ -53,5 +55,6 @@ sequelize.authenticate()
 //   .then(() => {
 //     console.log(`Database & tables created!`)
 //   }).catch(console.log);
+ 
 
 module.exports={ sequelize};

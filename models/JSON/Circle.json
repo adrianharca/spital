@@ -1,3 +1,7 @@
+{"allOf": [
+  {
+    "$ref": "#/definitions/Dates"
+  },
 {
     "title": "Circle",
     "type": "object",
@@ -19,9 +23,6 @@
       },
       "initiatorid": {
         "type": "integer"
-      },
-      "image": {
-        "type": "string"
       },
       "privacy": {
         "type": "integer"
@@ -59,6 +60,8 @@
     },
     "required": [
       "id",
-      "theme "
+      "theme"
     ]
   }
+]
+}

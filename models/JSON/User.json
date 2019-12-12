@@ -41,9 +41,6 @@
       "trustscore": {
         "type": "string"
       },
-      "img": {
-        "type": "string"
-      },
       "gender": {
         "type": "string"
       },

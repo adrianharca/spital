@@ -28,9 +28,6 @@ const Sequelize = require('sequelize');
   },
   motivation: {
     type: Sequelize.TEXT
-  },
-  image: {
-    type: Sequelize.TEXT
   }
 }, {
   sequelize,

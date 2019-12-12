@@ -1,3 +1,7 @@
+{"allOf": [
+  {
+      "$ref": "#/definitions/Dates"
+  },
 {
     "title": "Member",
     "type": "object",
@@ -17,18 +21,8 @@
       },
       "nickname": {
         "type": "string"
-      },
-      "image": {
-        "type": "string"
-      },
-      "createdat": {
-        "type": "string"
-      },
-      "updatedat": {
-        "type": "string"
-      },
-      "deletedat": {
-        "type": "string"
       }
     }
   }
+]
+}

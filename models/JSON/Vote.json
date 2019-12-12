@@ -1,3 +1,7 @@
+{"allOf": [
+  {
+      "$ref": "#/definitions/Dates"
+  },
 {
     "title": "Vote",
     "type": "object",
@@ -20,22 +24,10 @@
       "location": {
         "type": "string"
       },
-        "type": "string"
-      },
       "spot_type": {
-        "type": "string"
-      },
-      "image": {
-        "type": "string"
-      },
-      "createdat": {
-        "type": "string"
-      },
-      "updatedat": {
-        "type": "string"
-      },
-      "deletedat": {
         "type": "string"
       }
     }
   }
+]
+}
