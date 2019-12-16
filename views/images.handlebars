@@ -1,0 +1,16 @@
+<section id="images" class="container">
+    <h1>All Images</h1>
+    {{#each c}}
+
+
+    <div class="images">
+        <h3>Id: {{id}}</h3>
+        <p>Entity type: {{entityType}}</p>
+        <p>Entity id: {{entityid}}</p>
+        <p>Path: {{path}}</p>
+    </div>
+
+    {{else}}
+    <p>No images in db</p>
+    {{/each}}
+</section>

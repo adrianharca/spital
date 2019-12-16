@@ -45,6 +45,9 @@ class User extends Sequelize.Model {
 
         type: Sequelize.DOUBLE
       },
+      img: {
+        type: Sequelize.TEXT
+      },
       gender: {
         type: Sequelize.TEXT
       }
@@ -61,10 +64,9 @@ class User extends Sequelize.Model {
     this.nk_mbs = User.hasMany(models.Member, {
       constraints: false
     });
+
     // };
   }
-    // };
-  
 }
 module.exports = User;
 

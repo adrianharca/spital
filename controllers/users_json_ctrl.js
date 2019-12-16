@@ -8,11 +8,16 @@ exports.updateUserById= function(req,res){
    birthdayVar = null;
    if (req.body.interests!=null)
         interestsVar =  req.body.interests.toString();
-   if (req.body.birthday!=null){  
-                birthdayVar = Date.parse(req.body.birthday);
-            //    birthdayVar = new Date(birthdayVarTemp.getFullYear(), birthdayVarTemp.getMonth(), birthdayVarTemp.getDate());
+   if (req.body.birthday!=null){
+               /*if (req.body.birthday.indexOf("T")>0){
+                console.log("update one " + req.body.birthday.split("T")[0]);
+                birthdayVar = Date.parse(req.body.birthday.split("T")[0]);
+               }
+         else{
+            console.log("update two");*/{
+            birthdayVar = Date.parse(req.body.birthday);
          }
-   
+   }
    console.log(req.body.email + " with bday " + birthdayVar + "has been updated");
     var mainPath = __dirname + "\\.." + "\\public\\img\\";
     var path = mainPath + "users";
@@ -23,7 +28,7 @@ exports.updateUserById= function(req,res){
     User.update(
       {img: filename,
         name: req.body.name,
-        firstname: req.body.firstName,
+        firstname: req.body.firstName +"A",
         lastname: req.body.lastName,
         email: req.body.email,
         acctype: req.body.acctype,

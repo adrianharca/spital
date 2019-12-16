@@ -87,5 +87,16 @@ router.post('/add', (req, res) => {
 });
 
 
+// // Search for gigs
+// router.get('/search', (req, res) => {
+//   let { term } = req.query;
+
+//   // Make lowercase
+//   term = term.toLowerCase();
+
+//   Gig.findAll({ where: { technologies: { [Op.like]: '%' + term + '%' } } })
+//     .then(gigs => res.render('gigs', { gigs }))
+//     .catch(err => console.log(err));
+// });
 
 module.exports = router;

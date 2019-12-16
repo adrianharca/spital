@@ -9,6 +9,7 @@ function renderMember(m) {
         'userId',
         'nickname',
         'motivation',
+        'image',
         'createdAt',
         'updatedAt',
         'deletedAt',
@@ -45,6 +46,8 @@ exports.getMemberById = (req, res) => {
             //   container.keywords = circleFound.keywords.split(",");
             //   container.creationDate = new Date(circleFound.creationDate);
             //   container.date = new Date(circleFound.date);
+            //   //container.image = undefined;
+            //   container.image = circleFound.data;
             //   container.endDate = new Date(circleFound.endDate);
             res.send(container);
 

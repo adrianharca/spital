@@ -30,6 +30,9 @@ class Circle extends Sequelize.Model {
       initiatorid: {
         type: Sequelize.INTEGER
       },
+      image: {
+        type: Sequelize.TEXT
+      },
       invitationOnly: {
         type: Sequelize.BOOLEAN
       },
@@ -75,7 +78,6 @@ class Circle extends Sequelize.Model {
       // foreignKeyConstraint:true 
 
     });
-    
 
 
     // Circle.hasMany(models.Vote, {
