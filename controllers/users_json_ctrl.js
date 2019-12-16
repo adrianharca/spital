@@ -1,11 +1,13 @@
 const User = require('../models/User');
 
+var ImageEntity = require("../models/ImageEntity");
+var Global = require("../functions.js");
 console.log("user_json_ctrl");
 
 exports.updateUserById= function(req,res){
    console.log("update user by Id: ");
    interestsVar = null;
-   birthdayVar = null;
+   birthdayVar = "";
    if (req.body.interests!=null)
         interestsVar =  req.body.interests.toString();
    if (req.body.birthday!=null){
@@ -19,6 +21,7 @@ exports.updateUserById= function(req,res){
          }
    }
    console.log(req.body.email + " with bday " + birthdayVar + "has been updated");
+   console.log(req.body);
     var mainPath = __dirname + "\\.." + "\\public\\img\\";
     var path = mainPath + "users";
     var pathC = require("path");
@@ -28,7 +31,7 @@ exports.updateUserById= function(req,res){
     User.update(
       {img: filename,
         name: req.body.name,
-        firstname: req.body.firstName +"A",
+        firstname: req.body.firstName,
         lastname: req.body.lastName,
         email: req.body.email,
         acctype: req.body.acctype,
@@ -41,18 +44,25 @@ exports.updateUserById= function(req,res){
     )
     .then(function() {
         if (req.body.image != undefined) {
-            
-
-            if (!fs.existsSync(path)) {
-              shell.mkdir('-p', path);
-            }
-            var rawImg = req.body.image;
-            let buffer = Buffer.from(rawImg);
-            
-            fs.writeFile(filename, buffer, 'base64', function (err) { });
-        }
+            var filename = Global.createFile(req.body.image,req.body.name + "-" + req.body.acctype,"users");
+            if (filename!=""){
+              
+              image = ImageEntity.findOne({ where: { entityid: req.body.id, entityType: "User" } }).then(function (c) {
+                if (c==null){
+                  ImageEntity.create({
+                    path: filename, entityid: req.body.id, entityType: "User"}). then( a => {console.log("created file")});
+                }
+                else{
+                  console.log("Image entry is already created...");
+                }
+              }).error(function (err) {
+                console.log("Error:" + err);
+              });
+              
+          }
       console.log("User with id " + req.body.id + " updated successfully!");
       res.send("User with id " + req.body.id + " updated successfully!");
+        }
   }).catch(function(e) {
     
     console.log("User update failed ! " + e);
@@ -61,15 +71,15 @@ exports.updateUserById= function(req,res){
 }
 exports.getImageById = function (req,res){
     idS = Number(req.params.id);
-    console.log('getbyid' + idS);
+    
     var mainPath = __dirname + "\\.." + "\\public\\img\\";
     var path = mainPath + "users";
     var pathC = require("path");
     var shell = require('shelljs');
-    
-    circless = User.findOne({ where: { id: idS } }).then(function (userFound) {
-      if (userFound != null) {
-        res.sendFile(pathC.resolve(userFound.img));
+    console.log('getbyid' + idS);
+    circless = ImageEntity.findOne({ where: { entityid: idS, entityType: "User"} }).then(function (imageFound) {
+      if (imageFound != null) {
+        res.sendFile(pathC.resolve(imageFound.path));
       }
       else {
         res.send("null");
@@ -109,12 +119,10 @@ exports.delete= function(req,res){
        }else{
         container={};
         container=userFound;
-        //container.image = userFound.img;
-        //container.image = undefined;
         container.lastName = userFound.lastname;
         container.firstName = userFound.firstname;
-       container.birthday = userFound.bday;
-       container.name = userFound.name;
+        container.birthday = userFound.bday;
+        container.name = userFound.name;
         container.interests=userFound.interests.split(",");
         console.log(container);
         res.send(container);
@@ -175,11 +183,12 @@ exports.delete= function(req,res){
                 console.log("Error:" + err);
             });
             }
+
 exports.createUser = function (req, res) {
 
     let { name, firstname, lastname, email, acctype,
         bday, pass, description, interests,
-        trustscore, img, gender } = req.body;
+        trustscore, gender } = req.body;
     let errors = [];
     if (errors.length > 0) {
         res.put('err', {
@@ -196,8 +205,13 @@ exports.createUser = function (req, res) {
                 User.create({
                     name, firstname, lastname, email, acctype,
                     bday, pass, description, interests : interestsVar,
-                    trustscore, img, gender
+                    trustscore, gender
                 }).then(a => {
+                    var filename = createFile(req.body.img,req.body.name + "-" + req.body.acctype,"users");
+                    if (filename!="")
+                    ImageEntity.create({
+                      path: filename, entityid: a.id, entityType: "Users"}). then( a => {console.log("created file")});
+                    console.log('success');
                     console.log('added user' + a.id);
                     res.json(a.id);
                 }).catch(err => console.log(err));

@@ -9,8 +9,10 @@ var router = express.Router();
 var circleController = require("../controllers/circle_json_ctrl");
 var memberController= require ("../controllers/membas_json_ctrl")
 var userController = require("../controllers/users_json_ctrl");
+var imageController = require("../controllers/image_json_ctrl");
 //prefix /json/circles/etc
 // router.use(bodyparser.json);
+router.route("/circleList").get(imageController.getAllCircles);
 router.route("/circles").get(circleController.getAll).
     post(circleController.addOne).
     delete(circleController.delete);
@@ -26,22 +28,28 @@ router.route("/members").get(memberController.getMemberById).
     post(memberController.createMember).
     delete(memberController.deleteMember);
 router.route("/members/:id").put(memberController.updateMember);
-    
+router.route("/members/:id/image").get(memberController.getImageById);
 // router.route("/circles/:id/votes/:voteid").get(circleController.getVotesByCircle);
 
 router.route("/users").get(userController.getAllUsers)
                       .post(userController.createUser)
                       .delete(userController.delete);
-router.route("/users/byName=:name").get(userController.getUserByName);
+router.route("/users/:id/image").get(userController.getImageById);                      
+router.route("/usersName/:name").get(userController.getUserByName);
 
-router.route("/users/byId=:id").get(userController.getUserById)
+router.route("/users/:id").get(userController.getUserById)
                             .post(userController.createUser)
                             .put(userController.updateUserById);
                             
-router.route("/users/byId=:id/image").get(userController.getImageById);
+router.route("/users/:id/image").get(userController.getImageById);
 
 
-router.route("/users/byEmail=:email").get(userController.getUserByEmail);
+router.route("/usersEmail/:email").get(userController.getUserByEmail);
+
+router.route("/images").get(imageController.getImages)
+                       .post(imageController.addImage)
+                       .put(imageController.updateImage)
+                       .delete(imageController.delete);
 // router.route("/members");
 //INTERFACE
 // router.use("/circles", require('./circles'));

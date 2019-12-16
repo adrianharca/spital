@@ -29,7 +29,26 @@ class ImageEntity extends Sequelize.Model {
         paranoid: true
       }
     );
-  }
+  } static associate(models){
+
+    /*
+    this.fkIECircle=this.belongsTo(models.Circle, {
+      // as: "Circle",
+      //   constraints:false
+      foreignKey: "entityId"
+    });
+    this.fkIEUser=this.belongsTo(models.User, {
+      // as: "Circle",
+      //   constraints:false
+      foreignKey: "entityId"
+    });
+    this.fkIEMember=this.belongsTo(models.Member, {
+      // as: "Circle",
+      //   constraints:false
+      foreignKey: "entityId"
+    });
+    */
+    }
    
 }
 // };}}

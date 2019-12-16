@@ -1,6 +1,6 @@
 var Circle = require("../models/Circle");
 var Member = require("../models/Member");
-
+var Global = require("../functions.js");
 function renderMember(m) {
     var holder = new Object();
     const fields = ['id',
@@ -22,6 +22,26 @@ function renderMember(m) {
     return holder;
 
 }
+
+exports.getImageById = function (req, res) {
+    idS = Number(req.params.id);
+    console.log('getbyid' + idS);
+    var mainPath = __dirname + "\\.." + "\\public\\img\\";
+    var path = mainPath + "members";
+    var pathC = require("path");
+    var shell = require('shelljs');
+    images = ImageEntity.findOne({where: {id: idS, entityType: "Member"}}).then(function (imageFound){
+      if (imageFound != null) {
+        res.sendFile(pathC.resolve(imageFound.path));
+      }
+      else {
+        res.send("null");
+      }
+    }).error(function (err) {
+      console.log("Error:" + "no image found");
+      res.send(err);
+    });
+  };
 
 exports.getAllMembersByCircle = (req, res) => {
     circleId = Number(req.params.id);
