@@ -7,7 +7,7 @@ console.log("user_json_ctrl");
 exports.updateUserById= function(req,res){
    console.log("update user by Id: ");
    interestsVar = null;
-   birthdayVar = "";
+   birthdayVar = null;
    if (req.body.interests!=null)
         interestsVar =  req.body.interests.toString();
    if (req.body.birthday!=null){
@@ -28,6 +28,7 @@ exports.updateUserById= function(req,res){
     var shell = require('shelljs');
     const fs = require('fs');
     var filename = path + "\\" + req.body.firstName + "_" + req.body.lastName + "-" + req.body.email + ".jpg";
+    var idOne = req.body.id;
     User.update(
       {img: filename,
         name: req.body.name,
@@ -35,12 +36,12 @@ exports.updateUserById= function(req,res){
         lastname: req.body.lastName,
         email: req.body.email,
         acctype: req.body.acctype,
-        bday: birthdayVar.toString(),
+        bday: birthdayVar!=null? birthdayVar.toString():null,
         description: req.body.description,
         interests: interestsVar,
         gender: req.body.gender
         },
-        {where: {id: req.body.id}}
+        {where: {id: idOne}}
     )
     .then(function() {
         if (req.body.image != undefined) {
