@@ -13,6 +13,7 @@ var imageController = require("../controllers/image_json_ctrl");
 //prefix /json/circles/etc
 // router.use(bodyparser.json);
 router.route("/circleList").get(imageController.getAllCircles);
+router.route("/userList").get(imageController.getAllUsers);
 router.route("/circles").get(circleController.getAll).
     post(circleController.addOne).
     delete(circleController.delete);

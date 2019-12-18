@@ -11,11 +11,14 @@ class ImageEntity extends Sequelize.Model {
         primaryKey: true,
         autoIncrement: true
       },
-      entityid: {
+      circleId: {
         type: Sequelize.INTEGER
       },
-      entityType: {
-        type: Sequelize.STRING
+      userId: {
+        type: Sequelize.INTEGER
+      },
+      memberId: {
+        type: Sequelize.INTEGER
       },
       path: {
         type: Sequelize.STRING
@@ -31,12 +34,18 @@ class ImageEntity extends Sequelize.Model {
     );
   } static associate(models){
 
-    /*
+    
     this.fkIECircle=this.belongsTo(models.Circle, {
       // as: "Circle",
       //   constraints:false
-      foreignKey: "entityId"
+      foreignKey: "circleId"
     });
+    this.fkIEUser=this.belongsTo(models.User, {
+      // as: "Circle",
+      //   constraints:false
+      foreignKey: "userId"
+    });
+    /*
     this.fkIEUser=this.belongsTo(models.User, {
       // as: "Circle",
       //   constraints:false

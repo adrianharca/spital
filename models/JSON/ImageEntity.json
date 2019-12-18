@@ -10,16 +10,18 @@
       "id": {
         "type": "integer"
       },
-      "entityid": {
+      "circleId": {
+        "type": "integer"
+      },
+      "userId": {
+        "type": "integer"
+      },
+      "memberId": {
         "type": "integer"
       },
       "path": {
         "type": "string"
-      },
-      "entityType": {
-          "type": "string"
       }
-
     },
     "required": [
       "id",

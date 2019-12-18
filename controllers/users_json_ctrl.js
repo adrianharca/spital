@@ -21,17 +21,9 @@ exports.updateUserById= function(req,res){
          }
    }
    console.log(req.body.email + " with bday " + birthdayVar + "has been updated");
-   console.log(req.body);
-    var mainPath = __dirname + "\\.." + "\\public\\img\\";
-    var path = mainPath + "users";
-    var pathC = require("path");
-    var shell = require('shelljs');
-    const fs = require('fs');
-    var filename = path + "\\" + req.body.firstName + "_" + req.body.lastName + "-" + req.body.email + ".jpg";
     var idOne = req.body.id;
     User.update(
-      {img: filename,
-        name: req.body.name,
+      { name: req.body.name,
         firstname: req.body.firstName,
         lastname: req.body.lastName,
         email: req.body.email,
@@ -48,10 +40,10 @@ exports.updateUserById= function(req,res){
             var filename = Global.createFile(req.body.image,req.body.name + "-" + req.body.acctype,"users");
             if (filename!=""){
               
-              image = ImageEntity.findOne({ where: { entityid: req.body.id, entityType: "User" } }).then(function (c) {
+              image = ImageEntity.findOne({ where: { userId: req.body.id } }).then(function (c) {
                 if (c==null){
                   ImageEntity.create({
-                    path: filename, entityid: req.body.id, entityType: "User"}). then( a => {console.log("created file")});
+                    path: filename, userId: req.body.id}). then( a => {console.log("created file")});
                 }
                 else{
                   console.log("Image entry is already created...");
@@ -78,7 +70,7 @@ exports.getImageById = function (req,res){
     var pathC = require("path");
     var shell = require('shelljs');
     console.log('getbyid' + idS);
-    circless = ImageEntity.findOne({ where: { entityid: idS, entityType: "User"} }).then(function (imageFound) {
+    circless = ImageEntity.findOne({ where: { userId: idS} }).then(function (imageFound) {
       if (imageFound != null) {
         res.sendFile(pathC.resolve(imageFound.path));
       }
@@ -173,7 +165,7 @@ exports.delete= function(req,res){
                }else{
                 container={};
                 container=userFound;
-                container.image = userFound.img;
+               // container.image = userFound.img;
                 container.interests=userFound.interests.split(",");
                 container.lastName = userFound.lastname;
                 container.firstName = userFound.firstname;
@@ -208,10 +200,10 @@ exports.createUser = function (req, res) {
                     bday, pass, description, interests : interestsVar,
                     trustscore, gender
                 }).then(a => {
-                    var filename = createFile(req.body.img,req.body.name + "-" + req.body.acctype,"users");
+                    var filename = Global.createFile(req.body.img,req.body.name + "-" + req.body.acctype,"users");
                     if (filename!="")
                     ImageEntity.create({
-                      path: filename, entityid: a.id, entityType: "Users"}). then( a => {console.log("created file")});
+                      path: filename, userId: a.id}). then( a => {console.log("created file")});
                     console.log('success');
                     console.log('added user' + a.id);
                     res.json(a.id);

@@ -136,7 +136,7 @@ exports.downloadImageById = function (req, res) {
   var path = mainPath + "circles";
   var pathC = require("path");
   var shell = require('shelljs');
-  images = ImageEntity.findOne({where: {id: idS, entityType: "Circle"}}).then(function(imageFound){
+  images = ImageEntity.findOne({where: {circleId: idS}}).then(function(imageFound){
     if (imageFound!=null){
       var file = fs.readFileSync(pathC.resolve(imageFound.path), 'binary');
       res.setHeader('Content-Length', file.length);
@@ -263,7 +263,7 @@ exports.addOne = function (req, res) {
       var filename = Global.createFile(req.body.image,req.body.theme + "-" + req.body.description,"circles");
       if (filename!="")
       ImageEntity.create({
-        path: filename, entityid: a.id, entityType: "Circle"}). then( a => {console.log("created file")});
+        path: filename, circleId: a.id}). then( a => {console.log("created file")});
       console.log('success');
       res.json(a.id);
     })
