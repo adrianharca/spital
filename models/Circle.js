@@ -78,11 +78,12 @@ class Circle extends Sequelize.Model {
       // foreignKeyConstraint:true 
 
     });
-    
+    /*
 this.nk_image = this.hasOne(models.ImageEntity,{
-  constraints:false
+  constraints:false,
+  foreignKey: "entityId"
 }
-);
+);*/
 
     // Circle.hasMany(models.Vote, {
     //   as: "Votes",
