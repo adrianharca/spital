@@ -53,7 +53,8 @@ exports.updateUserById = function (req, res) {
 
             }
             console.log("User with id " + req.body.id + " updated successfully!");
-            res.send("User with id " + req.body.id + " updated successfully!");
+            res.send(req.body.id);
+            //res.send("User with id " + req.body.id.toString() + " updated successfully!");
           }
         }).catch(function (e) {
 
@@ -77,7 +78,7 @@ exports.updateUserById = function (req, res) {
         console.log('success');
         console.log('added user' + a.id);
         res.json(a.id);
-      }).catch(err => console.log(err));
+      }).catch(err => console.log("error: " + err));
     }
   });
 
