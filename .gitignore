@@ -108,3 +108,6 @@ node_modules/nodemon/lib/utils/merge.js
 node_modules/body-parser/lib/read.js
 node_modules/nodemon/lib/rules/parse.js
 public
+public/aaa.jpg
+public/clip.png
+public/img/showcase.jpg

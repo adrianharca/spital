@@ -168,7 +168,9 @@ exports.getUserByEmail = function (req, res) {
   console.log('getbyemail1: ' + emailS);
   user = User.findOne({ where: { email: emailS } }).then(function (userFound) {
     if (userFound == null) {
-      res.send("user not found");
+      container ={};
+      container.error = "user not found";
+      res.send(container);
     } else {
       container = renderUser(userFound);
       console.log(container);
