@@ -42,6 +42,11 @@ exports.createFile = function (imageBody, fileNameVar, folder){
       });
   };
   exports.createImageEntity = function (entityTypeVar, filenameVar, entityIdVar){
+    images = ImageEntity.findOne({ where: { id: entityIdVar, entityType: entityTypeVar } })
+    .then(function (imageFound) {
+      if (imageFound==null)
       ImageEntity.create({
-        path: filenameVar, circleId: entityIdVar, entityType: entityTypeVar}). then( a => {console.log("created file for " +entityTypeVar.toString().toLower())});
+        path: filenameVar, entityId: entityIdVar, entityType: entityTypeVar}). then( a => {console.log("created file for " +entityTypeVar.toString().toLowerCase())});
+      }
+    );
   }

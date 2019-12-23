@@ -25,7 +25,7 @@ exports.updateUserById = function (req, res) {
           firstname: req.body.firstName,
           lastname: req.body.lastName,
           email: req.body.email,
-          acctype: req.body.acctype,
+          acctype: req.body.accountType,
           bday: birthdayVar != null ? birthdayVar.toString() : null,
           description: req.body.description,
           interests: interestsVar,
@@ -35,10 +35,10 @@ exports.updateUserById = function (req, res) {
       )
         .then(function () {
           if (req.body.image != undefined) {
-            var filename = Global.createFile(req.body.image, req.body.name + "-" + req.body.acctype, "users");
+            var filename = Global.createFile(req.body.image, req.body.email + "-" + req.body.accountType, "users");
             if (filename != "") {
-
-              image = ImageEntity.findOne({ where: { entityId: req.body.id, entityType: "User" } }).then(function (c) {
+/*
+              image = ImageEntity.findOne({ where: { entityId: idOne, entityType: "User" } }).then(function (c) {
                 if (c == null) {
                   ImageEntity.create({
                     path: filename, entityId: req.body.id, entityType: "User"
@@ -50,7 +50,7 @@ exports.updateUserById = function (req, res) {
               }).error(function (err) {
                 console.log("Error:" + err);
               });
-
+*/
             }
             console.log("User with id " + req.body.id + " updated successfully!");
             res.send(req.body.id);
@@ -66,15 +66,17 @@ exports.updateUserById = function (req, res) {
     }
     else{
       User.create({
-        name, firstname, lastname, email, acctype,
+        name, firstname, lastname, email, acctype : req.body.accountType,
         bday, pass, description, interests: interestsVar,
         trustscore, gender
       }).then(a => {
-        var filename = Global.createFile(req.body.img, req.body.name + "-" + req.body.acctype, "users");
+        /*
+        var filename = Global.createFile(req.body.img, req.body.email + "-" + req.body.accountType, "users");
         if (filename != "")
           ImageEntity.create({
             path: filename, entityId: a.id, entityType: "User"
           }).then(a => { console.log("created file") });
+          */
         console.log('success');
         console.log('added user' + a.id);
         res.json(a.id);
@@ -93,6 +95,7 @@ exports.getImageById = function (req, res) {
   console.log('getbyid' + idS);
   circless = ImageEntity.findOne({ where: { entityId: idS, entityType: "User" } }).then(function (imageFound) {
     if (imageFound != null) {
+      console.log(imageFound.path);
       res.sendFile(pathC.resolve(imageFound.path));
     }
     else {
@@ -127,14 +130,12 @@ exports.delete = function (req, res) {
 exports.getUserById = function (req, res) {
 
   idS = Number(req.params.id);
-  console.log(req);
   console.log('getbyid: -' + idS);
   user = User.findOne({ where: { id: idS } }).then(function (userFound) {
     if (userFound == null) {
       res.send("user not found");
     } else {
       container = renderUser(userFound);
-      console.log(container);
       res.send(container);
     }
 
@@ -149,12 +150,13 @@ function renderUser(u){
   
   var container = new Object();
   fields.forEach((item) => {
-    console.log(item, ' ', u[item]);
+    //console.log(item, ' ', u[item]);
     container[item] = u[item];
   });
+  container.accountType = container.acctype;
   container.firstName = u.firstname;
   container.lastName = u.lastname;
-  
+  console.log("test: " + container.acctype + " - " + container.accountType);
   if (u.interests !=null){
     container.interests = u.interests.split(",");
   }
@@ -174,7 +176,7 @@ exports.getUserByEmail = function (req, res) {
       res.send(container);
     } else {
       container = renderUser(userFound);
-      console.log(container);
+      
       res.send(container);
     }
   }).error(function (err) {
@@ -200,7 +202,7 @@ exports.getUserByName = function (req, res) {
 
 exports.createUser = function (req, res) {
 
-  let { name, firstname, lastname, email, acctype,
+  let { name, firstname, lastname, email, accountType,
     bday, pass, description, interests,
     trustscore, gender } = req.body;
   let errors = [];
@@ -210,6 +212,7 @@ exports.createUser = function (req, res) {
     });
   } else {
     emailS = email;
+    console.log("account type: " + req.body.accountType);
     console.log('getbyemail: ' + emailS + " with bday " + bday);
     user = User.findOne({ where: { email: emailS } }).then(function (entries) {
       if (entries == null) {
@@ -217,15 +220,16 @@ exports.createUser = function (req, res) {
         if (interests != null)
           interestsVar = interests.toString();
         User.create({
-          name, firstname, lastname, email, acctype,
+          name, firstname, lastname, email, acctype : req.body.accountType,
           bday, pass, description, interests: interestsVar,
           trustscore, gender
         }).then(a => {
-          var filename = Global.createFile(req.body.img, req.body.name + "-" + req.body.acctype, "users");
+          /*
+          var filename = Global.createFile(req.body.img, req.body.email + "-" + req.body.accountType, "users");
           if (filename != "")
             ImageEntity.create({
               path: filename, entityId: a.id, entityType: "User"
-            }).then(a => { console.log("created file") });
+            }).then(a => { console.log("created file") });*/
           console.log('success');
           console.log('added user' + a.id);
           res.json(a.id);
