@@ -6,8 +6,14 @@ const router = require("./routes/routemap");
 
 console.log('server.js');
 
+
+
 //do this once only
 var app = express();
+
+
+
+
 app.set('json spaces', 40);
 //Handlebars
 app.engine('handlebars', exphbs({
@@ -68,9 +74,13 @@ const db=require('./config/db');
 //     .forEach(importModel)
 // Object.keys(db).forEach(assoc)
 
+  
+
+
 var server = app.listen(3000, function () {
     var host = server.address().address;
     var port = server.address().port;
     console.log("Server listening at :%s on port %s", host, port);
 });
+
 module.exports = router, bodyParser;

@@ -49,7 +49,7 @@ exports.getAllMembersByCircle = (req, res) => {
        c.getMembers().map(renderMember) )
         .then(mbs => {
             res.contentType('application/json');
-            res.json({ mbs });
+            res.json( mbs );
             console.log('members for circle ' + circleId + ' ' + res);
         }).catch(e => console.log(e));
 
