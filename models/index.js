@@ -1,5 +1,5 @@
 'use strict';
-
+var app = require('express')();
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');

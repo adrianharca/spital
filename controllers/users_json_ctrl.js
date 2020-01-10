@@ -11,14 +11,16 @@ exports.updateUserById = function (req, res) {
   if (req.body.interests != null)
     interestsVar = req.body.interests.toString();
   if (req.body.birthday != null) {
-               {
+    {
       birthdayVar = Date.parse(req.body.birthday);
     }
   }
-  console.log(req.body.email + " with bday " + birthdayVar + "has been updated");
+  console.log(req.body.email + " with email " + req.body.email + " and " + req.body.accountType + " will be updated");
   var idOne = req.body.id;
-  user = User.findOne({ where: { id: req.body.id } }).then(function (userFound) {
+  user = User.findOne({ where: { email: req.body.email, acctype: req.body.accountType } }).then(function (userFound) {
+    console.log("before found");
     if (userFound != null) {
+      console.log("found");
       User.update(
         {
           name: req.body.name,
@@ -31,26 +33,26 @@ exports.updateUserById = function (req, res) {
           interests: interestsVar,
           gender: req.body.gender
         },
-        { where: { id: idOne } }
+        { where: { email: req.body.email, acctype: req.body.accountType } }
       )
         .then(function () {
           if (req.body.image != undefined) {
             var filename = Global.createFile(req.body.image, req.body.email + "-" + req.body.accountType, "users");
             if (filename != "") {
-/*
-              image = ImageEntity.findOne({ where: { entityId: idOne, entityType: "User" } }).then(function (c) {
-                if (c == null) {
-                  ImageEntity.create({
-                    path: filename, entityId: req.body.id, entityType: "User"
-                  }).then(a => { console.log("created file") });
-                }
-                else {
-                  console.log("Image entry is already created...");
-                }
-              }).error(function (err) {
-                console.log("Error:" + err);
-              });
-*/
+              /*
+                            image = ImageEntity.findOne({ where: { entityId: idOne, entityType: "User" } }).then(function (c) {
+                              if (c == null) {
+                                ImageEntity.create({
+                                  path: filename, entityId: req.body.id, entityType: "User"
+                                }).then(a => { console.log("created file") });
+                              }
+                              else {
+                                console.log("Image entry is already created...");
+                              }
+                            }).error(function (err) {
+                              console.log("Error:" + err);
+                            });
+              */
             }
             console.log("User with id " + req.body.id + " updated successfully!");
             res.send(req.body.id);
@@ -62,13 +64,12 @@ exports.updateUserById = function (req, res) {
           res.send(e);
         })
 
-       
+
     }
-    else{
+    else {
       User.create({
-        name, firstname, lastname, email, acctype : req.body.accountType,
-        bday, pass, description, interests: interestsVar,
-        trustscore, gender
+        name: req.body.name, firstname: req.body.firstName, lastname: req.body.lastName, email: req.body.email, acctype: req.body.accountType,
+        bday: birthdayVar != null ? birthdayVar.toString() : null, pass: "", description: req.body.description, interests: interestsVar, gender: req.body.gender
       }).then(a => {
         /*
         var filename = Global.createFile(req.body.img, req.body.email + "-" + req.body.accountType, "users");
@@ -92,19 +93,21 @@ exports.getImageById = function (req, res) {
   var path = mainPath + "users";
   var pathC = require("path");
   var shell = require('shelljs');
-  console.log('getbyid' + idS);
-  circless = ImageEntity.findOne({ where: { entityId: idS, entityType: "User" } }).then(function (imageFound) {
-    if (imageFound != null) {
-      console.log(imageFound.path);
-      res.sendFile(pathC.resolve(imageFound.path));
-    }
-    else {
-      res.send("null");
-    }
-  }).error(function (err) {
-    console.log("Error:" + "no image found for user");
-    res.send(err);
-  });
+  if (!isNaN(idS)) {
+    console.log('getbyid' + idS);
+    circless = ImageEntity.findOne({ where: { entityId: idS, entityType: "User" } }).then(function (imageFound) {
+      if (imageFound != null) {
+        console.log(imageFound.path);
+        res.sendFile(pathC.resolve(imageFound.path));
+      }
+      else {
+        res.send("null");
+      }
+    }).error(function (err) {
+      console.log("Error:" + "no image found for user");
+      res.send(err);
+    });
+  }
 }
 exports.getAllUsers = function (req, res) {
   User.findAll().map(l => {
@@ -130,24 +133,27 @@ exports.delete = function (req, res) {
 exports.getUserById = function (req, res) {
 
   idS = Number(req.params.id);
-  console.log('getbyid: -' + idS);
-  user = User.findOne({ where: { id: idS } }).then(function (userFound) {
-    if (userFound == null) {
-      res.send("user not found");
-    } else {
-      container = renderUser(userFound);
-      res.send(container);
-    }
+  if (!isNaN(idS)) {
+    console.log('getbyid: -' + idS);
+    user = User.findOne({ where: { id: idS } }).then(function (userFound) {
+      if (userFound == null) {
+        res.send("user not found");
+      } else {
+        container = renderUser(userFound);
+        res.send(container);
 
-  }).error(function (err) {
-    console.log("Error:" + err);
-  });
+      }
+
+    }).error(function (err) {
+      console.log("Error:" + err);
+    });
+  }
 }
 
-function renderUser(u){
+function renderUser(u) {
   const fields = ['id', 'email', 'acctype', 'trustscore', 'description', 'gender',
     'name', 'createdAt', 'updatedAt', 'deletedAt'];
-  
+
   var container = new Object();
   fields.forEach((item) => {
     //console.log(item, ' ', u[item]);
@@ -157,7 +163,7 @@ function renderUser(u){
   container.firstName = u.firstname;
   container.lastName = u.lastname;
   console.log("test: " + container.acctype + " - " + container.accountType);
-  if (u.interests !=null){
+  if (u.interests != null) {
     container.interests = u.interests.split(",");
   }
   else
@@ -171,12 +177,12 @@ exports.getUserByEmail = function (req, res) {
   console.log('getbyemail1: ' + emailS);
   user = User.findOne({ where: { email: emailS } }).then(function (userFound) {
     if (userFound == null) {
-      container ={};
+      container = {};
       container.error = "user not found";
       res.send(container);
     } else {
       container = renderUser(userFound);
-      
+
       res.send(container);
     }
   }).error(function (err) {
@@ -220,7 +226,7 @@ exports.createUser = function (req, res) {
         if (interests != null)
           interestsVar = interests.toString();
         User.create({
-          name, firstname, lastname, email, acctype : req.body.accountType,
+          name, firstname, lastname, email, acctype: req.body.accountType,
           bday, pass, description, interests: interestsVar,
           trustscore, gender
         }).then(a => {
@@ -233,6 +239,7 @@ exports.createUser = function (req, res) {
           console.log('success');
           console.log('added user' + a.id);
           res.json(a.id);
+          //res.json(a);
         }).catch(err => console.log(err));
       }
       else {
