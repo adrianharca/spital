@@ -69,7 +69,8 @@ class Circle extends Sequelize.Model {
         paranoid: true
       }
     );
-  } static associate(models) {
+  };
+   static associate(models) {
     // Circle.associate = (models) => {
     this.nk_members = this.hasMany(models.Member, {
       // as: "Member",
@@ -78,12 +79,19 @@ class Circle extends Sequelize.Model {
       // foreignKeyConstraint:true 
 
     });
-    /*
-this.nk_image = this.hasOne(models.ImageEntity,{
+    
+this.nk_image = this.belongsToMany(models.Image,{
+  through: {
+    model: models.ImageEntity,
+    unique: false,
+    scope: {
+      entityType: 'Circle'
+    }
+  },
   constraints:false,
-  foreignKey: "entityId"
+  foreignKey: "imageId"
 }
-);*/
+);
 
     // Circle.hasMany(models.Vote, {
     //   as: "Votes",

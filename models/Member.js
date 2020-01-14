@@ -48,6 +48,18 @@ this.fkCircle=this.belongsTo(models.Circle, {
   //   constraints:false
   foreignKey: "circleId"
 });
+this.nk_image = this.belongsToMany(models.Image,{
+  through: {
+    model: models.ImageEntity,
+    unique: false,
+    scope: {
+      entityType: 'Member'
+    }
+  },
+  constraints:false,
+  foreignKey: "imageId"
+}
+);
 // this.fkInitiator=this.hasOne(models.Circle,{
 //   as:"Initiator",
 //   foreignKey:"initiatorid"

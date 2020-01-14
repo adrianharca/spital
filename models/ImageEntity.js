@@ -14,10 +14,10 @@ class ImageEntity extends Sequelize.Model {
       entityId: {
         type: Sequelize.INTEGER
       },
-      entityType: {
-        type: Sequelize.STRING
+      imageId: {
+        type: Sequelize.INTEGER
       },
-      path: {
+      entityType: {
         type: Sequelize.STRING
       }
     },
@@ -30,7 +30,6 @@ class ImageEntity extends Sequelize.Model {
       }
     );
   } static associate(models){
-
     /*
     this.fkIECircle=this.belongsTo(models.Circle, {
       // as: "Circle",

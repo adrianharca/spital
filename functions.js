@@ -41,6 +41,8 @@ exports.createFile = function (imageBody, fileNameVar, folder){
         }
       });
   };
+
+  
   exports.createImageEntity = function (entityTypeVar, filenameVar, entityIdVar){
     images = ImageEntity.findOne({ where: { id: entityIdVar, entityType: entityTypeVar } })
     .then(function (imageFound) {

@@ -61,6 +61,18 @@ class User extends Sequelize.Model {
     this.nk_mbs = User.hasMany(models.Member, {
       constraints: false
     });
+    this.nk_image = this.belongsToMany(models.Image,{
+      through: {
+        model: models.ImageEntity,
+        unique: false,
+        scope: {
+          entityType: 'User'
+        }
+      },
+      constraints:false,
+      foreignKey: "imageId"
+    }
+    );
     /*
     this.nk_imgs = User.hasOne(models.ImageEntity, {
       foreignKey: 'entityId',

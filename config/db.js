@@ -4,6 +4,7 @@ const Circle = require("../models/Circle");
 const Member = require("../models/Member");
 const User = require("../models/User");
 const Vote = require("../models/Vote");
+const Image = require("../models/Image");
 const ImageEntity = require("../models/ImageEntity");
 
 
@@ -36,7 +37,8 @@ const models = {
     Member: Member.init(sequelize, Sequelize),
     ImageEntity: ImageEntity.init(sequelize,Sequelize),
     User: User.init(sequelize, Sequelize),
-    Vote: Vote.init(sequelize, Sequelize)
+    Vote: Vote.init(sequelize, Sequelize),
+    Image: Image.init(sequelize, Sequelize)
 };
 Object.values(models)
     .filter(model => typeof model.associate == "function")
@@ -51,7 +53,7 @@ sequelize.authenticate()
 //Do following to autosync db to model. Eg. for init purposes
 
 
-// sequelize.sync({ force:true,alter:true })//,force:true
+// sequelize.sync({ alter:true })//,force:true
 //   .then(() => {
 //     console.log(`Database & tables created!`)
 //   }).catch(console.log);
