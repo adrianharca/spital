@@ -76,25 +76,36 @@ exports.getMemberById = (req, res) => {
         });
 
 };
+/////de refacut mizeria de createmember de mai jos, prea multe cautari in baza, cand o fi mai mult itmp
 exports.createMember = (req, res) => {
-    var circId=Number(req.params.circleId);
+   // var circId=Number(req.params.circleId);
+   console.log(JSON.stringify(req.body));
+   var circId = Number(req.body.circleId);
     let { circleId, userId, nickname, motivation } = req.body;
     console.log('request for to create member ' + circleId + ' ' + nickname);
-    Circle.findByPk(Number(circleId))
-   // Circle.findOne({ where: { id: circleId } })
-    .then(c =>
+   // Circle.findOne(Number(circleId))
+    Circle.findOne({ where: { id: circleId } })
+    .then(c =>{
+        if (c!=null)
         c.addMember(Member.
             create({
                 circleId, userId, nickname, motivation
             }))
             .catch(console.log)
             .then(a => {
-                console.log('success created memba ' + a);
-                res.json(a.id);
+                Member.findOne({ where: { circleId: circleId, userId: userId } }).then
+                (c1 => {
+                    
+                console.log('success created memba ' + JSON.stringify(c1) ) ;
+                    res.json(c1.id);
+                })
             })
-            .catch(console.log))
+            .catch(console.log)
+        }
+            )
         .catch(err => console.log(err));
-
+    
+    
 };
 exports.updateMember = (req, res) => {
     idS = Number(req.params.id);

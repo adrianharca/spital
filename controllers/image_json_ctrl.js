@@ -58,6 +58,7 @@ exports.getImages = function (req, res) {
     .catch(err => console.log(err));
 }
 exports.addImage = function (req, res) {
+  console.log("add image:" + JSON.stringify(req.body.entityId) + " " + req.body.type);
   images = ImageEntity.findAll({ where: { id: req.body.entityId, entityType: req.body.type } })
     .then(function (imageFound) {
 console.log("details: " + req.body.entityId + " " + req.body.type);

@@ -35,6 +35,7 @@ router.route("/members/:id/image").get(memberController.getImageById);
 
 router.route("/users").get(userController.getAllUsers)
                       .post(userController.createUser)
+                      .put(userController.updateUserById)
                       .delete(userController.delete);
 router.route("/users/:id/image").get(userController.getImageById);                      
 router.route("/usersName/:name").get(userController.getUserByName);

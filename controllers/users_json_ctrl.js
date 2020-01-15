@@ -5,7 +5,7 @@ var Global = require("../functions.js");
 console.log("user_json_ctrl");
 
 exports.updateUserById = function (req, res) {
-  console.log("update user by Id: ");
+  console.log("update user by Id: " + JSON.stringify(req.body));
   interestsVar = null;
   birthdayVar = null;
   if (req.body.interests != null)
@@ -96,6 +96,7 @@ exports.getImageById = function (req, res) {
   if (!isNaN(idS)) {
     console.log('getbyid' + idS);
     circless = ImageEntity.findOne({ where: { entityId: idS, entityType: "User" } }).then(function (imageFound) {
+      Image.findOne({id: imageFound.imageId})
       if (imageFound != null) {
         console.log(imageFound.path);
         res.sendFile(pathC.resolve(imageFound.path));
@@ -111,15 +112,18 @@ exports.getImageById = function (req, res) {
 }
 exports.getAllUsers = function (req, res) {
   User.findAll().map(l => {
-    container = {};
+
+   /* container = {};
     container = l;
     container.interests = l.interests.split(",");
+    container.accountType = l.acctype;*/
+    container = renderUser(l);
     return container;
   })
     .then(
       c => {
 
-        res.json({ c });
+        res.json( c );
 
         console.log('result: ' + c + ' ');
       })
@@ -151,7 +155,7 @@ exports.getUserById = function (req, res) {
 }
 
 function renderUser(u) {
-  const fields = ['id', 'email', 'acctype', 'trustscore', 'description', 'gender',
+  const fields = ['id', 'email', 'trustscore', 'description', 'gender',
     'name', 'createdAt', 'updatedAt', 'deletedAt'];
 
   var container = new Object();
@@ -159,10 +163,9 @@ function renderUser(u) {
     //console.log(item, ' ', u[item]);
     container[item] = u[item];
   });
-  container.accountType = container.acctype;
+  container.accountType = u.acctype;
   container.firstName = u.firstname;
   container.lastName = u.lastname;
-  console.log("test: " + container.acctype + " - " + container.accountType);
   if (u.interests != null) {
     container.interests = u.interests.split(",");
   }

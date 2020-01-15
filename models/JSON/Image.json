@@ -3,20 +3,14 @@
         "$ref": "#/definitions/Dates"
     },
 {
-    "title": "ImageEntity",
+    "title": "Image",
     "type": "object",
     "description": "model for image data",
     "properties": {
       "id": {
         "type": "integer"
       },
-      "entityId": {
-        "type": "integer"
-      },
-      "imageId": {
-        "type": "integer"
-      },
-      "entityType": {
+      "path": {
         "type": "string"
       }
     },

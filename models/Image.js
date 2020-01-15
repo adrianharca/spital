@@ -17,7 +17,7 @@ class Image extends Sequelize.Model {
     },
       {
         sequelize,
-        modelName: 'imageentity',
+        modelName: 'image',
         timestamps: true,
         freezeTableName: true,
         paranoid: true
