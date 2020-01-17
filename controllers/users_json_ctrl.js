@@ -1,6 +1,7 @@
 const User = require('../models/User');
 
 var ImageEntity = require("../models/ImageEntity");
+var Image = require("../models/Image");
 var Global = require("../functions.js");
 console.log("user_json_ctrl");
 
@@ -93,18 +94,27 @@ exports.getImageById = function (req, res) {
   var path = mainPath + "users";
   var pathC = require("path");
   var shell = require('shelljs');
+  
   if (!isNaN(idS)) {
     console.log('getbyid' + idS);
-    circless = ImageEntity.findOne({ where: { entityId: idS, entityType: "User" } }).then(function (imageFound) {
-      Image.findOne({id: imageFound.imageId})
-      if (imageFound != null) {
-        console.log(imageFound.path);
-        res.sendFile(pathC.resolve(imageFound.path));
-      }
-      else {
-        res.send("null");
-      }
-    }).error(function (err) {
+    circless = ImageEntity.findOne({ where: { entityId: idS, entityType: "User" } }).then(function (imageEntityFound) {
+      if (imageEntityFound!=null){
+      Image.findOne({id: imageEntityFound.imageId}). then(function (imageFound) {
+
+        if (imageFound != null) {
+          console.log(imageFound.path);
+          res.sendFile(pathC.resolve(imageFound.path));
+        }
+        else {
+          res.send("null");
+        }
+      });
+    }
+    else{
+      res.send("null");
+    }
+    }
+  ).error(function (err) {
       console.log("Error:" + "no image found for user");
       res.send(err);
     });
