@@ -17,7 +17,7 @@ exports.createFile = function (imageBody, fileNameVar, folder){
       }
       var rawImg = imageBody;
       let buffer = Buffer.from(rawImg);
-      console.log("filename: +" + filename);
+      console.log("filename: +" + fileNameVar);
       filename = path + "\\" +fileNameVar + ".jpg";
       fs.writeFile(filename, buffer, 'base64', function (err) { console.log(err); });
     }
@@ -45,15 +45,18 @@ exports.createFile = function (imageBody, fileNameVar, folder){
 
   
   exports.createImageEntity = function (entityTypeVar, filenameVar, entityIdVar){
+    console.log("file name for image:" + filenameVar);
     images = Image.findOne({ where: { path: filenameVar} })
     .then(function (imageFound) {
       if (imageFound==null){
       Image.create({path: filenameVar}).then( bb=> {
+        if (bb!=null){
         console.log("created image " + JSON.stringify(bb));
         ImageEntity.create({
           imageId: bb.id, entityId: entityIdVar, entityType: entityTypeVar}). then( a => {console.log("created file for " +entityTypeVar.toString().toLowerCase()) + " with " + JSON.stringify(a)});
+        };
       });
-      
+   
     }
   }
     );

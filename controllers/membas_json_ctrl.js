@@ -16,7 +16,7 @@ function renderMember(m) {
         'initiatorid'];
     // Object.values(m).forEach(i => holder[i] = m[i]);
     fields.forEach((item, k) => {
-        console.log(item, ' ', k, ' ', m[item]);
+      //  console.log(item, ' ', k, ' ', m[item]);
         holder[item] = m[item];
       });
     return holder;
@@ -45,14 +45,15 @@ exports.getImageById = function (req, res) {
 
 exports.getAllMembersByCircle = (req, res) => {
     circleId = Number(req.params.id);
-    membas = Circle.findByPk(circleId).then(c =>
-       c.getMembers().map(renderMember) )
+    membas = Circle.findByPk(circleId).then(c =>{
+       if (c!=null)
+       c.getMembers().map(renderMember) })
         .then(mbs => {
             res.contentType('application/json');
             res.json( mbs );
-            console.log('members for circle ' + circleId + ' ' + res);
-        }).catch(e => console.log(e));
-
+            console.log('members for circle ' + circleId + ' ');
+        } ).catch(e => console.log(e));
+    
 };
 
 exports.getMemberById = (req, res) => {
@@ -79,7 +80,6 @@ exports.getMemberById = (req, res) => {
 /////de refacut mizeria de createmember de mai jos, prea multe cautari in baza, cand o fi mai mult itmp
 exports.createMember = (req, res) => {
    // var circId=Number(req.params.circleId);
-   console.log(JSON.stringify(req.body));
    var circId = Number(req.body.circleId);
     let { circleId, userId, nickname, motivation } = req.body;
     console.log('request for to create member ' + circleId + ' ' + nickname);
