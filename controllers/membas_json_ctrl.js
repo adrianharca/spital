@@ -86,7 +86,8 @@ exports.createMember = (req, res) => {
    // Circle.findOne(Number(circleId))
     Circle.findOne({ where: { id: circleId } })
     .then(c =>{
-        if (c!=null)
+        if (c!=null){
+            console.log("found circle with id "+ circleId + " for member " + nickname);
         c.addMember(Member.
             create({
                 circleId, userId, nickname, motivation
@@ -101,6 +102,10 @@ exports.createMember = (req, res) => {
                 })
             })
             .catch(console.log)
+        }
+        else{
+            console.log("found not circle with id " + circleId);
+        };
         }
             )
         .catch(err => console.log(err));
