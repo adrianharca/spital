@@ -1,0 +1,36 @@
+<section id="addVote" class="container">
+    <div class="form-wrap">
+        <h1>Add a vote</h1>
+        {{#each errors}}
+        <div class="error">
+            <p>{{text}}</p>
+        </div>
+        {{/each}}
+        <form action="/votes/addVote" method="POST">
+            <div class="input-group">
+                <label for="memberId"> member id</label>
+                <input type="text" name="theme" id="theme" class="input-box" placeholder="default 1" maxlength="100"
+                    value={{memberId}}>
+            </div>
+            <div class="input-group">
+                <label for="numberofpeople">numberofpeople </label>
+                <input type="text" name="numberofpeople" id="numberofpeople" class="input-box" placeholder="0-10000"
+                    maxlength="100" value={{numberofpeople}}>
+            </div>
+            <div class="input-group">
+                <label for="date"> start date:</label>
+                <input type="date" id="date" name="start" value="2020-07-22" min="2020-01-01" max="2020-12-31">{{date}}</input>
+                <label for="endDate"> end date</label>
+                <input type="endDate" id="endDate" name="end" value="2020-07-22" min="2020-01-01" max="2020-12-31">{{endDate}}</input>
+{{!-- 
+                <textarea name="when" id="when" class="input-box" placeholder="pick date"
+                    rows="10">{{description}}</textarea> --}}
+            </div>
+            {{!-- <div class="input-group">
+          <label for="budget">Contact Email</label>
+          <input type="email" name="contact_email" id="contactemail" class="input-box" placeholder="Enter an email" value={{contact_email}}>
+        </div> --}}
+            <input type="submit" value="Add Gig" class="btn btn-reverse">
+        </form>
+    </div>
+</section>

@@ -3,21 +3,21 @@ const router = express.Router();
 const db = require('../config/db');
 const Sequelize = require('sequelize');
 const User = require('../models/User');
+const Vote = require('../models/Vote');
 var taskController = require("../controllers/circle_json_ctrl");
 const Op = Sequelize.Op;
 
-//Use this class for interface functions & put ur json api in controllers/users_json_ctrl
-console.log("routes/users.js");
-// router.route('/demoadd').get(taskController.demoadd);
+//Use this class for interface functions & put ur json api in controllers/vote_json_ctrl
+console.log("routes/votes.js");
 
 
-// Get user list
+// Get vote list
 router.get('/', (req, res) => {
 
-  User.findAll()
+  Vote.findAll()
   .then(c => {
-    res.render('users', { c });
-    console.log('user found');
+    res.render('votes', { c });
+    console.log('displayed votes');
   })
   .catch(err => console.log(err));
 });
@@ -27,7 +27,7 @@ router.get('/json', (req, res) => {
   res.contentType('application/json');
   res.removeHeader;
   var result=[];
-  User.findAll()
+  Vote.findAll()
     .then(
       c => {
         
@@ -41,19 +41,20 @@ router.get('/json', (req, res) => {
 
 
 // // Display add user form
-router.get('/adduser', (req, res) => res.render('adduser'));
+router.get('/addVote', (req, res) => res.render('addVote'));
 
 // Add a gig
-router.post('/adduser', (req, res) => {
-  let { firstname, lastname, email } = req.body;
-  let errors = [];
+router.post('/addVote', (req, res) => {
+    let {  memberId, circleId, numberofpeople,
+        createdAt, date, endDate, where } = req.body;
+      let errors = [];
 
 
   // Check for errors
   if (errors.length > 0) {
-    res.render('adduser', {
+    res.render('addVote', {
       errors,
-      firstname, lastname, email
+     memberId, numberofpeople, date, endDate
     });
   } else {
 
@@ -62,7 +63,7 @@ router.post('/adduser', (req, res) => {
     //  technologies = technologies.toLowerCase().replace(/, /g, ',');
 
     // Insert into table
-    User.create({
+    Vote.create({
       firstname, lastname, email
     })
       .then(a => {

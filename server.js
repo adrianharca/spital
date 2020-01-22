@@ -43,6 +43,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //Routes for interface:
 app.use("/circles", require('./routes/circles'));
 app.use("/users", require('./routes/users'));
+app.use("/votes", require('./routes/votes'));
 //JSON routes
 app.use("/json", router);
 //default route:
