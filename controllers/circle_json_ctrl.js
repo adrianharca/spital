@@ -1,5 +1,6 @@
 var Circle = require("../models/Circle");
 var ImageEntity = require("../models/ImageEntity");
+var Image = require("../models/Image");
 var Global = require("../functions.js");
 require("../functions.js");
 //var router= require('../server')
@@ -191,7 +192,14 @@ exports.getImageById = function (req, res) {
   var shell = require('shelljs');
   images = ImageEntity.findOne({ where: { entityId: idS, entityType: "Circle" } }).then(function (imageFound) {
     if (imageFound != null) {
-      res.sendFile(pathC.resolve(imageFound.path));
+      Image.findOne({where: {id: imageFound.imageId}}).then(function (imageEntityFound)
+      {
+        if (imageEntityFound!=null)
+          res.sendFile(pathC.resolve(imageEntityFound.path));
+          else
+          res.send("null");
+      });
+     
     }
     else {
       res.send("null");
@@ -261,25 +269,38 @@ exports.addOne = function (req, res) {
     placenameVar = where.placename;
     spottypeVar = where.spottype;
   }
-  if (initiatorId != undefined)
-    initiatoridVar = initiatorId;
+  if(initiatorId!=undefined)
+  initiatoridVar=initiatorId;
+  Circle.findOne({ where: { id: req.body.id} }).then(function (circleFound)
+{
+  if (circleFound==null)
   Circle.create(
     {//data
       theme, description, isFlexible: isflexibleVar, timeofday: timeofdayVar, invitationOnly, numberOfPeople,
       openToAnyone, keywords: keywordsVar, location: locationVar,
       status, initiatoridVar, date: dateVar, endDate: endDateVar,
-      placename: placenameVar, spotType: spottypeVar,
-    }).then(a => {
-      //here req.body.image
-      var filename = Global.createFile(req.body.image, req.body.theme + "-" + req.body.description, "circles");
-      if (filename != "")
-        ImageEntity.create({
-          path: filename, entityId: a.id, entityType: "Circle"
-        }).then(a => { console.log("created file") });
+      placename: placenameVar, spotType: spottypeVar, 
+    }).then(a => { 
+     //here req.body.image
+     /*
+      if (filename!="")
+      {
+      ImageEntity.create({
+        path: filename, entityId: a.id, entityType: "Circle"}). then( a => {console.log("created file")});
+      };*/
+      
+      
+      if (req.body.image!=null){
+        var filename = Global.createFile(req.body.image,req.body.theme + "-" + req.body.description,"circles");
+      if (filename!=null && filename!=undefined){
+      Global.createImageEntity("Circle", filename, a.id);
+      }
+    }
       console.log('success');
       res.json(a.id);
     })
     .catch(err => console.log(err));
+  });
 };
 
 

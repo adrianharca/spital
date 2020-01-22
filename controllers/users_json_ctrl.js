@@ -87,14 +87,13 @@ exports.updateUserById = function (req, res) {
   });
 
 }
-exports.getImageById = function (req, res) {
+exports.getImageById = function (req, res) {  
   idS = Number(req.params.id);
 
   var mainPath = __dirname + "\\.." + "\\public\\img\\";
   var path = mainPath + "users";
   var pathC = require("path");
   var shell = require('shelljs');
-  
   if (!isNaN(idS)) {
     console.log('getbyid' + idS);
     circless = ImageEntity.findOne({ where: { entityId: idS, entityType: "User" } }).then(function (imageEntityFound) {
@@ -119,6 +118,10 @@ exports.getImageById = function (req, res) {
       res.send(err);
     });
   }
+  else{
+    res.send("not a number");
+  }
+ // res.send("Aaa");
 }
 exports.getAllUsers = function (req, res) {
   User.findAll().map(l => {
@@ -135,7 +138,7 @@ exports.getAllUsers = function (req, res) {
 
         res.json( c );
 
-        console.log('result: ' + c + ' ');
+        console.log('result: shown all users ');
       })
 
     .catch(err => console.log(err));

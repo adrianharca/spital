@@ -45,10 +45,9 @@ router.route("/users/:id/image").get(userController.getImageById);
 router.route("/usersName/:name").get(userController.getUserByName);
 
 router.route("/users/:id").get(userController.getUserById)
-    .post(userController.createUser)
-    .put(userController.updateUserById);
-
-router.route("/users/:id/image").get(userController.getImageById);
+                            .post(userController.createUser)
+                            .put(userController.updateUserById);
+                        
 
 //router.route("/chat").get(chatController.getChatPage);
 router.route("/usersEmail/:email").get(userController.getUserByEmail);
