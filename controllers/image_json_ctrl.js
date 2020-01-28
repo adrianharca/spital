@@ -86,7 +86,7 @@ exports.getImages = function (req, res) {
     .catch(err => console.log(err));
 }
 exports.addImage = function (req, res) {
-  console.log("add image:" + JSON.stringify(req.body.entityId) + " " + req.body.type);
+  console.log("add image:" + JSON.stringify(req.body.entityId) + " " + req.body.type + "; filename: " + req.body.filename);
   images = ImageEntity.findAll({ where: { id: req.body.entityId, entityType: req.body.type } })
     .then(function (imageFound) {
 console.log("details: " + req.body.entityId + " " + req.body.type);
@@ -100,7 +100,7 @@ console.log("details: " + req.body.entityId + " " + req.body.type);
         }
       }
       else{
-        console.log("we have found the file: "+ imageFound.path + " " + imageFound.entityId + " " + imageFound.entityType);
+        console.log("we have found the file: " + JSON.stringify(imageFound));
       }
     });
   console.log('success');

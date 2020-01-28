@@ -36,16 +36,19 @@ exports.getVotesByMemberId = function (req, res) {
     .catch(err => console.log(err));
 };
 exports.addVote = function (req, res) {
+  console.log(JSON.stringify(req.body));
   let {  memberId, circleId, numberofpeople,
     createdAt,  when, where } = req.body;
-  var wenvar = newWhen(when);
-  var wervar = newWhere(where.placename, where.spotType, where.location);
+  var wenvar = newWhen(req.body.when);
+  var wervar = newWhere(req.body.where.placename, req.body.where.spotType, req.body.where.location);
 
   Vote.create({
-    memberId, circleId, numberofpeople,
-     when: wenvar, where: wervar, createdAt
+    memberId, circleId, numberofpeople: req.body.numberOfPeople, date: req.body.when.date, endDate: req.body.when.endDate,
+     placename: req.body.where.placeName, location: req.body.where.location, createdAt
   }).then(
-    a => res.json(a.id)
+    a => {
+      console.log("vote: " + JSON.stringify(a));
+      res.json(a.id)}
   )
     .catch(err => console.log(err));
 

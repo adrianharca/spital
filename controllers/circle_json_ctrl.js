@@ -45,7 +45,7 @@ function renderCircle(c) {
     container.when = when;
   }
   if (c.location != null) {
-    container.where = new Where(c.placename, c.spotType, c.location);
+    container.where = whereConstructor(c.placename, c.spotType, c.location);
   }
 
 
@@ -53,16 +53,18 @@ function renderCircle(c) {
   container.image = c.data;
   return container;
 };
-
-exports.newWhen = function When(c) {
+function whenConstructor(c){
   if (c.date != undefined)
-    this.date = Date.parse(c.date);
-  if (c.endDate != undefined)
-    this.endDate = Date.parse(c.endDate);
-  if (c.timeOfDay != undefined)
-    this.timeofday = c.timeOfDay;
+  this.date = Date.parse(c.date);
+if (c.endDate != undefined)
+  this.endDate = Date.parse(c.endDate);
+if (c.timeOfDay != undefined)
+  this.timeofday = c.timeOfDay;
 }
-exports.newWhere = function Where(placename, spottype, location) {
+exports.newWhen = function When(c) {
+ return whenConstructor(c);
+}
+function whereConstructor(placename, spottype, location){
   this.placename = placename;
   this.spottype = spottype;
   this.location = [];
@@ -71,15 +73,23 @@ exports.newWhere = function Where(placename, spottype, location) {
       a => {
         if (a != null)
 
-          this.location.push(new Place(a['latitude'], a['longitude']));
+          this.location.push(placeConstructor(a['latitude'], a['longitude']));
       });
   }
-  else this.location = new Array(new Place(location['latitude'], location['longitude']));
+  else this.location = new Array(placeConstructor(location['latitude'], location['longitude']));
 }
-exports.newPlace = function Place(latitude, longitude) {
+exports.newWhere = function Where(placename, spottype, location) {
+  whereConstructor(placename, spottype, location);
+}
+
+function placeConstructor(latitude, longitude){
   this.latitude = latitude;
   this.longitude = longitude;
 }
+exports.newPlace = function Place(latitude, longitude) {
+  placeConstructor(latitude, longitude);
+}
+
 exports.addByThemeDescriptionAndInit = function (req, res) {
   let { theme, description, initiatorid } = req.body;
   let errors = [];
