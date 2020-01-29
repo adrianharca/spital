@@ -21,6 +21,9 @@
       "enddate": {
         "type": "integer"
       },
+      "timeofday":{
+        "type":"string"
+      },
       "location": {
         "type": "string"
       },

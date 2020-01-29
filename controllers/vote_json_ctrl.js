@@ -44,7 +44,7 @@ exports.addVote = function (req, res) {
 
   Vote.create({
     memberId, circleId, numberofpeople: req.body.numberOfPeople, date: req.body.when.date, endDate: req.body.when.endDate,
-     placename: req.body.where.placeName, location: req.body.where.location, createdAt
+     placename: req.body.where.placeName, location: req.body.where.location, timeofday: req.body.when.timeOfDay, createdAt
   }).then(
     a => {
       console.log("vote: " + JSON.stringify(a));
