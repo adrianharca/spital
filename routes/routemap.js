@@ -34,7 +34,7 @@ router.route("/members/:id").put(memberController.updateMember);
 router.route("/members/:id/image").get(memberController.getImageById);
 router.route("/members/:id/votes").get(voteController.getVotesByMemberId)
     .post(voteController.addVote).delete(voteController.deleteVoteByid);
-
+    router.route("/votes").post(voteController.addVote).delete(voteController.deleteVoteByid);
 // router.route("/circles/:id/votes/:voteid").get(circleController.getVotesByCircle);
 
 router.route("/users").get(userController.getAllUsers)

@@ -35,6 +35,7 @@ exports.getVotesByMemberId = function (req, res) {
 
     .catch(err => console.log(err));
 };
+
 exports.addVote = function (req, res) {
   console.log(JSON.stringify(req.body));
   let {  memberId, circleId, numberofpeople,
