@@ -18,7 +18,10 @@ exports.createFile = function (imageBody, fileNameVar, folder){
       var rawImg = imageBody;
       let buffer = Buffer.from(rawImg);
       console.log("filename: +" + fileNameVar);
-      filename = path + "\\" +fileNameVar + ".jpg";
+      if (fileNameVar.toString().indexOf(".jpg")>0)
+         filename = path + "\\" +fileNameVar;
+      else
+         filename = path + "\\" +fileNameVar + ".jpg";
       fs.writeFile(filename, buffer, 'base64', function (err) { console.log(err); });
     }
       return filename;

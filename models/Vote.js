@@ -26,6 +26,9 @@ const Sequelize = require('sequelize');
   date: {
     type: Sequelize.STRING
   },
+  timeofday:{
+    type: Sequelize.STRING
+  },
   endDate: {
     type: Sequelize.STRING
   },

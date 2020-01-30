@@ -48,7 +48,7 @@ function renderCircle(c) {
     container.when = new When(c);
   }
   if (c.location != null) {
-    container.where = new whereMaker(c.placename, c.spotType, c.location);
+    container.where = whereConstructor(c.placename, c.spotType, c.location);
   }
 
 
@@ -56,7 +56,42 @@ function renderCircle(c) {
   container.image = c.data;
   return container;
 };
+function whenConstructor(c){
+  if (c.date != undefined)
+  this.date = Date.parse(c.date);
+if (c.endDate != undefined)
+  this.endDate = Date.parse(c.endDate);
+if (c.timeOfDay != undefined)
+  this.timeofday = c.timeOfDay;
+}
+exports.newWhen = function When(c) {
+ return whenConstructor(c);
+}
+function whereConstructor(placename, spottype, location){
+  this.placename = placename;
+  this.spottype = spottype;
+  this.location = [];
+  if (Array.isArray(location)) {
+    location.forEach(
+      a => {
+        if (a != null)
 
+          this.location.push(placeConstructor(a['latitude'], a['longitude']));
+      });
+  }
+  else this.location = new Array(placeConstructor(location['latitude'], location['longitude']));
+}
+exports.newWhere = function Where(placename, spottype, location) {
+  whereConstructor(placename, spottype, location);
+}
+
+function placeConstructor(latitude, longitude){
+  this.latitude = latitude;
+  this.longitude = longitude;
+}
+exports.newPlace = function Place(latitude, longitude) {
+  placeConstructor(latitude, longitude);
+}
 
 exports.addByThemeDescriptionAndInit = function (req, res) {
   let { theme, description, initiatorid } = req.body;

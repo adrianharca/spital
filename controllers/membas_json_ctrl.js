@@ -57,9 +57,10 @@ exports.getAllMembersByCircle = (req, res) => {
 };
 
 exports.getMemberById = (req, res) => {
+    if (req.params.id!=null){
     idS = Number(req.params.id);
-    console.log('getbyid' + idS);
-    circless = Member.findByPk(idS)
+    console.log('getbyid: ' + idS);
+    memberss = Member.findByPk(idS)
 
         .then(function (mb) {
             container = {};
@@ -75,7 +76,25 @@ exports.getMemberById = (req, res) => {
         }).error(function (err) {
             console.log("Error:" + err);
         });
+    }
+    else{
+        memberss = Member.findAll()
 
+        .then(function (mb) {
+            container = {};
+            container = mb;
+            //   container.keywords = circleFound.keywords.split(",");
+            //   container.creationDate = new Date(circleFound.creationDate);
+            //   container.date = new Date(circleFound.date);
+            //   //container.image = undefined;
+            //   container.image = circleFound.data;
+            //   container.endDate = new Date(circleFound.endDate);
+            res.send(container);
+
+        }).error(function (err) {
+            console.log("Error:" + err);
+        });
+    }
 };
 /////de refacut mizeria de createmember de mai jos, prea multe cautari in baza, cand o fi mai mult itmp
 exports.createMember = (req, res) => {
