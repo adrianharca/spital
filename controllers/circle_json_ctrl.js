@@ -1,6 +1,8 @@
 var Circle = require("../models/Circle");
 var ImageEntity = require("../models/ImageEntity");
 var Image = require("../models/Image");
+var When= require('../models/When');
+var whereMaker=require('../models/Where');
 var Global = require("../functions.js");
 require("../functions.js");
 //var router= require('../server')
@@ -38,14 +40,15 @@ function renderCircle(c) {
   // container.creationDate = new Date(circleFound.creationDate);
 
   if (c.date != undefined) {
-    var when = {};
-    when.date = Date.parse(c.date);
-    when.endDate = Date.parse(c.endDate);
-    when.timeofday = c.timeOfDay;
-    container.when = when;
+    // var when = {};
+    // when.date = Date.parse(c.date);
+    // when.endDate = Date.parse(c.endDate);
+    // when.timeofday = c.timeOfDay;
+    // container.when = when;
+    container.when = new When(c);
   }
   if (c.location != null) {
-    container.where = new Where(c.placename, c.spotType, c.location);
+    container.where = new whereMaker(c.placename, c.spotType, c.location);
   }
 
 
@@ -54,32 +57,7 @@ function renderCircle(c) {
   return container;
 };
 
-exports.newWhen = function When(c) {
-  if (c.date != undefined)
-    this.date = Date.parse(c.date);
-  if (c.endDate != undefined)
-    this.endDate = Date.parse(c.endDate);
-  if (c.timeOfDay != undefined)
-    this.timeofday = c.timeOfDay;
-}
-exports.newWhere = function Where(placename, spottype, location) {
-  this.placename = placename;
-  this.spottype = spottype;
-  this.location = [];
-  if (Array.isArray(location)) {
-    location.forEach(
-      a => {
-        if (a != null)
 
-          this.location.push(new Place(a['latitude'], a['longitude']));
-      });
-  }
-  else this.location = new Array(new Place(location['latitude'], location['longitude']));
-}
-exports.newPlace = function Place(latitude, longitude) {
-  this.latitude = latitude;
-  this.longitude = longitude;
-}
 exports.addByThemeDescriptionAndInit = function (req, res) {
   let { theme, description, initiatorid } = req.body;
   let errors = [];
@@ -164,7 +142,7 @@ exports.downloadImageById = function (req, res) {
 };
 
 exports.getAll = function (req, res) {
-  console.log('performing fetch all');
+  console.log('performing fetch all circles');
 
   res.removeHeader;
   var result = [];

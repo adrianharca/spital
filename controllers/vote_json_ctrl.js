@@ -1,7 +1,6 @@
 var Vote = require("../models/Vote");
-
-var newWhere = require("./circle_json_ctrl").newWhere;
-var newWhen = require("./circle_json_ctrl").newWhen;
+var newWhere = require("../models/Where");
+var newWhen = require("../models/When");
 
 function renderVote(v) {
   var container = new Object();
@@ -17,7 +16,26 @@ function renderVote(v) {
     container.where = new newWhere(c.placename, c.spotType, c.location);
   }
 }
+exports.getAll=function (req, res)  {
+  console.log('performing fetch all votes');
 
+  res.contentType('application/json');
+  res.removeHeader;
+  var result=[];
+  Vote.findAll()
+  .map(l => {
+    return renderVote(l);
+  })
+    .then(
+      c => {
+        
+       res.json({c})
+    
+      console.log('result: ' + result + ' ');
+    })
+  
+    .catch(err => console.log(err));
+};
 exports.getVotesByMemberId = function (req, res) {
   console.log('performing fetch all votes ');
   res.removeHeader;

@@ -10,7 +10,7 @@ var circleController = require("../controllers/circle_json_ctrl");
 var memberController = require("../controllers/membas_json_ctrl")
 var userController = require("../controllers/users_json_ctrl");
 var imageController = require("../controllers/image_json_ctrl");
-var voteController=require("../controllers/vote_json_ctrl");
+var voteController = require("../controllers/vote_json_ctrl");
 var chatController = require("../controllers/chat_json_ctrl");
 //prefix /json/circles/etc
 // router.use(bodyparser.json);
@@ -34,7 +34,7 @@ router.route("/members/:id").put(memberController.updateMember);
 router.route("/members/:id/image").get(memberController.getImageById);
 router.route("/members/:id/votes").get(voteController.getVotesByMemberId)
     .post(voteController.addVote).delete(voteController.deleteVoteByid);
-
+router.route('/votes').get(voteController.getAll);
 // router.route("/circles/:id/votes/:voteid").get(circleController.getVotesByCircle);
 
 router.route("/users").get(userController.getAllUsers)
@@ -45,9 +45,9 @@ router.route("/users/:id/image").get(userController.getImageById);
 router.route("/usersName/:name").get(userController.getUserByName);
 
 router.route("/users/:id").get(userController.getUserById)
-                            .post(userController.createUser)
-                            .put(userController.updateUserById);
-                        
+    .post(userController.createUser)
+    .put(userController.updateUserById);
+
 
 //router.route("/chat").get(chatController.getChatPage);
 router.route("/usersEmail/:email").get(userController.getUserByEmail);
