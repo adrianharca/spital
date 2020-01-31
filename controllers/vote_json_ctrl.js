@@ -8,13 +8,14 @@ function renderVote(v) {
   const fields = ['id', 'memberId', 'circleId', 'numberofpeople',
     'createdAt', 'updatedAt', 'deletedAt'];
   fields.forEach((item, k) => {
-    console.log(item, ' ', c[item]);
-    container[item] = c[item];
+    console.log(item, ' ', v[item]);
+    container[item] = v[item];
   });
   container.when = new newWhen(v);
-  if (c.location != null) {
-    container.where = new newWhere(c.placename, c.spotType, c.location);
+  if (v.location != null) {
+    container.where = new newWhere(v.placename, v.spotType, v.location);
   }
+  return container;
 }
 exports.getAll=function (req, res)  {
   console.log('performing fetch all votes');
@@ -29,7 +30,7 @@ exports.getAll=function (req, res)  {
     .then(
       c => {
         
-       res.json({c})
+       res.json(c)
     
       console.log('result: ' + result + ' ');
     })
