@@ -1,6 +1,6 @@
 var Vote = require("../models/Vote");
 var newWhere = require("../models/Where");
-var newWhen = require("../models/When");
+var newWhen = require("../models/When").When;
 
 function renderVote(v) {
   var container = new Object();
@@ -17,24 +17,24 @@ function renderVote(v) {
   }
   return container;
 }
-exports.getAll=function (req, res)  {
+exports.getAll = function (req, res) {
   console.log('performing fetch all votes');
 
   res.contentType('application/json');
   res.removeHeader;
-  var result=[];
+  var result = [];
   Vote.findAll()
-  .map(l => {
-    return renderVote(l);
-  })
+    .map(l => {
+      return renderVote(l);
+    })
     .then(
       c => {
-        
-       res.json(c)
-    
-      console.log('result: ' + result + ' ');
-    })
-  
+
+        res.json(c)
+
+        console.log('result: ' + result + ' ');
+      })
+
     .catch(err => console.log(err));
 };
 exports.getVotesByMemberId = function (req, res) {
@@ -57,18 +57,19 @@ exports.getVotesByMemberId = function (req, res) {
 
 exports.addVote = function (req, res) {
   console.log(JSON.stringify(req.body));
-  let {  memberId, circleId, numberofpeople,
-    createdAt,  when, where } = req.body;
+  let { memberId, circleId, numberofpeople,
+    createdAt, when, where } = req.body;
   var wenvar = newWhen(req.body.when);
   var wervar = newWhere(req.body.where.placename, req.body.where.spotType, req.body.where.location);
 
   Vote.create({
     memberId, circleId, numberofpeople: req.body.numberOfPeople, date: req.body.when.date, endDate: req.body.when.endDate,
-     placename: req.body.where.placeName, location: req.body.where.location, timeofday: req.body.when.timeOfDay, createdAt
+    placename: req.body.where.placeName, location: req.body.where.location, timeofday: req.body.when.timeOfDay, createdAt
   }).then(
     a => {
       console.log("vote: " + JSON.stringify(a));
-      res.json(a.id)}
+      res.json(a.id)
+    }
   )
     .catch(err => console.log(err));
 
