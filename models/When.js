@@ -21,5 +21,21 @@ function hoursBetween(date1, date2) {
 function isBetween(voteTime, date, endDate) {
   return (voteTime > date && voteTime < endDate);
 };
+//returns an array of the most specific of 2 votes
+module.exports.moreSpecificByTime = function moreSpecific(v1, v2) {
+  var firstIsFixd = v1.endDate != undefined && v1.endDate != null;//if first is range
+  var secondIsFixd = v2.endDate != undefined && v2.endDate != null;//if second is range
+  if (!firstIsFixd && !secondIsFixd)    //both range
+    return [];
 
+  if (firstIsFixd && !secondIsFixd)
+    return [v1];
+  if (!firstIsFixd && secondIsFixd)
+    return [v2];
+  return [v1, v2];
+};
+module.exports.isTimeRange = function (w) {
+  return (w.endDate != undefined && w.endDate != null);
+
+}
 module.exports.When = When;
