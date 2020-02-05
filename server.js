@@ -48,14 +48,14 @@ app.use("/votes", require('./routes/votes'));
 app.use("/json", router);
 //default route:
 
-app.get('*', (req, res) => res.status(200).send({
-    message: 'Welcome to the void',
-}));
+// app.get('*', (req, res) => res.status(200).send({
+//     message: 'Welcome to the void',
+// }));
 
 // const fs = require('fs')
 // const basename = path.basename(module.filename)
 // const assoc = require('./models/associations')();
-const db=require('./config/db');
+const db = require('./config/db');
 // const onlyModels = file =>
 //     file.indexOf('.') !== 0 &&
 //     file !== basename &&
@@ -75,7 +75,7 @@ const db=require('./config/db');
 //     .forEach(importModel)
 // Object.keys(db).forEach(assoc)
 
-  
+
 
 
 var server = app.listen(3000, function () {

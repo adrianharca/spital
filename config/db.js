@@ -1,4 +1,4 @@
- const Sequelize = require("sequelize");
+const Sequelize = require("sequelize");
 console.log('config/db.js');
 const Circle = require("../models/Circle");
 const Member = require("../models/Member");
@@ -17,7 +17,7 @@ const sequelize = new Sequelize('circles', 'root', 'root', {
     //     timestamps:false
     // },
     operatorAliases: false,
-    logging:  (...msg) => console.log(msg) ,
+    logging: (...msg) => console.log(msg),
     pool: {
         max: 5,
         min: 0,
@@ -29,13 +29,13 @@ const sequelize = new Sequelize('circles', 'root', 'root', {
         dateStrings: true,
         typeCast: true,
         timezone: '+02:00'
-  },
-  timezone: '+02:00' //for writing to database
+    },
+    timezone: '+02:00' //for writing to database
 });
 const models = {
     Circle: Circle.init(sequelize, Sequelize),
     Member: Member.init(sequelize, Sequelize),
-    ImageEntity: ImageEntity.init(sequelize,Sequelize),
+    ImageEntity: ImageEntity.init(sequelize, Sequelize),
     User: User.init(sequelize, Sequelize),
     Vote: Vote.init(sequelize, Sequelize),
     Image: Image.init(sequelize, Sequelize)
@@ -47,15 +47,15 @@ Object.values(models)
     });
 
 sequelize.authenticate()
-.then(() => console.log('Db connected'))
-.catch(err => console.log('Err: ' + err));
+    .then(() => console.log('Db connected'))
+    .catch(err => console.log('Err: ' + err));
 
 //Do following to autosync db to model. Eg. for init purposes
 
 
-// sequelize.sync({ alter:true })//,force:true
-//   .then(() => {
-//     console.log(`Database & tables created!`)
-//   }).catch(console.log);
+// sequelize.sync({ force: true, alter: true })//,force:true
+//     .then(() => {
+//         console.log(`Database & tables created!`)
+//     }).catch(console.log);
 
-module.exports={ sequelize};
+module.exports = { sequelize };

@@ -19,10 +19,24 @@
             </div>
             <div class="input-group">
                 <label for="date"> start date:</label>
-                <input type="date" id="date" name="start" value="2020-07-22" min="2020-01-01" max="2020-12-31">{{date}}</input>
+                <input type="date" id="date" name="start" value="2020-07-22" min="2020-01-01"
+                    max="2020-12-31">{{date}}</input>
                 <label for="endDate"> end date</label>
-                <input type="endDate" id="endDate" name="end" value="2020-07-22" min="2020-01-01" max="2020-12-31">{{endDate}}</input>
-{{!-- 
+                <input type="date" id="endDate" name="end" value="2020-07-22" min="2020-01-01"
+                    max="2020-12-31">{{endDate}}</input>
+                <div class="map" id="mapid">
+                    <script src="/mapScript.js"></script>
+                    <script>
+
+                    </script>
+                    {{!-- <link rel="stylesheet" href="/node_modules/leaflet/dist/leaflet.css" integrity="" crossorigin=""
+                        type="text/css" />
+                    <script src="/node_modules/leaflet/src/Leaflet.js"
+                        integrity="sha256-m6OzICu0uhFGzWwrjB0T95Bj04mVBM/3FaUl6lUcEqA=" crossorigin=""></script> --}}
+                    {{!-- <script src="/public/mapScript.js"></script> --}}
+                </div>
+
+                {{!-- 
                 <textarea name="when" id="when" class="input-box" placeholder="pick date"
                     rows="10">{{description}}</textarea> --}}
             </div>
