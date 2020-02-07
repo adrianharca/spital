@@ -1,5 +1,5 @@
 var Vote = require("../models/Vote");
-var newWhere = require("../models/Where");
+var newWhere = require("../models/Where").Where;
 var newWhen = require("../models/When").When;
 
 function renderVote(v) {

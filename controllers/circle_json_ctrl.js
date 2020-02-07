@@ -40,55 +40,76 @@ function renderCircle(c) {
   // container.creationDate = new Date(circleFound.creationDate);
 
   if (c.date != undefined) {
-    // var when = {};
-    // when.date = Date.parse(c.date);
-    // when.endDate = Date.parse(c.endDate);
-    // when.timeofday = c.timeOfDay;
-    // container.when = when;
     container.when = new When(c);
   }
   if (c.location != null) {
     container.where = whereConstructor(c.placename, c.spotType, c.location);
   }
 
-
+/*
+container.timeOfDay = c.timeofday;
+container.placeName = c.placename;
+container.date = c.date;
+container.endDate = c.endDate;
+container.location = c.location;
+container.laceName = c.placename;
+*/
   //container.image = undefined;
   container.image = c.data;
   return container;
 };
+function placeConstructor(latitudeVar, longitudeVar) {
+  var place = {};
+  place.latitude = latitudeVar;
+  place.longitude = longitudeVar;
+  console.log(place.latitude + " " + place.longitude) ;
+  return place;
+}
+function whereConstructor(placename, spottype, location) {
+  var whereConstr = {};
+  whereConstr.placeName = placename;
+  whereConstr.spotType = spottype;
+  locationArray = JSON.parse(location);
+  whereConstr.location = [];
+  if (Array.isArray(locationArray)) {
+    locationArray.forEach(
+      a => {
+        
+      
+        if (a != null){
+          whereConstr.location.push(placeConstructor(a['latitude'], a['longitude']));
+        }
+      });
+  }
+  else {
+    whereConstr.location = new Array(placeConstructor(locationArray[0].latitude, locationArray[0].longitude));
+  }
+  return whereConstr;
+}
 function whenConstructor(c) {
-  if (c.date != undefined)
-    this.date = Date.parse(c.date);
-  if (c.endDate != undefined)
-    this.endDate = Date.parse(c.endDate);
-  if (c.timeOfDay != undefined)
-    this.timeofday = c.timeOfDay;
+  if (c.date != undefined){
+    this.date = new Date(parseInt(c.date,10));
+    /*
+    if (this.date==null){
+        this.date = new Date(c.date);
+    }*/
+  }
+  if (c.endDate != undefined){
+    this.endDate = new Date(parseInt(c.endDate,10));
+   // this.endDate = Date.parse(c.endDate);
+  }
+    this.timeOfDay = c.timeofday;
 }
 exports.newWhen = function When(c) {
   return whenConstructor(c);
 }
-function whereConstructor(placename, spottype, location) {
-  this.placename = placename;
-  this.spottype = spottype;
-  this.location = [];
-  if (Array.isArray(location)) {
-    location.forEach(
-      a => {
-        if (a != null)
 
-          this.location.push(placeConstructor(a['latitude'], a['longitude']));
-      });
-  }
-  else this.location = new Array(placeConstructor(location['latitude'], location['longitude']));
-}
+
 exports.newWhere = function Where(placename, spottype, location) {
-  whereConstructor(placename, spottype, location);
+  return whereConstructor(placename, spottype, location);
 }
 
-function placeConstructor(latitude, longitude) {
-  this.latitude = latitude;
-  this.longitude = longitude;
-}
+
 exports.newPlace = function Place(latitude, longitude) {
   placeConstructor(latitude, longitude);
 }
@@ -251,7 +272,8 @@ exports.deleteByid = function (req, res) {
 };
 
 exports.addOne = function (req, res) {
-
+  req.body.image ="";
+  console.log(JSON.stringify(req.body));
   let { theme, description, keywords, invitationOnly, numberOfPeople, openToAnyone,
     status, initiatorId, when, where } = req.body;
   var isflexibleVar = null;
@@ -264,6 +286,7 @@ exports.addOne = function (req, res) {
   var spottypeVar = null;
   var initiatoridVar = null;
   if (when != undefined) {
+    
     isflexibleVar = when.isFlexible;
     timeofdayVar = when.timeOfDay;
     dateVar = Date.parse(when.date);
@@ -276,14 +299,13 @@ exports.addOne = function (req, res) {
   }
 
   if (where != undefined) {
-
     locationVar = where.location;
-    placenameVar = where.placename;
-    spottypeVar = where.spottype;
+    placenameVar = where.placeName;
+    spottypeVar = where.spotType;
   }
   if (initiatorId != undefined)
     initiatoridVar = initiatorId;
-  Circle.findOne({ where: { id: req.body.id } }).then(function (circleFound) {
+    Circle.findOne({ where: { id: req.body.id } }).then(function (circleFound) {
     if (circleFound == null)
       Circle.create(
         {//data

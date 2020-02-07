@@ -1,10 +1,19 @@
 function When(c) {
-  if (c.date != undefined)
-    this.date = Date.parse(c.date);
-  if (c.endDate != undefined)
-    this.endDate = Date.parse(c.endDate);
-  if (c.timeOfDay != undefined)
-    this.timeofday = c.timeOfDay;
+  var when = {};
+  if (c.date != undefined){
+    when.date = new Date(parseInt(c.date,10));
+    /*
+    if (this.date==null){
+        this.date = new Date(c.date);
+    }*/
+  }
+  if (c.endDate != undefined){
+    when.endDate = new Date(parseInt(c.endDate,10));
+   // this.endDate = Date.parse(c.endDate);
+  }
+  when.timeOfDay = c.timeofday;
+  when.isFlexible = c.isFlexible;
+  return when;
 };
 //returns 0-1 , 1 if same, w2 is required a single place not an area.
 module.exports.distanceByTime = function distanceByTime(w1, w2) {
