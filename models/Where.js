@@ -62,6 +62,7 @@ module.exports.isArea = function isArea(locationArray) {
 //   }
 // };
 function Where(vote) {
+  if (vote!=null){
   this.placename = vote.placename;
   this.spottype = vote.spottype;
   this.location = [];
@@ -78,6 +79,7 @@ function Where(vote) {
     //why is locationArray treated as an array outside the if?
     this.location = new Array(new Place(locationArray[0].latitude, locationArray[0].longitude));
   }
+}
 };
 
 function Place(latitude, longitude) {

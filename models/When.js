@@ -1,5 +1,6 @@
 function When(c) {
   var when = {};
+  if (c!=null){
   if (c.date != undefined){
     when.date = new Date(parseInt(c.date,10));
     /*
@@ -13,6 +14,7 @@ function When(c) {
   }
   when.timeOfDay = c.timeofday;
   when.isFlexible = c.isFlexible;
+}
   return when;
 };
 //returns 0-1 , 1 if same, w2 is required a single place not an area.
