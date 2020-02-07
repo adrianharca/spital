@@ -13,7 +13,7 @@ function renderVote(v) {
   });
   container.when = new newWhen(v);
   if (v.location != null) {
-    container.where = new newWhere(v.placename, v.spotType, v.location);
+    container.where = new newWhere(v);
   }
   return container;
 }
