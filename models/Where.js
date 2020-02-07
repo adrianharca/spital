@@ -62,24 +62,24 @@ module.exports.isArea = function isArea(locationArray) {
 //   }
 // };
 function Where(vote) {
-  if (vote!=null){
-  this.placename = vote.placename;
-  this.spottype = vote.spottype;
-  this.location = [];
-  var locationArray = JSON.parse(vote.location);
-  if (Array.isArray(locationArray)) {
-    locationArray.forEach(
-      a => {
-        if (a != null)
+  if (vote != null) {
+    this.placename = vote.placename;
+    this.spottype = vote.spottype;
+    this.location = [];
+    var locationArray = JSON.parse(vote.location);
+    if (Array.isArray(locationArray)) {
+      locationArray.forEach(
+        a => {
+          if (a != null)
 
-          this.location.push(new Place(a['latitude'], a['longitude']));
-      });
+            this.location.push(new Place(a['latitude'], a['longitude']));
+        });
+    }
+    else {
+      //why is locationArray treated as an array outside the if?
+      this.location = new Array(new Place(locationArray[0].latitude, locationArray[0].longitude));
+    }
   }
-  else {
-    //why is locationArray treated as an array outside the if?
-    this.location = new Array(new Place(locationArray[0].latitude, locationArray[0].longitude));
-  }
-}
 };
 
 function Place(latitude, longitude) {

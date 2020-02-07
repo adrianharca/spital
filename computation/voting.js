@@ -138,6 +138,7 @@ function isInMatrix(elem, mat) {
     mat.forEach(
         row => row.forEach(
             column => {
+                //todo: check == by location & time
                 if (JSON.stringify(mat[row][column]) === JSON.stringify(elem))
                     return true;
             }

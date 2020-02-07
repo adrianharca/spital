@@ -59,8 +59,8 @@ exports.addVote = function (req, res) {
   console.log(JSON.stringify(req.body));
   let { memberId, circleId, numberofpeople,
     createdAt, when, where } = req.body;
-  var wenvar = newWhen(req.body.when);
-  var wervar = newWhere(req.body.where.placename, req.body.where.spotType, req.body.where.location);
+  var wenvar = new newWhen(req.body.when);
+  var wervar = new newWhere(req.body.where.placename, req.body.where.spotType, req.body.where.location);
 
   Vote.create({
     memberId, circleId, numberofpeople: req.body.numberOfPeople, date: req.body.when.date, endDate: req.body.when.endDate,

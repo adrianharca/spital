@@ -269,6 +269,13 @@ label {
   }
 }
 #mapid { height:180px; width: 80%; }
+/* #calendar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 5px;
+    top: 64px;
+} */
 /* Smartphones */
 @media (max-width: 500px) {
   .container {

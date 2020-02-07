@@ -24,78 +24,26 @@
                 <label for="endDate"> end date</label>
                 <input type="date" id="endDate" name="end" value="2020-07-22" min="2020-01-01"
                     max="2020-12-31">{{endDate}}</input>
+
                 <div class="map" id="mapid">
                     <script src="/mapScript.js"></script>
-                    <script>
+                </div>
+                <div style="height: 20dps;">
+                    <p>
+                        &nbsp;
+                    </p>
+                </div>
+                <div id="calendar" style="height: 300px;">
+                    <script src="/calScript.js"></script>
 
-                    </script>
-                    <div id="calendar">
-                        <script>
-                            var calendar = new Calendar('#calendar', {
+                </div>
 
-                                // 'day', 'week', 'month'
-                                defaultView: 'week',
-
-                                // shows the milestone and task in weekly, daily view
-                                taskView: true,
-
-                                // shows the all day and time grid in weekly, daily view
-                                scheduleView: true,
-
-                                // template options
-                                template: {
-                                    milestone: function (schedule) {
-                                        return '<span style="color:red;"><i class="fa fa-flag"></i> ' + schedule.title + '</span>';
-                                    },
-                                    milestoneTitle: function () {
-                                        return 'Milestone';
-                                    },
-                                    task: function (schedule) {
-                                        return '&nbsp;&nbsp;#' + schedule.title;
-                                    },
-                                    taskTitle: function () {
-                                        return '<label><input type="checkbox" />Task</label>';
-                                    },
-                                    allday: function (schedule) {
-                                        return schedule.title + ' <i class="fa fa-refresh"></i>';
-                                    },
-                                    alldayTitle: function () {
-                                        return 'All Day';
-                                    },
-                                    time: function (schedule) {
-                                        return schedule.title + ' <i class="fa fa-refresh"></i>' + schedule.start;
-                                    }
-                                },
-                                week: {
-                                    daynames: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                                    startDayOfWeek: 0,
-                                    narrowWeekend: true
-                                },
-                                month: {
-                                    daynames: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                                    startDayOfWeek: 0,
-                                    narrowWeekend: true
-                                },
-
-                                // list of Calendars that can be used to add new schedule
-                                calendars: [],
-
-                                // whether use default creation popup or not
-                                useCreationPopup: false,
-
-                                // whether use default detail popup or not
-                                useDetailPopup: false
-
-                            });
-                        </script>
-                    </div>
-
-                    {{!-- <link rel="stylesheet" href="/node_modules/leaflet/dist/leaflet.css" integrity="" crossorigin=""
+                {{!-- <link rel="stylesheet" href="/node_modules/leaflet/dist/leaflet.css" integrity="" crossorigin=""
                         type="text/css" />
                     <script src="/node_modules/leaflet/src/Leaflet.js"
                         integrity="sha256-m6OzICu0uhFGzWwrjB0T95Bj04mVBM/3FaUl6lUcEqA=" crossorigin=""></script> --}}
-                    {{!-- <script src="/public/mapScript.js"></script> --}}
-                </div>
+                {{!-- <script src="/public/mapScript.js"></script> --}}
+
 
                 {{!-- 
                 <textarea name="when" id="when" class="input-box" placeholder="pick date"
