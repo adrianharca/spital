@@ -107,20 +107,35 @@ exports.createMember = (req, res) => {
     .then(c =>{
         if (c!=null){
             console.log("found circle with id "+ circleId + " for member " + nickname);
-        c.addMember(Member.
-            create({
-                circleId, userId, nickname, motivation
-            }))
-            .catch(console.log)
-            .then(a => {
-                Member.findOne({ where: { circleId: circleId, userId: userId } }).then
-                (c1 => {
+            Member.findOne({ where: { circleId: circleId, userId: userId } }).then(m1 => {
+                if (m1==null){
                     
-                console.log('success created memba ' + JSON.stringify(c1) ) ;
-                    res.json(c1.id);
-                })
-            })
-            .catch(console.log)
+                    console.log("creating member for circleId= "+ circleId + " for nickname " + nickname + " " + userId);
+                    c.addMember(Member.
+                        create({
+                            circleId, userId, nickname, motivation
+                        }))
+                        .catch(console.log)
+                        .then(a => {
+                            Member.findOne({ where: { circleId: circleId, userId: userId } }).then
+                            (c1 => {
+                                if (c1!=null){
+                            console.log('success created memba ' + JSON.stringify (a) + " -- " ) ;
+                                res.json(c1.id);
+                                }
+                                else{
+
+                                }
+                            })
+                        })
+                        .catch(console.log);
+                }
+                else{
+                    console.log("found already member existing for circleId= "+ circleId + " for member " + nickname);
+                    res.json(m1.id);
+                }
+            });
+      
         }
         else{
             console.log("found not circle with id " + circleId);
