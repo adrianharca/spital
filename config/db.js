@@ -53,7 +53,7 @@ sequelize.authenticate()
 //Do following to autosync db to model. Eg. for init purposes
 
 
-// sequelize.sync({ force: true, alter: true })//,force:true
+// sequelize.sync({ alter: true })//,force:true
 //     .then(() => {
 //         console.log(`Database & tables created!`)
 //     }).catch(console.log);

@@ -46,14 +46,14 @@ function renderCircle(c) {
     container.where = whereConstructor(c.placename, c.spotType, c.location);
   }
 
-/*
-container.timeOfDay = c.timeofday;
-container.placeName = c.placename;
-container.date = c.date;
-container.endDate = c.endDate;
-container.location = c.location;
-container.laceName = c.placename;
-*/
+  /*
+  container.timeOfDay = c.timeofday;
+  container.placeName = c.placename;
+  container.date = c.date;
+  container.endDate = c.endDate;
+  container.location = c.location;
+  container.laceName = c.placename;
+  */
   //container.image = undefined;
   container.image = c.data;
   return container;
@@ -62,43 +62,45 @@ function placeConstructor(latitudeVar, longitudeVar) {
   var place = {};
   place.latitude = latitudeVar;
   place.longitude = longitudeVar;
-  console.log(place.latitude + " " + place.longitude) ;
+  console.log(place.latitude + " " + place.longitude);
   return place;
 }
 function whereConstructor(placename, spottype, location) {
   var whereConstr = {};
   whereConstr.placeName = placename;
   whereConstr.spotType = spottype;
-  locationArray = JSON.parse(location);
-  whereConstr.location = [];
-  if (Array.isArray(locationArray)) {
-    locationArray.forEach(
-      a => {
-        
-      
-        if (a != null){
-          whereConstr.location.push(placeConstructor(a['latitude'], a['longitude']));
-        }
-      });
+  if (location != undefined) {
+    locationArray = JSON.parse(location);
+    whereConstr.location = [];
+    if (Array.isArray(locationArray)) {
+      locationArray.forEach(
+        a => {
+
+
+          if (a != null) {
+            whereConstr.location.push(placeConstructor(a['latitude'], a['longitude']));
+          }
+        });
+    }
+    else {
+      whereConstr.location = new Array(placeConstructor(locationArray[0].latitude, locationArray[0].longitude));
+    }
+    return whereConstr;
   }
-  else {
-    whereConstr.location = new Array(placeConstructor(locationArray[0].latitude, locationArray[0].longitude));
-  }
-  return whereConstr;
 }
 function whenConstructor(c) {
-  if (c.date != undefined){
-    this.date = new Date(parseInt(c.date,10));
+  if (c.date != undefined) {
+    this.date = new Date(parseInt(c.date, 10));
     /*
     if (this.date==null){
         this.date = new Date(c.date);
     }*/
   }
-  if (c.endDate != undefined){
-    this.endDate = new Date(parseInt(c.endDate,10));
-   // this.endDate = Date.parse(c.endDate);
+  if (c.endDate != undefined) {
+    this.endDate = new Date(parseInt(c.endDate, 10));
+    // this.endDate = Date.parse(c.endDate);
   }
-    this.timeOfDay = c.timeofday;
+  this.timeOfDay = c.timeofday;
 }
 exports.newWhen = function When(c) {
   return whenConstructor(c);
@@ -272,7 +274,7 @@ exports.deleteByid = function (req, res) {
 };
 
 exports.addOne = function (req, res) {
-  req.body.image ="";
+  req.body.image = "";
   console.log(JSON.stringify(req.body));
   let { theme, description, keywords, invitationOnly, numberOfPeople, openToAnyone,
     status, initiatorId, when, where } = req.body;
@@ -286,7 +288,7 @@ exports.addOne = function (req, res) {
   var spottypeVar = null;
   var initiatoridVar = null;
   if (when != undefined) {
-    
+
     isflexibleVar = when.isFlexible;
     timeofdayVar = when.timeOfDay;
     dateVar = Date.parse(when.date);
@@ -305,7 +307,7 @@ exports.addOne = function (req, res) {
   }
   if (initiatorId != undefined)
     initiatoridVar = initiatorId;
-    Circle.findOne({ where: { id: req.body.id } }).then(function (circleFound) {
+  Circle.findOne({ where: { id: req.body.id } }).then(function (circleFound) {
     if (circleFound == null)
       Circle.create(
         {//data

@@ -83,5 +83,6 @@ var server = app.listen(3000, function () {
     var port = server.address().port;
     console.log("Server listening at :%s on port %s", host, port);
 });
-
+var mbdistrib = require('./computation/tstdata');
+console.log("Member votes:" + JSON.stringify(mbdistrib.probVects, null, 1));
 module.exports = router, bodyParser;

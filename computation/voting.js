@@ -9,7 +9,10 @@ var Member = require('../models/Member');
 function Participrobability(distanceByLocation, distanceByTime, distanceByCrowding) {
     this.locDistance = 1 / distanceByLocation;// remove one after implementing normalization in responsible fcts
     this.timeDistance = distanceByTime;
-    this.crowdDistance = 1 / distanceByCrowding;
+    if (distanceByCrowding == undefined)
+        this.distanceByCrowding = 1;
+    else
+        this.crowdDistance = 1 / distanceByCrowding;
 };
 
 //this needs to look at the options of others
@@ -18,23 +21,29 @@ function calcCrowdDist(v, p) {
     return 1;
 };
 
-//turns each mb vote into a vector of distances by comparing with one vote
-const calculateDistances = (vote, preferences) => {
+//2 turns each mb's preferences into a vector of participrobabilities by comparison w one vote.
+// to be run foreach mb against all fixed votes 
+module.exports.calculateDistances = (vote, preferences) => {
     var ret;
     if (Array.isArray(preferences)) {
         ret = [];
         preferences.forEach(
             p => ret.push(
-                (vote, calculateDistances(vote, p))));
+                (vote.id, this.calculateDistances(vote, p))));
     }
     else
-        ret = new Participrobability(
-            When.distanceByTime(vote, preferences),
-            Where.spaceDistances(vote, preferences),
-            calcCrowdDist(vote, preferences));
+        ret = matches(vote, preferences);
+
+    // new Participrobability(
+    //     When.distanceByTime(vote, preferences),
+    //     Where.spaceDistances(vote, preferences),
+    //     calcCrowdDist(vote, preferences));
     return ret;
 };
-// get best fitting votes
+
+
+//4 get the highest scoring match from one users matchvector
+//[ rate of agreement with an option by prefs]
 function calcBestMatchForVoteComparisons(probvect) {
     if (Array.isArray(probvect)) {
 
@@ -45,17 +54,17 @@ function calcBestMatchForVoteComparisons(probvect) {
 
             if ((p.locDistance + p.timeDistance) > max) {
                 max = p.locDistance + p.timeDistance;
-                best = p;
+                best = index;
             }
 
         }
-        return max;
+        return { max: max, best: best };
     }
     return probvect.locDistance + probvect.timeDistance;
 };
 
 
-//create (member,votes) pairs
+// 1.1 create (member,votes) pairs
 function MemberVote(mb, votes) {
     this.mb = mb;
     this.votes = votes.slice(0, votes.length);
@@ -63,7 +72,7 @@ function MemberVote(mb, votes) {
 }
 
 
-//get a list of (member, votes) pairs for given circle
+//1. get a list of (member, votes) pairs for given circle
 var mbVotes;
 function getMbVotes(circleId) {
     var circId = Number(circleId);
@@ -85,25 +94,15 @@ function getMbVotes(circleId) {
 
 };
 
-//find best match of two users' preferences
-function getMbIntersection(i, j) {
-    var intersect = [];
-    var v1 = mbVotes[i].votes;
-    var v2 = mbVotes[j].votes;
-    for (let i = 0; i < v1.length; i++) {
-        for (let j = 0; j < v2.length; j++) {
-            if (matches(v1, v2))
-                intersect.push(When.moreSpecificByTime(v1, v2));
 
-        }
-    }
-};
 function matches(v1, v2) {
     return new Participrobability(
-        Where.spaceDistance(new Where(v1), new Where(v2)),
-        When.distanceByTime(new When(v1), new When(v2)), 0);
+        Where.spaceDistance(v1.longitude != 'undefined' ? v1 : new Where.Where(v1),
+            v2.longitude != 'undefined' ? v2 : new Where.Where(v2)),
+        When.distanceByTime(new When.When(v1), new When.When(v2)));
 }
-//calc unique & specific votes for each mbm[mb.id][v]
+
+//3determine the unique & specific votes for each mbm[mb.id][v]
 function calcDistMatrix() {
     var mbVoteMatrix = [mbVotes.length];
     mbVotes.forEach(m => {
@@ -122,7 +121,7 @@ function calcDistMatrix() {
 
     return mbVoteMatrix;
 };
-//foreach vote calculate mb participation chances
+//4 foreach vote calculate mb participation chances
 function calcPostDist(mbVoteMatrix) {
     voteParticipationMatrix = [];
     mbVoteMatrix.forEach(element => {
@@ -146,11 +145,13 @@ function isInMatrix(elem, mat) {
     )
     return false;
 };
-
 //main 
 function main(circleId) {
     mbVotes = getMbVotes(circleId);
     var joints = [mbVotes.length];
+
+
+
     for (let i = 0; i < mbVotes.length; i++)
         joints[i] = [mbVotes.length];
     for (let j = 0; j < mbVotes.length; j++) {
