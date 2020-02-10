@@ -56,14 +56,14 @@ exports.getVotesByMemberId = function (req, res) {
 };
 
 exports.addVote = function (req, res) {
-  console.log(JSON.stringify(req.body));
+  console.log("add vote: "  +JSON.stringify(req.body));
   let { memberId, circleId, numberofpeople, placename, spotType, location,
     createdAt, when } = req.body;
   var wenvar = new newWhen(req.body.when);
   var werr = {
-    'placename': req.body.where.placename,
-    'spotType': req.body.spotType,
-    'location': req.body.location
+    'placename': req.body.where.placeName,
+    'spotType': req.body.where.spotType,
+    'location': req.body.where.location
   };
   var wervar = new newWhere(werr);
 

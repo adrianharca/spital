@@ -81,8 +81,26 @@ function Where(vote) {
 
     this.placename = vote.placename;
     this.spottype = vote.spottype;
+    var locationArray;
     this.location = [];
-    var locationArray = JSON.parse(vote.location);
+    console.log("vote: " + JSON.stringify(vote));
+    if (vote.location!=null)
+      locationArray = vote.location;
+    
+    if ((typeof vote.where!=='undefined') && (typeof vote.where.location!=='undefined')){
+      if (JSON.stringify(vote.location).indexOf("\\")>0)
+        locationArray = JSON.parse(vote.where.location);
+      else
+        locationArray = vote.where.location;
+    }
+    else{
+  if (JSON.stringify(vote.location).indexOf("\\")>0){
+    console.log(vote.location);
+    locationArray = JSON.parse(vote.location);
+  }
+    else
+    locationArray =vote.location;
+    }
     if (Array.isArray(locationArray)) {
       locationArray.forEach(
         a => {

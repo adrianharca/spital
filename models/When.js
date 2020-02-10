@@ -2,15 +2,16 @@ function When(c) {
   var when = {};
   if (c != null) {
     if (c.date != undefined) {
-      when.date = new Date(parseInt(c.date, 10));
-      /*
-      if (this.date==null){
-          this.date = new Date(c.date);
-      }*/
+      if (!isNaN(c.date))
+          when.date = new Date(parseInt(c.date, 10));
+      else
+          when.date = new Date(c.date);
     }
     if (c.endDate != undefined) {
-      when.endDate = new Date(parseInt(c.endDate, 10));
-      // this.endDate = Date.parse(c.endDate);
+      if (!isNaN(c.date))
+        when.endDate = new Date(parseInt(c.endDate, 10));
+      else
+        when.endDate = new Date(c.endDate);
     }
     when.timeOfDay = c.timeofday;
     when.isFlexible = c.isFlexible;
