@@ -31,6 +31,7 @@ function renderCircle(c) {
   const fields = ['id', 'theme', 'description', 'status',
     'initiatorid', 'image', ' invitationOnly', 'openToAnyone',
     'createdAt', 'updatedAt', 'deletedAt'];
+    if (c!=null){
   fields.forEach((item, k) => {
     console.log(item, ' ', c[item]);
     container[item] = c[item];
@@ -57,6 +58,10 @@ function renderCircle(c) {
   //container.image = undefined;
   container.image = c.data;
   return container;
+}
+else{
+  return {};
+}
 };
 function placeConstructor(latitudeVar, longitudeVar) {
   var place = {};
