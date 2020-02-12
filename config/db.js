@@ -9,7 +9,7 @@ const ImageEntity = require("../models/ImageEntity");
 
 
 
-const sequelize = new Sequelize('meetings', 'root', 'root', {
+const sequelize = new Sequelize('circles', 'root', 'root', {
     host: 'localhost',
     port: '3308',
     dialect: 'mysql',
