@@ -1,6 +1,6 @@
 
 // const User = require('./User');
-// const Circle = require('./Circle');
+// const Meeting = require('./Meeting');
 // const Member = require('./Member');
 // const Vote = require('./Vote');
 // console.log('associations.js ')
@@ -15,8 +15,8 @@
 
 
 
-//   //   Circle.associate = (models)=>
-//   Circle.belongsTo(Member, {
+//   //   Meeting.associate = (models)=>
+//   Meeting.belongsTo(Member, {
 //     as: "Initiator",
 //     // targetKey: "initiatorid"
 //     foreignKey: "initiatorid"
@@ -24,7 +24,7 @@
 //   });
 
 //   // User.associate =(models)=>
-//   Circle.hasOne(Member, {
+//   Meeting.hasOne(Member, {
 //     as: 'Initiator',
 //       foreignKey: "initiatorid",
 //     //     foreignKeyConstraint:true 
@@ -34,18 +34,18 @@
 
 
 //   // Member.associate = (models)=> 
-//   Member.belongsTo(Circle, {
-//     as: "Circle",
+//   Member.belongsTo(Meeting, {
+//     as: "Meeting",
 //     //   constraints:false
-//     foreignKey: "circleId"
+//     foreignKey: "meetingId"
 //   });
 
 
-//   //   Circle.associate = (models) => 
-//   Circle.hasMany(Member, {
+//   //   Meeting.associate = (models) => 
+//   Meeting.hasMany(Member, {
 //     as: "Member",
 //     constraints: false
-//     // foreignKey: "circleId",
+//     // foreignKey: "meetingId",
 //     // foreignKeyConstraint:true 
 
 //   });
@@ -70,23 +70,23 @@
 
 
 //   //   Vote.associate = (models) => 
-//   Vote.belongsTo(Circle, {
-//     as: "Circle",
+//   Vote.belongsTo(Meeting, {
+//     as: "Meeting",
 
-//     //    foreignKey:"circleId"
-//     foreignKey: "circleId"
+//     //    foreignKey:"meetingId"
+//     foreignKey: "meetingId"
 //   });
 
-//   // Circle.associate = (models) => 
-//   Circle.hasMany(Vote, {
+//   // Meeting.associate = (models) => 
+//   Meeting.hasMany(Vote, {
 //     as: "Options",
 //     constraints: false
-//     // foreignKey: "circleId",
+//     // foreignKey: "meetingId",
 //     // foreignKeyConstraint:true 
 //   });
 
-//   // Circle.belongsToMany(User, {through: 'Member'});
-//   // User.belongsToMany(Circle,{through:'Member'});
+//   // Meeting.belongsToMany(User, {through: 'Member'});
+//   // User.belongsToMany(Meeting,{through:'Member'});
 
 
 //   console.log('assocations r made')

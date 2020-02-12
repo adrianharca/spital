@@ -1,4 +1,4 @@
-var Circle = require("../models/Circle");
+var Meeting = require("../models/Circle");
 var ImageEntity = require("../models/ImageEntity");
 var Image = require("../models/Image");
 var When = require('../models/When').When;
@@ -6,7 +6,7 @@ var whereMaker = require('../models/Where');
 var Global = require("../functions.js");
 require("../functions.js");
 //var router= require('../server')
-console.log("circle_json_ctrl");
+console.log("meeting_json_ctrl");
 
 // exports.demoadd = function (req, res) {
 //   const data = {
@@ -16,52 +16,52 @@ console.log("circle_json_ctrl");
 //   }
 //   let { theme, description, initiatorid } = data;
 
-//   Circle.create({
+//   Meeting.create({
 //     data
 //   }).then(a => {
-//     console.log('created circle ' + theme);
-//     res.redirect('/circles')
+//     console.log('created meeting ' + theme);
+//     res.redirect('/meetings')
 //   })
 //     .catch(err => console.log(err));
 // };
 
-function renderCircle(c) {
+function renderMeeting(c) {
   var container = new Object();
   // Object.assign(container, c); is di proper way to clone objs in js
   const fields = ['id', 'theme', 'description', 'status',
     'initiatorid', 'image', ' invitationOnly', 'openToAnyone',
     'createdAt', 'updatedAt', 'deletedAt'];
-    if (c!=null){
-  fields.forEach((item, k) => {
-    console.log(item, ' ', c[item]);
-    container[item] = c[item];
-  });
-  container.keywords = [];
-  container.keywords = c.keywords == null ? [] : c.keywords.split(",");
-  // container.creationDate = new Date(circleFound.creationDate);
+  if (c != null) {
+    fields.forEach((item, k) => {
+      console.log(item, ' ', c[item]);
+      container[item] = c[item];
+    });
+    container.keywords = [];
+    container.keywords = c.keywords == null ? [] : c.keywords.split(",");
+    // container.creationDate = new Date(meetingFound.creationDate);
 
-  if (c.date != undefined) {
-    container.when = new When(c);
-  }
-  if (c.location != null) {
-    container.where = whereConstructor(c.placename, c.spotType, c.location);
-  }
+    if (c.date != undefined) {
+      container.when = new When(c);
+    }
+    if (c.location != null) {
+      container.where = whereConstructor(c.placename, c.spotType, c.location);
+    }
 
-  /*
-  container.timeOfDay = c.timeofday;
-  container.placeName = c.placename;
-  container.date = c.date;
-  container.endDate = c.endDate;
-  container.location = c.location;
-  container.laceName = c.placename;
-  */
-  //container.image = undefined;
-  container.image = c.data;
-  return container;
-}
-else{
-  return {};
-}
+    /*
+    container.timeOfDay = c.timeofday;
+    container.placeName = c.placename;
+    container.date = c.date;
+    container.endDate = c.endDate;
+    container.location = c.location;
+    container.laceName = c.placename;
+    */
+    //container.image = undefined;
+    container.image = c.data;
+    return container;
+  }
+  else {
+    return {};
+  }
 };
 function placeConstructor(latitudeVar, longitudeVar) {
   var place = {};
@@ -149,12 +149,12 @@ exports.addByThemeDescriptionAndInit = function (req, res) {
     //  technologies = technologies.toLowerCase().replace(/, /g, ',');
 
     // Insert into table
-    Circle.create({
+    Meeting.create({
       theme, description, initiatorid
     })
       .then(a => {
         console.log('success');
-        res.redirect('/circles')
+        res.redirect('/meetings')
       })
       .catch(err => console.log(err));
 
@@ -163,16 +163,16 @@ exports.addByThemeDescriptionAndInit = function (req, res) {
 exports.delete = function (req, res) {
   console.log('deleted');
 };
-exports.getCircleByid = function (req, res) {
+exports.getMeetingByid = function (req, res) {
 
   idS = Number(req.params.id);
   console.log('getbyid' + idS);
-  circless = Circle.findOne({ where: { id: idS } })
+  meetingss = Meeting.findOne({ where: { id: idS } })
 
     .then(function (c) {
       res.setHeader('Content-Type', 'application/json');
-      console.log('Circle found ');
-      var container = renderCircle(c);
+      console.log('Meeting found ');
+      var container = renderMeeting(c);
       console.log(container);
 
       res.json({ container });
@@ -186,10 +186,10 @@ exports.downloadImageById = function (req, res) {
   idS = Number(req.params.id);
   console.log('getbyid' + idS);
   var mainPath = __dirname + "\\.." + "\\public\\img\\";
-  var path = mainPath + "circles";
+  var path = mainPath + "meetings";
   var pathC = require("path");
   var shell = require('shelljs');
-  images = ImageEntity.findOne({ where: { entityId: idS, entityType: "Circle" } }).then(function (imageFound) {
+  images = ImageEntity.findOne({ where: { entityId: idS, entityType: "Meeting" } }).then(function (imageFound) {
     if (imageFound != null) {
       var file = fs.readFileSync(pathC.resolve(imageFound.path), 'binary');
       res.setHeader('Content-Length', file.length);
@@ -205,13 +205,13 @@ exports.downloadImageById = function (req, res) {
 };
 
 exports.getAll = function (req, res) {
-  console.log('performing fetch all circles');
+  console.log('performing fetch all meetings');
 
   res.removeHeader;
   var result = [];
-  Circle.findAll()
+  Meeting.findAll()
     .map(l => {
-      return renderCircle(l);
+      return renderMeeting(l);
     })
     .then(
       c => {
@@ -228,10 +228,10 @@ exports.getImageById = function (req, res) {
   idS = Number(req.params.id);
   console.log('getbyid' + idS);
   var mainPath = __dirname + "\\.." + "\\public\\img\\";
-  var path = mainPath + "circles";
+  var path = mainPath + "meetings";
   var pathC = require("path");
   var shell = require('shelljs');
-  images = ImageEntity.findOne({ where: { entityId: idS, entityType: "Circle" } }).then(function (imageFound) {
+  images = ImageEntity.findOne({ where: { entityId: idS, entityType: "Meeting" } }).then(function (imageFound) {
     if (imageFound != null) {
       Image.findOne({ where: { id: imageFound.imageId } }).then(function (imageEntityFound) {
         if (imageEntityFound != null)
@@ -259,11 +259,11 @@ exports.updatebyId = function (req, res) {
   //not forget to install npm install shelljs
   //npm install buffer
   if (req.body.image != undefined) {
-    var filename = Global.createFile(req.body.image, req.body.theme + "-" + req.body.description, "circles");
+    var filename = Global.createFile(req.body.image, req.body.theme + "-" + req.body.description, "meetings");
     if (filename != "")
       ImageEntity.update(
         { path: filename },
-        { where: { entityId: req.body.id, entityType: "Circle" } }
+        { where: { entityId: req.body.id, entityType: "Meeting" } }
 
       ).
         then(function () {
@@ -312,9 +312,9 @@ exports.addOne = function (req, res) {
   }
   if (initiatorId != undefined)
     initiatoridVar = initiatorId;
-  Circle.findOne({ where: { id: req.body.id } }).then(function (circleFound) {
-    if (circleFound == null)
-      Circle.create(
+  Meeting.findOne({ where: { id: req.body.id } }).then(function (meetingFound) {
+    if (meetingFound == null)
+      Meeting.create(
         {//data
           theme, description, isFlexible: isflexibleVar, timeofday: timeofdayVar, invitationOnly, numberOfPeople,
           openToAnyone, keywords: keywordsVar, location: locationVar,
@@ -326,14 +326,14 @@ exports.addOne = function (req, res) {
            if (filename!="")
            {
            ImageEntity.create({
-             path: filename, entityId: a.id, entityType: "Circle"}). then( a => {console.log("created file")});
+             path: filename, entityId: a.id, entityType: "Meeting"}). then( a => {console.log("created file")});
            };*/
 
 
           if (req.body.image != null) {
-            var filename = Global.createFile(req.body.image, req.body.theme + "-" + req.body.description, "circles");
+            var filename = Global.createFile(req.body.image, req.body.theme + "-" + req.body.description, "meetings");
             if (filename != null && filename != undefined) {
-              Global.createImageEntity("Circle", filename, a.id);
+              Global.createImageEntity("Meeting", filename, a.id);
             }
           }
           console.log('success');

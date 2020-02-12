@@ -16,8 +16,8 @@ function getMbIntersection(i, j) {
 };
 
 
-function main(circleId) {
-    mbVotes = getMbVotes(circleId);
+function main(meetingId) {
+    mbVotes = getMbVotes(meetingId);
     var joints = [mbVotes.length];
 
 

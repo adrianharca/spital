@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../config/db');
 const Sequelize = require('sequelize');
 const User = require('../models/User');
-var taskController = require("../controllers/circle_json_ctrl");
+var taskController = require("../controllers/meeting_json_ctrl");
 const Op = Sequelize.Op;
 
 //Use this class for interface functions & put ur json api in controllers/users_json_ctrl

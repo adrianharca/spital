@@ -11,7 +11,7 @@ const Op = Sequelize.Op;
 console.log("routes/votes.js");
 function renderVote(c) {
   var container = new Object();
-  const fields = ['id', 'memberId', 'circleId', 'numberofpeople',
+  const fields = ['id', 'memberId', 'meetingId', 'numberofpeople',
     //    'date', 'endDate',
     //    'placename', 'location', 'spotType',
     'createdAt', 'updatedAt', 'deletedAt']
@@ -48,7 +48,7 @@ router.get('/addVote', (req, res) => res.render('addVote'));
 
 // Add a gig
 router.post('/addVote', (req, res) => {
-  let { memberId, circleId, numberofpeople,
+  let { memberId, meetingId, numberofpeople,
     createdAt, date, endDate, where } = req.body;
   let errors = [];
 

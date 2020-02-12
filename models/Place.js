@@ -5,8 +5,8 @@ const Sequelize = require('sequelize');
 // const Model = Sequelize.Model;
 
 class Place extends Sequelize.Model {
-    // Circle.init({
-    // Circle = db.define('circle', {
+    // Meeting.init({
+    // Meeting = db.define('meeting', {
     static init(sequelize, Sequelize) {
         return super.init({
             id: {
@@ -51,11 +51,11 @@ class Place extends Sequelize.Model {
         );
     };
     // static associate(models) {
-    //     // Circle.associate = (models) => {
+    //     // Meeting.associate = (models) => {
     //     this.nk_members = this.hasMany(models.Member, {
     //         // as: "Member",
     //         constraints: false
-    //         // foreignKey: "circleId",
+    //         // foreignKey: "meetingId",
     //         // foreignKeyConstraint:true 
 
     //     });
@@ -65,7 +65,7 @@ class Place extends Sequelize.Model {
     //             model: models.ImageEntity,
     //             unique: false,
     //             scope: {
-    //                 entityType: 'Circle'
+    //                 entityType: 'Meeting'
     //             }
     //         },
     //         constraints: false,
@@ -73,14 +73,14 @@ class Place extends Sequelize.Model {
     //     }
     //     );
 
-    //     // Circle.hasMany(models.Vote, {
+    //     // Meeting.hasMany(models.Vote, {
     //     //   as: "Votes",
     //     //   constraints: false
-    //     //   // foreignKey: "circleId",
+    //     //   // foreignKey: "meetingId",
     //     //   // foreignKeyConstraint:true 
     //     // });
 
-    //     // this.fkInit = Circle.belongsTo(models.Member, {
+    //     // this.fkInit = Meeting.belongsTo(models.Member, {
     //     //   as: "Initiator",
     //     //   // targetKey: "initiatorid"
     //     //   foreignKey: "initiatorid"

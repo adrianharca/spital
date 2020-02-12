@@ -28,7 +28,7 @@ exports.createFile = function (imageBody, fileNameVar, folder){
   };
 
   function generateJoinQuery(queryType ){
-    return "SELECT Distinct circles."+ queryType +".*,circles.image.path FROM circles."+ queryType+ " LEFT OUTER JOIN circles.imageentity on circles."+ queryType +".id = circles.imageentity.entityId and circles.imageentity.entityType='"+ queryType + "'"
+    return "SELECT Distinct meetings."+ queryType +".*,meetings.image.path FROM meetings."+ queryType+ " LEFT OUTER JOIN meetings.imageentity on meetings."+ queryType +".id = meetings.imageentity.entityId and meetings.imageentity.entityType='"+ queryType + "'"
 
   }
   exports.getAllEntitiesWithImages = function (res, entityType) {

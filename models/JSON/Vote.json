@@ -1,36 +1,37 @@
-{"allOf": [
-  {
-      "$ref": "#/definitions/Dates"
-  },
 {
-    "title": "Vote",
-    "type": "object",
-    "properties": {
-      "id": {
-        "type": "integer"
-      },
-      "memberid": {
-        "type": "integer"
-      },
-      "circleid": {
-        "type": "integer"
-      },
-      "date": {
-        "type": "integer"
-      },
-      "enddate": {
-        "type": "integer"
-      },
-      "timeofday":{
-        "type":"string"
-      },
-      "location": {
-        "type": "string"
-      },
-      "spot_type": {
-        "type": "string"
+  "allOf": [
+    {
+      "$ref": "#/definitions/Dates"
+    },
+    {
+      "title": "Vote",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "memberid": {
+          "type": "integer"
+        },
+        "meetingid": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "integer"
+        },
+        "enddate": {
+          "type": "integer"
+        },
+        "timeofday": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "spot_type": {
+          "type": "string"
+        }
       }
     }
-  }
-]
+  ]
 }

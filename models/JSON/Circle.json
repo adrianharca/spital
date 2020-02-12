@@ -3,7 +3,7 @@
     "$ref": "#/definitions/Dates"
   },
 {
-    "title": "Circle",
+    "title": "Meeting",
     "type": "object",
     "properties": {
       "id": {

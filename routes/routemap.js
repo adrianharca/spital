@@ -6,27 +6,27 @@ var router = express.Router();
 
 
 //Routes
-var circleController = require("../controllers/circle_json_ctrl");
+var meetingController = require("../controllers/meeting_json_ctrl");
 var memberController = require("../controllers/membas_json_ctrl")
 var userController = require("../controllers/users_json_ctrl");
 var imageController = require("../controllers/image_json_ctrl");
 var voteController = require("../controllers/vote_json_ctrl");
 var chatController = require("../controllers/chat_json_ctrl");
-//prefix /json/circles/etc
+//prefix /json/meetings/etc
 // router.use(bodyparser.json);
-router.route("/circleList").get(imageController.getAllCircles);
+router.route("/meetingList").get(imageController.getAllMeetings);
 router.route("/userList").get(imageController.getAllUsers);
-router.route("/circles").get(circleController.getAll).
-    post(circleController.addOne).
-    delete(circleController.delete);
-router.route("/circles/:id/image").get(circleController.getImageById);
-router.route("/circles/:id/image/download").get(circleController.downloadImageById);
-router.route("/circles/:id").get(circleController.getCircleByid).
-    post(circleController.addOne).
-    put(circleController.updatebyId).
-    delete(circleController.deleteByid);
+router.route("/meetings").get(meetingController.getAll).
+    post(meetingController.addOne).
+    delete(meetingController.delete);
+router.route("/meetings/:id/image").get(meetingController.getImageById);
+router.route("/meetings/:id/image/download").get(meetingController.downloadImageById);
+router.route("/meetings/:id").get(meetingController.getMeetingByid).
+    post(meetingController.addOne).
+    put(meetingController.updatebyId).
+    delete(meetingController.deleteByid);
 
-router.route("/circles/:id/members/").get(memberController.getAllMembersByCircle);
+router.route("/meetings/:id/members/").get(memberController.getAllMembersByMeeting);
 router.route("/members").get(memberController.getMemberById).
     post(memberController.createMember).
     delete(memberController.deleteMember);
@@ -36,7 +36,7 @@ router.route("/members/:id/votes").get(voteController.getVotesByMemberId)
     .post(voteController.addVote).delete(voteController.deleteVoteByid);
 router.route('/votes').get(voteController.getAll);
 router.route("/votes").post(voteController.addVote).delete(voteController.deleteVoteByid);
-// router.route("/circles/:id/votes/:voteid").get(circleController.getVotesByCircle);
+// router.route("/meetings/:id/votes/:voteid").get(meetingController.getVotesByMeeting);
 
 router.route("/users").get(userController.getAllUsers)//not needed
     .post(userController.createUser)
@@ -45,7 +45,7 @@ router.route("/users").get(userController.getAllUsers)//not needed
 
 //once we have auth tokens figured out
 router.route("/ME").get(userController.getSelfData);
-// router.route("/ME/circles").get(circleController.getSelfData);
+// router.route("/ME/meetings").get(meetingController.getSelfData);
 // router.route("/ME/events").get(meetingCtrl.getSelfData);
 
 router.route("/users/:id/image").get(userController.getImageById);
@@ -67,5 +67,5 @@ router.route("/images").get(imageController.getImages)
 
 // router.route("/members");
 //INTERFACE
-// router.use("/circles", require('./circles'));
+// router.use("/meetings", require('./meetings'));
 module.exports = router;

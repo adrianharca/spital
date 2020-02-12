@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 console.log('config/db.js');
-const Circle = require("../models/Circle");
+const Meeting = require("../models/Circle");
 const Member = require("../models/Member");
 const User = require("../models/User");
 const Vote = require("../models/Vote");
@@ -9,7 +9,7 @@ const ImageEntity = require("../models/ImageEntity");
 
 
 
-const sequelize = new Sequelize('circles', 'root', 'root', {
+const sequelize = new Sequelize('meetings', 'root', 'root', {
     host: 'localhost',
     port: '3308',
     dialect: 'mysql',
@@ -33,7 +33,7 @@ const sequelize = new Sequelize('circles', 'root', 'root', {
     timezone: '+02:00' //for writing to database
 });
 const models = {
-    Circle: Circle.init(sequelize, Sequelize),
+    Meeting: Meeting.init(sequelize, Sequelize),
     Member: Member.init(sequelize, Sequelize),
     ImageEntity: ImageEntity.init(sequelize, Sequelize),
     User: User.init(sequelize, Sequelize),

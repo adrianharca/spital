@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 class ImageEntity extends Sequelize.Model {
-  
+
   static init(sequelize, Sequelize) {
     return super.init({
       id: {
@@ -29,32 +29,32 @@ class ImageEntity extends Sequelize.Model {
         paranoid: true
       }
     );
-  } static associate(models){
+  } static associate(models) {
     /*
-    this.fkIECircle=this.belongsTo(models.Circle, {
-      // as: "Circle",
+    this.fkIEMeeting=this.belongsTo(models.Meeting, {
+      // as: "Meeting",
       //   constraints:false
       foreignKey: "entityId"
     });
     this.fkIEUser=this.belongsTo(models.User, {
-      // as: "Circle",
+      // as: "Meeting",
       //   constraints:false
       foreignKey: "entityId"
     });*/
     /*
     this.fkIEUser=this.belongsTo(models.User, {
-      // as: "Circle",
+      // as: "Meeting",
       //   constraints:false
       foreignKey: "entityId"
     });
     this.fkIEMember=this.belongsTo(models.Member, {
-      // as: "Circle",
+      // as: "Meeting",
       //   constraints:false
       foreignKey: "entityId"
     });
     */
-    }
-   
+  }
+
 }
 // };}}
 module.exports = ImageEntity;

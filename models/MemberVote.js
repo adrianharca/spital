@@ -32,12 +32,12 @@ class MemberVote extends Sequelize.Model {
     } static associate(models) {
 
         // this.fkMeeting=this.belongsTo(models.Meeting, {
-        //   // as: "Circle",
+        //   // as: "Meeting",
         //   //   constraints:false
         //   foreignKey: "meetId"
         // });
         // this.fkMb=this.belongsTo(models.MeetingMember {
-        //   // as: "Circle",
+        //   // as: "Meeting",
         //   //   constraints:false
         //   foreignKey: "entityId"
         // });
@@ -47,12 +47,12 @@ class MemberVote extends Sequelize.Model {
 
         /*
         this.fkIEUser=this.belongsTo(models.User, {
-          // as: "Circle",
+          // as: "Meeting",
           //   constraints:false
           foreignKey: "entityId"
         });
         this.fkIEMember=this.belongsTo(models.Member, {
-          // as: "Circle",
+          // as: "Meeting",
           //   constraints:false
           foreignKey: "entityId"
         });

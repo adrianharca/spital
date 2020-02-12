@@ -1,28 +1,29 @@
-{"allOf": [
-  {
-      "$ref": "#/definitions/Dates"
-  },
 {
-    "title": "Member",
-    "type": "object",
-    "description": "model for member data",
-    "properties": {
-      "id": {
-        "type": "integer"
-      },
-      "circleid": {
-        "type": "integer"
-      },
-      "age": {
-        "type": "integer"
-      },
-      "userid": {
-        "type": "integer"
-      },
-      "nickname": {
-        "type": "string"
+  "allOf": [
+    {
+      "$ref": "#/definitions/Dates"
+    },
+    {
+      "title": "Member",
+      "type": "object",
+      "description": "model for member data",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "meetingid": {
+          "type": "integer"
+        },
+        "age": {
+          "type": "integer"
+        },
+        "userid": {
+          "type": "integer"
+        },
+        "nickname": {
+          "type": "string"
+        }
       }
     }
-  }
-]
+  ]
 }

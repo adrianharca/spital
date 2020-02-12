@@ -72,12 +72,12 @@ function MemberVote(mb, votes) {
 }
 
 
-//1. get a list of (member, votes) pairs for given circle
+//1. get a list of (member, votes) pairs for given meeting
 var mbVotes;
-function getMbVotes(circleId) {
-    var circId = Number(circleId);
+function getMbVotes(meetingId) {
+    var circId = Number(meetingId);
     var membas = [];
-    membas = Circle.findByPk(circId)
+    membas = Meeting.findByPk(circId)
         .then(c => {
             if (c != null)
                 c.getMembers()
@@ -88,7 +88,7 @@ function getMbVotes(circleId) {
                     membas.push(MemberVote(mb, vs));
                 })
             )
-            console.log('members for circle ' + circleId + ' ');
+            console.log('members for meeting ' + meetingId + ' ');
             return membas;
         }).catch(e => console.log(e));
 
@@ -177,8 +177,8 @@ function bestCount(vs) {
 }
 
 //main 
-function main(circleId) {
-    mbVotes = getMbVotes(circleId);
+function main(meetingId) {
+    mbVotes = getMbVotes(meetingId);
     var joints = [mbVotes.length];
 
 

@@ -7,22 +7,23 @@ exports.delete = function (req, res) {
 }
 
 
-function createImage(entityTypeVar, filenameVar, entityIdVar){
+function createImage(entityTypeVar, filenameVar, entityIdVar) {
   console.log("file name for image:" + filenameVar);
-  images = Image.findOne({ where: { path: filenameVar} })
-  .then(function (imageFound) {
-    if (imageFound==null){
-    Image.create({path: filenameVar}).then( bb=> {
-      if (bb!=null){
-      console.log("created image " + JSON.stringify(bb));
-      ImageEntity.create({
-        imageId: bb.id, entityId: entityIdVar, entityType: entityTypeVar}). then( a => {console.log("created file for " +entityTypeVar.toString().toLowerCase()) + " with " + JSON.stringify(a)});
-      };
-    });
- 
-  }
-}
-  );
+  images = Image.findOne({ where: { path: filenameVar } })
+    .then(function (imageFound) {
+      if (imageFound == null) {
+        Image.create({ path: filenameVar }).then(bb => {
+          if (bb != null) {
+            console.log("created image " + JSON.stringify(bb));
+            ImageEntity.create({
+              imageId: bb.id, entityId: entityIdVar, entityType: entityTypeVar
+            }).then(a => { console.log("created file for " + entityTypeVar.toString().toLowerCase()) + " with " + JSON.stringify(a) });
+          };
+        });
+
+      }
+    }
+    );
   /*images = ImageEntity.findOne({ where: { id: entityIdVar, entityType: entityTypeVar } })
   .then(function (imageFound) {
     if (imageFound==null)
@@ -38,9 +39,9 @@ exports.updateImage = function (req, res) {
       if (imageFound == null) {
 
         if (filename != "") {
-        
+
           Global.createImageEntity(req.body.type, filename, req.body.id);
-         createImage(req.body.type, filename, req.body.id);
+          createImage(req.body.type, filename, req.body.id);
         }
         console.log('success');
         res.json(req.body.id);
@@ -64,8 +65,8 @@ exports.getAllUsers = function (req, res, entityType) {
   Global.getAllEntitiesWithImages(res, "User");
 };
 
-exports.getAllCircles = function (req, res) {
-  Global.getAllEntitiesWithImages(res, "Circle");
+exports.getAllMeetings = function (req, res) {
+  Global.getAllEntitiesWithImages(res, "Meeting");
 
 }
 
@@ -89,17 +90,17 @@ exports.addImage = function (req, res) {
   console.log("add image:" + JSON.stringify(req.body.entityId) + " " + req.body.type + "; filename: " + req.body.filename);
   images = ImageEntity.findAll({ where: { id: req.body.entityId, entityType: req.body.type } })
     .then(function (imageFound) {
-console.log("details: " + req.body.entityId + " " + req.body.type);
+      console.log("details: " + req.body.entityId + " " + req.body.type);
       var filename = Global.createFile(req.body.image, req.body.filename, req.body.type + "s");
 
       console.log("created the file");
-      if (imageFound == null){
+      if (imageFound == null) {
         if (filename != "") {
-       //   Global.createImageEntity(req.body.type, filename, req.body.id);
-         createImage(req.body.type, filename, req.body.id);
+          //   Global.createImageEntity(req.body.type, filename, req.body.id);
+          createImage(req.body.type, filename, req.body.id);
         }
       }
-      else{
+      else {
         console.log("we have found the file: " + JSON.stringify(imageFound));
       }
     });
