@@ -70,7 +70,7 @@ function whereConstructor(placename, spottype, location) {
   whereConstr.placeName = placename;
   whereConstr.spotType = spottype;
   if (location != undefined) {
-    locationArray = JSON.parse(location);
+    locationArray = location;
     whereConstr.location = [];
     if (Array.isArray(locationArray)) {
       locationArray.forEach(

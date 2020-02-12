@@ -145,6 +145,37 @@ function isInMatrix(elem, mat) {
     )
     return false;
 };
+
+function simpleCount(mitId) {
+    //or find all then bestCount
+    MemberVote.findAll({
+        where: { meetId: mitId },
+        attributes: ['voteId',
+            sequelize.fn('count', sequelize.col('memberId'))],
+        group: ["MemberVote.voteId"]
+    }).
+        then(mvL => {
+            console.log(mvl)
+        }
+        );
+};
+
+function bestCount(vs) {
+    var map = new Map();
+    if (vs != null && vs.isArray) {
+
+        vs.forEach(v => {
+            if (map.has(v.voteId))
+                map.get[v.voteId].push(v.memberId);
+            else
+                map.set(v.voteId, [v.memberId]);
+        }
+        )
+
+    }
+    return map;
+}
+
 //main 
 function main(circleId) {
     mbVotes = getMbVotes(circleId);
