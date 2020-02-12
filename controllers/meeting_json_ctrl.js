@@ -259,7 +259,7 @@ exports.updatebyId = function (req, res) {
   //not forget to install npm install shelljs
   //npm install buffer
   if (req.body.image != undefined) {
-    var filename = Global.createFile(req.body.image, req.body.theme + "-" + req.body.description, "meetings");
+    var filename = Global.createFile(req.body.image, req.body.theme + "-" + idS, "meetings");
     if (filename != "")
       ImageEntity.update(
         { path: filename },
@@ -329,13 +329,13 @@ exports.addOne = function (req, res) {
              path: filename, entityId: a.id, entityType: "Meeting"}). then( a => {console.log("created file")});
            };*/
 
-
-          if (req.body.image != null) {
-            var filename = Global.createFile(req.body.image, req.body.theme + "-" + req.body.description, "meetings");
-            if (filename != null && filename != undefined) {
-              Global.createImageEntity("Meeting", filename, a.id);
-            }
-          }
+          /*
+                    if (req.body.image != null) {
+                      var filename = Global.createFile(req.body.image, req.body.theme + "-" + req.body.description, "meetings");
+                      if (filename != null && filename != undefined) {
+                        Global.createImageEntity("Meeting", filename, a.id);
+                      }
+                    }*/
           console.log('success');
           res.json(a.id);
         })
