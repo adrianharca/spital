@@ -44,16 +44,41 @@ exports.getImageById = function (req, res) {
   };
 
 exports.getAllMembersByCircle = (req, res) => {
-    circleId = Number(req.params.id);
+    cId = Number(req.params.id);/*
     membas = Circle.findByPk(circleId).then(c =>{
-       if (c!=null)
-       c.getMembers().map(renderMember) })
+       if (c!=null){
+       t =c.getMembers().map(renderMember);
+       }
+       else
+       {
+           res.json([{}]);
+       }
+    })
         .then(mbs => {
+            if (mbs!=null){
             res.contentType('application/json');
             res.json( mbs );
             console.log('members for circle ' + circleId + ' ');
+            }
+            else{
+                res.json([]);
+            }
         } ).catch(e => console.log(e));
-    
+        */
+       Member.findAll({ where: { circleId: cId }}).
+       map(renderMember).
+       then(member => {
+           
+         res.contentType('application/json');
+           if (member!=null){
+         res.json(member);
+         console.log('result: ' + JSON.stringify(member) + ' ');
+           }
+           else{
+            res.json([]);
+           }
+       })
+       .catch(err => console.log(err));
 };
 
 exports.getMemberById = (req, res) => {

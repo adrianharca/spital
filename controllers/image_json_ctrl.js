@@ -1,4 +1,5 @@
 const ImageEntity = require('../models/ImageEntity');
+const Image = require('../models/Image');
 var Global = require("../functions.js");
 console.log("image_json_ctrl");
 
@@ -39,7 +40,7 @@ exports.updateImage = function (req, res) {
 
         if (filename != "") {
         
-          Global.createImageEntity(req.body.type, filename, req.body.id);
+         Global.createImageEntity(req.body.type, filename, req.body.id);
          createImage(req.body.type, filename, req.body.id);
         }
         console.log('success');
@@ -93,10 +94,10 @@ console.log("details: " + req.body.entityId + " " + req.body.type);
       var filename = Global.createFile(req.body.image, req.body.filename, req.body.type + "s");
 
       console.log("created the file");
-      if (imageFound == null){
+      if (imageFound == null || JSON.stringify(imageFound).length<5){
         if (filename != "") {
-       //   Global.createImageEntity(req.body.type, filename, req.body.id);
-         createImage(req.body.type, filename, req.body.id);
+       //  Global.createImageEntity(req.body.type, filename, req.body.id);
+         createImage(req.body.type, filename, req.body.entityId);
         }
       }
       else{
