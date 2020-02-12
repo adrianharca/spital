@@ -87,7 +87,7 @@ exports.updateUserById = function (req, res) {
   });
 
 }
-exports.getImageById = function (req, res) {  
+exports.getImageById = function (req, res) {
   idS = Number(req.params.id);
 
   var mainPath = __dirname + "\\.." + "\\public\\img\\";
@@ -97,46 +97,46 @@ exports.getImageById = function (req, res) {
   if (!isNaN(idS)) {
     console.log('getbyid' + idS);
     circless = ImageEntity.findOne({ where: { entityId: idS, entityType: "User" } }).then(function (imageEntityFound) {
-      if (imageEntityFound!=null){
-      Image.findOne({id: imageEntityFound.imageId}). then(function (imageFound) {
+      if (imageEntityFound != null) {
+        Image.findOne({ id: imageEntityFound.imageId }).then(function (imageFound) {
 
-        if (imageFound != null) {
-          console.log(imageFound.path);
-          res.sendFile(pathC.resolve(imageFound.path));
-        }
-        else {
-          res.send("null");
-        }
-      });
+          if (imageFound != null) {
+            console.log(imageFound.path);
+            res.sendFile(pathC.resolve(imageFound.path));
+          }
+          else {
+            res.send("null");
+          }
+        });
+      }
+      else {
+        res.send("null");
+      }
     }
-    else{
-      res.send("null");
-    }
-    }
-  ).error(function (err) {
+    ).error(function (err) {
       console.log("Error:" + "no image found for user");
       res.send(err);
     });
   }
-  else{
+  else {
     res.send("not a number");
   }
- // res.send("Aaa");
+  // res.send("Aaa");
 }
 exports.getAllUsers = function (req, res) {
   User.findAll().map(l => {
 
-   /* container = {};
-    container = l;
-    container.interests = l.interests.split(",");
-    container.accountType = l.acctype;*/
+    /* container = {};
+     container = l;
+     container.interests = l.interests.split(",");
+     container.accountType = l.acctype;*/
     container = renderUser(l);
     return container;
   })
     .then(
       c => {
 
-        res.json( c );
+        res.json(c);
 
         console.log('result: shown all users ');
       })
@@ -267,4 +267,9 @@ exports.createUser = function (req, res) {
 
   }
 
-}
+};
+
+//call with authToken
+exports.getSelfData = function (uid) {
+
+};

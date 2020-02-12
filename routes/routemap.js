@@ -35,13 +35,19 @@ router.route("/members/:id/image").get(memberController.getImageById);
 router.route("/members/:id/votes").get(voteController.getVotesByMemberId)
     .post(voteController.addVote).delete(voteController.deleteVoteByid);
 router.route('/votes').get(voteController.getAll);
-    router.route("/votes").post(voteController.addVote).delete(voteController.deleteVoteByid);
+router.route("/votes").post(voteController.addVote).delete(voteController.deleteVoteByid);
 // router.route("/circles/:id/votes/:voteid").get(circleController.getVotesByCircle);
 
-router.route("/users").get(userController.getAllUsers)
+router.route("/users").get(userController.getAllUsers)//not needed
     .post(userController.createUser)
     .put(userController.updateUserById)
     .delete(userController.delete);
+
+//once we have auth tokens figured out
+router.route("/ME").get(userController.getSelfData);
+// router.route("/ME/circles").get(circleController.getSelfData);
+// router.route("/ME/events").get(meetingCtrl.getSelfData);
+
 router.route("/users/:id/image").get(userController.getImageById);
 router.route("/usersName/:name").get(userController.getUserByName);
 
