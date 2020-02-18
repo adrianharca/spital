@@ -9,7 +9,7 @@ exports.checkForStale = function (device, server) {
 
 exports.synchronize = (objlist) => {
     objlist.array.forEach(element => {
-        Meeting.findByPk(element.id).then(c => this.checkForStale(element, c))
+        Circle.findByPk(element.id).then(c => this.checkForStale(element, c))
 
     });
 

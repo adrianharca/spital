@@ -1,12 +1,12 @@
 <section id="add" class="container">
   <div class="form-wrap">
-    <h1>Add meeting</h1>
+    <h1>Add circle</h1>
     {{#each errors}}
     <div class="error">
       <p>{{text}}</p>
     </div>
     {{/each}}
-    <form action="/meetings/add" method="POST">
+    <form action="/circles/add" method="POST">
       <div class="input-group">
         <label for="theme"> Theme</label>
         <input type="text" name="theme" id="theme" class="input-box"

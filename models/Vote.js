@@ -17,7 +17,7 @@ class Vote extends Sequelize.Model {
       memberId: {
         type: Sequelize.INTEGER
       },
-      meetingId: {
+      circleId: {
         type: Sequelize.INTEGER
       },
       //   status:{
@@ -60,11 +60,11 @@ class Vote extends Sequelize.Model {
       //   constraints:false
       foreignKey: "memberId"
     });
-    this.fkMeeting = this.belongsTo(models.Meeting, {
-      as: "Meeting",
+    this.fkCircle = this.belongsTo(models.Circle, {
+      as: "Circle",
 
-      //    foreignKey:"meetingId"
-      foreignKey: "meetingId"
+      //    foreignKey:"circleId"
+      foreignKey: "circleId"
     });
   };
 }

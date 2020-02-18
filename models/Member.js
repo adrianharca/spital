@@ -14,10 +14,10 @@ class Member extends Sequelize.Model {
         primaryKey: true,
         autoIncrement: true
       },
-      meetingId: {
+      circleId: {
         type: Sequelize.INTEGER
       },
-      age: {
+      meetId: {
         type: Sequelize.INTEGER
       },
       userId: {
@@ -26,12 +26,13 @@ class Member extends Sequelize.Model {
       nickname: {
         type: Sequelize.TEXT
       },
-      motivation: {
-        type: Sequelize.TEXT
-      },
-      image: {
+      motivation: {//todo:remove
         type: Sequelize.TEXT
       }
+      // ,
+      // image: {
+      //   type: Sequelize.TEXT
+      // }
     }, {
       sequelize,
       modelName: 'member',
@@ -44,10 +45,10 @@ class Member extends Sequelize.Model {
   // Member.associate=(models)=>{
   static associate(models) {
 
-    this.fkMeeting = this.belongsTo(models.Meeting, {
-      // as: "Meeting",
+    this.fkCircle = this.belongsTo(models.Circle, {
+      // as: "Circle",
       //   constraints:false
-      foreignKey: "meetingId"
+      foreignKey: "circleId"
     });
     this.nk_image = this.belongsToMany(models.Image, {
       through: {
@@ -61,7 +62,7 @@ class Member extends Sequelize.Model {
       foreignKey: "imageId"
     }
     );
-    // this.fkInitiator=this.hasOne(models.Meeting,{
+    // this.fkInitiator=this.hasOne(models.Circle,{
     //   as:"Initiator",
     //   foreignKey:"initiatorid"
     // })

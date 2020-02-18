@@ -1,10 +1,10 @@
-var Meeting = require("../models/Circle");
+var Circle = require("../models/Circle");
 var Member = require("../models/Member");
 var Global = require("../functions.js");
 function renderMember(m) {
     var holder = new Object();
     const fields = ['id',
-        'meetingId',
+        'circleId',
         'age',
         'userId',
         'nickname',
@@ -43,7 +43,7 @@ exports.getImageById = function (req, res) {
     });
 };
 
-exports.getAllMembersByMeeting = (req, res) => {
+exports.getAllMembersByCircle = (req, res) => {
     cId = Number(req.params.id);/*
     membas = Circle.findByPk(circleId).then(c =>{
        if (c!=null){
@@ -65,7 +65,7 @@ exports.getAllMembersByMeeting = (req, res) => {
             }
         } ).catch(e => console.log(e));
         */
-    Member.findAll({ where: { meetingId: cId } }).
+    Member.findAll({ where: { circleId: cId } }).
         map(renderMember).
         then(member => {
 
@@ -90,12 +90,12 @@ exports.getMemberById = (req, res) => {
             .then(function (mb) {
                 container = {};
                 container = mb;
-                //   container.keywords = meetingFound.keywords.split(",");
-                //   container.creationDate = new Date(meetingFound.creationDate);
-                //   container.date = new Date(meetingFound.date);
+                //   container.keywords = circleFound.keywords.split(",");
+                //   container.creationDate = new Date(circleFound.creationDate);
+                //   container.date = new Date(circleFound.date);
                 //   //container.image = undefined;
-                //   container.image = meetingFound.data;
-                //   container.endDate = new Date(meetingFound.endDate);
+                //   container.image = circleFound.data;
+                //   container.endDate = new Date(circleFound.endDate);
                 res.send(container);
 
             }).error(function (err) {
@@ -108,12 +108,12 @@ exports.getMemberById = (req, res) => {
             .then(function (mb) {
                 container = {};
                 container = mb;
-                //   container.keywords = meetingFound.keywords.split(",");
-                //   container.creationDate = new Date(meetingFound.creationDate);
-                //   container.date = new Date(meetingFound.date);
+                //   container.keywords = circleFound.keywords.split(",");
+                //   container.creationDate = new Date(circleFound.creationDate);
+                //   container.date = new Date(circleFound.date);
                 //   //container.image = undefined;
-                //   container.image = meetingFound.data;
-                //   container.endDate = new Date(meetingFound.endDate);
+                //   container.image = circleFound.data;
+                //   container.endDate = new Date(circleFound.endDate);
                 res.send(container);
 
             }).error(function (err) {
@@ -123,26 +123,26 @@ exports.getMemberById = (req, res) => {
 };
 /////de refacut mizeria de createmember de mai jos, prea multe cautari in baza, cand o fi mai mult itmp
 exports.createMember = (req, res) => {
-    // var circId=Number(req.params.meetingId);
-    var circId = Number(req.body.meetingId);
-    let { meetingId, userId, nickname, motivation } = req.body;
-    console.log('request for to create member ' + meetingId + ' ' + nickname);
-    // Meeting.findOne(Number(meetingId))
-    Meeting.findOne({ where: { id: meetingId } })
+    // var circId=Number(req.params.circleId);
+    var circId = Number(req.body.circleId);
+    let { circleId, userId, nickname, motivation } = req.body;
+    console.log('request for to create member ' + circleId + ' ' + nickname);
+    // Circle.findOne(Number(circleId))
+    Circle.findOne({ where: { id: circleId } })
         .then(c => {
             if (c != null) {
-                console.log("found meeting with id " + meetingId + " for member " + nickname);
-                Member.findOne({ where: { meetingId: meetingId, userId: userId } }).then(m1 => {
+                console.log("found circle with id " + circleId + " for member " + nickname);
+                Member.findOne({ where: { circleId: circleId, userId: userId } }).then(m1 => {
                     if (m1 == null) {
 
-                        console.log("creating member for meetingId= " + meetingId + " for nickname " + nickname + " " + userId);
+                        console.log("creating member for circleId= " + circleId + " for nickname " + nickname + " " + userId);
                         c.addMember(Member.
                             create({
-                                meetingId, userId, nickname, motivation
+                                circleId, userId, nickname, motivation
                             }))
                             .catch(console.log)
                             .then(a => {
-                                Member.findOne({ where: { meetingId: meetingId, userId: userId } }).then
+                                Member.findOne({ where: { circleId: circleId, userId: userId } }).then
                                     (c1 => {
                                         if (c1 != null) {
                                             console.log('success created memba ' + JSON.stringify(a) + " -- ");
@@ -156,14 +156,14 @@ exports.createMember = (req, res) => {
                             .catch(console.log);
                     }
                     else {
-                        console.log("found already member existing for meetingId= " + meetingId + " for member " + nickname);
+                        console.log("found already member existing for circleId= " + circleId + " for member " + nickname);
                         res.json(m1.id);
                     }
                 });
 
             }
             else {
-                console.log("found not meeting with id " + meetingId);
+                console.log("found not circle with id " + circleId);
             };
         }
         )
@@ -173,9 +173,9 @@ exports.createMember = (req, res) => {
 };
 exports.updateMember = (req, res) => {
     idS = Number(req.params.id);
-    let { meetingId, userId, nickname, motivation } = req.body;
+    let { circleId, userId, nickname, motivation } = req.body;
     Member.findOne({ where: { id: Number(idS) } }.update({
-        meetingId, userId, nickname, motivation
+        circleId, userId, nickname, motivation
     })).then(a => {
         console.log('success');
         res.send(a.id);

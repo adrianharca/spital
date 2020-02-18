@@ -30,14 +30,17 @@ class Meeting extends Sequelize.Model {
       initiatorid: {
         type: Sequelize.INTEGER
       },
-      image: {
-        type: Sequelize.TEXT
+      // image: {
+      //   type: Sequelize.TEXT
+      // },
+      privacy: {
+        type: Sequelize.INTEGER
       },
-      invitationOnly: {
-        type: Sequelize.BOOLEAN
+      minCrowd: {
+        type: Sequelize.INTEGER
       },
-      openToAnyone: {
-        type: Sequelize.BOOLEAN
+      maxCrowd: {
+        type: Sequelize.INTEGER
       },
       date: {
         type: Sequelize.STRING
@@ -45,20 +48,14 @@ class Meeting extends Sequelize.Model {
       endDate: {
         type: Sequelize.STRING
       },
-      placename: {
-        type: Sequelize.TEXT
+      placeId: {
+        type: Sequelize.INTEGER
       },
-      isFlexible: {
-        type: Sequelize.BOOLEAN
+      circleId: {
+        type: Sequelize.INTEGER
       },
-      location: {
-        type: Sequelize.JSON
-      },
-      timeofday: {
-        type: Sequelize.TEXT
-      },
-      spotType: {
-        type: Sequelize.TEXT
+      parentId: {
+        type: Sequelize.INTEGER
       }
     },
       {
@@ -80,18 +77,18 @@ class Meeting extends Sequelize.Model {
 
     });
 
-    this.nk_image = this.belongsToMany(models.Image, {
-      through: {
-        model: models.ImageEntity,
-        unique: false,
-        scope: {
-          entityType: 'Meeting'
-        }
-      },
-      constraints: false,
-      foreignKey: "imageId"
-    }
-    );
+    // this.nk_image = this.belongsToMany(models.Image, {
+    //   through: {
+    //     model: models.ImageEntity,
+    //     unique: false,
+    //     scope: {
+    //       entityType: 'Meeting'
+    //     }
+    //   },
+    //   constraints: false,
+    //   foreignKey: "imageId"
+    // }
+    // );
 
     // Meeting.hasMany(models.Vote, {
     //   as: "Votes",

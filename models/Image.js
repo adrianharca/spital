@@ -29,12 +29,12 @@ class Image extends Sequelize.Model {
 
 
 
-    this.fkIEMeeting = this.belongsToMany(models.Meeting, {
+    this.fkIECircle = this.belongsToMany(models.Circle, {
       through: {
         model: models.ImageEntity,
         unique: false,
         scope: {
-          entityType: 'Meeting'
+          entityType: 'Circle'
         }
       },
       foreignKey: 'entityId',
@@ -63,18 +63,18 @@ class Image extends Sequelize.Model {
       constraints: false
     });
     /* this.fkIEUser=this.belongsTo(models.User, {
-       // as: "Meeting",
+       // as: "Circle",
        //   constraints:false
        foreignKey: "entityId"
      });*/
     /*
     this.fkIEUser=this.belongsTo(models.User, {
-      // as: "Meeting",
+      // as: "Circle",
       //   constraints:false
       foreignKey: "entityId"
     });
     this.fkIEMember=this.belongsTo(models.Member, {
-      // as: "Meeting",
+      // as: "Circle",
       //   constraints:false
       foreignKey: "entityId"
     });

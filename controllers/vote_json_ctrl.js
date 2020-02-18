@@ -5,7 +5,7 @@ var newWhen = require("../models/When").When;
 function renderVote(v) {
   var container = new Object();
   // Object.assign(container, c); is di proper way to clone objs in js
-  const fields = ['id', 'memberId', 'meetingId', 'numberofpeople',
+  const fields = ['id', 'memberId', 'circleId', 'numberofpeople',
     'createdAt', 'updatedAt', 'deletedAt'];
   fields.forEach((item, k) => {
     console.log(item, ' ', v[item]);
@@ -56,8 +56,8 @@ exports.getVotesByMemberId = function (req, res) {
 };
 
 exports.addVote = function (req, res) {
-  console.log("add vote: "  +JSON.stringify(req.body));
-  let { memberId, meetingId, numberofpeople, placename, spotType, location,
+  console.log("add vote: " + JSON.stringify(req.body));
+  let { memberId, circleId, numberofpeople, placename, spotType, location,
     createdAt, when } = req.body;
   var wenvar = new newWhen(req.body.when);
   var werr = {
@@ -68,7 +68,7 @@ exports.addVote = function (req, res) {
   var wervar = new newWhere(werr);
 
   Vote.create({
-    memberId, meetingId, numberofpeople: req.body.numberOfPeople, date: req.body.when.date, endDate: req.body.when.endDate,
+    memberId, circleId, numberofpeople: req.body.numberOfPeople, date: req.body.when.date, endDate: req.body.when.endDate,
     placename: req.body.where.placeName, location: req.body.where.location, timeofday: req.body.when.timeOfDay, createdAt
   }).then(
     a => {

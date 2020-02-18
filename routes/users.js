@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../config/db');
 const Sequelize = require('sequelize');
 const User = require('../models/User');
-var taskController = require("../controllers/meeting_json_ctrl");
+var taskController = require("../controllers/circle_json_ctrl");
 const Op = Sequelize.Op;
 
 //Use this class for interface functions & put ur json api in controllers/users_json_ctrl
@@ -15,27 +15,27 @@ console.log("routes/users.js");
 router.get('/', (req, res) => {
 
   User.findAll()
-  .then(c => {
-    res.render('users', { c });
-    console.log('user found');
-  })
-  .catch(err => console.log(err));
+    .then(c => {
+      res.render('users', { c });
+      console.log('user found');
+    })
+    .catch(err => console.log(err));
 });
 
 
 router.get('/json', (req, res) => {
   res.contentType('application/json');
   res.removeHeader;
-  var result=[];
+  var result = [];
   User.findAll()
     .then(
       c => {
-        
-       res.json({c})
-    
-      console.log('result: ' + result + ' ');
-    })
-  
+
+        res.json({ c })
+
+        console.log('result: ' + result + ' ');
+      })
+
     .catch(err => console.log(err));
 });
 

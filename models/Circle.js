@@ -1,11 +1,11 @@
-//dis di code 4 meeting
+//dis di code 4 circle
 const Sequelize = require('sequelize');
 // const sequelize = require('../config/db').db;
 // const Model = Sequelize.Model;
 
-class Meeting extends Sequelize.Model {
-    // Meeting.init({
-    // Meeting = db.define('meeting', {
+class Circle extends Sequelize.Model {
+    // Circle.init({
+    // Circle = db.define('circle', {
     static init(sequelize, Sequelize) {
         return super.init({
             id: {
@@ -27,7 +27,7 @@ class Meeting extends Sequelize.Model {
             status: {
                 type: Sequelize.INTEGER
             },
-            initiatorid: {
+            initiatorid: {//userId
                 type: Sequelize.INTEGER
             },
             image: {
@@ -39,7 +39,7 @@ class Meeting extends Sequelize.Model {
             placename: {
                 type: Sequelize.TEXT
             },
-            range: {
+            placeRange: {
                 type: Sequelize.JSON
             },
             parentId: {
@@ -48,7 +48,7 @@ class Meeting extends Sequelize.Model {
         },
             {
                 sequelize,
-                modelName: 'meeting',
+                modelName: 'circle',
                 timestamps: true,
                 freezeTableName: true,
                 paranoid: true
@@ -56,14 +56,14 @@ class Meeting extends Sequelize.Model {
         );
     };
     static associate(models) {
-        // Meeting.associate = (models) => {
+        // Circle.associate = (models) => {
         this.nk_members = this.hasMany(models.Member, {
             constraints: false
-            // foreignKey: "meetingId",
+            // foreignKey: "circleId",
             // foreignKeyConstraint:true 
 
         });
-        this.fkParent = Meeting.belongsTo(models.Meeting, {
+        this.fkParent = Circle.belongsTo(models.Circle, {
             as: "Parent",
             // targetKey: "initiatorid"
             foreignKey: "parentId"
@@ -74,7 +74,7 @@ class Meeting extends Sequelize.Model {
         //         model: models.ImageEntity,
         //         unique: false,
         //         scope: {
-        //             entityType: 'Meeting'
+        //             entityType: 'Circle'
         //         }
         //     },
         //     constraints: false,
@@ -82,14 +82,14 @@ class Meeting extends Sequelize.Model {
         // }
         // );
 
-        // Meeting.hasMany(models.Vote, {
+        // Circle.hasMany(models.Vote, {
         //   as: "Votes",
         //   constraints: false
-        //   // foreignKey: "meetingId",
+        //   // foreignKey: "circleId",
         //   // foreignKeyConstraint:true 
         // });
 
-        // this.fkInit = Meeting.belongsTo(models.Member, {
+        // this.fkInit = Circle.belongsTo(models.Member, {
         //   as: "Initiator",
         //   // targetKey: "initiatorid"
         //   foreignKey: "initiatorid"
@@ -98,4 +98,4 @@ class Meeting extends Sequelize.Model {
     }
 }
 // };}}
-module.exports = Meeting;
+module.exports = Circle;

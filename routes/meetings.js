@@ -1,9 +1,9 @@
-var Meeting = require('../models/Circle');
+var Circle = require('../models/Circle');
 var router = require('express').Router();
 
 
 
-console.log("routes/meetings.js");
+console.log("routes/circles.js");
 //this file should only contain routemap then the implementations should be in corresponding files 
 // router.route('/demoadd').get(taskController.demoadd);
 // router.route('/')
@@ -17,21 +17,21 @@ console.log("routes/meetings.js");
 //     initiatorid: '0',
 //   }
 //   let { theme, description, initiatorid } = data;
-//   Meeting.create({
+//   Circle.create({
 //     theme, description, initiatorid
 //   }).then(a => {
 //     console.log('created cirlce ' + theme);
-//     res.redirect('/meetings')
+//     res.redirect('/circles')
 //   })
 //     .catch(err => console.log(err));
 // })
 
-// Get meeting list
+// Get circle list
 router.get('/', (req, res) => {
 
-  Meeting.findAll()
+  Circle.findAll()
     .then(c => {
-      res.render('meetings', { c });
+      res.render('circles', { c });
       console.log('theme: ' + c.theme + ' ');
     })
     .catch(err => console.log(err));
@@ -74,12 +74,12 @@ router.post('/add', (req, res) => {
     //  technologies = technologies.toLowerCase().replace(/, /g, ',');
 
     // Insert into table
-    Meeting.create({
+    Circle.create({
       theme, description, initiatorid
     })
       .then(a => {
         console.log('success');
-        res.redirect('/meetings')
+        res.redirect('/circles')
       })
       .catch(err => console.log(err));
 

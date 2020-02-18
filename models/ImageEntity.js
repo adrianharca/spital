@@ -31,24 +31,24 @@ class ImageEntity extends Sequelize.Model {
     );
   } static associate(models) {
     /*
-    this.fkIEMeeting=this.belongsTo(models.Meeting, {
-      // as: "Meeting",
+    this.fkIECircle=this.belongsTo(models.Circle, {
+      // as: "Circle",
       //   constraints:false
       foreignKey: "entityId"
     });
     this.fkIEUser=this.belongsTo(models.User, {
-      // as: "Meeting",
+      // as: "Circle",
       //   constraints:false
       foreignKey: "entityId"
     });*/
     /*
     this.fkIEUser=this.belongsTo(models.User, {
-      // as: "Meeting",
+      // as: "Circle",
       //   constraints:false
       foreignKey: "entityId"
     });
     this.fkIEMember=this.belongsTo(models.Member, {
-      // as: "Meeting",
+      // as: "Circle",
       //   constraints:false
       foreignKey: "entityId"
     });

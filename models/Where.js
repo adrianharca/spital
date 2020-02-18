@@ -25,18 +25,18 @@ module.exports.spaceDistance = function calculateDistance(w1, w2) {
       var l12 = locUtils.createLocation(loca1[1].latitude, loca1[1].longitude, 'LatitudeLongitude');
       var rad1 = locUtils.distanceTo(l1, l12);
       if (!l2IsArea) {
-        if (locUtils.insideMeeting(l2, l1, rad1))
+        if (locUtils.insideCircle(l2, l1, rad1))
           return 1;
-        return distanceTo(l1, l2) - rad1;// distance to meeting
+        return distanceTo(l1, l2) - rad1;// distance to circle
       }
     }
     if (l2IsArea) {
       var l22 = locUtils.createLocation(loca2[1].latitude, loca2[1].longitude, 'LatitudeLongitude');
       var rad2 = locUtils.distanceTo(l2, l22);
       if (!l1IsArea) {
-        if (locUtils.insideMeeting(l1, l2, rad2))
+        if (locUtils.insideCircle(l1, l2, rad2))
           return 1;
-        return distanceTo(l1, l2) - rad2;// distance to meeting
+        return distanceTo(l1, l2) - rad2;// distance to circle
       }
     }
     //get an avg of dists from edge of area to other center

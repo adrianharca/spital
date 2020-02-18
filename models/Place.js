@@ -5,8 +5,8 @@ const Sequelize = require('sequelize');
 // const Model = Sequelize.Model;
 
 class Place extends Sequelize.Model {
-    // Meeting.init({
-    // Meeting = db.define('meeting', {
+    // Circle.init({
+    // Circle = db.define('circle', {
     static init(sequelize, Sequelize) {
         return super.init({
             id: {
@@ -16,28 +16,13 @@ class Place extends Sequelize.Model {
                 primaryKey: true,
                 autoIncrement: true
             },
-            theme: {
-                type: Sequelize.TEXT
-            },
-            description: {
-                type: Sequelize.TEXT
-            },
-            keywords: {
-                type: Sequelize.TEXT
-            },
-            status: {
-                type: Sequelize.INTEGER
-            },
-            image: {
-                type: Sequelize.TEXT
-            },
             placename: {
                 type: Sequelize.TEXT
             },
             location: {
                 type: Sequelize.JSON
             },
-            spotType: {
+            address: {
                 type: Sequelize.TEXT
             }
         },
@@ -51,11 +36,11 @@ class Place extends Sequelize.Model {
         );
     };
     // static associate(models) {
-    //     // Meeting.associate = (models) => {
+    //     // Circle.associate = (models) => {
     //     this.nk_members = this.hasMany(models.Member, {
     //         // as: "Member",
     //         constraints: false
-    //         // foreignKey: "meetingId",
+    //         // foreignKey: "circleId",
     //         // foreignKeyConstraint:true 
 
     //     });
@@ -65,7 +50,7 @@ class Place extends Sequelize.Model {
     //             model: models.ImageEntity,
     //             unique: false,
     //             scope: {
-    //                 entityType: 'Meeting'
+    //                 entityType: 'Circle'
     //             }
     //         },
     //         constraints: false,
@@ -73,14 +58,14 @@ class Place extends Sequelize.Model {
     //     }
     //     );
 
-    //     // Meeting.hasMany(models.Vote, {
+    //     // Circle.hasMany(models.Vote, {
     //     //   as: "Votes",
     //     //   constraints: false
-    //     //   // foreignKey: "meetingId",
+    //     //   // foreignKey: "circleId",
     //     //   // foreignKeyConstraint:true 
     //     // });
 
-    //     // this.fkInit = Meeting.belongsTo(models.Member, {
+    //     // this.fkInit = Circle.belongsTo(models.Member, {
     //     //   as: "Initiator",
     //     //   // targetKey: "initiatorid"
     //     //   foreignKey: "initiatorid"

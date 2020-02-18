@@ -66,8 +66,8 @@ exports.getAllUsers = function (req, res, entityType) {
   Global.getAllEntitiesWithImages(res, "User");
 };
 
-exports.getAllMeetings = function (req, res) {
-  Global.getAllEntitiesWithImages(res, "Meeting");
+exports.getAllCircles = function (req, res) {
+  Global.getAllEntitiesWithImages(res, "Circle");
 
 }
 

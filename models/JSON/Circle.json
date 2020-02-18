@@ -1,67 +1,68 @@
-{"allOf": [
-  {
-    "$ref": "#/definitions/Dates"
-  },
 {
-    "title": "Meeting",
-    "type": "object",
-    "properties": {
-      "id": {
-        "type": "integer"
-      },
-      "theme": {
-        "type": "string"
-      },
-      "description": {
-        "type": "string"
-      },
-      "keywords": {
-        "type": "string"
-      },
-      "status": {
-        "type": "integer"
-      },
-      "initiatorid": {
-        "type": "integer"
-      },
-      "privacy": {
-        "type": "integer"
-      },
-      "date": {
-        "type": "string"
-      },
-      "enddate": {
-        "type": "string"
-      },
-      "isflexible":{
-        "type":"integer"
-      },
-      "location": {
-        "type": "object"
-      },
-      "placename": {
-        "type": "string"
-      },
-      "spottype":{
-        "type":"string"
-      },
-      "timeofday":{
-        "type":"string"
-      },
-      "createdat": {
-        "type": "string"
-      },
-      "updatedat": {
-        "type": "string"
-      },
-      "deletedat": {
-        "type": "string"
-      }
+  "allOf": [
+    {
+      "$ref": "#/definitions/Dates"
     },
-    "required": [
-      "id",
-      "theme"
-    ]
-  }
-]
+    {
+      "title": "Circle",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "theme": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "keywords": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer"
+        },
+        "initiatorid": {
+          "type": "integer"
+        },
+        "privacy": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string"
+        },
+        "enddate": {
+          "type": "string"
+        },
+        "isflexible": {
+          "type": "integer"
+        },
+        "location": {
+          "type": "object"
+        },
+        "placename": {
+          "type": "string"
+        },
+        "spottype": {
+          "type": "string"
+        },
+        "timeofday": {
+          "type": "string"
+        },
+        "createdat": {
+          "type": "string"
+        },
+        "updatedat": {
+          "type": "string"
+        },
+        "deletedat": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "theme"
+      ]
+    }
+  ]
 }

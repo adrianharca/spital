@@ -41,7 +41,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 //Routes for interface:
-app.use("/meetings", require('./routes/meetings'));
+app.use("/circles", require('./routes/circles'));
 app.use("/users", require('./routes/users'));
 app.use("/votes", require('./routes/votes'));
 //JSON routes

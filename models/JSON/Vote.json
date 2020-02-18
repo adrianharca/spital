@@ -13,7 +13,7 @@
         "memberid": {
           "type": "integer"
         },
-        "meetingid": {
+        "circleid": {
           "type": "integer"
         },
         "date": {

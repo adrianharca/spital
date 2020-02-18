@@ -96,7 +96,7 @@ exports.getImageById = function (req, res) {
   var shell = require('shelljs');
   if (!isNaN(idS)) {
     console.log('getbyid' + idS);
-    meetingss = ImageEntity.findOne({ where: { entityId: idS, entityType: "User" } }).then(function (imageEntityFound) {
+    circless = ImageEntity.findOne({ where: { entityId: idS, entityType: "User" } }).then(function (imageEntityFound) {
       if (imageEntityFound != null) {
         Image.findOne({ id: imageEntityFound.imageId }).then(function (imageFound) {
 

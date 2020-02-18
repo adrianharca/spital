@@ -31,13 +31,13 @@ class MemberVote extends Sequelize.Model {
         );
     } static associate(models) {
 
-        // this.fkMeeting=this.belongsTo(models.Meeting, {
-        //   // as: "Meeting",
+        // this.fkCircle=this.belongsTo(models.Circle, {
+        //   // as: "Circle",
         //   //   constraints:false
         //   foreignKey: "meetId"
         // });
-        // this.fkMb=this.belongsTo(models.MeetingMember {
-        //   // as: "Meeting",
+        // this.fkMb=this.belongsTo(models.CircleMember {
+        //   // as: "Circle",
         //   //   constraints:false
         //   foreignKey: "entityId"
         // });
@@ -47,12 +47,12 @@ class MemberVote extends Sequelize.Model {
 
         /*
         this.fkIEUser=this.belongsTo(models.User, {
-          // as: "Meeting",
+          // as: "Circle",
           //   constraints:false
           foreignKey: "entityId"
         });
         this.fkIEMember=this.belongsTo(models.Member, {
-          // as: "Meeting",
+          // as: "Circle",
           //   constraints:false
           foreignKey: "entityId"
         });

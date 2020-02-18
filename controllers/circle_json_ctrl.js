@@ -1,4 +1,4 @@
-var Meeting = require("../models/Circle");
+var Circle = require("../models/Circle");
 var ImageEntity = require("../models/ImageEntity");
 var Image = require("../models/Image");
 var When = require('../models/When').When;
@@ -6,7 +6,7 @@ var whereMaker = require('../models/Where');
 var Global = require("../functions.js");
 require("../functions.js");
 //var router= require('../server')
-console.log("meeting_json_ctrl");
+console.log("circle_json_ctrl");
 
 // exports.demoadd = function (req, res) {
 //   const data = {
@@ -16,16 +16,16 @@ console.log("meeting_json_ctrl");
 //   }
 //   let { theme, description, initiatorid } = data;
 
-//   Meeting.create({
+//   Circle.create({
 //     data
 //   }).then(a => {
-//     console.log('created meeting ' + theme);
-//     res.redirect('/meetings')
+//     console.log('created circle ' + theme);
+//     res.redirect('/circles')
 //   })
 //     .catch(err => console.log(err));
 // };
 
-function renderMeeting(c) {
+function renderCircle(c) {
   var container = new Object();
   // Object.assign(container, c); is di proper way to clone objs in js
   const fields = ['id', 'theme', 'description', 'status',
@@ -38,7 +38,7 @@ function renderMeeting(c) {
     });
     container.keywords = [];
     container.keywords = c.keywords == null ? [] : c.keywords.split(",");
-    // container.creationDate = new Date(meetingFound.creationDate);
+    // container.creationDate = new Date(circleFound.creationDate);
 
     if (c.date != undefined) {
       container.when = new When(c);
@@ -149,12 +149,12 @@ exports.addByThemeDescriptionAndInit = function (req, res) {
     //  technologies = technologies.toLowerCase().replace(/, /g, ',');
 
     // Insert into table
-    Meeting.create({
+    Circle.create({
       theme, description, initiatorid
     })
       .then(a => {
         console.log('success');
-        res.redirect('/meetings')
+        res.redirect('/circles')
       })
       .catch(err => console.log(err));
 
@@ -163,16 +163,16 @@ exports.addByThemeDescriptionAndInit = function (req, res) {
 exports.delete = function (req, res) {
   console.log('deleted');
 };
-exports.getMeetingByid = function (req, res) {
+exports.getCircleByid = function (req, res) {
 
   idS = Number(req.params.id);
   console.log('getbyid' + idS);
-  meetingss = Meeting.findOne({ where: { id: idS } })
+  circless = Circle.findOne({ where: { id: idS } })
 
     .then(function (c) {
       res.setHeader('Content-Type', 'application/json');
-      console.log('Meeting found ');
-      var container = renderMeeting(c);
+      console.log('Circle found ');
+      var container = renderCircle(c);
       console.log(container);
 
       res.json({ container });
@@ -186,10 +186,10 @@ exports.downloadImageById = function (req, res) {
   idS = Number(req.params.id);
   console.log('getbyid' + idS);
   var mainPath = __dirname + "\\.." + "\\public\\img\\";
-  var path = mainPath + "meetings";
+  var path = mainPath + "circles";
   var pathC = require("path");
   var shell = require('shelljs');
-  images = ImageEntity.findOne({ where: { entityId: idS, entityType: "Meeting" } }).then(function (imageFound) {
+  images = ImageEntity.findOne({ where: { entityId: idS, entityType: "Circle" } }).then(function (imageFound) {
     if (imageFound != null) {
       var file = fs.readFileSync(pathC.resolve(imageFound.path), 'binary');
       res.setHeader('Content-Length', file.length);
@@ -205,13 +205,13 @@ exports.downloadImageById = function (req, res) {
 };
 
 exports.getAll = function (req, res) {
-  console.log('performing fetch all meetings');
+  console.log('performing fetch all circles');
 
   res.removeHeader;
   var result = [];
-  Meeting.findAll()
+  Circle.findAll()
     .map(l => {
-      return renderMeeting(l);
+      return renderCircle(l);
     })
     .then(
       c => {
@@ -228,10 +228,10 @@ exports.getImageById = function (req, res) {
   idS = Number(req.params.id);
   console.log('getbyid' + idS);
   var mainPath = __dirname + "\\.." + "\\public\\img\\";
-  var path = mainPath + "meetings";
+  var path = mainPath + "circles";
   var pathC = require("path");
   var shell = require('shelljs');
-  images = ImageEntity.findOne({ where: { entityId: idS, entityType: "Meeting" } }).then(function (imageFound) {
+  images = ImageEntity.findOne({ where: { entityId: idS, entityType: "Circle" } }).then(function (imageFound) {
     if (imageFound != null) {
       Image.findOne({ where: { id: imageFound.imageId } }).then(function (imageEntityFound) {
         if (imageEntityFound != null)
@@ -259,11 +259,11 @@ exports.updatebyId = function (req, res) {
   //not forget to install npm install shelljs
   //npm install buffer
   if (req.body.image != undefined) {
-    var filename = Global.createFile(req.body.image, req.body.theme + "-" + idS, "meetings");
+    var filename = Global.createFile(req.body.image, req.body.theme + "-" + idS, "circles");
     if (filename != "")
       ImageEntity.update(
         { path: filename },
-        { where: { entityId: req.body.id, entityType: "Meeting" } }
+        { where: { entityId: req.body.id, entityType: "Circle" } }
 
       ).
         then(function () {
@@ -312,9 +312,9 @@ exports.addOne = function (req, res) {
   }
   if (initiatorId != undefined)
     initiatoridVar = initiatorId;
-  Meeting.findOne({ where: { id: req.body.id } }).then(function (meetingFound) {
-    if (meetingFound == null)
-      Meeting.create(
+  Circle.findOne({ where: { id: req.body.id } }).then(function (circleFound) {
+    if (circleFound == null)
+      Circle.create(
         {//data
           theme, description, isFlexible: isflexibleVar, timeofday: timeofdayVar, invitationOnly, numberOfPeople,
           openToAnyone, keywords: keywordsVar, location: locationVar,
@@ -326,14 +326,14 @@ exports.addOne = function (req, res) {
            if (filename!="")
            {
            ImageEntity.create({
-             path: filename, entityId: a.id, entityType: "Meeting"}). then( a => {console.log("created file")});
+             path: filename, entityId: a.id, entityType: "Circle"}). then( a => {console.log("created file")});
            };*/
 
           /*
                     if (req.body.image != null) {
-                      var filename = Global.createFile(req.body.image, req.body.theme + "-" + req.body.description, "meetings");
+                      var filename = Global.createFile(req.body.image, req.body.theme + "-" + req.body.description, "circles");
                       if (filename != null && filename != undefined) {
-                        Global.createImageEntity("Meeting", filename, a.id);
+                        Global.createImageEntity("Circle", filename, a.id);
                       }
                     }*/
           console.log('success');
