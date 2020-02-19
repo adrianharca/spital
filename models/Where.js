@@ -106,21 +106,46 @@ function Where(vote) {
         a => {
           if (a != null)
 
-            this.location.push(new Place(a['latitude'], a['longitude']));
+            this.location.push(new placeConstructor(a['latitude'], a['longitude']));
         });
     }
     else {
       //why is locationArray treated as an array outside the if?
-      this.location = new Array(new Place(locationArray[0].latitude, locationArray[0].longitude));
+      this.location = new Array(new placeConstructor(locationArray[0].latitude, locationArray[0].longitude));
     }
   }
 };
 
-function Place(latitude, longitude) {
-  this.latitude = latitude;
-  this.longitude = longitude;
+module.exports.placeConstructor = (latitudeVar, longitudeVar) => {
+  var place = {};
+  place.latitude = latitudeVar;
+  place.longitude = longitudeVar;
+  console.log(place.latitude + " " + place.longitude);
+  return place;
 };
 
+module.exports.whereConstructor = (placename, spottype, location) => {
+  var whereConstr = {};
+  whereConstr.placeName = placename;
+  whereConstr.spotType = spottype;
+  if (location != undefined) {
+    locationArray = location;
+    whereConstr.location = [];
+    if (Array.isArray(locationArray)) {
+      locationArray.forEach(
+        a => {
 
+
+          if (a != null) {
+            whereConstr.location.push(placeConstructor(a['latitude'], a['longitude']));
+          }
+        });
+    }
+    else {
+      whereConstr.location = new Array(placeConstructor(locationArray[0].latitude, locationArray[0].longitude));
+    }
+    return whereConstr;
+  }
+};
 
 module.exports.Where = Where;

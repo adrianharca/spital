@@ -3,9 +3,9 @@ function When(c) {
   if (c != null) {
     if (c.date != undefined) {
       if (!isNaN(c.date))
-          when.date = new Date(parseInt(c.date, 10));
+        when.date = new Date(parseInt(c.date, 10));
       else
-          when.date = new Date(c.date);
+        when.date = new Date(c.date);
     }
     if (c.endDate != undefined) {
       if (!isNaN(c.date))
@@ -53,4 +53,18 @@ module.exports.isTimeRange = function (w) {
   return (w.endDate != undefined && w.endDate != null);
 
 }
+module.exports.whenConstructor = (c) => {
+  if (c.date != undefined) {
+    this.date = new Date(parseInt(c.date, 10));
+    /*
+    if (this.date==null){
+        this.date = new Date(c.date);
+    }*/
+  }
+  if (c.endDate != undefined) {
+    this.endDate = new Date(parseInt(c.endDate, 10));
+    // this.endDate = Date.parse(c.endDate);
+  }
+  this.timeOfDay = c.timeofday;
+};
 module.exports.When = When;

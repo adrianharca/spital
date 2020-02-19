@@ -1,7 +1,7 @@
 var Vote = require("../models/Vote");
 var newWhere = require("../models/Where").Where;
 var newWhen = require("../models/When").When;
-
+//TODO:add hits on response
 function renderVote(v) {
   var container = new Object();
   // Object.assign(container, c); is di proper way to clone objs in js
