@@ -3,6 +3,7 @@ console.log('config/db.js');
 const Circle = require("../models/Circle");
 const Meeting = require("../models/Meeting");
 const Member = require("../models/Member");
+const MemberVote = require("../models/MemberVote");
 const User = require("../models/User");
 const Vote = require("../models/Vote");
 const Image = require("../models/Image");
@@ -37,6 +38,7 @@ const models = {
     Circle: Circle.init(sequelize, Sequelize),
     Member: Member.init(sequelize, Sequelize),
     Meeting: Meeting.init(sequelize,Sequelize),
+    MemberVote: MemberVote.init(sequelize,Sequelize),
     ImageEntity: ImageEntity.init(sequelize, Sequelize),
     User: User.init(sequelize, Sequelize),
     Vote: Vote.init(sequelize, Sequelize),
