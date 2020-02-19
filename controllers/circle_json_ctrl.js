@@ -1,8 +1,9 @@
 var Circle = require("../models/Circle");
 var ImageEntity = require("../models/ImageEntity");
 var Image = require("../models/Image");
-var When = require('../models/When').When;
-var whereMaker = require('../models/Where');
+var When = require('../models/When').whenConstructor;
+var whereConstructor = require('../models/Where').whereConstructor;
+var placeConstructor = require('../models/Where').placeConstructor;
 var Global = require("../functions.js");
 require("../functions.js");
 //var router= require('../server')
@@ -29,7 +30,7 @@ function renderCircle(c) {
   var container = new Object();
   // Object.assign(container, c); is di proper way to clone objs in js
   const fields = ['id', 'theme', 'description', 'status',
-    'initiatorid', 'image', ' invitationOnly', 'openToAnyone',
+    'initiatorid', 'image', 'privacy', ' invitationOnly', 'openToAnyone',
     'createdAt', 'updatedAt', 'deletedAt'];
   if (c != null) {
     fields.forEach((item, k) => {
@@ -63,63 +64,22 @@ function renderCircle(c) {
     return {};
   }
 };
-function placeConstructor(latitudeVar, longitudeVar) {
-  var place = {};
-  place.latitude = latitudeVar;
-  place.longitude = longitudeVar;
-  console.log(place.latitude + " " + place.longitude);
-  return place;
-}
-function whereConstructor(placename, spottype, location) {
-  var whereConstr = {};
-  whereConstr.placeName = placename;
-  whereConstr.spotType = spottype;
-  if (location != undefined) {
-    locationArray = location;
-    whereConstr.location = [];
-    if (Array.isArray(locationArray)) {
-      locationArray.forEach(
-        a => {
 
 
-          if (a != null) {
-            whereConstr.location.push(placeConstructor(a['latitude'], a['longitude']));
-          }
-        });
-    }
-    else {
-      whereConstr.location = new Array(placeConstructor(locationArray[0].latitude, locationArray[0].longitude));
-    }
-    return whereConstr;
-  }
-}
-function whenConstructor(c) {
-  if (c.date != undefined) {
-    this.date = new Date(parseInt(c.date, 10));
-    /*
-    if (this.date==null){
-        this.date = new Date(c.date);
-    }*/
-  }
-  if (c.endDate != undefined) {
-    this.endDate = new Date(parseInt(c.endDate, 10));
-    // this.endDate = Date.parse(c.endDate);
-  }
-  this.timeOfDay = c.timeofday;
-}
-exports.newWhen = function When(c) {
-  return whenConstructor(c);
-}
+
+// exports.newWhen = function When(c) {
+//   return whenConstructor(c);
+// }
 
 
-exports.newWhere = function Where(placename, spottype, location) {
-  return whereConstructor(placename, spottype, location);
-}
+// exports.newWhere = function Where(placename, spottype, location) {
+//   return whereConstructor(placename, spottype, location);
+// }
 
 
-exports.newPlace = function Place(latitude, longitude) {
-  placeConstructor(latitude, longitude);
-}
+// exports.newPlace = function Place(latitude, longitude) {
+//   placeConstructor(latitude, longitude);
+// }
 
 exports.addByThemeDescriptionAndInit = function (req, res) {
   let { theme, description, initiatorid } = req.body;
