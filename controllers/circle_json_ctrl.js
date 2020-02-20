@@ -125,7 +125,7 @@ exports.delete = function (req, res) {
 };
 exports.getCircleByid = function (req, res) {
 
-  idS = Number(req.params.id);
+  var idS = Number(req.params.id);
   console.log('getbyid' + idS);
   circless = Circle.findOne({ where: { id: idS } })
 
@@ -143,13 +143,13 @@ exports.getCircleByid = function (req, res) {
 
 exports.downloadImageById = function (req, res) {
 
-  idS = Number(req.params.id);
+  var idS = Number(req.params.id);
   console.log('getbyid' + idS);
   var mainPath = __dirname + "\\.." + "\\public\\img\\";
   var path = mainPath + "circles";
   var pathC = require("path");
   var shell = require('shelljs');
-  images = ImageEntity.findOne({ where: { entityId: idS, entityType: "Circle" } }).then(function (imageFound) {
+  var images = ImageEntity.findOne({ where: { entityId: idS, entityType: "Circle" } }).then(function (imageFound) {
     if (imageFound != null) {
       var file = fs.readFileSync(pathC.resolve(imageFound.path), 'binary');
       res.setHeader('Content-Length', file.length);

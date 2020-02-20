@@ -27,6 +27,7 @@ router.route("/circles/:id").get(circleController.getCircleByid).
     post(circleController.addOne).
     put(circleController.updatebyId).
     delete(circleController.deleteByid);
+router.route("/circles/:id/meets").get(meetController.getMeetsForCircle);
 
 router.route("/circles/:id/members/").get(memberController.getAllMembersByCircle);
 router.route("/members").get(memberController.getMemberById).

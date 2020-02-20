@@ -46,10 +46,25 @@ class Member extends Sequelize.Model {
   static associate(models) {
 
     this.fkCircle = this.belongsTo(models.Circle, {
-      // as: "Circle",
-      //   constraints:false
+
       foreignKey: "circleId"
     });
+    this.fkMeet = this.belongsTo(models.Meeting, {
+
+      foreignKey: "meetId"
+    });
+    this.nkvote = this.belongsToMany(models.Vote, {
+      through: {
+        model: models.MemberVote,
+        unique: false
+        // scope: {
+        //   entityType: 'Member'
+        // }
+      },
+      constraints: false,
+      foreignKey: "voteId"
+    }
+    );
     this.nk_image = this.belongsToMany(models.Image, {
       through: {
         model: models.ImageEntity,

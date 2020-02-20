@@ -35,7 +35,24 @@ class Place extends Sequelize.Model {
             }
         );
     };
-    // static associate(models) {
+    static associate(models) {
+        this.nk_meets = this.hasMany(models.Meeting, {
+            constraints: false
+
+        });
+
+    }
+}
+// };}}
+module.exports = Place;
+
+
+
+
+
+
+
+
     //     // Circle.associate = (models) => {
     //     this.nk_members = this.hasMany(models.Member, {
     //         // as: "Member",
@@ -71,7 +88,3 @@ class Place extends Sequelize.Model {
     //     //   foreignKey: "initiatorid"
     //     //   // constraints:false
     //     // });
-    // }
-}
-// };}}
-module.exports = Place;

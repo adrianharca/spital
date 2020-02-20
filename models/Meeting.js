@@ -76,7 +76,38 @@ class Meeting extends Sequelize.Model {
       // foreignKeyConstraint:true 
 
     });
+    this.fkCircle = this.belongsTo(models.Circle, {
 
+      foreignKey: "circleId"
+    });
+    this.fkParent = this.belongsTo(models.Meeting, {
+      as: "Parent",
+      foreignKey: "parentId"
+    });
+    this.fkplace = this.belongsTo(models.Place, {
+      foreignKey: "placeId"
+    });
+    this.nk_meets = this.hasMany(models.Meeting, {
+      as: 'Babies',
+      constraints: false
+
+    });
+    this.nk_mbs = this.hasMany(models.Member, {
+      constraints: false
+
+    });
+    this.nkvote = this.belongsToMany(models.Vote, {
+      through: {
+        model: models.MemberVote,
+        unique: false
+        // scope: {
+        //   entityType: 'Meeting'
+        // }
+      },
+      constraints: false,
+      foreignKey: "voteId"
+    }
+    );
     // this.nk_image = this.belongsToMany(models.Image, {
     //   through: {
     //     model: models.ImageEntity,

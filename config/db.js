@@ -7,6 +7,9 @@ const User = require("../models/User");
 const Vote = require("../models/Vote");
 const Image = require("../models/Image");
 const ImageEntity = require("../models/ImageEntity");
+const Place = require("../models/Place");
+const MemberVote = require("../models/MemberVote");
+
 
 
 
@@ -36,11 +39,13 @@ const sequelize = new Sequelize('circles', 'root', 'root', {
 const models = {
     Circle: Circle.init(sequelize, Sequelize),
     Member: Member.init(sequelize, Sequelize),
-    Meeting: Meeting.init(sequelize,Sequelize),
+    Meeting: Meeting.init(sequelize, Sequelize),
     ImageEntity: ImageEntity.init(sequelize, Sequelize),
     User: User.init(sequelize, Sequelize),
     Vote: Vote.init(sequelize, Sequelize),
-    Image: Image.init(sequelize, Sequelize)
+    Image: Image.init(sequelize, Sequelize),
+    Place: Place.init(sequelize, Sequelize),
+    MemberVote: MemberVote.init(sequelize, Sequelize)
 };
 Object.values(models)
     .filter(model => typeof model.associate == "function")

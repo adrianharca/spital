@@ -29,8 +29,22 @@ class MemberVote extends Sequelize.Model {
                 paranoid: true
             }
         );
-    } static associate(models) {
+    }
 
+
+    static associate(models) {
+
+        // this.fkParent = this.belongsTo(models.Meeting, {
+        //     foreignKey: "meetId"
+        // });
+        // this.fkParent = this.belongsTo(models.Member, {
+
+        //     foreignKey: "memberId"
+        // });
+        // this.fkParent = this.belongsTo(models.Vote, {
+
+        //     foreignKey: "voteId"
+        // });
         // this.fkCircle=this.belongsTo(models.Circle, {
         //   // as: "Circle",
         //   //   constraints:false

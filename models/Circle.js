@@ -63,7 +63,11 @@ class Circle extends Sequelize.Model {
             // foreignKeyConstraint:true 
 
         });
-        this.fkParent = Circle.belongsTo(models.Circle, {
+        this.nk_meets = this.hasMany(models.Meeting, {
+            constraints: false
+
+        });
+        this.fkParent = this.belongsTo(models.Circle, {
             as: "Parent",
             // targetKey: "initiatorid"
             foreignKey: "parentId"
