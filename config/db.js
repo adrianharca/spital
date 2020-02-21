@@ -3,12 +3,13 @@ console.log('config/db.js');
 const Circle = require("../models/Circle");
 const Meeting = require("../models/Meeting");
 const Member = require("../models/Member");
+const MemberVote = require("../models/MemberVote");
 const User = require("../models/User");
 const Vote = require("../models/Vote");
 const Image = require("../models/Image");
 const ImageEntity = require("../models/ImageEntity");
 const Place = require("../models/Place");
-const MemberVote = require("../models/MemberVote");
+// const MemberVote = require("../models/MemberVote");
 
 
 
