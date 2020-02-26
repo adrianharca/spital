@@ -99,52 +99,53 @@ exports.getAll = function (req, res) {
 };
 module.exports.addMeet = (req, res) => {
     var circId = Number(req.body.circleId);
-    let { circleId, userId, nickname, motivation } = req.body;
-    console.log('request for to create member ' + circleId + ' ' + nickname);
-    // Circle.findOne(Number(circleId))
-    Circle.findOne({ where: { id: circleId } })
-        .then(c => {
-            if (c != null) {
-                console.log("found circle with id " + circleId + " for member " + nickname);
-                Meeting.findOne({ where: { circleId: circleId, userId: userId } }).then(m1 => {
-                    if (m1 == null) {
+    let { theme, description, keywords, privacy, numberOfPeople,
+        status, initiatorId, when, where } = req.body;
+    console.log('request for to create meeting ' + theme + ' ' + description);
 
-                        console.log("creating member for circleId= " + circleId + " for nickname " + nickname + " " + userId);
-                        c.addMember(Member.
-                            create({
-                                circleId, userId, nickname, motivation
-                            }))
-                            .catch(console.log)
-                            .then(a => {
-                                Member.findOne({ where: { circleId: circleId, userId: userId } }).then
-                                    (c1 => {
-                                        if (c1 != null) {
-                                            console.log('success created memba ' + JSON.stringify(a) + " -- ");
-                                            res.json(c1.id);
-                                        }
-                                        else {
+    var isflexibleVar = null;
+    var dateVar = null;
+    var endDateVar = null;
+    var keywordsVar = null;
+    var timeofdayVar = null;
+    var locationVar = null;
+    var placenameVar = null;
+    var spottypeVar = null;
+    var initiatoridVar = null;
+    if (when != undefined) {
 
-                                        }
-                                    })
-                            })
-                            .catch(console.log);
-                    }
-                    else {
-                        console.log("found already member existing for circleId= " + circleId + " for member " + nickname);
-                        res.json(m1.id);
-                    }
-                });
+        isflexibleVar = when.isFlexible;
+        timeofdayVar = when.timeOfDay;
+        dateVar = Date.parse(when.date);
+        endDateVar = null;
+        if (when.endDate != null)
+            endDateVar = Date.parse(when.endDate);
+    }
+    if (keywords != undefined) {
+        keywordsVar = keywords.toString();
+    }
 
-            }
-            else {
-                console.log("found not circle with id " + circleId);
-            };
-        }
-        )
+    if (where != undefined) {
+        locationVar = where.location;
+        placenameVar = where.placeName;
+        spottypeVar = where.spotType;
+    }
+    if (initiatorId != undefined)
+        initiatoridVar = initiatorId;
+    Meeting.create({//data
+        theme, description, isFlexible: isflexibleVar, timeofday: timeofdayVar, numberOfPeople,
+        privacy, keywords: keywordsVar, location: locationVar,
+        status, initiatoridVar, date: dateVar, endDate: endDateVar,
+        placename: placenameVar, spotType: spottypeVar,
+    }).then(a => {
+        console.log('success');
+        res.json(a.id);
+    })
         .catch(err => console.log(err));
 
 
 };
+
 module.exports.updateMeet = (req, res) => { };
 module.exports.deleteMeet = (req, res) => { };
 
