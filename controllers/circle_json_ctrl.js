@@ -241,6 +241,7 @@ exports.deleteByid = function (req, res) {
 exports.addOne = function (req, res) {
   req.body.image = "";
   console.log(JSON.stringify(req.body));
+  //todo:add privacy
   let { theme, description, keywords, invitationOnly, numberOfPeople, openToAnyone,
     status, initiatorId, when, where } = req.body;
   var isflexibleVar = null;
