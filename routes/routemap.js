@@ -70,6 +70,8 @@ router.route("/meetings").get(meetController.getMeets)
     .post(meetController.addMeet)
     .put(meetController.updateMeet)
     .delete(meetController.deleteMeet);
+router.route("/meetings/:id/votes").get(voteController.getVotesByMeetId);
+router.route("/meetings/:id/members").get(memberController.getAllMembersByMeetId).post(memberController.createMeetMember);
 
 // router.route("/members");
 //INTERFACE

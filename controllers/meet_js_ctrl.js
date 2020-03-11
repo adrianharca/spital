@@ -58,9 +58,9 @@ module.exports.getMeetsForCircle = (req, res) => {
         })
         .catch(err => console.log(err));
 
-}
+};
 module.exports.getMeets = (req, res) => {
-    console.log('mmeeting ctrlr' + req.params);
+    console.log('mmeeting ctrlr. performing get all meets' + JSON.stringify(req.params));
     var result = [];
     Meeting.findAll(
         // {where:{...req.params}} //xperiment
@@ -79,24 +79,7 @@ module.exports.getMeets = (req, res) => {
         .catch(err => console.log(err));
 
 };
-exports.getAll = function (req, res) {
-    console.log('performing fetch all meetings');
-    res.removeHeader;
-    var result = [];
-    Meeting.findAll()
-        .map(l => {
-            return renderMeeting(l);
-        })
-        .then(
-            c => {
-                res.contentType('application/json');
-                res.json(c);
 
-                console.log('result: ' + result + ' ');
-            })
-
-        .catch(err => console.log(err));
-};
 module.exports.addMeet = (req, res) => {
     var circId = Number(req.body.circleId);
     let { theme, description, keywords, privacy, numberOfPeople,
@@ -149,3 +132,21 @@ module.exports.addMeet = (req, res) => {
 module.exports.updateMeet = (req, res) => { };
 module.exports.deleteMeet = (req, res) => { };
 
+// exports.getAll = function (req, res) {
+//     console.log('performing fetch all meetings');
+//     res.removeHeader;
+//     var result = [];
+//     Meeting.findAll()
+//         .map(l => {
+//             return renderMeeting(l);
+//         })
+//         .then(
+//             c => {
+//                 res.contentType('application/json');
+//                 res.json(c);
+
+//                 console.log('result: ' + result + ' ');
+//             })
+
+//         .catch(err => alert(err));
+// };

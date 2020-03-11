@@ -95,3 +95,22 @@ exports.deleteVoteByid = function (req, res) {
     );
 
 };
+module.exports.getVotesByMeetId = function (req, res) {
+  res.removeHeader;
+  var result = [];
+  idS = Number(req.params.meetId);
+  console.log('performing fetch all votes for meeting ' + idS);
+
+  Vote.findAll({ where: { meetId: idS } }).
+    map(renderVote).
+    then(c => {
+      res.contentType('application/json');
+      res.json(c);
+
+      console.log('result: ' + result + ' ');
+    })
+
+    .catch(err => console.log(err));
+};
+
+

@@ -1,5 +1,6 @@
 var Circle = require("../models/Circle");
 var Member = require("../models/Member");
+var Meeting = require("../models/Meeting");
 var Global = require("../functions.js");
 function renderMember(m) {
     var holder = new Object();
@@ -80,7 +81,24 @@ exports.getAllMembersByCircle = (req, res) => {
         })
         .catch(err => console.log(err));
 };
+module.exports.getAllMembersByMeetId = (req, res) => {
 
+    id = Number(req.params.id);
+    Member.findAll({ where: { meetId: id } }).
+        map(renderMember).
+        then(member => {
+
+            res.contentType('application/json');
+            if (member != null) {
+                res.json(member);
+                console.log('result: ' + JSON.stringify(member) + ' ');
+            }
+            else {
+                res.json([]);
+            }
+        })
+        .catch(err => console.log(err));
+};
 exports.getMemberById = (req, res) => {
     if (req.params.id != null) {
         idS = Number(req.params.id);
@@ -125,6 +143,7 @@ exports.getMemberById = (req, res) => {
 exports.createMember = (req, res) => {
     // var circId=Number(req.params.circleId);
     var circId = Number(req.body.circleId);
+    // if(circId==null) this.createMeetMember(req,res); in case sync down wont work
     let { circleId, userId, nickname, motivation } = req.body;
     console.log('request for to create member ' + circleId + ' ' + nickname);
     // Circle.findOne(Number(circleId))
@@ -157,6 +176,59 @@ exports.createMember = (req, res) => {
                     }
                     else {
                         console.log("found already member existing for circleId= " + circleId + " for member " + nickname);
+                        res.json(m1.id);
+                    }
+                });
+
+            }
+            else {
+                console.log("found not circle with id " + circleId);
+            };
+        }
+        )
+        .catch(err => console.log(err));
+
+
+};
+exports.createMeetMember = (req, res) => {
+    // var circId=Number(req.params.circleId);
+    console.log('request create meetMember');
+    var meetId = Number(req.body.meetId);
+    let { circleId, userId, nickname, motivation } = req.body;
+    console.log('request for to create meet member ' + meetId + ' ' + nickname);
+    // Circle.findOne(Number(circleId))
+    Meeting.findOne({ where: { id: meetId } })
+        .then(c => {
+            if (c != null) {
+                console.log("found meet with id " + meetId + " for member " + nickname);
+                Member.findOne({ where: { meetId: meetId, userId: userId } }).then(m1 => {
+                    if (m1 == null) {
+
+                        console.log("creating member for meetId= " + meetId + " for nickname " + nickname + " " + userId);
+                        Member.
+                            create({
+                                meetId, circleId, userId, nickname, motivation
+                            })
+                            // .catch(console.log)
+                            .then(a => {
+                                console.log('success created memba ' + JSON.stringify(a) + " -- ");
+                                res.json(a.id);
+                                c.addMember(a);
+                                // Member.findOne({ where: { meetId: meetId, userId: userId } }).then
+                                //     (c1 => {
+                                //         if (c1 != null) {
+                                //             console.log('success created memba ' + JSON.stringify(a) + " -- ");
+                                //             res.json(c1.id);
+                                //         }
+                                //         else {
+
+                                //         }
+                                //     })
+                            })
+                            .catch(console.log);
+                    }
+                    else {
+                        console.log("found already member existing for meeting= " + meetId + " for member " + nickname);
                         res.json(m1.id);
                     }
                 });
