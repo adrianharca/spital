@@ -4,13 +4,17 @@ const exphbs = require('express-handlebars');
 const path = require("path");
 const router = require("./routes/routemap");
 
+const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
+
 console.log('server.js');
 
 
 
 //do this once only
 var app = express();
-
+app.use(cors());
 
 
 
@@ -25,7 +29,6 @@ app.engine('handlebars', exphbs({
 app.set('view engine', 'handlebars');
 console.log(__dirname);
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 //Index route
 app.get('/', (req, res) => res.render('index', { layout: 'landing' }));
@@ -74,7 +77,6 @@ const db = require('./config/db');
 //     .filter(onlyModels)
 //     .forEach(importModel)
 // Object.keys(db).forEach(assoc)
-
 
 
 

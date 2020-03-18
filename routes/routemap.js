@@ -50,7 +50,8 @@ router.route("/users").get(userController.getAllUsers)//not needed
 router.route("/ME").get(userController.getSelfData);
 // router.route("/ME/circles").get(circleController.getSelfData);
 // router.route("/ME/events").get(circleCtrl.getSelfData);
-
+router.route("/login").post(userController.login);
+router.route("/signUp").post(userController.createAccount);
 router.route("/users/:id/image").get(userController.getImageById);
 router.route("/usersName/:name").get(userController.getUserByName);
 
