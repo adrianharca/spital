@@ -60,16 +60,17 @@ exports.addVote = function (req, res) {
   let { memberId, circleId, numberofpeople, placename, spotType, location,
     createdAt, when } = req.body;
   var wenvar = new newWhen(req.body.when);
-  var werr = {
-    'placename': req.body.where.placeName,
-    'spotType': req.body.where.spotType,
-    'location': req.body.where.location
-  };
-  var wervar = new newWhere(werr);
-
+  if (req.body.where != undefined) {
+    var werr = {
+      'placename': req.body.where.placeName,
+      'spotType': req.body.where.spotType,
+      'location': req.body.where.location
+    };
+    var wervar = new newWhere(werr);
+  }
   Vote.create({
     memberId, circleId, numberofpeople: req.body.numberOfPeople, date: req.body.when.date, endDate: req.body.when.endDate,
-    placename: req.body.where.placeName, location: req.body.where.location, timeofday: req.body.when.timeOfDay, createdAt
+    placename: req.body.place.placeName, location: req.body.place.location, timeofday: req.body.when.timeOfDay, createdAt
   }).then(
     a => {
       console.log("vote: " + JSON.stringify(a));
