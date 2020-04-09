@@ -88,6 +88,7 @@ exports.addPassword = async function (req, res) {
 exports.createAccount = async function (req, res) {
   console.log("creates account");
   generalCreate(req, res);
+  
 };
 function  verifyToken(req,res) {
   const bearerHeader = req.headers['x-access-token'] || req.headers['authorization'];
