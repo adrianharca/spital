@@ -16,7 +16,7 @@ const Place = require("../models/Place");
 
 const sequelize = new Sequelize('circles', 'root', 'root', {
     host: 'localhost',
-    port: '3308',
+    port: '3306',
     dialect: 'mysql',
     // define:{
     //     timestamps:false
