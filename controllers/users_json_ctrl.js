@@ -1,11 +1,85 @@
+
+var nodemailer = require("sendmail");
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const config = require('config');
 var ImageEntity = require("../models/ImageEntity");
 var Image = require("../models/Image");
 var Global = require("../functions.js");
 const bcrypt = require('bcrypt');
+var EmailTemplate = require('email-templates').EmailTemplate;
 console.log("user_json_ctrl");
 
+
+function sendPasswordResetMail(userMail, res){
+  var mailer = require("nodemailer");
+
+  // Use Smtp Protocol to send Email
+  var smtpTransport = mailer.createTransport({
+    service: config.get('mailService'),
+    auth: {
+    /*  user: 'adrianharca08@gmail.com',
+      pass: ''*/
+      user: config.get('fromEmail'),
+      pass: config.get('fromPassword')
+  }
+  //doesn't work:
+    /*
+    host: 'mx2.bestware.ro',
+    port: 25,
+    auth: {
+      user: 'root',
+      pass: 'bw1admin$'
+    },
+    tls: {rejectUnauthorized: false}*/
+  });
+  let subject = config.get('resetmail.subject');
+  let body = config.get('resetmail.body');
+  var mail = {
+      from: config.get('from'),
+      to: userMail,
+      subject: subject,
+      text: body,
+      html: body
+  }
+  link = "http://" + config.get("ip") + ":" + config.get("port") + "/" + config.get("resetURL") + "?email=" + userMail
+  mail.text = mail.text + " " + link
+  mail.html = mail.html + " <a href='" + link + "'>Link</a>"
+  smtpTransport.sendMail(mail, (err,info) => {
+    if (err){
+      console.log("Error: "  + JSON.stringify(err));
+      smtpTransport.close();
+      res.send("Error: " + JSON.stringify(err));
+    }
+    else{
+      console.log("Info: " + JSON.stringify(info.messageId));
+      smtpTransport.close();
+      res.send("OK");
+    }
+  });
+}
+
+exports.forgottenPasswordSendMail= async function(req,res) {
+  console.log("forgotten password send mail for user: " + JSON.stringify(req.body.email));
+  if (req.body.email==null || req.body.email.trim()=="")
+    res.send("Error: email is empty");
+    User.findOne({ where: { email: req.body.email} }).then(function (userFound) {
+
+      if (userFound==null){
+        console.log(JSON.stringify("No user found"));
+        res.send(JSON.stringify("No user found"));
+      }
+      else
+      {
+       sendPasswordResetMail(req.body.email,res);
+      }
+
+    });
+
+
+
+  
+}
 exports.login = async function (req, res) {
 
   console.log("user: " + JSON.stringify(req.body));
@@ -27,6 +101,7 @@ exports.login = async function (req, res) {
         // return res.json("Cannot find user in database")
         login = {};
         login.token = "Cannot find user in database"
+        
         return res.json(login)
       }
     }
@@ -43,8 +118,15 @@ exports.login = async function (req, res) {
         }
       }
       else {
+        if (acctype!='Email'){
         token = getToken(userFound);
         sendUser(res, userFound, token);
+        }
+        else{
+          login = {};
+          login.token = "Incorrect password";
+          return res.json(login);
+        }
       }
     }
 

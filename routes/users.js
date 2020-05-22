@@ -1,6 +1,8 @@
+const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
+const config = require('config');
 const Sequelize = require('sequelize');
 const User = require('../models/User');
 var taskController = require("../controllers/circle_json_ctrl");
@@ -39,7 +41,96 @@ router.get('/json', (req, res) => {
     .catch(err => console.log(err));
 });
 
+// // Display add user form
+router.get('/resetpassword', async function(req,res) {
+  
+  res.render('resetpassword',{
+    query: req.query
+  })
+  
+});
+router.post('/resetpassword',async function(req,res){
+  try {
+let {email, currentpassword,newpassword,confirmpassword} = req.body;
+let errortext = "";
+let queryParam = req.query;
+if (email==""){
+  errortext = config.get('password.noemail');
+}
+else if (currentpassword==""){
+  errortext = config.get('password.nopassword');
+ 
+}
+else if (newpassword==""){
+  errortext = config.get('password.nonewpassword');
+ 
+}
+else if (currentpassword==newpassword){
+  errortext = config.get('password.samepassword');
+}
+else if (confirmpassword!=newpassword){
+  errortext = config.get('password.samenewpasswords');
+}
 
+
+
+if (errortext.length > 0) {
+  res.render('resetpassword', {
+    errortext,
+    email, currentpassword, newpassword,
+    query: {email: email}
+  }
+  );
+} 
+else {
+  User.findOne({ where: { email: req.body.email, acctype : 'Email' } }).then(async function (userFound) {
+    if (userFound==null){
+      errortext = config.get('password.nouserfound');
+      res.render('resetpassword', {
+        errortext,
+        email, currentpassword, newpassword,
+        query: {email: email}
+      }
+      )
+    }
+    else{
+      console.log("new pass: " + currentpassword + " " + userFound.pass);
+      if (await bcrypt.compare(currentpassword, userFound.pass)) {
+        
+        console.log("new pass: " + newpassword);
+        const hashedPassword = await bcrypt.hash(newpassword, 10)
+        userFound.update({
+          pass: hashedPassword
+        });
+        errortext = config.get('password.successfulchange') + email;
+        res.render('resetpassword', {
+          errortext,
+          email, currentpassword, newpassword,
+          query: {email: email}
+        });
+      }
+      else{
+        errortext = config.get('password.incorrectpassword')  + email;
+        res.render('resetpassword', {
+          errortext,
+          email, currentpassword, newpassword,
+          query: {email: email}
+        });
+    }
+    }
+  });
+}
+
+  }
+  catch(e){
+    errortext = "Error changing password for user "  + email + ": "  + JSON.stringify(e);
+    res.render('resetpassword', {
+      errortext,
+      email, currentpassword, newpassword,
+      query: {email: email}
+    });
+  }    
+  });
 // // Display add user form
 router.get('/adduser', (req, res) => res.render('adduser'));
 
