@@ -12,12 +12,13 @@ var userController = require("../controllers/users_json_ctrl");
 var imageController = require("../controllers/image_json_ctrl");
 var voteController = require("../controllers/vote_json_ctrl");
 var meetController = require("../controllers/meet_js_ctrl");
-
+var interestCategoryController = require("../controllers/category_json_ctrl");
 var chatController = require("../controllers/chat_json_ctrl");
 //prefix /json/circles/etc
 // router.use(bodyparser.json);
 router.route("/circleList").get(imageController.getAllCircles);
 router.route("/userList").get(imageController.getAllUsers);
+router.route("/categories").get(interestCategoryController.getAll);
 router.route("/circles").get(circleController.getAll).
     post(circleController.addOne).
     delete(circleController.delete);

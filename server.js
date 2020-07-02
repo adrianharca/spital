@@ -46,6 +46,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/circles", require('./routes/circles'));
 app.use("/users", require('./routes/users'));
 app.use("/votes", require('./routes/votes'));
+app.use("/categories", require('./routes/categories'));
 //JSON routes
 app.use("/json", router);
 //default route:

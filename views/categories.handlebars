@@ -1,0 +1,13 @@
+<section id="categories" class="container">
+    <h1>All Categories</h1>
+    {{#each c}}
+
+
+    <div class="categories">
+        <h3>{{categoryName}}</h3>
+    </div>
+
+    {{else}}
+    <p>No categories in db</p>
+    {{/each}}
+</section>

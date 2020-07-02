@@ -1,0 +1,22 @@
+<section id="add" class="container">
+  <div class="form-wrap">
+    <h1>Add new category</h1>
+    {{#each errors}}
+    <div class="error">
+      <p>{{text}}</p>
+    </div>
+    {{/each}}
+    <form action="/categories/add" method="POST">
+      <div class="input-group">
+        <label for="categoryName">Category name</label>
+        <input type="text" name="categoryName" id="categoryName" class="input-box"
+          placeholder="eg. 'Literature','Art', etc." maxlength="100" value={{categoryName}}>
+      </div>
+      {{!-- <div class="input-group">
+          <label for="budget">Contact Email</label>
+          <input type="email" name="contact_email" id="contactemail" class="input-box" placeholder="Enter an email" value={{contact_email}}>
+        </div> --}}
+      <input type="submit" value="Add Category" class="btn btn-reverse">
+    </form>
+  </div>
+</section>
