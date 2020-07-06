@@ -27,5 +27,19 @@ class InterestCategory extends Sequelize.Model {
             }
         );
     };
+    static associate(models) {
+        this.nk_images = this.belongsToMany(models.Image, {
+            through: {
+              model: models.ImageEntity,
+              unique: false,
+              scope: {
+                entityType: 'Image'
+              }
+            },
+            foreignKey: 'entityId',
+            constraints: false
+          });
+    }
+    //
 }
 module.exports = InterestCategory;

@@ -27,7 +27,19 @@ class Image extends Sequelize.Model {
 
   static associate(models) {
 
-
+  
+    
+    this.belongsToMany(models.InterestCategory, {
+      through: {
+        model: models.ImageEntity,
+        unique: false,
+        scope: {
+          entityType: 'InterestCategory'
+        }
+      },
+      foreignKey: 'entityId',
+      constraints: false
+    });
 
     this.fkIECircle = this.belongsToMany(models.Circle, {
       through: {

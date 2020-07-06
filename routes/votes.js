@@ -16,7 +16,8 @@ function renderVote(c) {
     //    'placename', 'location', 'spotType',
     'createdAt', 'updatedAt', 'deletedAt']
   fields.forEach((item, k) => {
-    console.log(item, ' ', c[item]);
+   // console.log(item, ' ', c[item]);
+   //mai bine sa ramana comentat, pentru ca ocupa tot terminalul
     container[item] = c[item];
   });
   if (c.date != undefined) {

@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 console.log('config/db.js');
+
 const Circle = require("../models/Circle");
 const Meeting = require("../models/Meeting");
 const Member = require("../models/Member");

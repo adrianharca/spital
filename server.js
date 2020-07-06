@@ -6,10 +6,9 @@ const router = require("./routes/routemap");
 
 const cors = require('cors');
 const helmet = require('helmet');
-const morgan = require('morgan');
+const morgan = require('morgan'); 
 console.log('server.js');
-
-
+const multer = require('multer'); 
 
 //do this once only
 var app = express();
