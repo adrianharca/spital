@@ -11,6 +11,7 @@ const Op = Sequelize.Op;
 console.log("routes/votes.js");
 function renderVote(c) {
   var container = new Object();
+ 
   const fields = ['id', 'memberId', 'circleId', 'numberofpeople',
     //    'date', 'endDate',
     //    'placename', 'location', 'spotType',

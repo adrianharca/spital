@@ -89,7 +89,7 @@ InterestCategory.findOne({ where: { categoryName: req.body.categoryName } }).the
           Image.create({ path: fileName}).then( b => {
             ImageEntity.create({
               entityId: a.id, entityType: "Category", imageId: b.id}). then( a => {console.log("created file");
-              console.log('had success:' + categeoryFound + "-" + JSON.stringify(req.body));
+              console.log('had success:' + categoryFound + "-" + JSON.stringify(req.body));
               console.log('success');
                res.redirect('/categories');
             });

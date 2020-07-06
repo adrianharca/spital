@@ -89,7 +89,8 @@ function genMembersAndAssign(n, locations) {
             name: mbs[index].name,
             vote: JSON.stringify(mbs[index].vote)
         };
-        console.log(obj);
+        //console.log(obj);
+        //let's comment those logs
         // console.log(JSON.stringify(mbs[index]));
         // console.log(getPartition(locations, index,
         //     Math.floor(locations.length / n)));
@@ -162,11 +163,11 @@ function distmatrix(av) {
     var temp = [];
     console.log('making vote matrix');
     av.map(v => {
-        console.log('vote' + JSON.stringify(v, null, 1));
+       // console.log('vote' + JSON.stringify(v, null, 1));
         temp.push(v);
         mbVotes.map(mb => {
             temp[v] = new Object({ name: mb.name, probs: alg.calculateDistances(v, mb.vote) });
-            console.log(mb.name + ' ' + JSON.stringify(temp[v]['probs'], null, 1));
+           // console.log(mb.name + ' ' + JSON.stringify(temp[v]['probs'], null, 1));
         })
     });
     return temp;

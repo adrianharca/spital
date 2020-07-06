@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
   Circle.findAll()
     .then(c => {
       res.render('circles', { c });
-      console.log('theme: ' + c.theme + ' ');
+      //console.log('theme: ' + c.theme + ' ');
     })
     .catch(err => console.log(err));
 });
