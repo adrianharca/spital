@@ -44,7 +44,7 @@ router.get('/', (req, res) => {
 // // Display add gig form
 router.get('/add', (req, res) => res.render('add'));
 
-// Add a gig
+// Add a circle
 router.post('/add', (req, res) => {
   let { theme, description, initiatorid } = req.body;
   let errors = [];

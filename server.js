@@ -46,6 +46,7 @@ app.use("/circles", require('./routes/circles'));
 app.use("/users", require('./routes/users'));
 app.use("/votes", require('./routes/votes'));
 app.use("/categories", require('./routes/categories'));
+app.use("/interests", require('./routes/interests'));
 //JSON routes
 app.use("/json", router);
 //default route:

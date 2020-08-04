@@ -11,7 +11,7 @@ const Image = require("../models/Image");
 const ImageEntity = require("../models/ImageEntity");
 const Place = require("../models/Place");
 const InterestCategory = require("../models/InterestCategory");
-
+const Interest = require("../models/Interest");
 // const MemberVote = require("../models/MemberVote");
 
 
@@ -50,7 +50,8 @@ const models = {
     Image: Image.init(sequelize, Sequelize),
     Place: Place.init(sequelize, Sequelize),
     MemberVote: MemberVote.init(sequelize, Sequelize),
-    InterestCategory: InterestCategory.init(sequelize,Sequelize)
+    InterestCategory: InterestCategory.init(sequelize,Sequelize),
+    Interest: Interest.init(sequelize, Sequelize)
 };
 Object.values(models)
     .filter(model => typeof model.associate == "function")

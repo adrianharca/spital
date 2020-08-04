@@ -15,7 +15,12 @@ exports.delete = function (req, res) {
 
   
     var result = [];
-    InterestCategory.findAll()
+    InterestCategory.findAll({
+    
+      order: [
+          ['categoryName', 'ASC'],
+      ]
+  })
       .map(l => {
         return l;
       })

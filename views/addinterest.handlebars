@@ -1,0 +1,22 @@
+<section id="add" class="container">
+  <div class="form-wrap">
+    <h1>Add new interest/keyword</h1>
+    {{#each errors}}
+    <div style="color:red;background-color:aqua" class="error">
+      <p style="color: red;background-color:aqua">{{text}}</p>
+    </div>
+    {{/each}}
+     <form action="/interests/add" method="POST">
+      <div class="input-group">
+        <label for="interestName">Keyword name</label>
+        <input type="text" name="interestName" id="interestName" class="input-box"
+          placeholder="eg. 'Chopin' (for music), 'Yoga' (for sport) etc." maxlength="100" value={{interestName}}>
+      </div>
+      <div class="input-group">
+          <label for="categoryId">Category id</label>
+          <input type="number" name="categoryId" id="categoryId" value={{categoryId}}>
+        </div> 
+      <input type="submit" value="Add Interest" class="btn btn-reverse">
+    </form>
+  </div>
+</section>
