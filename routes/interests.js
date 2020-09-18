@@ -11,10 +11,10 @@ router.get('/show',(req,res) => {
     InterestCategory.findAll()
     .then(c => {
       res.render('categories', { c });
-      console.log('category name: ' + c.categoryName + ' ');
     })
     .catch(err => console.log(err));
 });
+router.
 router.get('/', (req, res) => {
     /*
     Interest.findAll()
@@ -27,10 +27,11 @@ router.get('/', (req, res) => {
     Interest.findAll({ include: [{
         model: InterestCategory,
         as: 'Categories',
-        attributes: [['name','categoryName']]
+        attributes: [['categoryName','categoryName']]
       }]
     })
     .then( c => {
+      
             if (c!=undefined)
             {
                 /*

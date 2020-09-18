@@ -22,7 +22,10 @@ router.route("/interests").put(interestController.addOne);
 
 router.route("/circleList").get(imageController.getAllCircles);
 router.route("/userList").get(imageController.getAllUsers);
+
 router.route("/categories").get(interestCategoryController.getAll);
+router.route("/categories/:id/image").get(interestCategoryController.getImageById);
+
 router.route("/circles").get(circleController.getAll).
     post(circleController.addOne).
     delete(circleController.delete);

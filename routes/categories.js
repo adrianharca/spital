@@ -11,7 +11,7 @@ console.log("routes/categories.js");
 
 router.get('/', (req, res) => {
 
-    InterestCategory.findAll()
+    InterestCategory.findAll({ order: ['categoryName']})
       .then(c => {
         res.render('categories', { c });
         console.log('category name: ' + c.categoryName + ' ');
@@ -47,6 +47,7 @@ var storage = multer.diskStorage(
       destination:  "public/img/categories/",
       filename: function ( req, file, cb ) {
           //req.body is empty... here is where req.body.new_file_name doesn't exists
+          
           cb( null, req.body.categoryName + ".jpg" );
       }
   }
@@ -84,15 +85,19 @@ InterestCategory.findOne({ where: { categoryName: req.body.categoryName } }).the
       }).then(a => {
         
       //  Global.createImageEntity("Category", filename, a.id);
-       
-          var fileName = req.body.categoryName + ".jpg";
-          Image.create({ path: fileName}).then( b => {
+       console.log("body for image/category: "  + JSON.stringify(req.body));
+          
+          var mainPath = Global.createFilename(req.body.categoryName, "categories");
+          Image.create({ path: mainPath}).then( b => {
+          
+            
             ImageEntity.create({
               entityId: a.id, entityType: "Category", imageId: b.id}). then( a => {console.log("created file");
               console.log('had success:' + categoryFound + "-" + JSON.stringify(req.body));
               console.log('success');
                res.redirect('/categories');
             });
+            
               
           })
        
@@ -111,7 +116,8 @@ InterestCategory.findOne({ where: { categoryName: req.body.categoryName } }).the
        });
     }
    else{
-     errors.push({"text": "The category was already created. Please choose a different category."});
+     errors.push({"text": "The category was already created. Only the image for the category has been replaced."});
+    
      res.render('addcategory', {
        errors,
        categoryName 

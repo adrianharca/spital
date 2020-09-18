@@ -6,6 +6,32 @@ var Image = require("../models/Image");
 var Global = require("../functions.js");
 console.log("category_json_ctrl");
 
+exports.getImageById = function (req, res) {
+  idS = Number(req.params.id);
+  console.log('getbyid' + idS);
+  var mainPath = __dirname + "\\.." + "\\public\\img\\";
+  var path = mainPath + "circles";
+  var pathC = require("path");
+  var shell = require('shelljs');
+  images = ImageEntity.findOne({ where: { entityId: idS, entityType: "Category" } }).then(function (imageFound) {
+    if (imageFound != null) {
+      Image.findOne({ where: { id: imageFound.imageId } }).then(function (imageEntityFound) {
+        if (imageEntityFound != null)
+          res.sendFile(pathC.resolve(imageEntityFound.path));
+        else
+          res.send("null");
+      });
+
+    }
+    else {
+      res.send("null");
+    }
+  }).error(function (err) {
+    console.log("Error:" + "no image found");
+    res.send(err);
+  });
+};
+
 
 exports.delete = function (req, res) {
     console.log('deleted');

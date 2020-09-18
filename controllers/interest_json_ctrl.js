@@ -19,6 +19,13 @@ exports.delete = function (req, res) {
       order: [
           ['interestName', 'ASC'],
       ]
+  }).then(c => res.render('interests', { c })) ; 
+    /*
+    Interest.findAll({
+    
+      order: [
+          ['interestName', 'ASC'],
+      ]
   })
       .map(l => {
         return l;
@@ -32,6 +39,7 @@ exports.delete = function (req, res) {
         })
   
       .catch(err => console.log(err));
+      */
   };
  
 

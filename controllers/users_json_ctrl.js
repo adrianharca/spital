@@ -453,6 +453,7 @@ function generalCreate(req, res) {
     });
   } else {
     emailS = email;
+    console.log("new email: " + JSON.stringify(req.body));
     console.log("account type: " + accountType);
     console.log('getbyemail: ' + emailS + " with bday " + bday);
     user = User.findOne({ where: { email: emailS } }).then(async function (entries) {
