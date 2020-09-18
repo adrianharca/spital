@@ -14,7 +14,7 @@ router.get('/show',(req,res) => {
     })
     .catch(err => console.log(err));
 });
-router.
+
 router.get('/', (req, res) => {
     /*
     Interest.findAll()
