@@ -7,23 +7,41 @@ var multer = require('multer');
 
 
 console.log("routes/interests.js");
-router.get('/show',(req,res) => {
+router.get('/showOnlyCategories',(req,res) => {
     InterestCategory.findAll()
     .then(c => {
       res.render('categories', { c });
     })
     .catch(err => console.log(err));
 });
-
 router.get('/', (req, res) => {
-    /*
-    Interest.findAll()
-      .then(c => {
-        res.render('interests', { c });
-        console.log('interest name: ' + c.interestName + ' ');
-      })
-      .catch(err => console.log(err));*/
-    
+/*
+  Interest.findAll()
+    .then(c => {
+      res.render('interests', { c });
+      console.log('interest found');
+    })
+    .catch(err => console.log(err));
+    */
+   Interest.findAll({ include: [{
+    model: InterestCategory,
+    as: 'Categories',
+    attributes: [['categoryName','categoryName']]
+  }]
+})
+.then( c => {
+  
+        if (c!=undefined)
+        {
+                      res.render('interests', { c })
+        }
+ 
+  
+}).catch(err => {console.log(err);  res.render('errors',{error: err});});
+});
+
+router.get('/showWithCategories', (req, res) => {
+       
     Interest.findAll({ include: [{
         model: InterestCategory,
         as: 'Categories',
@@ -34,21 +52,7 @@ router.get('/', (req, res) => {
       
             if (c!=undefined)
             {
-                /*
-            c.forEach((resultSetItem) => {
-                console.log("id: " + resultSetItem.id);
-                Interest.findAll({where: {
-                    categoryId: resultSetItem.id
-                  }})
-                  .then(c => {
-                    res.render('interests', {categoryName: resultSetItem.categoryName, interestName: c.interestName});
-                    console.log('interest name: ' + c.interestName + ' ');
-                  })
-                  .catch(err => console.log(err));
-            });
-            res.render('categories',  { c } );
-            */
-           res.render('interests', { c })
+                          res.render('interests', { c })
             }
      
       

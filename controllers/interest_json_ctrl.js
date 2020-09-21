@@ -9,6 +9,22 @@ console.log("interest_json_ctrl");
 exports.delete = function (req, res) {
     console.log('deleted');
   };
+  exports.getAllJSON = function (req, res) {
+    console.log('performing fetch all keywords');
+
+  
+    var result = [];
+    Interest.findAll({
+    
+      order: [
+          ['interestName', 'ASC'],
+      ]
+  }).then(c => {
+  res.contentType('application/json');
+  res.json(c);
+
+   }); 
+  }
   exports.getAll = function (req, res) {
     console.log('performing fetch all keywords');
 

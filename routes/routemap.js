@@ -17,7 +17,7 @@ var interestController = require("../controllers/interest_json_ctrl");
 var chatController = require("../controllers/chat_json_ctrl");
 //prefix /json/circles/etc
 // router.use(bodyparser.json);
-router.route("/interests").get(interestController.getAll);
+router.route("/interests").get(interestController.getAllJSON);
 router.route("/interests").put(interestController.addOne);
 
 router.route("/circleList").get(imageController.getAllCircles);
