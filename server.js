@@ -6,11 +6,9 @@ const router = require("./routes/routemap");
 
 const cors = require('cors');
 const helmet = require('helmet');
-const morgan = require('morgan');
-
+const morgan = require('morgan'); 
 console.log('server.js');
-
-
+const multer = require('multer'); 
 
 //do this once only
 var app = express();
@@ -47,6 +45,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/circles", require('./routes/circles'));
 app.use("/users", require('./routes/users'));
 app.use("/votes", require('./routes/votes'));
+app.use("/categories", require('./routes/categories'));
+app.use("/interests", require('./routes/interests'));
 //JSON routes
 app.use("/json", router);
 //default route:
@@ -85,6 +85,9 @@ var server = app.listen(3000, function () {
     var port = server.address().port;
     console.log("Server listening at :%s on port %s", host, port);
 });
+
+  
+
 var mbdistrib = require('./computation/tstdata');
-console.log("Member votes:" + JSON.stringify(mbdistrib.probVects, null, 1));
+//console.log("Member votes:" + JSON.stringify(mbdistrib.probVects, null, 1));
 module.exports = router, bodyParser;

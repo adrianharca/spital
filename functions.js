@@ -2,6 +2,21 @@ const ImageEntity = require('./models/ImageEntity');
 const Image = require('./models/Image');
 var db = require("./config/db.js");
 
+exports.createFilename = function (fileNameVar, folder){
+  var mainPath = __dirname + "\\public\\img\\";
+  var path = mainPath + folder;
+  var shell = require('shelljs');
+  var filename = "";
+  const fs = require('fs');
+    if (!fs.existsSync(path)) {
+      shell.mkdir('-p', path);
+    }
+  if (fileNameVar.toString().indexOf(".jpg") > 0)
+    filename = path + "\\" + fileNameVar;
+  else
+    filename = path + "\\" + fileNameVar + ".jpg";
+  return filename;
+}
 exports.createFile = function (imageBody, fileNameVar, folder) {
 
   //var mainPath = __dirname + "\\.." + "\\public\\img\\";

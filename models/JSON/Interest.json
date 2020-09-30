@@ -1,0 +1,26 @@
+{"allOf": [
+    {
+        "$ref": "#/definitions/Dates"
+    },
+{
+    "title": "Interest",
+    "type": "object",
+    "description": "model for keyword/interest data",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "interestName": {
+        "type": "string"
+      },
+      "categoryId": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "id",
+      "categoryName"
+    ]
+}
+]
+}

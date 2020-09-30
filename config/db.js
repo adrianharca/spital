@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 console.log('config/db.js');
+
 const Circle = require("../models/Circle");
 const Meeting = require("../models/Meeting");
 const Member = require("../models/Member");
@@ -9,6 +10,8 @@ const Vote = require("../models/Vote");
 const Image = require("../models/Image");
 const ImageEntity = require("../models/ImageEntity");
 const Place = require("../models/Place");
+const InterestCategory = require("../models/InterestCategory");
+const Interest = require("../models/Interest");
 // const MemberVote = require("../models/MemberVote");
 
 
@@ -16,7 +19,7 @@ const Place = require("../models/Place");
 
 const sequelize = new Sequelize('circles', 'root', 'root', {
     host: 'localhost',
-    port: '3308',
+    port: '3306',
     dialect: 'mysql',
     // define:{
     //     timestamps:false
@@ -46,7 +49,9 @@ const models = {
     Vote: Vote.init(sequelize, Sequelize),
     Image: Image.init(sequelize, Sequelize),
     Place: Place.init(sequelize, Sequelize),
-    MemberVote: MemberVote.init(sequelize, Sequelize)
+    MemberVote: MemberVote.init(sequelize, Sequelize),
+    InterestCategory: InterestCategory.init(sequelize,Sequelize),
+    Interest: Interest.init(sequelize, Sequelize)
 };
 Object.values(models)
     .filter(model => typeof model.associate == "function")

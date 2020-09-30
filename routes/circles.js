@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
   Circle.findAll()
     .then(c => {
       res.render('circles', { c });
-      console.log('theme: ' + c.theme + ' ');
+      //console.log('theme: ' + c.theme + ' ');
     })
     .catch(err => console.log(err));
 });
@@ -44,7 +44,7 @@ router.get('/', (req, res) => {
 // // Display add gig form
 router.get('/add', (req, res) => res.render('add'));
 
-// Add a gig
+// Add a circle
 router.post('/add', (req, res) => {
   let { theme, description, initiatorid } = req.body;
   let errors = [];

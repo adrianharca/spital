@@ -12,12 +12,20 @@ var userController = require("../controllers/users_json_ctrl");
 var imageController = require("../controllers/image_json_ctrl");
 var voteController = require("../controllers/vote_json_ctrl");
 var meetController = require("../controllers/meet_js_ctrl");
-
+var interestCategoryController = require("../controllers/category_json_ctrl");
+var interestController = require("../controllers/interest_json_ctrl");
 var chatController = require("../controllers/chat_json_ctrl");
 //prefix /json/circles/etc
 // router.use(bodyparser.json);
+router.route("/interests").get(interestController.getAllJSON);
+router.route("/interests").put(interestController.addOne);
+
 router.route("/circleList").get(imageController.getAllCircles);
 router.route("/userList").get(imageController.getAllUsers);
+
+router.route("/categories").get(interestCategoryController.getAll);
+router.route("/categories/:id/image").get(interestCategoryController.getImageById);
+
 router.route("/circles").get(circleController.getAll).
     post(circleController.addOne).
     delete(circleController.delete);
@@ -51,6 +59,7 @@ router.route("/ME").get(userController.getSelfData);
 // router.route("/ME/circles").get(circleController.getSelfData);
 // router.route("/ME/events").get(circleCtrl.getSelfData);
 router.route("/login").post(userController.login);
+router.route("/login").put(userController.forgottenPasswordSendMail);
 router.route("/signUp").post(userController.createAccount);
 router.route("/users/:id/image").get(userController.getImageById);
 router.route("/usersName/:name").get(userController.getUserByName);
