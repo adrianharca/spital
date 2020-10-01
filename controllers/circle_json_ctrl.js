@@ -230,7 +230,7 @@ exports.updatebyId = function (req, res) {
         });
     console.log("Project with id " + req.body.id + " updated successfully-!");
   }
-  res.send("ok");
+  return res.send("ok");
 };
 
 
@@ -300,7 +300,10 @@ exports.addOne = function (req, res) {
           console.log('success');
           res.json(a.id);
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          console.log(err);
+          return res.status(500).send(err);
+        });
   });
 };
 
