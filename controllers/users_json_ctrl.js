@@ -443,8 +443,8 @@ exports.getUserByName = function (req, res) {
   });
 }
 function generalCreate(req, res) {
-  let { name, firstname, lastname, email, accountType,
-    bday, password, description, interests,
+  let { name, firstName, lastName, email, accountType,
+    birthday, password, description, interests,
     trustscore, gender } = req.body;
   let errors = [];
   if (errors.length > 0) {
@@ -455,7 +455,6 @@ function generalCreate(req, res) {
     emailS = email;
     console.log("new email: " + JSON.stringify(req.body));
     console.log("account type: " + accountType);
-    console.log('getbyemail: ' + emailS + " with bday " + bday);
     user = User.findOne({ where: { email: emailS } }).then(async function (entries) {
       if (entries == null) {
         interestsVar = null;
@@ -463,8 +462,8 @@ function generalCreate(req, res) {
           interestsVar = interests.toString();
         const hashedPassword = await bcrypt.hash(password, 10);
         User.create({
-          name, firstname, lastname, email, acctype: accountType,
-          bday, pass: hashedPassword, description, interests: interestsVar,
+          name, firstname: firstName, lastname: lastName, email, acctype: accountType,
+          bday: birthday, pass: hashedPassword, description, interests: interestsVar,
           trustscore, gender
         }).then(a => {
           /*
@@ -481,7 +480,7 @@ function generalCreate(req, res) {
       }
       else {
         console.log("user exists: " + entries.id);
-        res.json(entries.id);
+        res.json("-" + entries.id);
       }
     });
 
