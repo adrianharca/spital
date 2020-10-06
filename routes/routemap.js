@@ -1,11 +1,13 @@
 var express = require('express');
 var router = express.Router();
-
 //this file should only contain routemap then the implementations should be in corresponding files 
-
+//Best practice for RESTful API design is that path params are used to identify a specific resource or resources, 
+//while query parameters are used to sort/filter those resources.
 
 
 //Routes
+var relatedController = require("../controllers/related_json_ctrl");
+
 var circleController = require("../controllers/circle_json_ctrl");
 var memberController = require("../controllers/membas_json_ctrl")
 var userController = require("../controllers/users_json_ctrl");
@@ -82,7 +84,7 @@ router.route("/meetings").get(meetController.getMeets)
     .delete(meetController.deleteMeet);
 router.route("/meetings/:id/votes").get(voteController.getVotesByMeetId);
 router.route("/meetings/:id/members").get(memberController.getAllMembersByMeetId).post(memberController.createMeetMember);
-
+router.route("/similar/:type/:id").get(relatedController.getRelated).post(relatedController.add, relatedController.getRelated);
 // router.route("/members");
 //INTERFACE
 // router.use("/circles", require('./circles'));

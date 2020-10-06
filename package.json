@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "api for some app",
   "main": "server.js",
-  "config":{
+  "config": {
     "recreateDb": "false"
   },
   "scripts": {
@@ -35,8 +35,10 @@
     "mysql2": "^1.7.0",
     "node-uuid": "^1.4.8",
     "nodemailer": "^6.4.6",
+    "orientjs": "^3.0.11",
     "path": "^0.12.7",
     "pug": "^2.0.4",
+    "python-shell": "^2.0.2",
     "sendmail": "^1.6.1",
     "sequelize": "^5.19.2",
     "sequelize-cli": "^5.5.1",
