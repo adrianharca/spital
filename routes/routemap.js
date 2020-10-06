@@ -84,7 +84,7 @@ router.route("/meetings").get(meetController.getMeets)
     .delete(meetController.deleteMeet);
 router.route("/meetings/:id/votes").get(voteController.getVotesByMeetId);
 router.route("/meetings/:id/members").get(memberController.getAllMembersByMeetId).post(memberController.createMeetMember);
-router.route("/similar/:type/:id").get(relatedController.getRelated).post(relatedController.add);
+router.route("/similar/:type/:id").get(relatedController.getRelated).post(relatedController.add, relatedController.getRelated);
 // router.route("/members");
 //INTERFACE
 // router.use("/circles", require('./circles'));

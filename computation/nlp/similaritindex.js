@@ -261,15 +261,17 @@ async function doOnce(nodes) {
         }).catch(err => console.error(err));
 }
 
-
-async function getRelated(ids) {
-
+//TODO:modify to reflect different datatypes and select by sqlid(use Indata)
+async function getRelated(ids, enttype = 'meet') {
+    let q1 = "SELECT * FROM (MATCH { class= :cls, as: m, where: (id = :idds or @rid = :idds or @rid= ('#'+:idds) ) }.outE('SemanticGroup'){ as: e, where: (dist < 10.0) }.inV(){ as: mm, while: ($depth < 2), where: ($matched != $currentMatch) } RETURN mm, e.dist, mm.keywords order by e.dist)";
+    let pq1 = { params: { cls: enttype, idds: ids } };
     db.on
         .then(client => {
             client.sessions({ name: "circ", username: "root", password: "troo" })
                 .then(pool => {
                     return pool.acquire()
-                        .then(session => session.query("SELECT * FROM (MATCH { class: meet, as: m, where: (@rid = :idds) }.outE('SemanticGroup'){ as: e, where: (dist < 10.0) }.inV(){ as: mm, while: ($depth < 2), where: ($matched != $currentMatch) } RETURN mm, e.dist, mm.keywords order by e.dist)", { params: { idds: ids } })// ", ids.toString(), "
+                        .then(session => session
+                            .query("SELECT * FROM (MATCH { class= :cls, as: m, where: (id = :idds or @rid = :idds or @rid= ('#'+:idds) ) }.outE('SemanticGroup'){ as: e, where: (dist < 10.0) }.inV(){ as: mm, while: ($depth < 2), where: ($matched != $currentMatch) } RETURN mm, e.dist, mm.keywords order by e.dist)", { params: { cls: enttype, idds: ids } })// ", ids.toString(),@rid not id  "
                             .all()
                             .then((select) => {
                                 console.log(select.slice(0, 10));
@@ -289,7 +291,7 @@ async function getRelated(ids) {
             // });
         }).catch(err => console.error(err));
 }
-// getRelated('#32:255');
+// getRelated('#29:25632', 'meet');
 
 async function insertOne(ks) {
     return db.on.then(client => {
@@ -313,17 +315,23 @@ const orientypes = {
     MEET: 'meet',
     USER: 'user'
 };
+function getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+}
 function InData(orientype, sqlid, keywords) {
-    this.intype = orientype;
+    this.intype = orientype;// orientypes[orientype] != undefined ? orientypes[orientype] : getKeyByValue(orientypes, orientype);
     this.sqlid = sqlid;
     this.keywords = keywords;
 }
 
 // expects an InData, creates one node and calculates connections to all other entities
-//which it then adds as edges
-async function insertObject(ks) {
-    var k = ks;
-    var nodes = [];
+//which it then adds as edges 
+// var ks = new InData(orientypes.CIRC, 0, ['sport', 'rugaciune', 'americani']);
+// insertObject(ks);
+async function insertObject(indata) {
+    let k = indata;
+    let nodes = [];
+    // let rid = '';
     nodes.push(new Array(k.keywords));// need 2 wrap in xtra list to fit py 
     return db.on.then(async (client) => {
         await client.sessions({ name: "circ", username: "root", password: "troo" })
@@ -343,6 +351,7 @@ async function insertObject(ks) {
                             .then(async (res) => {
                                 console.log('received from insert ', res['@rid']);
                                 ids.push(res['@rid'] != undefined ? res['@rid'].toString() : '');
+                                // rid = res['@rid'];
                                 nodes.push(new Array(ids));
                                 console.log('nodes in js ', nodes);
                                 await pyOne(nodes);//py get edges                      
@@ -366,7 +375,6 @@ async function insertObject(ks) {
             }).then(console.log('client closed')).catch(errr);
         // })
     });
-
 }
 
 async function edgeinsert(session, k = 0, kf = null) {
@@ -386,12 +394,13 @@ async function edgeinsert(session, k = 0, kf = null) {
         .catch(errr);
     return session.close();
 }
-module.exports = insertOne;
-
-var ks = new InData(orientypes.CIRC, 0, ['sport', 'rugaciune', 'americani']);
-insertObject(ks);
+// module.exports = insertOne;
 
 
+module.exports.addone = insertObject;
+module.exports.datawrap = InData;
+module.exports.getRelated = getRelated;
+module.exports.types = orientypes;
 // .catch (err => console.error(err));
 // }
 
