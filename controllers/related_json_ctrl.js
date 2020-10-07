@@ -34,5 +34,5 @@ exports.addEntity = async function (type, obj) {
     let keywords = []; keywords.push(obj.keywords);
     let arg = new Indata(inEntType, id, keywords);//types[inEntType] != undefined ? types[inEntType] : getKeyByValue(types, inEntType)
     await addToGraph(arg).catch(console.log);
-    return getSimilar(id, inEntType);
+    // return getSimilar(id, inEntType);
 };
