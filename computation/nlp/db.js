@@ -10,10 +10,17 @@ const OrientDBClient = require("orientjs").OrientDBClient;
 // console.log('Using Database:', db.name);
 // module.exports = db;
 
-module.exports.on = OrientDBClient.connect({
+
+const clientt = new OrientDBClient({//.connect
     host: "localhost",
     port: 2424
 });
+module.exports.client = clientt;
+module.exports.on = OrientDBClient.connect({//
+    host: "localhost",
+    port: 2424
+});
+
 // .then(client => {
 //     client.session({ name: "circ", username: "root", password: "troo" });
 //     // .then(pool => {

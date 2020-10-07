@@ -11,7 +11,7 @@ def use_event_model():
     # already called
     #  model.init_sims(replace=True)
     # if need true vector/ continue training, retrain
-    model_d2v = Doc2Vec.load('mypy/corpus/d2vModelFb2.bin')
+    model_d2v = Doc2Vec.load('.\\computation\\nlp\mypy\corpus\d2vModelFb2.bin')
     return model_d2v
 
 
@@ -88,7 +88,7 @@ def connectOne(keyset):
     # print(newid[0], 'newvec-', newvec[:10])
     # read+ append new vector to untrained vectors file, to be appended to the model for retraining
     # TODO:make dis call create file if non ext
-    with open(".\\mypy\\corpus\\results\\untrained.txt", "r+") as f:
+    with open(".\\computation\\nlp\\mypy\\corpus\\results\\untrained.txt", "r+") as f:
         #     tw = [json.loads(line) for line in f.readlines()]
         lines = [json.loads(line) for line in f]  # .readlines()
         untrainedVecs = lines[0] if len(lines) > 0 else []

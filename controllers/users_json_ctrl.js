@@ -9,7 +9,8 @@ var Global = require("../functions.js");
 const bcrypt = require('bcrypt');
 var EmailTemplate = require('email-templates').EmailTemplate;
 console.log("user_json_ctrl");
-
+const types = require('../computation/nlp/similaritindex.js').types;
+var similar = require('./related_json_ctrl');
 
 function sendPasswordResetMail(userMail, res) {
   var mailer = require("nodemailer");
@@ -480,6 +481,8 @@ function generalCreate(req, res) {
       }
       else {
         console.log("user exists: " + entries.id);
+        console.log(similar.addEntity(types.USER, entries));
+
         res.json(entries.id);
       }
     });

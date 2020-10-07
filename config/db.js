@@ -50,7 +50,7 @@ const models = {
     Image: Image.init(sequelize, Sequelize),
     Place: Place.init(sequelize, Sequelize),
     MemberVote: MemberVote.init(sequelize, Sequelize),
-    InterestCategory: InterestCategory.init(sequelize,Sequelize),
+    InterestCategory: InterestCategory.init(sequelize, Sequelize),
     Interest: Interest.init(sequelize, Sequelize)
 };
 Object.values(models)

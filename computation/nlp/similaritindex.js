@@ -192,7 +192,7 @@ async function pyDist(nodes, todo, session) {
 }
 
 async function pyOne(nodes) {
-    var pyshell3 = new PythonShell('./mypy/add1.py');
+    var pyshell3 = new PythonShell('./computation/nlp/mypy/add1.py');
     const sendAsync = utils.promisify(pyshell3.send.bind(pyshell3));
     const onMessageAsync = utils.promisify(pyshell3.on.bind(pyshell3));
     const endAsync = utils.promisify(pyshell3.end.bind(pyshell3));
@@ -262,32 +262,30 @@ async function doOnce(nodes) {
 }
 
 //TODO:modify to reflect different datatypes and select by sqlid(use Indata)
+//should return [ids]
 async function getRelated(ids, enttype = 'meet') {
-    let q1 = "SELECT * FROM (MATCH { class= :cls, as: m, where: (id = :idds or @rid = :idds or @rid= ('#'+:idds) ) }.outE('SemanticGroup'){ as: e, where: (dist < 10.0) }.inV(){ as: mm, while: ($depth < 2), where: ($matched != $currentMatch) } RETURN mm, e.dist, mm.keywords order by e.dist)";
+    let q1 = "SELECT * FROM (MATCH { class= :cls, as: m, where: (id = :idds or @rid = :idds or @rid= ('#'+:idds) ) }.outE('SemanticGroup'){ as: e, where: (dist < 10.0) }.inV(){class as: mm, while: ($depth < 2), where: ($matched != $currentMatch) } RETURN mm, e.dist, mm.keywords order by e.dist)";
     let pq1 = { params: { cls: enttype, idds: ids } };
-    db.on
-        .then(client => {
-            client.sessions({ name: "circ", username: "root", password: "troo" })
-                .then(pool => {
-                    return pool.acquire()
-                        .then(session => session
-                            .query("SELECT * FROM (MATCH { class= :cls, as: m, where: (id = :idds or @rid = :idds or @rid= ('#'+:idds) ) }.outE('SemanticGroup'){ as: e, where: (dist < 10.0) }.inV(){ as: mm, while: ($depth < 2), where: ($matched != $currentMatch) } RETURN mm, e.dist, mm.keywords order by e.dist)", { params: { cls: enttype, idds: ids } })// ", ids.toString(),@rid not id  "
-                            .all()
-                            .then((select) => {
-                                console.log(select.slice(0, 10));
-                                return session.close();
-                            })
-                            .then(() => {
-                                // close the pool
-                                return pool.close();
-                            })
-                        );
-                })
-                .then(() => {
-                    return client.close();
-                }).then(() => {
-                    console.log('Client closed');
-                }).catch(err => console.log(err));
+    // return await 
+    db.client.connect()
+        .then(async () => {
+            return db.client.session({ name: "circ", username: "root", password: "troo" })
+                .then(async (session) => {
+                    // .select().from(enttype)
+                    return await session
+                        // .query("SELECT * FROM (MATCH { class: :cls, as: m, where: (id = :idds )  }.outE('SemanticGroup'){ as: e, where: (dist < 10.0) }.inV(){class:GRUP as: mm, while: ($depth < 2), where: ($matched != $currentMatch) } RETURN mm, e.dist, mm.keywords order by e.dist)", { params: { cls: enttype, idds: ids } })// ", ids.toString(),@rid not id  "
+                        .query("select * from(MATCH { class=:cls, as: m, where: (class=:cls, id = :idds) }.outE('SemanticGroup'){ as: e, where: (dist < 10.0) }.inV(){ as: mm, while: ($depth < 2), where: ($matched != $currentMatch) }RETURN e.dist, mm.keywords, m order by e.dist)", { params: { cls: enttype, idds: ids } })
+                        .all()
+                        .then(async (select) => {
+                            console.log(select.slice(0, 10));
+                            session.close()
+                                .then(() => {
+                                    return db.client.close();
+                                }).then(() => {
+                                    console.log('Client closed');
+                                });
+                        }).catch(err => console.log(err));
+                }).catch(errr);
             // });
         }).catch(err => console.error(err));
 }
@@ -333,7 +331,7 @@ async function insertObject(indata) {
     let nodes = [];
     // let rid = '';
     nodes.push(new Array(k.keywords));// need 2 wrap in xtra list to fit py 
-    return db.on.then(async (client) => {
+    return await db.on.then(async (client) => {
         await client.sessions({ name: "circ", username: "root", password: "troo" })
             .then(async (pool) => {
                 return await pool.acquire()

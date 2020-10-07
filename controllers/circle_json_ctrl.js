@@ -5,7 +5,10 @@ var When = require('../models/When').whenConstructor;
 var whereConstructor = require('../models/Where').whereConstructor;
 var placeConstructor = require('../models/Where').placeConstructor;
 var Global = require("../functions.js");
+
 require("../functions.js");
+const types = require('../computation/nlp/similaritindex.js').types;
+var similar = require('./related_json_ctrl');
 //var router= require('../server')
 console.log("circle_json_ctrl");
 
@@ -298,6 +301,7 @@ exports.addOne = function (req, res) {
                       }
                     }*/
           console.log('success');
+          console.log(similar.addEntity(types.CIRC, a));
           res.json(a.id);
         })
         .catch(err => {
