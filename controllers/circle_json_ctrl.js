@@ -301,7 +301,7 @@ exports.addOne = function (req, res) {
                       }
                     }*/
           console.log('success');
-          console.log(similar.addEntity(types.CIRC, a));
+          similar.addEntity(types.CIRC, a);
           res.json(a.id);
         })
         .catch(err => {
