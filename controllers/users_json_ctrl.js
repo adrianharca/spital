@@ -42,10 +42,10 @@ function sendPasswordResetMail(userMail, res) {
     subject: subject,
     text: body,
     html: body
-  }
-  link = "http://" + config.get("ip") + ":" + config.get("port") + "/" + config.get("resetURL") + "?email=" + userMail
-  mail.text = mail.text + " " + link
-  mail.html = mail.html + " <a href='" + link + "'>Link</a>"
+  };
+  link = "http://" + config.get("ip") + ":" + config.get("port") + "/" + config.get("resetURL") + "?email=" + userMail;
+  mail.text = mail.text + " " + link;
+  mail.html = mail.html + " <a href='" + link + "'>Link</a>";
   smtpTransport.sendMail(mail, (err, info) => {
     if (err) {
       console.log("Error: " + JSON.stringify(err));
@@ -76,10 +76,7 @@ exports.forgottenPasswordSendMail = async function (req, res) {
 
   });
 
-
-
-
-}
+};
 exports.login = async function (req, res) {
 
   console.log("user: " + JSON.stringify(req.body));
@@ -97,12 +94,12 @@ exports.login = async function (req, res) {
         });
       }
       else {
-        console.log("cannot find user")
+        console.log("cannot find user");
         // return res.json("Cannot find user in database")
         login = {};
-        login.token = "Cannot find user in database"
+        login.token = "Cannot find user in database";
 
-        return res.json(login)
+        return res.json(login);
       }
     }
     else {
@@ -133,7 +130,7 @@ exports.login = async function (req, res) {
   }).catch(function (e) {
     console.log("User retrieve failed! " + e);
     res.json("User retrieve failed");
-  })
+  });
 };
 function getToken(user) {
   const token = jwt.sign(
@@ -153,13 +150,13 @@ function sendUser(res, userFound, token) {
 }
 exports.addPassword = async function (req, res) {
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10)
-    const user = { name: req.body.name, password: hashedPassword }
-    users.push(user)
-    res.status(201).send()
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const user = { name: req.body.name, password: hashedPassword };
+    users.push(user);
+    res.status(201).send();
   }
   catch {
-    res.status(500).send()
+    res.status(500).send();
   }
 };
 
@@ -280,7 +277,7 @@ exports.updateUserById = function (req, res) {
 
             console.log("User update failed ! " + e);
             res.send(e);
-          })
+          });
 
 
       }
@@ -307,7 +304,7 @@ exports.updateUserById = function (req, res) {
     res.json(JSON.stringify(tokenResponse));
 
   }
-}
+};
 exports.getImageById = function (req, res) {
   idS = Number(req.params.id);
 
@@ -343,7 +340,7 @@ exports.getImageById = function (req, res) {
     res.send("not a number");
   }
   // res.send("Aaa");
-}
+};
 exports.getAllUsers = function (req, res) {
   User.findAll().map(l => {
 
@@ -363,10 +360,10 @@ exports.getAllUsers = function (req, res) {
       })
 
     .catch(err => console.log(err));
-}
+};
 exports.delete = function (req, res) {
   console.log('deleted');
-}
+};
 
 exports.getUserById = function (req, res) {
 
@@ -386,7 +383,7 @@ exports.getUserById = function (req, res) {
       console.log("Error:" + err);
     });
   }
-}
+};
 
 function renderUser(u) {
   const fields = ['id', 'email', 'trustscore', 'description', 'gender',
@@ -425,7 +422,7 @@ exports.getUserByEmail = function (req, res) {
   }).error(function (err) {
     console.log("Error:" + err);
   });
-}
+};
 exports.getUserByName = function (req, res) {
 
   nameS = req.params.name;
@@ -441,7 +438,7 @@ exports.getUserByName = function (req, res) {
   }).error(function (err) {
     console.log("Error:" + err);
   });
-}
+};
 function generalCreate(req, res) {
   let { name, firstName, lastName, email, accountType,
     birthday, password, description, interests,

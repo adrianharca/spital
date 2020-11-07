@@ -66,7 +66,7 @@ function renderCircle(c) {
   else {
     return {};
   }
-};
+}
 
 
 
@@ -117,7 +117,7 @@ exports.addByThemeDescriptionAndInit = function (req, res) {
     })
       .then(a => {
         console.log('success');
-        res.redirect('/circles')
+        res.redirect('/circles');
       })
       .catch(err => console.log(err));
 

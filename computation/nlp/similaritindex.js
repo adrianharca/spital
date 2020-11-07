@@ -266,21 +266,24 @@ async function doOnce(nodes) {
 async function getRelated(ids, enttype = 'meet') {
     let q1 = "SELECT * FROM (MATCH { class= :cls, as: m, where: (id = :idds or @rid = :idds or @rid= ('#'+:idds) ) }.outE('SemanticGroup'){ as: e, where: (dist < 10.0) }.inV(){class as: mm, while: ($depth < 2), where: ($matched != $currentMatch) } RETURN mm, e.dist, mm.keywords order by e.dist)";
     let pq1 = { params: { cls: enttype, idds: ids } };
+    let res = [];
     // return await 
-    db.client.connect()
-        .then(async () => {
-            return db.client.session({ name: "circ", username: "root", password: "troo" })
+    await db.client.connect()
+        .then(async (client) => {
+            return client.session({ name: "circ", username: "root", password: "troo" })
                 .then(async (session) => {
                     // .select().from(enttype)
+                    console.log('session on for getRelated ' + enttype + ids);
                     return await session
-                        // .query("SELECT * FROM (MATCH { class: :cls, as: m, where: (id = :idds )  }.outE('SemanticGroup'){ as: e, where: (dist < 10.0) }.inV(){class:GRUP as: mm, while: ($depth < 2), where: ($matched != $currentMatch) } RETURN mm, e.dist, mm.keywords order by e.dist)", { params: { cls: enttype, idds: ids } })// ", ids.toString(),@rid not id  "
-                        .query("select * from(MATCH { class=:cls, as: m, where: (class=:cls, id = :idds) }.outE('SemanticGroup'){ as: e, where: (dist < 10.0) }.inV(){ as: mm, while: ($depth < 2), where: ($matched != $currentMatch) }RETURN e.dist, mm.keywords, m order by e.dist)", { params: { cls: enttype, idds: ids } })
+                        // .query("SELECT * FROM (MATCH { class: :cls, as: m, where: (class=:cls,id = :idds )  }.outE('SemanticGroup'){ as: e, where: (dist < 10.0) }.inV(){class:GRUP as: mm, while: ($depth < 2), where: ($matched != $currentMatch) } RETURN mm, e.dist, mm.keywords order by e.dist)", { params: { cls: enttype, idds: ids } })// ", ids.toString(),@rid not id  "
+                        .query("select * from(MATCH { class: GRUP, as: m, where: (@class=:cls and id = :idds) }.outE('SemanticGroup'){ as: e, where: (dist < 10.0) }.inV(){class:GRUP, as: mm, while: ($depth < 2), where: ($matched != $currentMatch and id is not null) }RETURN e.dist, mm.keywords, mm.id, mm.@class order by e.dist)", { params: { cls: enttype, idds: ids } })
                         .all()
                         .then(async (select) => {
                             console.log(select.slice(0, 10));
+                            res = select;
                             session.close()
                                 .then(() => {
-                                    return db.client.close();
+                                    return client.close();
                                 }).then(() => {
                                     console.log('Client closed');
                                 });
@@ -288,6 +291,7 @@ async function getRelated(ids, enttype = 'meet') {
                 }).catch(errr);
             // });
         }).catch(err => console.error(err));
+    return res;
 }
 // getRelated('#29:25632', 'meet');
 

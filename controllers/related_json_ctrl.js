@@ -8,11 +8,12 @@ const getSimilar = require('../computation/nlp/similaritindex.js').getRelated;
 
 
 //require from orient a number of related entities; response will contain fields:  circs:[circleids], meets:[meetids]
-exports.getRelated = function (req, res) {
+exports.getRelated = async function (req, res) {
     let id = Number(req.params.id);
     let inEntType = String(req.params.type);// possible values: circ/meet/user, use types constant
     let outEntType = String(req.query.outenttype);// possible values: circ/meet
-    return res.json(getSimilar(id, inEntType));
+    let sims = await getSimilar(id, inEntType);
+    return res.json(sims);
 };
 
 exports.add = async function (req, res, next) {
