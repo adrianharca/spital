@@ -7,7 +7,7 @@ var Circle = require("../models/Circle");
 function renderMeeting(c) {
     var container = new Object();
     // Object.assign(container, c); is di proper way to clone objs in js
-    const fields = ['id', 'theme', 'description', 'status',
+    const fields = ['id', 'theme', 'description', 'status', 'placeId',
         'initiatorid', 'image', 'privacy', 'minCrowd', 'maxCrowd',
         'createdAt', 'updatedAt', 'deletedAt'];
     if (c != null) {
@@ -24,9 +24,9 @@ function renderMeeting(c) {
         // if (c.location != null) {
         //     container.where = new Where(c.placename, c.spotType, c.location);
         // }
-        if (c.placeId != null) {
-            //retrieve place from db and send it
-        }
+        // if (c.placeId != null) {
+        //     //retrieve place from db and send it
+        // }
         //TODO: render  'circleId', 'parentId'
 
         // if(c.circleId!=null){
@@ -83,7 +83,7 @@ module.exports.getMeets = (req, res) => {
 module.exports.addMeet = (req, res) => {
     var circId = Number(req.body.circleId);
     let { theme, description, keywords, privacy, numberOfPeople,
-        status, initiatorId, when, where } = req.body;
+        status, initiatorId, when, placeId } = req.body;
     console.log('request for to create meeting ' + theme + ' ' + description);
 
     var isflexibleVar = null;
@@ -91,9 +91,9 @@ module.exports.addMeet = (req, res) => {
     var endDateVar = null;
     var keywordsVar = null;
     var timeofdayVar = null;
-    var locationVar = null;
-    var placenameVar = null;
-    var spottypeVar = null;
+    // var locationVar = null;
+    // var placenameVar = null;
+    // var spottypeVar = null;
     var initiatoridVar = null;
     if (when != undefined) {
 
@@ -108,18 +108,17 @@ module.exports.addMeet = (req, res) => {
         keywordsVar = keywords.toString();
     }
 
-    if (where != undefined) {
-        locationVar = where.location;
-        placenameVar = where.placeName;
-        spottypeVar = where.spotType;
-    }
+    // if (where != undefined) {
+    //     locationVar = where.location;
+    //     placenameVar = where.placeName;
+    //     spottypeVar = where.spotType;
+    // }
     if (initiatorId != undefined)
         initiatoridVar = initiatorId;
     Meeting.create({//data
-        theme, description, isFlexible: isflexibleVar, timeofday: timeofdayVar, numberOfPeople,
-        privacy, keywords: keywordsVar, location: locationVar,
+        theme, description, placeId, isFlexible: isflexibleVar, timeofday: timeofdayVar, numberOfPeople,
+        privacy, keywords: keywordsVar,
         status, initiatoridVar, date: dateVar, endDate: endDateVar,
-        placename: placenameVar, spotType: spottypeVar,
     }).then(a => {
         console.log('success');
         res.json(a.id);

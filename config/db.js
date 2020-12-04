@@ -14,9 +14,9 @@ const Place = require("../models/Place");
 
 
 
-const sequelize = new Sequelize('circles', 'root', 'root', {
+const sequelize = new Sequelize('circles', 'root', 'root420024', {
     host: 'localhost',
-    port: '3308',
+    port: '3306',
     dialect: 'mysql',
     // define:{
     //     timestamps:false
@@ -59,7 +59,6 @@ sequelize.authenticate()
     .catch(err => console.log('Err: ' + err));
 
 //Do following to autosync db to model. Eg. for init purposes
-
 
 // sequelize.sync({ alter: true })//,force:true
 //     .then(() => {

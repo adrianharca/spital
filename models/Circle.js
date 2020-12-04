@@ -36,11 +36,14 @@ class Circle extends Sequelize.Model {
             privacy: {
                 type: Sequelize.INTEGER
             },
-            placename: {
-                type: Sequelize.TEXT
-            },
-            placeRange: {
-                type: Sequelize.JSON
+            // placename: {
+            //     type: Sequelize.TEXT
+            // },
+            // placeRange: {
+            //     type: Sequelize.JSON
+            // },
+            placeId: {
+                type: Sequelize.INTEGER
             },
             parentId: {
                 type: Sequelize.INTEGER
@@ -66,6 +69,9 @@ class Circle extends Sequelize.Model {
         this.nk_meets = this.hasMany(models.Meeting, {
             constraints: false
 
+        });
+        this.fkPlace = this.belongsTo(models.Place,{
+            foreignKey: "placeId"
         });
         this.fkParent = this.belongsTo(models.Circle, {
             as: "Parent",

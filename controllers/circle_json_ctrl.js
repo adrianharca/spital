@@ -110,7 +110,7 @@ exports.addByThemeDescriptionAndInit = function (req, res) {
 
     // Insert into table
     Circle.create({
-      theme, description, initiatorid
+      theme, description, initiatorid, placeId
     })
       .then(a => {
         console.log('success');
@@ -243,7 +243,7 @@ exports.addOne = function (req, res) {
   console.log(JSON.stringify(req.body));
   //todo:add privacy
   let { theme, description, keywords, invitationOnly, numberOfPeople, openToAnyone,
-    status, initiatorId, when, where } = req.body;
+    status, initiatorId, when, placeId } = req.body;
   var isflexibleVar = null;
   var dateVar = null;
   var endDateVar = null;
@@ -266,21 +266,20 @@ exports.addOne = function (req, res) {
     keywordsVar = keywords.toString();
   }
 
-  if (where != undefined) {
-    locationVar = where.location;
-    placenameVar = where.placeName;
-    spottypeVar = where.spotType;
-  }
+  // if (where != undefined) {
+  //   locationVar = where.location;
+  //   placenameVar = where.placeName;
+  //   spottypeVar = where.spotType;
+  // }
   if (initiatorId != undefined)
     initiatoridVar = initiatorId;
   Circle.findOne({ where: { id: req.body.id } }).then(function (circleFound) {
     if (circleFound == null)
       Circle.create(
         {//data
-          theme, description, isFlexible: isflexibleVar, timeofday: timeofdayVar, invitationOnly, numberOfPeople,
-          openToAnyone, keywords: keywordsVar, location: locationVar,
-          status, initiatoridVar, date: dateVar, endDate: endDateVar,
-          placename: placenameVar, spotType: spottypeVar,
+          theme, description, placeId, isFlexible: isflexibleVar, timeofday: timeofdayVar, invitationOnly, numberOfPeople,
+          openToAnyone, keywords: keywordsVar,
+          status, initiatoridVar, date: dateVar, endDate: endDateVar
         }).then(a => {
           //here req.body.image
           /*

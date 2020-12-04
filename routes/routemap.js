@@ -12,7 +12,7 @@ var userController = require("../controllers/users_json_ctrl");
 var imageController = require("../controllers/image_json_ctrl");
 var voteController = require("../controllers/vote_json_ctrl");
 var meetController = require("../controllers/meet_js_ctrl");
-
+var placeController= require("../controllers/place_json_ctrl");
 var chatController = require("../controllers/chat_json_ctrl");
 //prefix /json/circles/etc
 // router.use(bodyparser.json);
@@ -37,7 +37,7 @@ router.route("/members/:id").put(memberController.updateMember);
 router.route("/members/:id/image").get(memberController.getImageById);
 router.route("/members/:id/votes").get(voteController.getVotesByMemberId)
     .post(voteController.addVote).delete(voteController.deleteVoteByid);
-router.route('/votes').get(voteController.getAll);
+router.route("/votes").get(voteController.getAll);
 router.route("/votes").post(voteController.addVote).delete(voteController.deleteVoteByid);
 // router.route("/circles/:id/votes/:voteid").get(circleController.getVotesByCircle);
 
@@ -73,7 +73,9 @@ router.route("/meetings").get(meetController.getMeets)
     .delete(meetController.deleteMeet);
 router.route("/meetings/:id/votes").get(voteController.getVotesByMeetId);
 router.route("/meetings/:id/members").get(memberController.getAllMembersByMeetId).post(memberController.createMeetMember);
-
+router.route("/places").post(placeController.createPlace);
+router.route("/places/:id").get(placeController.getPlaceById);
+router.route("/places").get(placeController.getAll);
 // router.route("/members");
 //INTERFACE
 // router.use("/circles", require('./circles'));

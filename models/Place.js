@@ -16,7 +16,7 @@ class Place extends Sequelize.Model {
                 primaryKey: true,
                 autoIncrement: true
             },
-            placename: {
+            placeName: {
                 type: Sequelize.TEXT
             },
             location: {
