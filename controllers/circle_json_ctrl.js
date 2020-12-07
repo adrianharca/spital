@@ -5,7 +5,10 @@ var When = require('../models/When').whenConstructor;
 var whereConstructor = require('../models/Where').whereConstructor;
 var placeConstructor = require('../models/Where').placeConstructor;
 var Global = require("../functions.js");
+
 require("../functions.js");
+const types = require('../computation/nlp/similaritindex.js').types;
+var similar = require('./related_json_ctrl');
 //var router= require('../server')
 console.log("circle_json_ctrl");
 
@@ -63,7 +66,7 @@ function renderCircle(c) {
   else {
     return {};
   }
-};
+}
 
 
 
@@ -114,7 +117,7 @@ exports.addByThemeDescriptionAndInit = function (req, res) {
     })
       .then(a => {
         console.log('success');
-        res.redirect('/circles')
+        res.redirect('/circles');
       })
       .catch(err => console.log(err));
 
@@ -230,7 +233,7 @@ exports.updatebyId = function (req, res) {
         });
     console.log("Project with id " + req.body.id + " updated successfully-!");
   }
-  res.send("ok");
+  return res.send("ok");
 };
 
 
@@ -297,9 +300,13 @@ exports.addOne = function (req, res) {
                       }
                     }*/
           console.log('success');
+          similar.addEntity(types.CIRC, a);
           res.json(a.id);
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          console.log(err);
+          return res.status(500).send(err);
+        });
   });
 };
 

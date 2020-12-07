@@ -1,0 +1,22 @@
+<section id="add" class="container">
+  <div class="form-wrap">
+    <h1>Add new category</h1>
+    {{#each errors}}
+    <div style="color:red;background-color:aqua" class="error">
+      <p style="color: red;background-color:aqua">{{text}}</p>
+    </div>
+    {{/each}}
+    <form action="/categories/add" method="post" enctype="multipart/form-data">
+      <div class="input-group">
+        <label for="categoryName">Category name</label>
+        <input type="text" name="categoryName" id="categoryName" class="input-box"
+          placeholder="eg. 'Literature','Art', etc." maxlength="100" value={{categoryName}}>
+      </div>
+      <div class="input-group">
+          <label for="imageaa">Image</label>
+          <input type="file" name="imageaa" id="imageaa" accept="image/*">
+        </div> 
+      <input type="submit" value="Add Category" class="btn btn-reverse">
+    </form>
+  </div>
+</section>

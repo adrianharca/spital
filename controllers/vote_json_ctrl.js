@@ -30,7 +30,7 @@ exports.getAll = function (req, res) {
   console.log('performing fetch all votes');
 
   res.contentType('application/json');
-  res.removeHeader;
+  res.removeHeader();
   var result = [];
   
   db.sequelize.query(
@@ -42,7 +42,7 @@ exports.getAll = function (req, res) {
     .then(
       c => {
 
-        res.json(c)
+        res.json(c);
 
         console.log('result: ' + result + ' ');
       })
@@ -64,7 +64,7 @@ exports.getAll = function (req, res) {
 };
 exports.getVotesByMemberId = function (req, res) {
   console.log('performing fetch all votes ');
-  res.removeHeader;
+  res.removeHeader();
   var result = [];
   idS = Number(req.params.id);
 
@@ -132,7 +132,7 @@ function generateMemberVoteJoinQuery(meetId) {
 
 };
 module.exports.getVotesByMeetId = function (req, res) {
-  res.removeHeader;
+  res.removeHeader();
   var result = [];
   idS = Number(req.params.meetId);
   console.log('performing fetch all votes for meeting ' + idS);

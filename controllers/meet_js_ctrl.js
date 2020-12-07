@@ -3,6 +3,8 @@ var Meeting = require("../models/Meeting");
 var When = require('../models/When').When;
 var Where = require('../models/Where').whereConstructor;
 var Circle = require("../models/Circle");
+const types = require('../computation/nlp/similaritindex.js').types;
+var similar = require('./related_json_ctrl');
 
 function renderMeeting(c) {
     var container = new Object();
@@ -121,6 +123,8 @@ module.exports.addMeet = (req, res) => {
         status, initiatoridVar, date: dateVar, endDate: endDateVar,
     }).then(a => {
         console.log('success');
+        console.log(similar.addEntity(types.MEET, a));
+
         res.json(a.id);
     })
         .catch(err => console.log(err));

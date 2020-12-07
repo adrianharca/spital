@@ -1,0 +1,25 @@
+{
+    "from": "SumApp",
+    "appName": "SumApp",
+    "fromEmail": "sumappuser@gmail.com",
+    "fromPassword": "SUMappadm1n",
+    "mailService": "gmail",
+    "ip": "localhost",
+    "port": 3000,
+    "resetURL": "users/resetpassword",
+    "resetmail": {
+        "subject": "Reset Password for SumApp User",
+        "body": "Please follow the link to reset the password:",
+        "resetURL": "users/reset"
+    },
+    "password": {
+            "samepassword": "The current password is the same with the old password!",
+            "noemail": "The 'Email' field is not filled in",
+            "nopassword": "The 'Current Password' field is not filled in",
+            "nonewpassword": "The 'New Password' field is not filled in",
+            "samenewpasswords": "The new passwords don't match. Please fill in the 'New Password' and 'Confirm Password' fields with the same chosen password",
+            "nouserfound": "No user found with this e-mail address",
+            "successfulchange": "Password successfully changed for user ",
+            "incorrectpassword": "Incorrect password for user "
+    }
+}
