@@ -442,7 +442,7 @@ exports.getUserByName = function (req, res) {
 function generalCreate(req, res) {
   let { name, firstName, lastName, email, accountType,
     birthday, password, description, interests,
-    trustscore, gender } = req.body;
+    trustscore, gender, city } = req.body;
   let errors = [];
   if (errors.length > 0) {
     res.put('err', {
@@ -461,7 +461,7 @@ function generalCreate(req, res) {
         User.create({
           name, firstname: firstName, lastname: lastName, email, acctype: accountType,
           bday: birthday, pass: hashedPassword, description, interests: interestsVar,
-          trustscore, gender
+          trustscore, gender, city
         }).then(a => {
           /*
           var filename = Global.createFile(req.body.img, req.body.email + "-" + req.body.accountType, "users");
