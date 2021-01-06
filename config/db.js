@@ -17,7 +17,7 @@ const Interest = require("../models/Interest");
 
 
 
-const sequelize = new Sequelize('circles', 'root', 'root420024', {
+const sequelize = new Sequelize('circles', 'root', 'root', {
     host: 'localhost',
     port: '3306',
     dialect: 'mysql',

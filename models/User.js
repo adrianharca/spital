@@ -38,6 +38,9 @@ class User extends Sequelize.Model {
       description: {
         type: Sequelize.TEXT
       },
+      city: {
+       type: Sequelize.TEXT 
+      },
       interests: {
         type: Sequelize.TEXT
       },

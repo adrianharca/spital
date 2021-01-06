@@ -35,6 +35,9 @@
       "description": {
         "type": "string"
       },
+      "city":{
+        "type":"string"
+      },
       "interests": {
         "type": "string"
       },
