@@ -243,7 +243,7 @@ exports.updateUserById = function (req, res) {
             lastname: req.body.lastName,
             email: req.body.email,
             acctype: req.body.accountType,
-            bday: birthdayVar != null ? birthdayVar.toString() : null,
+            bday: birthdayVar != null ? birthdayVar : null,
             description: req.body.description,
             interests: interestsVar,
             gender: req.body.gender
@@ -269,10 +269,11 @@ exports.updateUserById = function (req, res) {
                               });
                 */
               }
-              console.log("User with id " + req.body.id + " updated successfully!");
-              res.send(req.body.id);
+              
               //res.send("User with id " + req.body.id.toString() + " updated successfully!");
             }
+            console.log("User with id " + req.body.id + " updated successfully!");
+              res.sendStatus(200);
           }).catch(function (e) {
 
             console.log("User update failed ! " + e);
@@ -368,6 +369,7 @@ exports.delete = function (req, res) {
 exports.getUserById = function (req, res) {
 
   idS = Number(req.params.id);
+ 
   if (!isNaN(idS)) {
     console.log('getbyid: -' + idS);
     user = User.findOne({ where: { id: idS } }).then(function (userFound) {
