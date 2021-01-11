@@ -324,11 +324,13 @@ exports.getImageById = function (req, res) {
             res.sendFile(pathC.resolve(imageFound.path));
           }
           else {
+            console.log("image was not found");
             res.send("null");
           }
         });
       }
       else {
+        console.log("image entity was not found");
         res.send("null");
       }
     }

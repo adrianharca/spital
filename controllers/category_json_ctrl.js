@@ -36,6 +36,8 @@ exports.getImageById = function (req, res) {
 exports.delete = function (req, res) {
     console.log('deleted');
   };
+
+
   exports.getAll = function (req, res) {
     console.log('performing fetch all categories');
 
@@ -52,10 +54,16 @@ exports.delete = function (req, res) {
       })
       .then(
         c => {
-          res.contentType('application/json');
-          res.json(c);
-  
-          console.log('result: ' + result + ' ');
+          if (Global.isEmpty(c))
+          {
+           // res.contentType('application/json');
+            res.json(JSON.parse("[{\n\"id\": 1,\"categoryName\": \"Cinematography\",\n\"imageId\": null,\n\"createdAt\": \"2020-09-18 10:37:24\",\n\"updatedAt\": \"2020-09-18 10:37:24\",\n\"deletedAt\": null\n}]"));
+          }
+          {
+            res.contentType('application/json');
+            res.json(c);
+            console.log('result: ' + result + ' ');
+          }
         })
   
       .catch(err => console.log(err));

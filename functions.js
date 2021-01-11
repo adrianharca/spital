@@ -2,6 +2,15 @@ const ImageEntity = require('./models/ImageEntity');
 const Image = require('./models/Image');
 var db = require("./config/db.js");
 
+exports.isEmpty = function (obj) {
+  for(var prop in obj) {
+    if(obj.hasOwnProperty(prop))
+      return false;
+  }
+
+  return true;
+};
+
 exports.createFilename = function (fileNameVar, folder){
   var mainPath = __dirname + "\\public\\img\\";
   var path = mainPath + folder;

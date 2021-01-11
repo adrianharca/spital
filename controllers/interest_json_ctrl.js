@@ -9,6 +9,10 @@ console.log("interest_json_ctrl");
 exports.delete = function (req, res) {
     console.log('deleted');
   };
+
+
+  
+
   exports.getAllJSON = function (req, res) {
     console.log('performing fetch all keywords');
 
@@ -20,8 +24,13 @@ exports.delete = function (req, res) {
           ['interestName', 'ASC'],
       ]
   }).then(c => {
-  res.contentType('application/json');
-  res.json(c);
+    if (Global.isEmpty(c)){
+      res.json(JSON.parse("[{\"id\": 90,\"interestName\": \"Kusturica\",\"categoryId\": 1,\"createdAt\": \"2020-09-18 11:16:57\",\"updatedAt\": \"2020-09-18 11:16:57\",\"deletedAt\": null}]"));
+    }
+    else{
+      res.contentType('application/json');
+      res.json(c);
+    }
 
    }); 
   }
