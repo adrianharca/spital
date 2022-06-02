@@ -1,0 +1,342 @@
+<section id="chart1" class="container" style="width:100% !important">
+    <table style="width:100%">
+        <tr>
+            <td><div>Greutatea actuala:{{{greutateactuala}}}</div>
+                <div>Greutatea nastere:{{{greutatenastere}}}</div>
+                <div>Indice ponderal:{{{indiceponderal}}}</div>
+                <div>Suprafata corporala:{{{suprafatacorporala}}}</div></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr><td colspan="2">
+            <h1 style="text-align:center">Foaie de temperatura</h1>
+            <div style="text-align:center">CNP {{{spcnp}}}</div>
+            <div style="text-align:center">&nbsp;</div>
+            <div style="text-align:center">Numele {{{nume}}} &nbsp; &nbsp; &nbsp; Prenumele {{{prenume}}}</div>
+            <div style="text-align:center">&nbsp;</div>
+            <div style="text-align:center">Anul {{{an}}} &nbsp; &nbsp; &nbsp; luna {{{luna}}} &nbsp; &nbsp; &nbsp; Nr. foii de observatie {{{nr}}} &nbsp; &nbsp; &nbsp; Nr. salon {{{salon}}} &nbsp; &nbsp; &nbsp; Nr. pat {{{pat}}}</div>
+            <div style="text-align:center">&nbsp;</div>
+            <div style="text-align:center">&nbsp;</div>
+
+        </td>
+        </tr>
+    </table>
+    <script type="text/x-handlebars-template" id="tableTemplate">
+          <table style="width:100%;text-align:center">
+            <tr><td style="width:22%; text-align:left">Ziua</td>
+                __#each serialList++
+                <td>
+                    <div class="rowLichide">__this++</div>
+                </td>
+                __/each++
+            </tr>
+              <tr> <td style="width:22%; text-align:left">Lichide ingerate</td>
+                  __#each lichideV++
+                  <td>
+                      <div class="rowLichide">__this++</div>
+                  </td>
+                  __/each++
+              </tr>
+              <tr><td style="width:22%; text-align:left">Diureza</td>
+                  __#each diurezaV++
+                  <td>
+                      <div class="rowDiureza">__this++</div>
+                  </td>
+                  __/each++
+              </tr>
+              <tr><td style="width:22%; text-align:left">Scaune</td>
+                  __#each scauneV++
+                  <td>
+                      <div class="rowScaune">__this++</div>
+                  </td>
+                  __/each++
+              </tr>
+              <tr><td style="width:22%; text-align:left">Dieta</td>
+                  __#each dietaV++
+                  <td>
+                      <div class="rowDieta">__this++</div>
+                  </td>
+                  __/each++
+              </tr>
+        </table>
+    </script>
+    <canvas id="myChart" width="1200" height="1200"></canvas>
+
+    <div id="updatedtable"></div>
+
+    <br/><br/>
+    <div id="addDayDiv">
+    <table style="width:100%; text-align:center">
+        <tr>
+            <td colspan="2" >
+                Adauga zi noua
+            </td>
+        </tr>
+        <tr><td>Ziua + timpul (D/S) </td><td><input id="ziua" type="text" value=""/></td></tr>
+        <tr><td>Ziua de boala</td><td><input id="ziuadeboala" type="text" value=""/></td></tr>
+        <tr><td>Resp.</td><td><input id="resp" type="text" value=""/></td></tr>
+        <tr><td>T.A.</td><td><input id="ta" type="text" value=""/></td></tr>
+        <tr><td>Puls</td><td><input id="puls" type="text" value=""/></td></tr>
+        <tr><td>Temperatura</td><td><input id="temperatura" type="text" value=""/></td></tr>
+        <tr><td>Lichide ingerate</td><td><input id="lichideingerate" type="text" value=""/></td></tr>
+        <tr><td>Diureza</td><td><input id="diureza" type="text" value=""/></td></tr>
+        <tr><td>Scaune</td><td><input id="scaune" type="text" value=""/></td></tr>
+        <tr><td>Dieta</td><td><input id="dieta" type="text" value=""/></td></tr>
+        <tr>
+            <td colspan="2" >
+                <input type="button" value="Adauga" onclick="add()" />
+            </td>
+        </tr>
+    </table>
+    </div>
+
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/chartjs-plugin-dragdata.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <script src="/js/chart.js"></script>
+    <script src="/js/utils.js"></script>
+    <script>
+var templateText;
+var tableTemplate;
+function add(){
+        var tt = [document.getElementById("ziua").value, document.getElementById("ziuadeboala").value];
+
+        var uniqDaysTemp = [...new Set(labelsVarArr)];
+        var indexElement = uniqDaysTemp.indexOf(document.getElementById("ziua").value);
+        if (indexElement>=0) {
+            tempVar[indexElement] = document.getElementById("temperatura").value;
+            respVar[indexElement] = document.getElementById("resp").value;
+            taVar[indexElement]= document.getElementById("ta").value;
+            pulsVar[indexElement]=document.getElementById("puls").value;
+        }
+        else {
+            labelsVarFinal.push(tt);
+            labelsVarArr.push(document.getElementById("ziua").value);
+            tempVar.push(document.getElementById("temperatura").value);
+            respVar.push(document.getElementById("resp").value);
+            taVar.push(document.getElementById("ta").value);
+            pulsVar.push(document.getElementById("puls").value);
+            templateText = $("#tableTemplate").html();
+            templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");
+            tableTemplate = Handlebars.compile(templateText);
+
+        }
+        var uniqDay = document.getElementById("ziua").value;
+        uniqDay = uniqDay.replace(" D","");
+        uniqDay = uniqDay.replace(" S","");
+        var indexElementUniq = uniqDaysV.indexOf(uniqDay.replace(" S").replace(" D"));
+        if (indexElementUniq>=0) {
+            lichideL[indexElementUniq] = document.getElementById("lichideingerate").value;
+            diurezaL[indexElementUniq] = document.getElementById("diureza").value;
+            scauneL[indexElementUniq] = document.getElementById("scaune").value;
+            dietaL[indexElementUniq] = document.getElementById("dieta").value;
+        }
+        else {
+            uniqDaysV.push(uniqDay);
+            if (document.getElementById("lichideingerate").value!==undefined)
+                lichideL.push (document.getElementById("lichideingerate").value);
+            if (document.getElementById("diureza").value!==undefined)
+                diurezaL.push (document.getElementById("diureza").value);
+            if (document.getElementById("scaune").value!==undefined)
+                scauneL.push (document.getElementById("scaune").value);
+            if (document.getElementById("dieta").value!==undefined)
+                dietaL.push (document.getElementById("dieta").value);
+        }
+        myChart.update();
+
+        $("#updatedtable").html(tableTemplate({ serialList: uniqDaysV, lichideV:lichideL, diurezaV:diurezaL, scauneV:scauneL, dietaV:dietaL}));
+
+    }
+var ctx = document.getElementById('myChart').getContext('2d');
+const labelsVar = "{{labels}}";
+const labels2Var = "{{labels2}}";
+var labelsVarArr = labelsVar.split(",");
+var labels2VarArr = labels2Var.split(",");
+var labelsVarFinal = [];
+var i = 0;
+labelsVarArr.forEach(element => {
+                labelsVarFinal.push([element, labels2VarArr[i]])
+                i = i+1;
+});
+templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");
+tableTemplate = Handlebars.compile(templateText);
+
+
+var lichideL = "{{lichide}}".split(",");
+var uniqDaysV = "{{uniqDays}}".split(",");
+var diurezaL = "{{diureza}}".split(",");
+var scauneL = "{{scaune}}".split(",");
+var dietaL = "{{dieta}}".split(",");
+
+$("#updatedtable").html(tableTemplate({ serialList: uniqDaysV, lichideV:lichideL, diurezaV:diurezaL, scauneV:scauneL, dietaV:dietaL}));
+
+var tempVar = [{{temp}}];
+var taVar = [{{ta}}];
+var pulsVar = [{{puls}}];
+var respVar = [{{resp}}];
+
+var lastDay = labelsVarArr[labelsVarArr.length-1];
+const data = {
+  labels: labelsVarFinal,
+  datasets: [
+    {
+      label: 'Resp.',
+      data: respVar,
+      borderColor: ['rgba(255, 99, 71, 1)'],
+      backgroundColor: ['rgba(255, 99, 71, 1)'],
+      yAxisID: 'y',
+    },
+    {
+      label: 'T.A.',
+      data: taVar,
+      borderColor: ['rgba(36, 37, 42, 1)'],
+      backgroundColor: ['rgba(36, 37, 42, 1)'],
+      yAxisID: 'y1',
+    },
+    {
+      label: 'Puls',
+      data: pulsVar,
+      borderColor: ['rgba(15, 10, 222,1)'],
+      backgroundColor: ['rgba(15, 10, 222,1)'],
+      yAxisID: 'y2',
+    },
+    {
+      label: 'Temperatura',
+      data: tempVar,
+      borderColor: ['rgba(60, 179, 113,1)'],
+      backgroundColor: ['rgba(60, 179, 113,1)'],
+      yAxisID: 'y3',
+    }
+  ]
+};
+
+function addData(chart, label, data) {
+    chart.data.labels.push(label);
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.push(data);
+    });
+    chart.update();
+}
+
+function removeData(chart) {
+    chart.data.labels.pop();
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.pop();
+    });
+    chart.update();
+}
+
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: data,
+    options: {
+
+        legend:{
+           "display": true
+             },
+        tooltips: {
+            "enabled": true
+            },
+         plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function(context) {
+                        let titleFormat =  context[0].label;
+                        titleFormat = "Ziua " + titleFormat;
+                        titleFormat = titleFormat.replace("D,","dimineata, ziua de boala ");
+                        titleFormat = titleFormat.replace("S,","seara, ziua de boala ");
+                        return titleFormat;
+                    },
+                    label: function(context) {
+                        let label = context.dataset.label || '';
+                        label = " "  + label;
+                        if (label) {
+                            label += ': ';
+                        }
+
+                        if (context.parsed.y !== null) {
+                            label += context.parsed.y;
+                            if (label.includes("Temperatura")) label += "°";
+                        }
+                        return label;
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+             title: {
+             align: 'center',
+             display: true,
+             text: ['Ziua', '(Zile de boala)'],
+             font: {
+               family: 'Arial',
+                size: 18,
+                weight: 'bold',
+                lineHeight: 1.2,
+                 },
+             }
+            },
+            y3: {
+                beginAtZero: false,
+                min: 35,
+                max: 42,
+                display: true,
+                title: {
+                    align: 'end',
+                    display: true,
+                    text: 'Temp.',
+                    padding: {top: 0, left: 0, right: 0, bottom: 0}
+                },
+                ticks: {
+                    // Include a tempr sign in the ticks
+                    callback: function(value, index, ticks) {
+                        return value + "°";
+                    }
+                }
+            },
+           y2: {
+                beginAtZero: false,
+                min: 40,
+                max: 180,
+                display: true,
+                title: {
+                    align: 'end',
+                    display: true,
+                    text: 'Puls',
+                    padding: {top: 0, left: 0, right: 0, bottom: 0}
+               }
+            },
+            y1: {
+                beginAtZero: false,
+                min: 0,
+                max: 35,
+                display: true,
+                title: {
+                    align: 'end',
+                    display: true,
+                    text: 'T.A.',
+                    padding: {top: 0, left: 0, right: 0, bottom: 0}
+               }
+            },
+            y: {
+                beginAtZero: false,
+                min: 5,
+                max: 40,
+                display: true,
+                title: {
+                    align: 'end',
+                    display: true,
+                    text: 'Resp.',
+                    padding: {top: 0, left: 0, right: 0, bottom: 0}
+               }
+            }
+        }
+    }
+});
+
+</script>
+
+</section>

@@ -9,6 +9,7 @@ const helmet = require('helmet');
 const morgan = require('morgan'); 
 console.log('server.js');
 const multer = require('multer'); 
+const chart = require('chart');
 
 //do this once only
 var app = express();
@@ -42,6 +43,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 //Routes for interface:
+app.use("/foaie_temperatura", require('./routes/foaietemperatura'));
 app.use("/circles", require('./routes/circles'));
 app.use("/users", require('./routes/users'));
 app.use("/votes", require('./routes/votes'));
@@ -90,4 +92,4 @@ var server = app.listen(3000, function () {
 
 var mbdistrib = require('./computation/tstdata');
 //console.log("Member votes:" + JSON.stringify(mbdistrib.probVects, null, 1));
-module.exports = router, bodyParser;
+module.exports = router, bodyParser, chart;

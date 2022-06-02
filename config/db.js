@@ -16,7 +16,7 @@ const Interest = require("../models/Interest");
 
 
 
-
+/*
 const sequelize = new Sequelize('circles', 'root', 'root', {
     host: 'localhost',
     port: '3306',
@@ -71,3 +71,4 @@ sequelize.authenticate()
 //     }).catch(console.log);
 
 module.exports = { sequelize };
+*/
