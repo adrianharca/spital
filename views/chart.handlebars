@@ -69,23 +69,46 @@
     <div id="addDayDiv">
     <table style="width:100%; text-align:center">
         <tr>
-            <td colspan="2" >
+            <td colspan="2" style="font-weight:bold;font-size:20px" >
                 Adauga zi noua
             </td>
         </tr>
-        <tr><td>Ziua + timpul (D/S) </td><td><input id="ziua" type="text" value=""/></td></tr>
-        <tr><td>Ziua de boala</td><td><input id="ziuadeboala" type="text" value=""/></td></tr>
-        <tr><td>Resp.</td><td><input id="resp" type="text" value=""/></td></tr>
-        <tr><td>T.A.</td><td><input id="ta" type="text" value=""/></td></tr>
-        <tr><td>Puls</td><td><input id="puls" type="text" value=""/></td></tr>
-        <tr><td>Temperatura</td><td><input id="temperatura" type="text" value=""/></td></tr>
-        <tr><td>Lichide ingerate</td><td><input id="lichideingerate" type="text" value=""/></td></tr>
-        <tr><td>Diureza</td><td><input id="diureza" type="text" value=""/></td></tr>
-        <tr><td>Scaune</td><td><input id="scaune" type="text" value=""/></td></tr>
-        <tr><td>Dieta</td><td><input id="dieta" type="text" value=""/></td></tr>
+        <tr><td>Ziua + timpul (D/S) </td><td style="text-align:left"><input id="ziua" type="text" value="" style="width:30px"/>
+                                            <select id="timeofday" name="timeofday">
+                                                <option value="D">D</option>
+                                                <option value="S">S</option>
+                                            </select></td></tr>
+        <tr><td>Ziua de boala</td><td style="text-align:left"><input id="ziuadeboala" type="text" value="" disabled/></td></tr>
+        <tr><td>Resp.</td><td style="text-align:left"><input id="resp" type="text" value=""/></td></tr>
+        <tr><td>T.A.</td><td style="text-align:left"><input id="ta" type="text" value=""/></td></tr>
+        <tr><td>Puls</td><td style="text-align:left"><input id="puls" type="text" value=""/></td></tr>
+        <tr><td>Temperatura</td><td style="text-align:left"><input id="temperatura" type="text" value=""/></td></tr>
+        <tr><td>Lichide ingerate</td><td style="text-align:left"><input id="lichideingerate" type="text" value=""/></td></tr>
+        <tr><td>Diureza</td><td style="text-align:left"><input id="diureza" type="text" value=""/></td></tr>
+        <tr><td>Scaune</td><td style="text-align:left"><input id="scaune" type="text" value=""/></td></tr>
+        <tr><td>Dieta</td><td style="text-align:left"><input id="dieta" type="text" value=""/></td></tr>
         <tr>
             <td colspan="2" >
                 <input type="button" value="Adauga" onclick="add()" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="font-weight:bold;font-size:20px">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="font-weight:bold;font-size:20px" >
+                Stergere zi
+            </td>
+        </tr>
+        <tr><td>Ziua + timpul (D/S) </td><td style="text-align:left"><select id="ziuaErase" name="ziuaErase" style="width:90px"></select>
+            <select id="timeofdayErase" name="timeofdayErase">
+                <option value="D">D</option>
+                <option value="S">S</option>
+            </select></td></tr>
+        <tr>
+            <td colspan="2" >
+                <input type="button" value="Stergere" onclick="remove()" />
             </td>
         </tr>
     </table>
@@ -100,11 +123,50 @@
     <script>
 var templateText;
 var tableTemplate;
+function remove(){
+    var uniqDaysTemp = [...new Set(labelsVarArr)];
+
+    var eraseDaysDropDown = document.getElementById("ziuaErase");
+    var eraseTimeOfDayDropDown = document.getElementById("timeofdayErase");
+    var dayEraseWithoutTime = eraseDaysDropDown.value;
+    var dayErase = eraseDaysDropDown.value + " " + eraseTimeOfDayDropDown.value;
+    var indexDayErase = uniqDaysTemp.indexOf(dayErase);
+    if (indexDayErase!=-1) {
+        labelsVarFinal.splice(indexDayErase,1);
+        labelsVarArr.splice(indexDayErase,1);
+        uniqDaysTemp.splice(indexDayErase, 1);
+        tempVar.splice(indexDayErase, 1);
+        respVar.splice(indexDayErase, 1);
+        pulsVar.splice(indexDayErase, 1);
+        taVar.splice(indexDayErase, 1);
+        var indexElementUniq = uniqDaysV.indexOf(dayEraseWithoutTime);
+        if (indexElementUniq>=0) {
+            uniqDaysV.splice(indexElementUniq,1);
+            lichideL.splice(indexElementUniq,1);
+            diurezaL.splice(indexElementUniq,1);
+            scauneL.splice(indexElementUniq,1);
+            dietaL.splice(indexElementUniq,1);
+        }
+    }
+    else {
+        alert("Elementul nu este in lista");
+    }
+   /*
+   $("#ziuaErase").empty();
+    for (var ind = 0; uniqDaysV.length > ind ; ind++) {
+        var option = document.createElement("option");
+        option.text = uniqDaysV[ind];
+        eraseDaysDropDown.add(option);
+    }
+    */
+    myChart.update();
+    $("#updatedtable").html(tableTemplate({ serialList: uniqDaysV, lichideV:lichideL, diurezaV:diurezaL, scauneV:scauneL, dietaV:dietaL}));
+}
 function add(){
-        var tt = [document.getElementById("ziua").value, document.getElementById("ziuadeboala").value];
+        var tt = [document.getElementById("ziua").value + " " + document.getElementById("timeofday").value, document.getElementById("ziuadeboala").value];
 
         var uniqDaysTemp = [...new Set(labelsVarArr)];
-        var indexElement = uniqDaysTemp.indexOf(document.getElementById("ziua").value);
+        var indexElement = uniqDaysTemp.indexOf(document.getElementById("ziua").value + " " + document.getElementById("timeofday").value);
         if (indexElement>=0) {
             tempVar[indexElement] = document.getElementById("temperatura").value;
             respVar[indexElement] = document.getElementById("resp").value;
@@ -124,9 +186,7 @@ function add(){
 
         }
         var uniqDay = document.getElementById("ziua").value;
-        uniqDay = uniqDay.replace(" D","");
-        uniqDay = uniqDay.replace(" S","");
-        var indexElementUniq = uniqDaysV.indexOf(uniqDay.replace(" S").replace(" D"));
+        var indexElementUniq = uniqDaysV.indexOf(uniqDay);
         if (indexElementUniq>=0) {
             lichideL[indexElementUniq] = document.getElementById("lichideingerate").value;
             diurezaL[indexElementUniq] = document.getElementById("diureza").value;
@@ -166,6 +226,14 @@ tableTemplate = Handlebars.compile(templateText);
 
 var lichideL = "{{lichide}}".split(",");
 var uniqDaysV = "{{uniqDays}}".split(",");
+
+var eraseDaysDropDown = document.getElementById("ziuaErase");
+
+for (var ind = 0; uniqDaysV.length > ind ; ind++) {
+    var option = document.createElement("option");
+    option.text = uniqDaysV[ind];
+    eraseDaysDropDown.add(option);
+}
 var diurezaL = "{{diureza}}".split(",");
 var scauneL = "{{scaune}}".split(",");
 var dietaL = "{{dieta}}".split(",");
