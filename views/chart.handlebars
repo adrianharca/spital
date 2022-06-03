@@ -339,15 +339,30 @@ var myChart = new Chart(ctx, {
             round: 1,
             showTooltip: true,
             onDragStart: function(e, datasetIndex, index, value) {
-              // console.log(e)
+
             },
             onDrag: function(e, datasetIndex, index, value) {
               e.target.style.cursor = 'grabbing'
-              // console.log(e, datasetIndex, index, value)
+
             },
             onDragEnd: function(e, datasetIndex, index, value) {
               e.target.style.cursor = 'default'
-              // console.log(datasetIndex, index, value)
+              switch(datasetIndex) {
+                    case 0:
+                        respVar[index] = value;
+                        break;
+                    case 1:
+                        taVar[index] = value;
+                        break;
+                    case 2:
+                        pulsVar[index] = value;
+                        break;
+                    case 3:
+                        tempVar[index] = value;
+                        break;
+                    default:
+                        // code block
+                }
             },
           },
             tooltip: {
