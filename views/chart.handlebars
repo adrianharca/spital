@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <section id="chart1" class="container" style="width:100% !important">
     <table style="width:100%">
         <tr>
@@ -70,7 +71,7 @@
     <table style="width:100%; text-align:center">
         <tr>
             <td colspan="2" style="font-weight:bold;font-size:20px" >
-                Adauga zi noua
+                Adauga zi noua (sau modifica zi existenta)
             </td>
         </tr>
         <tr><td>Ziua + timpul (D/S) </td><td style="text-align:left"><input id="ziua" type="text" value="" style="width:30px"/>
@@ -78,7 +79,7 @@
                                                 <option value="D">D</option>
                                                 <option value="S">S</option>
                                             </select></td></tr>
-        <tr><td>Ziua de boala</td><td style="text-align:left"><input id="ziuadeboala" type="text" value="" disabled/></td></tr>
+        <tr><td>Ziua de boala</td><td style="text-align:left"><input id="ziuadeboala" type="text" value="" /></td></tr>
         <tr><td>Resp.</td><td style="text-align:left"><input id="resp" type="text" value=""/></td></tr>
         <tr><td>T.A.</td><td style="text-align:left"><input id="ta" type="text" value=""/></td></tr>
         <tr><td>Puls</td><td style="text-align:left"><input id="puls" type="text" value=""/></td></tr>
@@ -101,35 +102,58 @@
                 Stergere zi
             </td>
         </tr>
-        <tr><td>Ziua + timpul (D/S) </td><td style="text-align:left"><select id="ziuaErase" name="ziuaErase" style="width:90px"></select>
-            <select id="timeofdayErase" name="timeofdayErase">
-                <option value="D">D</option>
-                <option value="S">S</option>
-            </select></td></tr>
+        <tr><td>Ziua + timpul (D/S) </td><td style="text-align:left"><select id="dayAndTimeErase" name="dayAndTimeErase" style="width:100px" ></select>
+            </td></tr>
         <tr>
             <td colspan="2" >
                 <input type="button" value="Stergere" onclick="remove()" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/><br/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="font-weight:bold;font-size:20px" >
+                Audit
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="font-weight:bold;font-size:10px" >
+                <div id="audit" ></div>
             </td>
         </tr>
     </table>
     </div>
 
     <script src="/js/jquery-3.6.0.min.js"></script>
-    <script src="/js/chartjs-plugin-dragdata.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
     <script src="/js/chart.js"></script>
     <script src="/js/utils.js"></script>
+
+    <script src="/js/chartjs-plugin-dragdata.min.js"></script>
     <script>
 var templateText;
 var tableTemplate;
+function formatNumber(numberVar){
+    if (10>numberVar) return "0" + numberVar;
+    return "" + numberVar;
+}
+function formatDate(dateVar){
+    return formatNumber(dateVar.getHours()) + ":" + formatNumber(dateVar.getMinutes()) + ":" + formatNumber(dateVar.getSeconds()) + ", " + formatNumber(dateVar.getDate()) +
+     "." + formatNumber(dateVar.getMonth()+1) + "." +  dateVar.getFullYear();
+}
+function addToAudit(stringVar){
+    var current = new Date();
+    $("#audit").html($("#audit").html() + "<br/>" + stringVar + "( ora " + formatDate(current) + ")");
+}
 function remove(){
     var uniqDaysTemp = [...new Set(labelsVarArr)];
 
-    var eraseDaysDropDown = document.getElementById("ziuaErase");
-    var eraseTimeOfDayDropDown = document.getElementById("timeofdayErase");
-    var dayEraseWithoutTime = eraseDaysDropDown.value;
-    var dayErase = eraseDaysDropDown.value + " " + eraseTimeOfDayDropDown.value;
+    var eraseDaysDropDown = document.getElementById("dayAndTimeErase");
+    var dayErase = eraseDaysDropDown.value;
+    var dayEraseWithoutTime = dayErase.substring(0,dayErase.indexOf(" "));
     var indexDayErase = uniqDaysTemp.indexOf(dayErase);
     if (indexDayErase!=-1) {
         labelsVarFinal.splice(indexDayErase,1);
@@ -140,25 +164,22 @@ function remove(){
         pulsVar.splice(indexDayErase, 1);
         taVar.splice(indexDayErase, 1);
         var indexElementUniq = uniqDaysV.indexOf(dayEraseWithoutTime);
-        if (indexElementUniq>=0) {
-            uniqDaysV.splice(indexElementUniq,1);
-            lichideL.splice(indexElementUniq,1);
-            diurezaL.splice(indexElementUniq,1);
-            scauneL.splice(indexElementUniq,1);
-            dietaL.splice(indexElementUniq,1);
+        if (dayErase.includes(" S")) {
+            if (indexElementUniq>=0) {
+                uniqDaysV.splice(indexElementUniq,1);
+                lichideL.splice(indexElementUniq,1);
+                diurezaL.splice(indexElementUniq,1);
+                scauneL.splice(indexElementUniq,1);
+                dietaL.splice(indexElementUniq,1);
+             }
         }
+        addToAudit("Elementul " + dayErase + " a fost sters cu succes ");
     }
     else {
         alert("Elementul nu este in lista");
     }
-   /*
-   $("#ziuaErase").empty();
-    for (var ind = 0; uniqDaysV.length > ind ; ind++) {
-        var option = document.createElement("option");
-        option.text = uniqDaysV[ind];
-        eraseDaysDropDown.add(option);
-    }
-    */
+    updateEraseDropDown();
+
     myChart.update();
     $("#updatedtable").html(tableTemplate({ serialList: uniqDaysV, lichideV:lichideL, diurezaV:diurezaL, scauneV:scauneL, dietaV:dietaL}));
 }
@@ -172,10 +193,11 @@ function add(){
             respVar[indexElement] = document.getElementById("resp").value;
             taVar[indexElement]= document.getElementById("ta").value;
             pulsVar[indexElement]=document.getElementById("puls").value;
+            addToAudit("Elementul " + document.getElementById("ziua").value + " " + document.getElementById("timeofday").value + " a fost modificat cu succes ");
         }
         else {
             labelsVarFinal.push(tt);
-            labelsVarArr.push(document.getElementById("ziua").value);
+            labelsVarArr.push(document.getElementById("ziua").value + " " + document.getElementById("timeofday").value);
             tempVar.push(document.getElementById("temperatura").value);
             respVar.push(document.getElementById("resp").value);
             taVar.push(document.getElementById("ta").value);
@@ -183,7 +205,7 @@ function add(){
             templateText = $("#tableTemplate").html();
             templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");
             tableTemplate = Handlebars.compile(templateText);
-
+            addToAudit("Elementul " + document.getElementById("ziua").value + " " + document.getElementById("timeofday").value + " a fost adaugat cu succes ");
         }
         var uniqDay = document.getElementById("ziua").value;
         var indexElementUniq = uniqDaysV.indexOf(uniqDay);
@@ -204,11 +226,22 @@ function add(){
             if (document.getElementById("dieta").value!==undefined)
                 dietaL.push (document.getElementById("dieta").value);
         }
+
+        updateEraseDropDown();
         myChart.update();
 
         $("#updatedtable").html(tableTemplate({ serialList: uniqDaysV, lichideV:lichideL, diurezaV:diurezaL, scauneV:scauneL, dietaV:dietaL}));
 
     }
+function updateEraseDropDown(){
+        var eraseDaysDropDown = document.getElementById("dayAndTimeErase");
+        $("#dayAndTimeErase").empty();
+        for (var ind = 0; labelsVarArr.length > ind ; ind++) {
+            var option = document.createElement("option");
+            option.text = labelsVarArr[ind];
+            eraseDaysDropDown.add(option);
+        }
+}
 var ctx = document.getElementById('myChart').getContext('2d');
 const labelsVar = "{{labels}}";
 const labels2Var = "{{labels2}}";
@@ -227,13 +260,8 @@ tableTemplate = Handlebars.compile(templateText);
 var lichideL = "{{lichide}}".split(",");
 var uniqDaysV = "{{uniqDays}}".split(",");
 
-var eraseDaysDropDown = document.getElementById("ziuaErase");
+updateEraseDropDown();
 
-for (var ind = 0; uniqDaysV.length > ind ; ind++) {
-    var option = document.createElement("option");
-    option.text = uniqDaysV[ind];
-    eraseDaysDropDown.add(option);
-}
 var diurezaL = "{{diureza}}".split(",");
 var scauneL = "{{scaune}}".split(",");
 var dietaL = "{{dieta}}".split(",");
@@ -300,7 +328,6 @@ var myChart = new Chart(ctx, {
     type: 'line',
     data: data,
     options: {
-
         legend:{
            "display": true
              },
@@ -308,6 +335,21 @@ var myChart = new Chart(ctx, {
             "enabled": true
             },
          plugins: {
+            dragData: {
+            round: 1,
+            showTooltip: true,
+            onDragStart: function(e, datasetIndex, index, value) {
+              // console.log(e)
+            },
+            onDrag: function(e, datasetIndex, index, value) {
+              e.target.style.cursor = 'grabbing'
+              // console.log(e, datasetIndex, index, value)
+            },
+            onDragEnd: function(e, datasetIndex, index, value) {
+              e.target.style.cursor = 'default'
+              // console.log(datasetIndex, index, value)
+            },
+          },
             tooltip: {
                 callbacks: {
                     title: function(context) {
