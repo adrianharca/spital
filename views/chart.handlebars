@@ -2,21 +2,21 @@
 <section id="chart1" class="container" style="width:100% !important">
     <table style="width:100%">
         <tr>
-            <td><div>Greutatea actuala:{{{greutateactuala}}}</div>
-                <div>Greutatea nastere:{{{greutatenastere}}}</div>
-                <div>Indice ponderal:{{{indiceponderal}}}</div>
-                <div>Suprafata corporala:{{{suprafatacorporala}}}</div></td>
+            <td><div>Greutatea actuala:{{{pacient.greutateactuala}}}</div>
+                <div>Greutatea nastere:{{{pacient.greutatenastere}}}</div>
+                <div>Indice ponderal:{{{pacient.indiceponderal}}}</div>
+                <div>Suprafata corporala:{{{pacient.suprafatacorporala}}}</div></td>
             <td>
 
             </td>
         </tr>
         <tr><td colspan="2">
             <h1 style="text-align:center">Foaie de temperatura</h1>
-            <div style="text-align:center">CNP {{{spcnp}}}</div>
+            <div style="text-align:center">CNP {{{pacient.spcnp}}}</div>
             <div style="text-align:center">&nbsp;</div>
-            <div style="text-align:center">Numele {{{nume}}} &nbsp; &nbsp; &nbsp; Prenumele {{{prenume}}}</div>
+            <div style="text-align:center">Numele {{{pacient.nume}}} &nbsp; &nbsp; &nbsp; Prenumele {{{pacient.prenume}}}</div>
             <div style="text-align:center">&nbsp;</div>
-            <div style="text-align:center">Anul {{{an}}} &nbsp; &nbsp; &nbsp; luna {{{luna}}} &nbsp; &nbsp; &nbsp; Nr. foii de observatie {{{nr}}} &nbsp; &nbsp; &nbsp; Nr. salon {{{salon}}} &nbsp; &nbsp; &nbsp; Nr. pat {{{pat}}}</div>
+            <div style="text-align:center">Anul {{{detaliiFoaie.an}}} &nbsp; &nbsp; &nbsp; luna {{{detaliiFoaie.luna}}} &nbsp; &nbsp; &nbsp; Nr. foii de observatie {{{detaliiFoaie.nr}}} &nbsp; &nbsp; &nbsp; Nr. salon {{{detaliiFoaie.salon}}} &nbsp; &nbsp; &nbsp; Nr. pat {{{detaliiFoaie.pat}}}</div>
             <div style="text-align:center">&nbsp;</div>
             <div style="text-align:center">&nbsp;</div>
 
@@ -136,6 +136,9 @@
     <script>
 var templateText;
 var tableTemplate;
+document.getElementById("myChart").ondblclick = function(evt) {
+   chartClickEvent(evt);
+}
 function formatNumber(numberVar){
     if (10>numberVar) return "0" + numberVar;
     return "" + numberVar;
@@ -183,17 +186,56 @@ function remove(){
     myChart.update();
     $("#updatedtable").html(tableTemplate({ serialList: uniqDaysV, lichideV:lichideL, diurezaV:diurezaL, scauneV:scauneL, dietaV:dietaL}));
 }
+function chartClickEvent(event){
+   var numberOfExistingElements = labelsVarFinal.length-1;
+   var oldDay = labelsVarArr[numberOfExistingElements].split(" ")[0];
+   var oldSicknessDay = labelsVarFinal[numberOfExistingElements][1];
+   var newSicknessDay;
+   var oldTimeOfDay = labelsVarArr[numberOfExistingElements].split(" ")[1];
+   var newDay, newTimeOfDay;
+   var newElement = newDay + " " + newTimeOfDay;
+   if (oldTimeOfDay.includes("D")) {
+        newTimeOfDay = "S";
+        newDay = oldDay;
+        newSicknessDay = oldSicknessDay;
+   }
+   else {
+        newDay = parseInt(oldDay) + 1;
+        uniqDaysV.push(newDay);
+        newSicknessDay = parseInt(oldSicknessDay) + 1;
+        newTimeOfDay = "D";
+   }
+   var newElement = newDay + " " + newTimeOfDay;
+   labelsVarFinal.push([newElement,newSicknessDay]);
+   labelsVarArr.push(newElement);
+   tempVar.push(tempVar[numberOfExistingElements]);
+   respVar.push(respVar[numberOfExistingElements]);
+   taVar.push(taVar[numberOfExistingElements]);
+   pulsVar.push(pulsVar[numberOfExistingElements]);
+   lichideL.push("");
+   diurezaL.push("");
+   scauneL.push("");
+   dietaL.push("");
+   $("#updatedtable").html(tableTemplate({ serialList: uniqDaysV, lichideV:lichideL, diurezaV:diurezaL, scauneV:scauneL, dietaV:dietaL}));
+   templateText = $("#tableTemplate").html();
+   templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");
+   tableTemplate = Handlebars.compile(templateText);
+   addToAudit("Elementul " + newElement + " a fost adaugat cu succes pe grafic");
+   myChart.update();
+}
+
 function add(){
         var tt = [document.getElementById("ziua").value + " " + document.getElementById("timeofday").value, document.getElementById("ziuadeboala").value];
 
         var uniqDaysTemp = [...new Set(labelsVarArr)];
+        var ceSaIntamplat = "";
         var indexElement = uniqDaysTemp.indexOf(document.getElementById("ziua").value + " " + document.getElementById("timeofday").value);
         if (indexElement>=0) {
             tempVar[indexElement] = document.getElementById("temperatura").value;
             respVar[indexElement] = document.getElementById("resp").value;
             taVar[indexElement]= document.getElementById("ta").value;
             pulsVar[indexElement]=document.getElementById("puls").value;
-            addToAudit("Elementul " + document.getElementById("ziua").value + " " + document.getElementById("timeofday").value + " a fost modificat cu succes ");
+            ceSaIntamplat = "modificat";
         }
         else {
             labelsVarFinal.push(tt);
@@ -205,7 +247,7 @@ function add(){
             templateText = $("#tableTemplate").html();
             templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");
             tableTemplate = Handlebars.compile(templateText);
-            addToAudit("Elementul " + document.getElementById("ziua").value + " " + document.getElementById("timeofday").value + " a fost adaugat cu succes ");
+            ceSaIntamplat = "adaugat";
         }
         var uniqDay = document.getElementById("ziua").value;
         var indexElementUniq = uniqDaysV.indexOf(uniqDay);
@@ -226,7 +268,10 @@ function add(){
             if (document.getElementById("dieta").value!==undefined)
                 dietaL.push (document.getElementById("dieta").value);
         }
-
+        addToAudit("Elementul " + document.getElementById("ziua").value + " " + document.getElementById("timeofday").value + " a fost " + ceSaIntamplat + " cu succes - Temp. "
+            +document.getElementById("temperatura").value + ",Resp. " + document.getElementById("resp").value + ", T.A. " + document.getElementById("ta").value + ", Puls " +
+            document.getElementById("puls").value + ", Lichide " + document.getElementById("lichideingerate").value + ", Diureza " + document.getElementById("diureza").value +
+             ", Scaune " + document.getElementById("scaune").value + ", Dieta " + document.getElementById("dieta").value);
         updateEraseDropDown();
         myChart.update();
 
@@ -243,8 +288,8 @@ function updateEraseDropDown(){
         }
 }
 var ctx = document.getElementById('myChart').getContext('2d');
-const labelsVar = "{{labels}}";
-const labels2Var = "{{labels2}}";
+const labelsVar = "{{foaieTemperatura.labels}}";
+const labels2Var = "{{foaieTemperatura.labels2}}";
 var labelsVarArr = labelsVar.split(",");
 var labels2VarArr = labels2Var.split(",");
 var labelsVarFinal = [];
@@ -257,21 +302,21 @@ templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}"
 tableTemplate = Handlebars.compile(templateText);
 
 
-var lichideL = "{{lichide}}".split(",");
-var uniqDaysV = "{{uniqDays}}".split(",");
+var lichideL = "{{foaieTemperatura.lichide}}".split(",");
+var uniqDaysV = "{{foaieTemperatura.uniqDays}}".split(",");
 
 updateEraseDropDown();
 
-var diurezaL = "{{diureza}}".split(",");
-var scauneL = "{{scaune}}".split(",");
-var dietaL = "{{dieta}}".split(",");
+var diurezaL = "{{foaieTemperatura.diureza}}".split(",");
+var scauneL = "{{foaieTemperatura.scaune}}".split(",");
+var dietaL = "{{foaieTemperatura.dieta}}".split(",");
 
 $("#updatedtable").html(tableTemplate({ serialList: uniqDaysV, lichideV:lichideL, diurezaV:diurezaL, scauneV:scauneL, dietaV:dietaL}));
 
-var tempVar = [{{temp}}];
-var taVar = [{{ta}}];
-var pulsVar = [{{puls}}];
-var respVar = [{{resp}}];
+var tempVar = [{{foaieTemperatura.temp}}];
+var taVar = [{{foaieTemperatura.ta}}];
+var pulsVar = [{{foaieTemperatura.puls}}];
+var respVar = [{{foaieTemperatura.resp}}];
 
 var lastDay = labelsVarArr[labelsVarArr.length-1];
 const data = {
@@ -347,22 +392,28 @@ var myChart = new Chart(ctx, {
             },
             onDragEnd: function(e, datasetIndex, index, value) {
               e.target.style.cursor = 'default'
+              var elementModificat = "";
               switch(datasetIndex) {
                     case 0:
                         respVar[index] = value;
+                        elementModificat = "Respiratia";
                         break;
                     case 1:
                         taVar[index] = value;
+                        elementModificat = "T.A.";
                         break;
                     case 2:
                         pulsVar[index] = value;
+                        elementModificat = "Puls";
                         break;
                     case 3:
                         tempVar[index] = value;
+                        elementModificat = "Temperatura";
                         break;
                     default:
                         // code block
                 }
+                addToAudit("Elementul " + labelsVarArr[index] + " a fost modificat cu succes, " + elementModificat + ": " + value);
             },
           },
             tooltip: {

@@ -124,8 +124,10 @@ router.get('/', (req, res) => {
             dieta.push (entry.dieta);
     });
     uniqDays = [...new Set(labelsDays)];
-
-    res.render('chart', { arr ,labels, temp, resp, ta, puls, labels2, cnp, prenume, nume, spcnp, an, luna, nr, salon, pat,greutateactuala,greutatenastere,indiceponderal,suprafatacorporala,lichide,diureza,scaune,dieta,uniqDays} );
+    foaieTemperatura = {arr, labels, temp, resp, ta, puls, labels2,uniqDays,lichide,diureza,scaune,dieta};
+    pacient = {cnp, prenume, nume, spcnp,greutateactuala,greutatenastere,indiceponderal,suprafatacorporala};
+    detaliiFoaie = {an, luna, nr, salon, pat};
+    res.render('chart', { foaieTemperatura, pacient, detaliiFoaie} );
 
 });
 
