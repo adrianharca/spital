@@ -63,7 +63,7 @@ router.get('/', (req, res) => {
     arr.push(new FTchart(day,illnessDay,"D",29,23,145,39.4));
     arr.push(new FTchart(day++,illnessDay++,"S",28,24,140,36.8,125,1200,1,"V"));
     arr.push(new FTchart(day,illnessDay,"D",29,21,150,36.2));
-    arr.push(new FTchart(day++,illnessDay++,"S",28,22,155,36.6));
+    arr.push(new FTchart(day++,illnessDay++,"S",28,22,155,36.6,125,1200,1,"V"));
 
     cnp = '6171002160667';
     prenumeStr = "Gina";

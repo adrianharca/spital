@@ -35,34 +35,34 @@
               <tr> <td style="width:22%; text-align:left">Lichide ingerate</td>
                   __#each lichideV++
                   <td>
-                      <div class="rowLichide">__this++</div>
+                      <input type="text" style="width:50px" class="rowLichide" value="__this++"/>
                   </td>
                   __/each++
               </tr>
               <tr><td style="width:22%; text-align:left">Diureza</td>
                   __#each diurezaV++
                   <td>
-                      <div class="rowDiureza">__this++</div>
+                      <input type="text" style="width:50px" class="rowDiureza" value="__this++"/>
                   </td>
                   __/each++
               </tr>
               <tr><td style="width:22%; text-align:left">Scaune</td>
                   __#each scauneV++
                   <td>
-                      <div class="rowScaune">__this++</div>
+                      <input type="text" style="width:50px" class="rowScaune" value="__this++"/>
                   </td>
                   __/each++
               </tr>
               <tr><td style="width:22%; text-align:left">Dieta</td>
                   __#each dietaV++
                   <td>
-                      <div class="rowDieta">__this++</div>
+                      <input type="text" style="width:50px" class="rowDieta" value="__this++"/>
                   </td>
                   __/each++
               </tr>
         </table>
     </script>
-    <canvas id="myChart" width="1200" height="1200"></canvas>
+    <canvas id="myChart"></canvas>
 
     <div id="updatedtable"></div>
 
@@ -75,9 +75,9 @@
             </td>
         </tr>
         <tr><td>Ziua + timpul (D/S) </td><td style="text-align:left"><input id="ziua" type="text" value="" style="width:30px"/>
-                                            <select id="timeofday" name="timeofday">
-                                                <option value="D">D</option>
-                                                <option value="S">S</option>
+                                            <select id="timeofday" onchange="disableElements()" name="timeofday">
+                                                <option value="D" >D</option>
+                                                <option value="S" >S</option>
                                             </select></td></tr>
         <tr><td>Ziua de boala</td><td style="text-align:left"><input id="ziuadeboala" type="text" value="" /></td></tr>
         <tr><td>Resp.</td><td style="text-align:left"><input id="resp" type="text" value=""/></td></tr>
@@ -102,7 +102,7 @@
                 Stergere zi
             </td>
         </tr>
-        <tr><td>Ziua + timpul (D/S) </td><td style="text-align:left"><select id="dayAndTimeErase" name="dayAndTimeErase" style="width:100px" ></select>
+        <tr><td>Ziua + timpul (Dimineata/Seara) </td><td style="text-align:left"><select id="dayAndTimeErase" name="dayAndTimeErase" style="width:100px" ></select>
             </td></tr>
         <tr>
             <td colspan="2" >
@@ -138,6 +138,23 @@ var templateText;
 var tableTemplate;
 document.getElementById("myChart").ondblclick = function(evt) {
    chartClickEvent(evt);
+}
+
+function disableElements() {
+     var disable;
+     if (document.getElementById("timeofday").options[document.getElementById("timeofday").selectedIndex].value=="D") {
+        document.getElementById("dieta").value = "";
+        document.getElementById("scaune").value = "";
+        document.getElementById("diureza").value = "";
+        document.getElementById("lichideingerate").value = "";
+        disable = true;
+        }
+     else
+        disable = false;
+     document.getElementById("dieta").disabled=disable;
+     document.getElementById("scaune").disabled=disable;
+     document.getElementById("diureza").disabled=disable;
+     document.getElementById("lichideingerate").disabled=disable;
 }
 function formatNumber(numberVar){
     if (10>numberVar) return "0" + numberVar;
@@ -184,7 +201,17 @@ function remove(){
     updateEraseDropDown();
 
     myChart.update();
+    resizeChart();
     $("#updatedtable").html(tableTemplate({ serialList: uniqDaysV, lichideV:lichideL, diurezaV:diurezaL, scauneV:scauneL, dietaV:dietaL}));
+}
+function resizeChart(){
+ var numberOfExistingElements = labelsVarFinal.length-1;
+ if (numberOfExistingElements<16)
+    myChart.resize(800, 600);
+ else if (numberOfExistingElements>=16 && numberOfExistingElements<20)
+    myChart.resize(1000, 600);
+ else if (numberOfExistingElements>=20)
+    myChart.resize(1200, 1200);
 }
 function chartClickEvent(event){
    var numberOfExistingElements = labelsVarFinal.length-1;
@@ -198,10 +225,17 @@ function chartClickEvent(event){
         newTimeOfDay = "S";
         newDay = oldDay;
         newSicknessDay = oldSicknessDay;
+        uniqDaysV.push(newDay);
+        lichideL.push("");
+        diurezaL.push("");
+        scauneL.push("");
+        dietaL.push("");
+        templateText = $("#tableTemplate").html();
+        templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");
+        $("#updatedtable").html(tableTemplate({ serialList: uniqDaysV, lichideV:lichideL, diurezaV:diurezaL, scauneV:scauneL, dietaV:dietaL}));
    }
    else {
         newDay = parseInt(oldDay) + 1;
-        uniqDaysV.push(newDay);
         newSicknessDay = parseInt(oldSicknessDay) + 1;
         newTimeOfDay = "D";
    }
@@ -212,16 +246,12 @@ function chartClickEvent(event){
    respVar.push(respVar[numberOfExistingElements]);
    taVar.push(taVar[numberOfExistingElements]);
    pulsVar.push(pulsVar[numberOfExistingElements]);
-   lichideL.push("");
-   diurezaL.push("");
-   scauneL.push("");
-   dietaL.push("");
-   $("#updatedtable").html(tableTemplate({ serialList: uniqDaysV, lichideV:lichideL, diurezaV:diurezaL, scauneV:scauneL, dietaV:dietaL}));
-   templateText = $("#tableTemplate").html();
-   templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");
+
+
    tableTemplate = Handlebars.compile(templateText);
    addToAudit("Elementul " + newElement + " a fost adaugat cu succes pe grafic");
    myChart.update();
+   resizeChart();
 }
 
 function add(){
@@ -238,6 +268,27 @@ function add(){
             ceSaIntamplat = "modificat";
         }
         else {
+            var numberOfExistingElements = labelsVarFinal.length-1;
+            var oldDay = labelsVarArr[numberOfExistingElements].split(" ")[0];
+            var oldSicknessDay = labelsVarFinal[numberOfExistingElements][1];
+            var newSicknessDay;
+            var oldTimeOfDay = labelsVarArr[numberOfExistingElements].split(" ")[1];
+            if (oldTimeOfDay.includes("D")) {
+                newTimeOfDay = "S";
+                newDay = oldDay;
+                newSicknessDay = oldSicknessDay;
+            }
+            else {
+               newDay = parseInt(oldDay) + 1;
+               newSicknessDay = parseInt(oldSicknessDay) + 1;
+               newTimeOfDay = "D";
+            }
+            if (document.getElementById("ziua").value!=newDay || document.getElementById("timeofday").value!= newTimeOfDay) {
+               alert("Elementul urmator trebuie sa fie: " + newDay + " " + newTimeOfDay);
+               return;
+            }
+
+
             labelsVarFinal.push(tt);
             labelsVarArr.push(document.getElementById("ziua").value + " " + document.getElementById("timeofday").value);
             tempVar.push(document.getElementById("temperatura").value);
@@ -250,23 +301,25 @@ function add(){
             ceSaIntamplat = "adaugat";
         }
         var uniqDay = document.getElementById("ziua").value;
-        var indexElementUniq = uniqDaysV.indexOf(uniqDay);
-        if (indexElementUniq>=0) {
-            lichideL[indexElementUniq] = document.getElementById("lichideingerate").value;
-            diurezaL[indexElementUniq] = document.getElementById("diureza").value;
-            scauneL[indexElementUniq] = document.getElementById("scaune").value;
-            dietaL[indexElementUniq] = document.getElementById("dieta").value;
-        }
-        else {
-            uniqDaysV.push(uniqDay);
-            if (document.getElementById("lichideingerate").value!==undefined)
-                lichideL.push (document.getElementById("lichideingerate").value);
-            if (document.getElementById("diureza").value!==undefined)
-                diurezaL.push (document.getElementById("diureza").value);
-            if (document.getElementById("scaune").value!==undefined)
-                scauneL.push (document.getElementById("scaune").value);
-            if (document.getElementById("dieta").value!==undefined)
-                dietaL.push (document.getElementById("dieta").value);
+        if (document.getElementById("timeofday").value=="S") {
+            var indexElementUniq = uniqDaysV.indexOf(uniqDay);
+            if (indexElementUniq>=0) {
+                lichideL[indexElementUniq] = document.getElementById("lichideingerate").value;
+                diurezaL[indexElementUniq] = document.getElementById("diureza").value;
+                scauneL[indexElementUniq] = document.getElementById("scaune").value;
+                dietaL[indexElementUniq] = document.getElementById("dieta").value;
+            }
+            else {
+                uniqDaysV.push(uniqDay);
+                if (document.getElementById("lichideingerate").value!==undefined)
+                    lichideL.push (document.getElementById("lichideingerate").value);
+                if (document.getElementById("diureza").value!==undefined)
+                    diurezaL.push (document.getElementById("diureza").value);
+                if (document.getElementById("scaune").value!==undefined)
+                    scauneL.push (document.getElementById("scaune").value);
+                if (document.getElementById("dieta").value!==undefined)
+                    dietaL.push (document.getElementById("dieta").value);
+            }
         }
         addToAudit("Elementul " + document.getElementById("ziua").value + " " + document.getElementById("timeofday").value + " a fost " + ceSaIntamplat + " cu succes - Temp. "
             +document.getElementById("temperatura").value + ",Resp. " + document.getElementById("resp").value + ", T.A. " + document.getElementById("ta").value + ", Puls " +
@@ -274,7 +327,7 @@ function add(){
              ", Scaune " + document.getElementById("scaune").value + ", Dieta " + document.getElementById("dieta").value);
         updateEraseDropDown();
         myChart.update();
-
+        resizeChart();
         $("#updatedtable").html(tableTemplate({ serialList: uniqDaysV, lichideV:lichideL, diurezaV:diurezaL, scauneV:scauneL, dietaV:dietaL}));
 
     }
@@ -512,7 +565,8 @@ var myChart = new Chart(ctx, {
         }
     }
 });
-
+disableElements();
+resizeChart();
 </script>
 
 </section>
