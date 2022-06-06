@@ -32,28 +32,28 @@
                 </td>
                 __/each++
             </tr>
-              <tr> <td style="width:22%; text-align:left">Lichide ingerate</td>
+              <tr> <td style="width:22%; text-align:left">{{etichete.lichLabel}}</td>
                   __#each lichideV++
                   <td>
                       <input type="text" style="width:50px" class="rowLichide" value="__this++"/>
                   </td>
                   __/each++
               </tr>
-              <tr><td style="width:22%; text-align:left">Diureza</td>
+              <tr><td style="width:22%; text-align:left">{{etichete.diurezaLabel}}</td>
                   __#each diurezaV++
                   <td>
                       <input type="text" style="width:50px" class="rowDiureza" value="__this++"/>
                   </td>
                   __/each++
               </tr>
-              <tr><td style="width:22%; text-align:left">Scaune</td>
+              <tr><td style="width:22%; text-align:left">{{etichete.scauneLabel}}</td>
                   __#each scauneV++
                   <td>
                       <input type="text" style="width:50px" class="rowScaune" value="__this++"/>
                   </td>
                   __/each++
               </tr>
-              <tr><td style="width:22%; text-align:left">Dieta</td>
+              <tr><td style="width:22%; text-align:left">{{etichete.dietaLabel}}</td>
                   __#each dietaV++
                   <td>
                       <input type="text" style="width:50px" class="rowDieta" value="__this++"/>
@@ -80,14 +80,14 @@
                                                 <option value="S" >S</option>
                                             </select></td></tr>
         <tr><td>Ziua de boala</td><td style="text-align:left"><input id="ziuadeboala" type="text" value="" /></td></tr>
-        <tr><td>Resp.</td><td style="text-align:left"><input id="resp" type="text" value=""/></td></tr>
-        <tr><td>T.A.</td><td style="text-align:left"><input id="ta" type="text" value=""/></td></tr>
-        <tr><td>Puls</td><td style="text-align:left"><input id="puls" type="text" value=""/></td></tr>
-        <tr><td>Temperatura</td><td style="text-align:left"><input id="temperatura" type="text" value=""/></td></tr>
-        <tr><td>Lichide ingerate</td><td style="text-align:left"><input id="lichideingerate" type="text" value=""/></td></tr>
-        <tr><td>Diureza</td><td style="text-align:left"><input id="diureza" type="text" value=""/></td></tr>
-        <tr><td>Scaune</td><td style="text-align:left"><input id="scaune" type="text" value=""/></td></tr>
-        <tr><td>Dieta</td><td style="text-align:left"><input id="dieta" type="text" value=""/></td></tr>
+        <tr><td><span id="respspan"/></td><td style="text-align:left"><input id="resp" type="text" value=""/></td></tr>
+        <tr><td><span id="taspan"/></td><td style="text-align:left"><input id="ta" type="text" value=""/></td></tr>
+        <tr><td><span id="pulsspan"/></td><td style="text-align:left"><input id="puls" type="text" value=""/></td></tr>
+        <tr><td><span id="tempspan"/></td><td style="text-align:left"><input id="temperatura" type="text" value=""/></td></tr>
+        <tr><td><span id="lichspan"/></td><td style="text-align:left"><input id="lichideingerate" type="text" value=""/></td></tr>
+        <tr><td><span id="diurezaspan"/></td><td style="text-align:left"><input id="diureza" type="text" value=""/></td></tr>
+        <tr><td><span id="scaunespan"/></td><td style="text-align:left"><input id="scaune" type="text" value=""/></td></tr>
+        <tr><td><span id="dietaspan"/></td><td style="text-align:left"><input id="dieta" type="text" value=""/></td></tr>
         <tr>
             <td colspan="2" >
                 <input type="button" value="Adauga" onclick="add()" />
@@ -107,6 +107,15 @@
         <tr>
             <td colspan="2" >
                 <input type="button" value="Stergere" onclick="remove()" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><br/><br/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" >
+                <input type="button" style="width:150px;height:30px" value="Salvare in baza" onclick="remove()" />
             </td>
         </tr>
         <tr>
@@ -134,8 +143,31 @@
 
     <script src="/js/chartjs-plugin-dragdata.min.js"></script>
     <script>
+var respLabel = "{{etichete.respLabel}}";
+var respLongLabel = "{{etichete.respLongLabel}}";
+var taLabel = "{{etichete.taLabel}}";
+var pulsLabel = "{{etichete.pulsLabel}}";
+var tempLabel = "{{etichete.tempLabel}}";
+var tempLongLabel = "Temperatura";
+var lichLabel = "{{etichete.lichLabel}}";
+var diurezaLabel = "{{etichete.diurezaLabel}}";
+var scauneLabel = "{{etichete.scauneLabel}}";
+var dietaLabel = "{{etichete.dietaLabel}}";
+
+var pointRadiusVar = 5;
+var pointHitRadiusVar = 10;
 var templateText;
 var tableTemplate;
+
+document.getElementById("respspan").innerHTML = respLongLabel;
+document.getElementById("taspan").innerHTML = taLabel;
+document.getElementById("pulsspan").innerHTML = pulsLabel;
+document.getElementById("tempspan").innerHTML = tempLongLabel;
+document.getElementById("lichspan").innerHTML = lichLabel;
+document.getElementById("diurezaspan").innerHTML = diurezaLabel;
+document.getElementById("scaunespan").innerHTML = scauneLabel;
+document.getElementById("dietaspan").innerHTML = dietaLabel;
+
 document.getElementById("myChart").ondblclick = function(evt) {
    chartClickEvent(evt);
 }
@@ -155,6 +187,33 @@ function disableElements() {
      document.getElementById("scaune").disabled=disable;
      document.getElementById("diureza").disabled=disable;
      document.getElementById("lichideingerate").disabled=disable;
+}
+function validateNumbers() {
+    if (!checkIfNumber(respLabel,document.getElementById("resp").value,5,40))
+        return false;
+    if (!checkIfNumber(taLabel,document.getElementById("ta").value,0,35))
+        return false;
+    if (!checkIfNumber(pulsLabel,document.getElementById("puls").value,40,180))
+        return false;
+    if (!checkIfNumber(tempLongLabel,document.getElementById("temperatura").value,35,42))
+        return false;
+    return true;
+}
+function checkIfNumber(label, numberStr, minVar, maxVar){
+    if (isNaN(numberStr)) {
+            alert(label + " trebuie sa fie numar");
+            return false;
+        }
+    var trueNumber = parseInt(numberStr);
+    if (trueNumber<minVar) {
+        alert(label + " trebuie sa fie mai mare sau egal cu " + minVar + " (curent este " +trueNumber + ")");
+        return false;
+    }
+    if (trueNumber>maxVar) {
+        alert(label + " trebuie sa fie mai mic sau egal cu " + maxVar + " (curent este " +trueNumber + ")");
+        return false;
+    }
+    return true;
 }
 function formatNumber(numberVar){
     if (10>numberVar) return "0" + numberVar;
@@ -215,6 +274,10 @@ function resizeChart(){
 }
 function chartClickEvent(event){
    var numberOfExistingElements = labelsVarFinal.length-1;
+   if (numberOfExistingElements<0){
+        alert("Adaugati prin intermediul formularului de mai jos primul punct de pe grafic!");
+        return;
+   }
    var oldDay = labelsVarArr[numberOfExistingElements].split(" ")[0];
    var oldSicknessDay = labelsVarFinal[numberOfExistingElements][1];
    var newSicknessDay;
@@ -255,6 +318,8 @@ function chartClickEvent(event){
 }
 
 function add(){
+        if (!validateNumbers())
+            return;
         var tt = [document.getElementById("ziua").value + " " + document.getElementById("timeofday").value, document.getElementById("ziuadeboala").value];
 
         var uniqDaysTemp = [...new Set(labelsVarArr)];
@@ -269,25 +334,26 @@ function add(){
         }
         else {
             var numberOfExistingElements = labelsVarFinal.length-1;
-            var oldDay = labelsVarArr[numberOfExistingElements].split(" ")[0];
-            var oldSicknessDay = labelsVarFinal[numberOfExistingElements][1];
-            var newSicknessDay;
-            var oldTimeOfDay = labelsVarArr[numberOfExistingElements].split(" ")[1];
-            if (oldTimeOfDay.includes("D")) {
-                newTimeOfDay = "S";
-                newDay = oldDay;
-                newSicknessDay = oldSicknessDay;
+            if (numberOfExistingElements>=0) {
+                var oldDay = labelsVarArr[numberOfExistingElements].split(" ")[0];
+                var oldSicknessDay = labelsVarFinal[numberOfExistingElements][1];
+                var newSicknessDay;
+                var oldTimeOfDay = labelsVarArr[numberOfExistingElements].split(" ")[1];
+                if (oldTimeOfDay.includes("D")) {
+                    newTimeOfDay = "S";
+                    newDay = oldDay;
+                    newSicknessDay = oldSicknessDay;
+                }
+                else {
+                    newDay = parseInt(oldDay) + 1;
+                    newSicknessDay = parseInt(oldSicknessDay) + 1;
+                    newTimeOfDay = "D";
+                }
+                if (document.getElementById("ziua").value!=newDay || document.getElementById("timeofday").value!= newTimeOfDay) {
+                    alert("Elementul urmator trebuie sa fie: " + newDay + " " + newTimeOfDay);
+                    return;
+                }
             }
-            else {
-               newDay = parseInt(oldDay) + 1;
-               newSicknessDay = parseInt(oldSicknessDay) + 1;
-               newTimeOfDay = "D";
-            }
-            if (document.getElementById("ziua").value!=newDay || document.getElementById("timeofday").value!= newTimeOfDay) {
-               alert("Elementul urmator trebuie sa fie: " + newDay + " " + newTimeOfDay);
-               return;
-            }
-
 
             labelsVarFinal.push(tt);
             labelsVarArr.push(document.getElementById("ziua").value + " " + document.getElementById("timeofday").value);
@@ -321,10 +387,11 @@ function add(){
                     dietaL.push (document.getElementById("dieta").value);
             }
         }
-        addToAudit("Elementul " + document.getElementById("ziua").value + " " + document.getElementById("timeofday").value + " a fost " + ceSaIntamplat + " cu succes - Temp. "
-            +document.getElementById("temperatura").value + ",Resp. " + document.getElementById("resp").value + ", T.A. " + document.getElementById("ta").value + ", Puls " +
-            document.getElementById("puls").value + ", Lichide " + document.getElementById("lichideingerate").value + ", Diureza " + document.getElementById("diureza").value +
-             ", Scaune " + document.getElementById("scaune").value + ", Dieta " + document.getElementById("dieta").value);
+
+        addToAudit("Elementul " + document.getElementById("ziua").value + " " + document.getElementById("timeofday").value + " a fost " + ceSaIntamplat + " cu succes - " + tempLongLabel + " " +
+            +document.getElementById("temperatura").value + ", " + respLongLabel + " " + document.getElementById("resp").value + ", " + taLabel + " " + document.getElementById("ta").value + ", " + pulsLabel + " " +
+            document.getElementById("puls").value + ", " + lichLabel + " " + document.getElementById("lichideingerate").value + ", " + diurezaLabel+ " " + document.getElementById("diureza").value +
+             ", " + scauneLabel + " " + document.getElementById("scaune").value + ", " + dietaLabel + " " + document.getElementById("dieta").value);
         updateEraseDropDown();
         myChart.update();
         resizeChart();
@@ -376,32 +443,40 @@ const data = {
   labels: labelsVarFinal,
   datasets: [
     {
-      label: 'Resp.',
+      label: respLongLabel,
       data: respVar,
       borderColor: ['rgba(255, 99, 71, 1)'],
       backgroundColor: ['rgba(255, 99, 71, 1)'],
       yAxisID: 'y',
+      pointRadius: pointRadiusVar,
+      pointHitRadius: pointHitRadiusVar
     },
     {
-      label: 'T.A.',
+      label: taLabel,
       data: taVar,
       borderColor: ['rgba(36, 37, 42, 1)'],
       backgroundColor: ['rgba(36, 37, 42, 1)'],
       yAxisID: 'y1',
+      pointRadius: pointRadiusVar,
+      pointHitRadius: pointHitRadiusVar
     },
     {
-      label: 'Puls',
+      label: pulsLabel,
       data: pulsVar,
       borderColor: ['rgba(15, 10, 222,1)'],
       backgroundColor: ['rgba(15, 10, 222,1)'],
       yAxisID: 'y2',
+      pointRadius: pointRadiusVar,
+      pointHitRadius: pointHitRadiusVar
     },
     {
-      label: 'Temperatura',
+      label: tempLongLabel,
       data: tempVar,
       borderColor: ['rgba(60, 179, 113,1)'],
       backgroundColor: ['rgba(60, 179, 113,1)'],
       yAxisID: 'y3',
+      pointRadius: pointRadiusVar,
+      pointHitRadius: pointHitRadiusVar
     }
   ]
 };
@@ -449,19 +524,19 @@ var myChart = new Chart(ctx, {
               switch(datasetIndex) {
                     case 0:
                         respVar[index] = value;
-                        elementModificat = "Respiratia";
+                        elementModificat = respLongLabel;
                         break;
                     case 1:
                         taVar[index] = value;
-                        elementModificat = "T.A.";
+                        elementModificat = taLabel;
                         break;
                     case 2:
                         pulsVar[index] = value;
-                        elementModificat = "Puls";
+                        elementModificat = pulsLabel;
                         break;
                     case 3:
                         tempVar[index] = value;
-                        elementModificat = "Temperatura";
+                        elementModificat = tempLongLabel;
                         break;
                     default:
                         // code block
@@ -487,7 +562,7 @@ var myChart = new Chart(ctx, {
 
                         if (context.parsed.y !== null) {
                             label += context.parsed.y;
-                            if (label.includes("Temperatura")) label += "°";
+                            if (label.includes(tempLabel)) label += "°";
                         }
                         return label;
                     }
@@ -516,7 +591,7 @@ var myChart = new Chart(ctx, {
                 title: {
                     align: 'end',
                     display: true,
-                    text: 'Temp.',
+                    text: tempLabel,
                     padding: {top: 0, left: 0, right: 0, bottom: 0}
                 },
                 ticks: {
@@ -534,7 +609,7 @@ var myChart = new Chart(ctx, {
                 title: {
                     align: 'end',
                     display: true,
-                    text: 'Puls',
+                    text: pulsLabel,
                     padding: {top: 0, left: 0, right: 0, bottom: 0}
                }
             },
@@ -546,7 +621,7 @@ var myChart = new Chart(ctx, {
                 title: {
                     align: 'end',
                     display: true,
-                    text: 'T.A.',
+                    text: taLabel,
                     padding: {top: 0, left: 0, right: 0, bottom: 0}
                }
             },
@@ -558,7 +633,7 @@ var myChart = new Chart(ctx, {
                 title: {
                     align: 'end',
                     display: true,
-                    text: 'Resp.',
+                    text: respLabel,
                     padding: {top: 0, left: 0, right: 0, bottom: 0}
                }
             }

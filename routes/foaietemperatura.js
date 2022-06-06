@@ -2,6 +2,16 @@ const express = require('express');
 const router = express.Router();
 
 global.chart = require('chart');
+var lichLabel = "Lichide ingerate";
+var diurezaLabel = "Diureza";
+var scauneLabel = "Scaune";
+var dietaLabel = "Dieta";
+var tempLongLabel = "Temperatura";
+var tempLabel = "Temp.";
+var pulsLabel = "Puls";
+var respLabel = "Resp.";
+var respLongLabel = "Respiratia";
+var taLabel = "T.A.";
 var FTchart = function (ziuaVar, ziledeboalaVar, timpul_zileiVar) {
     this.ziua = ziuaVar;
     this.ziledeboala = ziledeboalaVar;
@@ -127,7 +137,9 @@ router.get('/', (req, res) => {
     foaieTemperatura = {arr, labels, temp, resp, ta, puls, labels2,uniqDays,lichide,diureza,scaune,dieta};
     pacient = {cnp, prenume, nume, spcnp,greutateactuala,greutatenastere,indiceponderal,suprafatacorporala};
     detaliiFoaie = {an, luna, nr, salon, pat};
-    res.render('chart', { foaieTemperatura, pacient, detaliiFoaie} );
+
+    etichete = {lichLabel,diurezaLabel,scauneLabel,dietaLabel,tempLongLabel,tempLabel,pulsLabel,respLabel,respLongLabel,taLabel};
+    res.render('chart', { foaieTemperatura, pacient, detaliiFoaie, etichete} );
 
 });
 
