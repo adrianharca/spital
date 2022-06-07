@@ -44,6 +44,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //Routes for interface:
 app.use("/foaie_temperatura", require('./routes/foaietemperatura'));
+app.use("/fisa_terapie", require('./routes/fisaterapie'));
 app.use("/circles", require('./routes/circles'));
 app.use("/users", require('./routes/users'));
 app.use("/votes", require('./routes/votes'));

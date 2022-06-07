@@ -1,0 +1,184 @@
+<!--suppress ALL -->
+<section id="chart1" class="container" style="width:100% !important">
+
+    <table style="width:100%">
+        <tr>
+            <td colspan="3" style="text-align:center">
+                ARSURI
+            </td>
+        </tr>
+        <tr>
+            <td style="width:26%"></td><td style="width:53%"></td><td style="width:20%">DATA <span class="dottedSpan">{{{fisa.data}}}</span></td>
+        </tr>
+        <tr>
+            <td></td><td></td><td>SALON <span class="dottedSpan">{{{fisa.salon}}}</span></td>
+        </tr>
+        <tr>
+            <td></td><td></td><td>NR. FO <span class="dottedSpan">{{{fisa.nrFo}}}</span></td>
+        </tr>
+    </table>
+    <h1 style="font-style:italic; text-align:center">FISA TERAPIE INTENSIVA</h1>
+    <table style="width:100%">
+        <tr>
+            <td>NUME <span class="dottedSpan">{{{pacient.nume}}}</span></td>
+            <td>PRENUME <span class="dottedSpan">{{{pacient.prenume}}}</span></td>
+            <td>VARSTA <span class="dottedSpan">{{{pacient.varsta}}}</span></td>
+        </tr>
+        <tr>
+            <td>GRUP SANGUIN RH <span class="dottedSpan">{{{pacient.rh}}}</span></td>
+            <td colspan="2">DIAGNOSTIC<span class="dottedSpan">{{{pacient.diagnostic}}}</span></td>
+        </tr>
+
+    </table>
+    <br/><br/>
+    <table style="width:100%;border: 1px solid black;" cellspacing="0">
+        <tr >
+            <td style="border: 1px solid black;">
+                ????? 5% {{{detaliiFisa.row1col1}}}
+            </td>
+            <td style="border: 1px solid black;">
+                PPC {{{detaliiFisa.row1col2}}}
+            </td>
+            <td width="15%" style="border: 1px solid black;">
+                TEMPERATURA
+            </td>
+            <td width="15%" style="border: 1px solid black;">
+                {{{detaliiFisa.row1col3}}}
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black;">
+                ????? LACTAT {{{detaliiFisa.row2col1}}}
+            </td>
+            <td style="border: 1px solid black;">
+                M E {{{detaliiFisa.row2col2}}}
+            </td>
+            <td style="border: 1px solid black;">
+                FR
+            </td>
+            <td style="border: 1px solid black;">
+                {{{detaliiFisa.row2col3}}}
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black;">
+                SER FIZIOLOGIC {{{detaliiFisa.row3col1}}}
+            </td>
+            <td style="border: 1px solid black;">
+                GLUC 33% {{{detaliiFisa.row3col2}}}
+            </td>
+            <td style="border: 1px solid black;">
+                SpCl2
+            </td>
+            <td style="border: 1px solid black;">
+                {{{detaliiFisa.row3col3}}}
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black;">
+                ???????? {{{detaliiFisa.row4col1}}}
+            </td>
+            <td style="border: 1px solid black;">
+                NaCl58,5% {{{detaliiFisa.row4col2}}}
+            </td>
+            <td style="border: 1px solid black;">
+                AV
+            </td>
+            <td style="border: 1px solid black;">
+                {{{detaliiFisa.row4col3}}}
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black;">
+                ???????? {{{detaliiFisa.row5col1}}}
+            </td>
+            <td style="border: 1px solid black;">
+                KCl 7,4% {{{detaliiFisa.row5col2}}}
+            </td>
+            <td style="border: 1px solid black;">
+                T.A
+            </td>
+            <td style="border: 1px solid black;">
+                {{{detaliiFisa.row5col3}}}
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black;">
+                ???????? {{{detaliiFisa.row6col1}}}
+            </td>
+            <td style="border: 1px solid black;">
+                CA GLUCONIC {{{detaliiFisa.row6col2}}}
+            </td>
+            <td style="border: 1px solid black;">
+                VIT. B6 B1
+            </td>
+            <td style="border: 1px solid black;">
+                {{{detaliiFisa.row6col3}}}
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black;">
+                ???????? {{{detaliiFisa.row7col1}}}
+            </td>
+            <td style="border: 1px solid black;">
+                OCTAGAM {{{detaliiFisa.row7col2}}}
+            </td>
+            <td style="border: 1px solid black;">
+                VIT C
+            </td>
+            <td style="border: 1px solid black;">
+                {{{detaliiFisa.row7col3}}}
+            </td>
+        </tr>
+    </table>
+
+    <br/><br/>
+
+    <table style="width:100%;border: 1px solid black;" cellspacing="0">
+        <tr>
+            <td style="border: 1px solid black;width:10px;">
+                ORA
+            </td>
+            <td style="border: 1px solid black;">
+                SOL PERFUZABILA
+            </td>
+            <td style="border: 1px solid black;">
+                TRATAMENT
+            </td>
+            <td style="border: 1px solid black;">
+                DIUREZA
+            </td>
+            <td style="border: 1px solid black;">
+                SCAUN
+            </td>
+            <td style="border: 1px solid black;">
+                VARSAT
+            </td>
+            <td style="border: 1px solid black;">
+                LICHIDE INGERATE
+            </td>
+        </tr>
+        {{#each comments}}
+            <tr>
+                <td style="border: 1px solid black; width:10px;" >{{this.ora}}</td>
+                <td style="border: 1px solid black;"><input type="text" value="{{this.solPerfuzabil}}"/></td>
+                <td style="border: 1px solid black;"><input type="text" value="{{this.tratament}}"/></td>
+                <td style="border: 1px solid black;"><input type="text" value="{{this.diureza}}"/></td>
+                <td style="border: 1px solid black;"><input type="text" value="{{this.scaun}}"/></td>
+                <td style="border: 1px solid black;"><input type="text" value="{{this.varsat}}"/></td>
+                <td style="border: 1px solid black;"><input type="text" style="width:90px" value="{{this.lichideIngerate}}"/></td>
+            </tr>
+        {{/each}}
+        <tr><td></td></tr>
+        <tr><td> <input type="button" value="Salveaza in baza de date" onclick="add()" /></td></tr>
+    </table>
+
+    <script src="/js/jquery-3.6.0.min.js"></script>
+
+<script>
+function add(){
+    alert("add");
+};
+</script>
+
+</section>

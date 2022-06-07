@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 global.chart = require('chart');
+var emptyStr = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 var lichLabel = "Lichide ingerate";
 var diurezaLabel = "Diureza";
 var scauneLabel = "Scaune";
@@ -81,12 +82,12 @@ router.get('/', (req, res) => {
     nr = 3199;
     an = 2022;
     luna = "03";
-    salon = "...";
-    pat = "...";
+    salon = emptyStr;
+    pat = emptyStr;
     greutateactuala = "19 Kg.";
-    greutatenastere = "....";
-    indiceponderal = "....";
-    suprafatacorporala = "....";
+    greutatenastere = emptyStr;
+    indiceponderal = emptyStr;
+    suprafatacorporala = emptyStr;
     //// end init
     var nonVoidEntries = arr.length;
     // do we need to add also the rest of the days in that particular month????? if so, let's uncomment
@@ -97,22 +98,11 @@ router.get('/', (req, res) => {
     }
 */
     // end do we need to add also the rest of the days?
-    var spcnp = "&nbsp";
-    for(i=0;i<=cnp.length-1; i++)
-        {
-            var html = cnp.substr(i,1);
-            spcnp += "<span style='font-size:18px; font-weight:bold;border: 2px solid black;display: inline;'> " + html
-            spcnp += " </span> &nbsp;";
-        }
 
-    prenume = "";
-    prenume += "<span style='font-size:18px; font-weight:bold;border-style: none none dotted none; display: inline;'>" + prenumeStr
-    prenume += " </span> &nbsp;";
+    prenume = prenumeStr;
 
 
-    nume = "";
-    nume += "<span style='font-size:18px; font-weight:bold;border-style: none none dotted none; display: inline;'>" + numeStr
-    nume += " </span> &nbsp;";
+    nume = numeStr;
 
     lichide = []; diureza = []; scaune = []; dieta = [];labels = [];labels2 = [];
     labelsDays = []; temp = []; resp = []; ta = []; puls = [];
@@ -135,7 +125,7 @@ router.get('/', (req, res) => {
     });
     uniqDays = [...new Set(labelsDays)];
     foaieTemperatura = {arr, labels, temp, resp, ta, puls, labels2,uniqDays,lichide,diureza,scaune,dieta};
-    pacient = {cnp, prenume, nume, spcnp,greutateactuala,greutatenastere,indiceponderal,suprafatacorporala};
+    pacient = {cnp, prenume, nume,greutateactuala,greutatenastere,indiceponderal,suprafatacorporala};
     detaliiFoaie = {an, luna, nr, salon, pat};
 
     etichete = {lichLabel,diurezaLabel,scauneLabel,dietaLabel,tempLongLabel,tempLabel,pulsLabel,respLabel,respLongLabel,taLabel};

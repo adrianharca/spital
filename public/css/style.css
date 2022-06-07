@@ -38,7 +38,12 @@ a:hover {
   margin: auto;
   overflow: hidden;
 }
-
+.dottedSpan {
+    font-size:18px;
+    font-weight:bold;
+    border-style: none none dotted none;
+    display: inline;
+}
 .error {
   padding: 5px;
   border: #777 dotted 1px;
