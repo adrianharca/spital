@@ -29,7 +29,8 @@ router.get('/', (req, res) => {
         if (oraV.length<2)
             oraV = "0"+i;
         comments.push(new Comment(oraV,'','','','','',''));
-    }
+   }
+
     //end init
     var row1col1=row1col2=row1col3=
                       row2col1=row2col2=row2col3=

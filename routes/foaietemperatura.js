@@ -3,6 +3,7 @@ const router = express.Router();
 
 global.chart = require('chart');
 var emptyStr = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+var ziuadeboalaLabel = "Ziua de boală";
 var lichLabel = "Lichide ingerate";
 var diurezaLabel = "Diureza";
 var scauneLabel = "Scaune";
@@ -11,7 +12,7 @@ var tempLongLabel = "Temperatura";
 var tempLabel = "Temp.";
 var pulsLabel = "Puls";
 var respLabel = "Resp.";
-var respLongLabel = "Respiratia";
+var respLongLabel = "Respirația";
 var taLabel = "T.A.";
 var FTchart = function (ziuaVar, ziledeboalaVar, timpul_zileiVar) {
     this.ziua = ziuaVar;
@@ -62,6 +63,7 @@ router.get('/', (req, res) => {
 
     var day=startDay;
     var illnessDay = 57;
+
     arr.push(new FTchart(day,illnessDay,"D",24,25,120,37.9));
     arr.push(new FTchart(day++,illnessDay++,"S",26,24,124,38.1,300,1500,1,"V"));
     arr.push(new FTchart(day,illnessDay,"D",25,26,120,36.9));
@@ -128,7 +130,7 @@ router.get('/', (req, res) => {
     pacient = {cnp, prenume, nume,greutateactuala,greutatenastere,indiceponderal,suprafatacorporala};
     detaliiFoaie = {an, luna, nr, salon, pat};
 
-    etichete = {lichLabel,diurezaLabel,scauneLabel,dietaLabel,tempLongLabel,tempLabel,pulsLabel,respLabel,respLongLabel,taLabel};
+    etichete = {ziuadeboalaLabel, lichLabel,diurezaLabel,scauneLabel,dietaLabel,tempLongLabel,tempLabel,pulsLabel,respLabel,respLongLabel,taLabel};
     res.render('chart', { foaieTemperatura, pacient, detaliiFoaie, etichete} );
 
 });

@@ -17,12 +17,12 @@
             <td></td><td></td><td>NR. FO <span class="dottedSpan">{{{fisa.nrFo}}}</span></td>
         </tr>
     </table>
-    <h1 style="font-style:italic; text-align:center">FISA TERAPIE INTENSIVA</h1>
+    <h1 style="font-style:italic; text-align:center">FIȘĂ TERAPIE INTENSIVĂ</h1>
     <table style="width:100%">
         <tr>
             <td>NUME <span class="dottedSpan">{{{pacient.nume}}}</span></td>
             <td>PRENUME <span class="dottedSpan">{{{pacient.prenume}}}</span></td>
-            <td>VARSTA <span class="dottedSpan">{{{pacient.varsta}}}</span></td>
+            <td>VÂRSTA <span class="dottedSpan">{{{pacient.varsta}}}</span></td>
         </tr>
         <tr>
             <td>GRUP SANGUIN RH <span class="dottedSpan">{{{pacient.rh}}}</span></td>
@@ -40,7 +40,7 @@
                 PPC {{{detaliiFisa.row1col2}}}
             </td>
             <td width="15%" style="border: 1px solid black;">
-                TEMPERATURA
+                TEMPERATURĂ
             </td>
             <td width="15%" style="border: 1px solid black;">
                 {{{detaliiFisa.row1col3}}}
@@ -134,25 +134,34 @@
 
     <br/><br/>
 
-    <table style="width:100%;border: 1px solid black;" cellspacing="0">
+    <table style="width:100%;border: 1px solid black;resize:both;" cellspacing="0">
+        <colgroup>
+            <col style="width:40px !important"/>
+            <col style="width:40px"/>
+            <col style="width:40px"/>
+            <col style="width:40px"/>
+            <col style="width:40px"/>
+            <col style="width:40px"/>
+            <col style="width:40px"/>
+        </colgroup>
         <tr>
-            <td style="border: 1px solid black;width:10px;">
+            <td style="border: 1px solid black;">
                 ORA
             </td>
             <td style="border: 1px solid black;">
-                SOL PERFUZABILA
+                SOL PERFUZABILĂ
             </td>
             <td style="border: 1px solid black;">
                 TRATAMENT
             </td>
             <td style="border: 1px solid black;">
-                DIUREZA
+                DIUREZĂ
             </td>
             <td style="border: 1px solid black;">
                 SCAUN
             </td>
             <td style="border: 1px solid black;">
-                VARSAT
+                VĂRSAT
             </td>
             <td style="border: 1px solid black;">
                 LICHIDE INGERATE
@@ -160,17 +169,17 @@
         </tr>
         {{#each comments}}
             <tr>
-                <td style="border: 1px solid black; width:10px;" >{{this.ora}}</td>
-                <td style="border: 1px solid black;"><input type="text" value="{{this.solPerfuzabil}}"/></td>
-                <td style="border: 1px solid black;"><input type="text" value="{{this.tratament}}"/></td>
-                <td style="border: 1px solid black;"><input type="text" value="{{this.diureza}}"/></td>
-                <td style="border: 1px solid black;"><input type="text" value="{{this.scaun}}"/></td>
-                <td style="border: 1px solid black;"><input type="text" value="{{this.varsat}}"/></td>
-                <td style="border: 1px solid black;"><input type="text" style="width:90px" value="{{this.lichideIngerate}}"/></td>
+                <td style="border: 1px solid black;">{{this.ora}}</td>
+                <td style="border: 1px solid black;"><input type="text" style="width:110px" value="{{this.solPerfuzabil}}"/></td>
+                <td style="border: 1px solid black;"><input type="text" style="width:110px" value="{{this.tratament}}"/></td>
+                <td style="border: 1px solid black;"><input type="text" style="width:110px" value="{{this.diureza}}"/></td>
+                <td style="border: 1px solid black;"><input type="text" style="width:110px" value="{{this.scaun}}"/></td>
+                <td style="border: 1px solid black;"><input type="text" style="width:110px" value="{{this.varsat}}"/></td>
+                <td style="border: 1px solid black;"><input type="text" style="width:110px" value="{{this.lichideIngerate}}"/></td>
             </tr>
         {{/each}}
         <tr><td></td></tr>
-        <tr><td> <input type="button" value="Salveaza in baza de date" onclick="add()" /></td></tr>
+        <tr><td> <input type="button" value="Salvează în baza de date" onclick="add()" /></td></tr>
     </table>
 
     <script src="/js/jquery-3.6.0.min.js"></script>

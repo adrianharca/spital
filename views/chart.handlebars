@@ -2,21 +2,21 @@
 <section id="chart1" class="container" style="width:100% !important">
     <table style="width:100%">
         <tr>
-            <td><div>Greutatea actuala:<span class="dottedSpan">{{{pacient.greutateactuala}}}</span></div>
-                <div>Greutatea nastere:<span class="dottedSpan">{{{pacient.greutatenastere}}}</span></div>
+            <td><div>Greutatea actuală:<span class="dottedSpan">{{{pacient.greutateactuala}}}</span></div>
+                <div>Greutatea naștere:<span class="dottedSpan">{{{pacient.greutatenastere}}}</span></div>
                 <div>Indice ponderal:<span class="dottedSpan">{{{pacient.indiceponderal}}}</span></div>
-                <div>Suprafata corporala:<span class="dottedSpan">{{{pacient.suprafatacorporala}}}</span></div></td>
+                <div>Suprafață corporală:<span class="dottedSpan">{{{pacient.suprafatacorporala}}}</span></div></td>
             <td>
 
             </td>
         </tr>
         <tr><td colspan="2">
-            <h1 style="text-align:center">Foaie de temperatura</h1>
+            <h1 style="text-align:center">Foaie de temperatură</h1>
             <div style="text-align:center">CNP <span class="dottedSpan">{{{pacient.cnp}}}</span></div>
             <div style="text-align:center">&nbsp;</div>
             <div style="text-align:center">Numele <span class="dottedSpan">{{{pacient.nume}}}</span> &nbsp; &nbsp; &nbsp; Prenumele <span class="dottedSpan">{{{pacient.prenume}}}</span></div>
             <div style="text-align:center">&nbsp;</div>
-            <div style="text-align:center">Anul <span class="dottedSpan">{{{detaliiFoaie.an}}}</span> &nbsp; &nbsp; &nbsp; luna <span class="dottedSpan">{{{detaliiFoaie.luna}}}</span> &nbsp; &nbsp; &nbsp; Nr. foii de observatie <span class="dottedSpan">{{{detaliiFoaie.nr}}}</span> &nbsp; &nbsp; &nbsp; Nr. salon <span class="dottedSpan">{{{detaliiFoaie.salon}}}</span> &nbsp; &nbsp; &nbsp; Nr. pat <span class="dottedSpan">{{{detaliiFoaie.pat}}}</span></div>
+            <div style="text-align:center">Anul <span class="dottedSpan" id="an">{{{detaliiFoaie.an}}}</span> &nbsp; &nbsp; &nbsp; luna <span class="dottedSpan" id="luna" >{{{detaliiFoaie.luna}}}</span> &nbsp; &nbsp; &nbsp; Nr. foii de observație <span class="dottedSpan">{{{detaliiFoaie.nr}}}</span> &nbsp; &nbsp; &nbsp; Nr. salon <span class="dottedSpan">{{{detaliiFoaie.salon}}}</span> &nbsp; &nbsp; &nbsp; Nr. pat <span class="dottedSpan">{{{detaliiFoaie.pat}}}</span></div>
             <div style="text-align:center">&nbsp;</div>
             <div style="text-align:center">&nbsp;</div>
 
@@ -71,15 +71,15 @@
     <table style="width:100%; text-align:center">
         <tr>
             <td colspan="2" style="font-weight:bold;font-size:20px" >
-                Adauga zi noua (sau modifica zi existenta)
+                Adaugă zi nouă (sau modifică zi existentă)
             </td>
         </tr>
-        <tr><td>Ziua + timpul (D/S) </td><td style="text-align:left"><input id="ziua" type="text" value="" style="width:30px"/>
-                                            <select id="timeofday" onchange="disableElements()" name="timeofday">
-                                                <option value="D" >D</option>
-                                                <option value="S" >S</option>
-                                            </select></td></tr>
-        <tr><td>Ziua de boala</td><td style="text-align:left"><input id="ziuadeboala" type="text" value="" /></td></tr>
+        <tr><td>Ziua + timpul (Dimineața/Seara) </td>
+             <td style="text-align:left">
+                 <select id="selectExistingOrNewDay" onchange="disableElements()" name="selectExistingOrNewDay">
+                 </select>
+                 </td></tr>
+        <tr><td>Ziua de boală</td><td style="text-align:left"><input id="ziuadeboala" type="text" value="" disabled="" /></td></tr>
         <tr><td><span id="respspan"/></td><td style="text-align:left"><input id="resp" type="text" value=""/></td></tr>
         <tr><td><span id="taspan"/></td><td style="text-align:left"><input id="ta" type="text" value=""/></td></tr>
         <tr><td><span id="pulsspan"/></td><td style="text-align:left"><input id="puls" type="text" value=""/></td></tr>
@@ -90,7 +90,7 @@
         <tr><td><span id="dietaspan"/></td><td style="text-align:left"><input id="dieta" type="text" value=""/></td></tr>
         <tr>
             <td colspan="2" >
-                <input type="button" value="Adauga" onclick="add()" />
+                <input type="button" value="Adaugă" onclick="add()" />
             </td>
         </tr>
         <tr>
@@ -99,14 +99,14 @@
         </tr>
         <tr>
             <td colspan="2" style="font-weight:bold;font-size:20px" >
-                Stergere zi
+                Ștergere zi
             </td>
         </tr>
-        <tr><td>Ziua + timpul (Dimineata/Seara) </td><td style="text-align:left"><select id="dayAndTimeErase" name="dayAndTimeErase" style="width:100px" ></select>
+        <tr><td>Ziua + timpul (Dimineața/Seara) </td><td style="text-align:left"><select id="dayAndTimeErase" name="dayAndTimeErase" style="width:100px" ></select>
             </td></tr>
         <tr>
             <td colspan="2" >
-                <input type="button" value="Stergere" onclick="remove()" />
+                <input type="button" value="Ștergere" onclick="remove()" />
             </td>
         </tr>
         <tr>
@@ -115,7 +115,7 @@
         </tr>
         <tr>
             <td colspan="2" >
-                <input type="button" style="width:150px;height:30px" value="Salvare in baza" onclick="remove()" />
+                <input type="button" style="width:150px;height:30px" value="Salvare în bază" onclick="salvareInBaza()" />
             </td>
         </tr>
         <tr>
@@ -143,6 +143,7 @@
 
     <script src="/js/chartjs-plugin-dragdata.min.js"></script>
     <script>
+var ziuadeboalaLabel = "{{etichete.ziuadeboalaLabel}}";
 var respLabel = "{{etichete.respLabel}}";
 var respLongLabel = "{{etichete.respLongLabel}}";
 var taLabel = "{{etichete.taLabel}}";
@@ -159,6 +160,10 @@ var pointHitRadiusVar = 10;
 var templateText;
 var tableTemplate;
 
+function salvareInBaza(){
+    alert("Graficul a fost salvat în baza de date.");
+}
+
 document.getElementById("respspan").innerHTML = respLongLabel;
 document.getElementById("taspan").innerHTML = taLabel;
 document.getElementById("pulsspan").innerHTML = pulsLabel;
@@ -171,15 +176,38 @@ document.getElementById("dietaspan").innerHTML = dietaLabel;
 document.getElementById("myChart").ondblclick = function(evt) {
    chartClickEvent(evt);
 }
+function comportamentZiuaDeBoala() {
 
+    if (labelsVarArr.length==0) {
+        document.getElementById("ziuadeboala").disabled = false;
+        return;
+    }
+    if (document.getElementById("selectExistingOrNewDay").selectedIndex==0 ) {
+            document.getElementById("ziuadeboala").disabled = false;
+     }
+     else {
+        document.getElementById("ziuadeboala").disabled = true;
+        if (labelsVarFinal.length!=0) {
+            if (document.getElementById("selectExistingOrNewDay").value.includes("S")) {
+                document.getElementById("ziuadeboala").value = labelsVarFinal[document.getElementById("selectExistingOrNewDay").selectedIndex-1][1];
+            }
+            else
+            {
+                document.getElementById("ziuadeboala").value = parseInt(labelsVarFinal[document.getElementById("selectExistingOrNewDay").selectedIndex-1][1]) + 1;
+            }
+        }
+     }
+
+}
 function disableElements() {
      var disable;
-     if (document.getElementById("timeofday").options[document.getElementById("timeofday").selectedIndex].value=="D") {
-        document.getElementById("dieta").value = "";
-        document.getElementById("scaune").value = "";
-        document.getElementById("diureza").value = "";
-        document.getElementById("lichideingerate").value = "";
-        disable = true;
+     comportamentZiuaDeBoala();
+     if (document.getElementById("selectExistingOrNewDay").options[document.getElementById("selectExistingOrNewDay").selectedIndex].value.includes("D")) {
+            document.getElementById("dieta").value = "";
+            document.getElementById("scaune").value = "";
+            document.getElementById("diureza").value = "";
+            document.getElementById("lichideingerate").value = "";
+            disable = true;
         }
      else
         disable = false;
@@ -189,6 +217,8 @@ function disableElements() {
      document.getElementById("lichideingerate").disabled=disable;
 }
 function validateNumbers() {
+    if (!checkIfNumber(ziuadeboalaLabel,document.getElementById("ziuadeboala").value,5,40))
+        return false;
     if (!checkIfNumber(respLabel,document.getElementById("resp").value,5,40))
         return false;
     if (!checkIfNumber(taLabel,document.getElementById("ta").value,0,35))
@@ -200,17 +230,22 @@ function validateNumbers() {
     return true;
 }
 function checkIfNumber(label, numberStr, minVar, maxVar){
+    errorMessageNotNumber = label + " trebuie să fie număr.";
+    if (numberStr==null || numberStr===null || numberStr==undefined || numberStr=="") {
+        alert(errorMessageNotNumber);
+        return false;
+    }
     if (isNaN(numberStr)) {
-            alert(label + " trebuie sa fie numar");
+            alert(errorMessageNotNumber);
             return false;
         }
     var trueNumber = parseInt(numberStr);
     if (trueNumber<minVar) {
-        alert(label + " trebuie sa fie mai mare sau egal cu " + minVar + " (curent este " +trueNumber + ")");
+        alert(label + " trebuie să fie mai mare sau egal cu " + minVar + " (curent este " +trueNumber + ")");
         return false;
     }
     if (trueNumber>maxVar) {
-        alert(label + " trebuie sa fie mai mic sau egal cu " + maxVar + " (curent este " +trueNumber + ")");
+        alert(label + " trebuie să fie mai mic sau egal cu " + maxVar + " (curent este " +trueNumber + ")");
         return false;
     }
     return true;
@@ -252,13 +287,14 @@ function remove(){
                 dietaL.splice(indexElementUniq,1);
              }
         }
-        addToAudit("Elementul " + dayErase + " a fost sters cu succes ");
+        addToAudit("Elementul " + dayErase + " a fost șters cu succes ");
     }
     else {
-        alert("Elementul nu este in lista");
+        alert("Elementul " + dayErase + " nu este in listă.");
     }
     updateEraseDropDown();
 
+    updateAddDropDown();
     myChart.update();
     resizeChart();
     $("#updatedtable").html(tableTemplate({ serialList: uniqDaysV, lichideV:lichideL, diurezaV:diurezaL, scauneV:scauneL, dietaV:dietaL}));
@@ -275,7 +311,7 @@ function resizeChart(){
 function chartClickEvent(event){
    var numberOfExistingElements = labelsVarFinal.length-1;
    if (numberOfExistingElements<0){
-        alert("Adaugati prin intermediul formularului de mai jos primul punct de pe grafic!");
+        alert("Adăugați prin intermediul formularului de mai jos primul punct de pe grafic!");
         return;
    }
    var oldDay = labelsVarArr[numberOfExistingElements].split(" ")[0];
@@ -312,7 +348,9 @@ function chartClickEvent(event){
 
 
    tableTemplate = Handlebars.compile(templateText);
-   addToAudit("Elementul " + newElement + " a fost adaugat cu succes pe grafic");
+   addToAudit("Elementul " + newElement + " a fost adăugat cu succes pe grafic ");
+   updateAddDropDown();
+   updateEraseDropDown();
    myChart.update();
    resizeChart();
 }
@@ -320,11 +358,11 @@ function chartClickEvent(event){
 function add(){
         if (!validateNumbers())
             return;
-        var tt = [document.getElementById("ziua").value + " " + document.getElementById("timeofday").value, document.getElementById("ziuadeboala").value];
+        var tt = [document.getElementById("selectExistingOrNewDay").value, document.getElementById("ziuadeboala").value];
 
         var uniqDaysTemp = [...new Set(labelsVarArr)];
         var ceSaIntamplat = "";
-        var indexElement = uniqDaysTemp.indexOf(document.getElementById("ziua").value + " " + document.getElementById("timeofday").value);
+        var indexElement = uniqDaysTemp.indexOf(document.getElementById("selectExistingOrNewDay").value);
         if (indexElement>=0) {
             tempVar[indexElement] = document.getElementById("temperatura").value;
             respVar[indexElement] = document.getElementById("resp").value;
@@ -349,14 +387,14 @@ function add(){
                     newSicknessDay = parseInt(oldSicknessDay) + 1;
                     newTimeOfDay = "D";
                 }
-                if (document.getElementById("ziua").value!=newDay || document.getElementById("timeofday").value!= newTimeOfDay) {
-                    alert("Elementul urmator trebuie sa fie: " + newDay + " " + newTimeOfDay);
+                if (document.getElementById("selectExistingOrNewDay").value!= (newDay + " " + newTimeOfDay)) {
+                    alert("Elementul urmator trebuie să fie: " + newDay + " " + newTimeOfDay + ".");
                     return;
                 }
             }
 
             labelsVarFinal.push(tt);
-            labelsVarArr.push(document.getElementById("ziua").value + " " + document.getElementById("timeofday").value);
+            labelsVarArr.push(document.getElementById("selectExistingOrNewDay").value);
             tempVar.push(document.getElementById("temperatura").value);
             respVar.push(document.getElementById("resp").value);
             taVar.push(document.getElementById("ta").value);
@@ -364,10 +402,10 @@ function add(){
             templateText = $("#tableTemplate").html();
             templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");
             tableTemplate = Handlebars.compile(templateText);
-            ceSaIntamplat = "adaugat";
+            ceSaIntamplat = "adăugat";
         }
-        var uniqDay = document.getElementById("ziua").value;
-        if (document.getElementById("timeofday").value=="S") {
+        var uniqDay = document.getElementById("selectExistingOrNewDay").value.split(" ")[0];
+        if (document.getElementById("selectExistingOrNewDay").value.includes("S")) {
             var indexElementUniq = uniqDaysV.indexOf(uniqDay);
             if (indexElementUniq>=0) {
                 lichideL[indexElementUniq] = document.getElementById("lichideingerate").value;
@@ -388,16 +426,66 @@ function add(){
             }
         }
 
-        addToAudit("Elementul " + document.getElementById("ziua").value + " " + document.getElementById("timeofday").value + " a fost " + ceSaIntamplat + " cu succes - " + tempLongLabel + " " +
+        addToAudit("Elementul " + document.getElementById("selectExistingOrNewDay").value + " a fost " + ceSaIntamplat + " cu succes - " + tempLongLabel + " " +
             +document.getElementById("temperatura").value + ", " + respLongLabel + " " + document.getElementById("resp").value + ", " + taLabel + " " + document.getElementById("ta").value + ", " + pulsLabel + " " +
             document.getElementById("puls").value + ", " + lichLabel + " " + document.getElementById("lichideingerate").value + ", " + diurezaLabel+ " " + document.getElementById("diureza").value +
              ", " + scauneLabel + " " + document.getElementById("scaune").value + ", " + dietaLabel + " " + document.getElementById("dieta").value);
         updateEraseDropDown();
+        updateAddDropDown();
         myChart.update();
         resizeChart();
         $("#updatedtable").html(tableTemplate({ serialList: uniqDaysV, lichideV:lichideL, diurezaV:diurezaL, scauneV:scauneL, dietaV:dietaL}));
 
     }
+function updateAddDropDown(){
+        var addDaysDropDown = document.getElementById("selectExistingOrNewDay");
+        $("#selectExistingOrNewDay").empty();
+        if (labelsVarArr.length>0 && labelsVarArr[0]!="") {
+            for (var ind = 0; labelsVarArr.length > ind ; ind++) {
+                var option = document.createElement("option");
+                option.text = labelsVarArr[ind];
+                addDaysDropDown.add(option);
+            }
+        }
+        else {
+               var monthVar = parseInt(document.getElementById("luna").innerHTML);
+               var anVar = parseInt(document.getElementById("an").innerHTML);
+
+               var limit = 31;
+               if (monthVar==2 && (anVar % 4 == 0))
+                    limit = 29;
+               else if (monthVar==2 && (anVar % 4 != 0))
+                     limit = 28;
+               else if (monthVar==4 || monthVar==6 || monthVar==9 || monthVar==11)
+                    limit = 30;
+               for (var ind = 1; ind<=limit ; ind++) {
+                    var option = document.createElement("option");
+                    option.text = parseInt(ind) + " D";
+                    addDaysDropDown.add(option);
+                    var option = document.createElement("option");
+                    option.text = parseInt(ind) + " S";
+                    addDaysDropDown.add(option);
+            }
+        }
+        var lastInList = labelsVarArr[labelsVarArr.length-1];
+        if (typeof lastInList !== 'undefined') {
+            var lastDay = lastInList.split(" ")[0];
+            var lastTimeOfDay = lastInList.split(" ")[1];
+            var option = document.createElement("option");
+            if (typeof lastTimeOfDay!== 'undefined') {
+                if (lastTimeOfDay.includes("D")) {
+                    option.text = (parseInt(lastDay)) + " S";
+                }
+                else{
+                    option.text =(parseInt(lastDay) + 1) + " D";
+                }
+            }
+            else {
+                option.text =(parseInt(lastDay) + 1) + " D";
+            }
+            addDaysDropDown.add(option);
+        }
+}
 function updateEraseDropDown(){
         var eraseDaysDropDown = document.getElementById("dayAndTimeErase");
         $("#dayAndTimeErase").empty();
@@ -412,6 +500,10 @@ const labelsVar = "{{foaieTemperatura.labels}}";
 const labels2Var = "{{foaieTemperatura.labels2}}";
 var labelsVarArr = labelsVar.split(",");
 var labels2VarArr = labels2Var.split(",");
+
+if (labelsVarArr[0]=="") labelsVarArr = [];
+if (labels2VarArr[0]=="") labels2VarArr = [];
+
 var labelsVarFinal = [];
 var i = 0;
 labelsVarArr.forEach(element => {
@@ -423,20 +515,28 @@ tableTemplate = Handlebars.compile(templateText);
 
 
 var lichideL = "{{foaieTemperatura.lichide}}".split(",");
+if (lichideL[0]=="") lichideL = [];
 var uniqDaysV = "{{foaieTemperatura.uniqDays}}".split(",");
-
+if (uniqDaysV[0]=="") uniqDaysV = [];
+updateAddDropDown();
 updateEraseDropDown();
-
+comportamentZiuaDeBoala();
 var diurezaL = "{{foaieTemperatura.diureza}}".split(",");
+if (diurezaL[0]=="") diurezaL = [];
 var scauneL = "{{foaieTemperatura.scaune}}".split(",");
+if (scauneL[0]=="") scauneL = [];
 var dietaL = "{{foaieTemperatura.dieta}}".split(",");
-
+if (dietaL[0]=="") dietaL = [];
 $("#updatedtable").html(tableTemplate({ serialList: uniqDaysV, lichideV:lichideL, diurezaV:diurezaL, scauneV:scauneL, dietaV:dietaL}));
 
 var tempVar = [{{foaieTemperatura.temp}}];
+if (tempVar[0]=="") tempVar = [];
 var taVar = [{{foaieTemperatura.ta}}];
+if (taVar[0]=="") taVar = [];
 var pulsVar = [{{foaieTemperatura.puls}}];
+if (pulsVar[0]=="") pulsVar = [];
 var respVar = [{{foaieTemperatura.resp}}];
+if (respVar[0]=="") respVar = [];
 
 var lastDay = labelsVarArr[labelsVarArr.length-1];
 const data = {
@@ -541,7 +641,7 @@ var myChart = new Chart(ctx, {
                     default:
                         // code block
                 }
-                addToAudit("Elementul " + labelsVarArr[index] + " a fost modificat cu succes, " + elementModificat + ": " + value);
+                addToAudit("Elementul " + labelsVarArr[index] + " a fost modificat cu succes, " + elementModificat + ": " + value + " ");
             },
           },
             tooltip: {
@@ -574,7 +674,7 @@ var myChart = new Chart(ctx, {
              title: {
              align: 'center',
              display: true,
-             text: ['Ziua', '(Zile de boala)'],
+             text: ['Ziua', '(Zile de boală)'],
              font: {
                family: 'Arial',
                 size: 18,

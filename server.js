@@ -60,6 +60,7 @@ app.use("/json", router);
 
 // const fs = require('fs')
 // const basename = path.basename(module.filename)
+
 // const assoc = require('./models/associations')();
 const db = require('./config/db');
 // const onlyModels = file =>
