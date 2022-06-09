@@ -1,6 +1,7 @@
 <!--suppress ALL -->
 <section id="chart1" class="container" style="width:100% !important">
-
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/general.js"></script>
     <table style="width:100%">
         <tr>
             <td colspan="3" style="text-align:center">
@@ -170,23 +171,44 @@
         {{#each comments}}
             <tr>
                 <td style="border: 1px solid black;">{{this.ora}}</td>
-                <td style="border: 1px solid black;"><input type="text" style="width:110px" value="{{this.solPerfuzabil}}"/></td>
-                <td style="border: 1px solid black;"><input type="text" style="width:110px" value="{{this.tratament}}"/></td>
-                <td style="border: 1px solid black;"><input type="text" style="width:110px" value="{{this.diureza}}"/></td>
-                <td style="border: 1px solid black;"><input type="text" style="width:110px" value="{{this.scaun}}"/></td>
-                <td style="border: 1px solid black;"><input type="text" style="width:110px" value="{{this.varsat}}"/></td>
-                <td style="border: 1px solid black;"><input type="text" style="width:110px" value="{{this.lichideIngerate}}"/></td>
+                <td style="border: 1px solid black;"><input type="text" value="{{this.solPerfuzabil}}"/></td>
+                <td style="border: 1px solid black;"><input type="text" value="{{this.tratament}}"/></td>
+                <td style="border: 1px solid black;"><input type="text" value="{{this.diureza}}"/></td>
+                <td style="border: 1px solid black;"><input type="text"  value="{{this.scaun}}"/></td>
+                <td style="border: 1px solid black;"><input type="text"  value="{{this.varsat}}"/></td>
+                <td style="border: 1px solid black;"><input type="text"  value="{{this.lichideIngerate}}"/></td>
             </tr>
         {{/each}}
-        <tr><td></td></tr>
-        <tr><td> <input type="button" value="Salvează în baza de date" onclick="add()" /></td></tr>
+        <tr><td colspan="7"></td></tr>
+        <tr><td colspan="7"> <input type="button" value="Salvează în baza de date" onclick="add()" /></td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;</td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;</td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2" style="font-weight:bold;font-size:20px" >
+                Audit
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="font-weight:bold;font-size:10px" >
+                <div id="audit" >&nbsp;</div>
+            </td>
+        </tr>
     </table>
 
-    <script src="/js/jquery-3.6.0.min.js"></script>
 
 <script>
+
 function add(){
-    alert("add");
+    addToAudit("a");
+
 };
 </script>
 
