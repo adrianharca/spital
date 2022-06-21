@@ -43,6 +43,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 //Routes for interface:
+app.use("/foaie_observatie", require('./routes/foaieobservatie'));
+app.use("/buletin_analize_hemato", require('./routes/buletinanalizehemato'));
+app.use("/buletin_analize_coagulare", require('./routes/buletinanalizecoagulare'));
+app.use("/buletin_analize_biochimie", require('./routes/buletinanalizebiochimie'));
 app.use("/foaie_temperatura", require('./routes/foaietemperatura'));
 app.use("/fisa_terapie", require('./routes/fisaterapie'));
 app.use("/circles", require('./routes/circles'));

@@ -1,0 +1,203 @@
+<!--suppress ALL -->
+<section id="foaie" class="container" style="width:100% !important">
+  <h1>Foaie de observație clinică generală</h1>
+  <!-- Tab links -->
+  <div class="tab">
+    <button class="tablinks" onclick="openTab(event, 'diagnostic')">1. Diagnostic</button>
+    <button class="tablinks" onclick="openTab(event, 'anamneza')">2. Anamneza</button>
+    <button class="tablinks" onclick="openTab(event, 'tratament')">3. Tratament</button>
+    <button class="tablinks" onclick="openTab(event, 'epetapa')">4. Epicriza de etapă</button>
+    <button class="tablinks" onclick="openTab(event, 'epfinala')">5. Epicriza finală</button>
+    <button class="tablinks" onclick="openTab(event, 'recom')">6. Recomandări</button>
+    <button class="tablinks" onclick="openTab(event, 'urm')">7. Urmărire</button>
+  </div>
+
+  <!-- Tab content -->
+  <div id="diagnostic" class="tabcontent">
+    <h3>Diagnostic</h3>
+    <p>Arsuri - etiologia</p>
+    <div>
+        <div id="updatedtable"></div>
+        <input type="button" id="adauga" onclick="adauga()" value="Adaugă arsură"/>&nbsp;&nbsp;<input type="button" id="sterge" onclick="sterge()" value="Șterge ultima arsură"/>
+        <br/><br/>
+        <input type="checkbox" id="caiResp" name="caiResp" value="{{foaie.caiResp}}">Arsuri de căi respiratorii</input>
+
+
+    </div><br/>
+
+  </div>
+
+  <div id="anamneza" class="tabcontent">
+    <h3>Anamneza</h3>
+
+    Locul producerii accidentului: <input type="text" id="locaccident" value="{{foaie.anamneza.loc}}"/><br/><br/>
+    <input type="checkbox" id="prezentaparinti" name="prezentaparinti" value="{{foaie.anamneza.prezentaparinti}}">A fost în prezența părinților</input><br/><br/>
+    Descrierea accidentului: <input style="width:100%" type="text" id="prezentaparinti" name="prezentaparinti" value="{{foaie.anamneza.descriere}}"/><br/><br/>
+
+    Primul ajutor
+    <table style="width:50%" border="1">
+      <tr><td>Locul</td><td>Tratamentul</td></tr>
+      <tr><td><input type="text" style="width:100%"  id="locajutor" name="locajutor" value="{{foaie.anamneza.locprimajutor}}"/></td>
+           <td><input type="text"  style="width:100%" id="tratamentajutor" name="tratamentajutor" value="{{foaie.anamneza.tratamentprimajutor}}"/></td></tr>
+    </table><br/><br/>
+    Mijloc de transport la spital <input type="text" id="transport" style="width:100%"  name="transport" value="{{foaie.anamneza.transport}}"/><br/><br/>
+    Timpul trecut de la producerea accidentului: <input type="text" style="width:100%"  id="timp" name="timp" value="{{foaie.anamneza.timp}}"/><br/><br/>
+    Starea pacientului în momentul sosirii la spital/UPU: <input type="text" style="width:100%"  id="starepacient" name="starepacient" value="{{foaie.anamneza.stare}}"/><br/><br/>
+    Tratamentul primit în timpul transportului: <input type="text" id="tratasport" style="width:100%"  name="tratasport" value="{{foaie.anamneza.tratasport}}"/><br/><br/>
+  </div>
+
+  <div id="tratament" class="tabcontent">
+    <h3>Tratament</h3>
+    <h4>a) Sistemic</h4>
+    <h4>b) Local</h4>
+    <h4>Analize</h4>
+    <a href="/buletin_analize_biochimie" style="color:red" target="_blank">Biochimie 14 Iunie</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanBio" onclick="adaugaanBio()" value="Adaugă analiză biochimie"/> <br/>
+    <a href="/buletin_analize_coagulare" style="color:red" target="_blank">Coagulare 14 Iunie</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanCo" onclick="adaugaanCo()" value="Adaugă analiză coagulare"/> <br/>
+    <a href="/buletin_analize_hemato" style="color:red"  target="_blank">Sânge 14 Iunie</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanHema" onclick="adaugaanHema()" value="Adaugă analiză hematologie"/> <br/>
+
+    <h4></h4>
+  </div>
+  <div id="epetapa" class="tabcontent">
+    <h3>Epicriza de etapă</h3>
+    <p>Tokyo is the capital of Japan.</p>
+  </div>
+  <div id="epfinala" class="tabcontent">
+    <h3>Epicriza finală</h3>
+    <textarea id="epicrizafinala" name="epicrizafinala" rows="4" cols="50">
+      {{{foaie.epicrizafinala}}}
+    </textarea>
+  </div>
+  <div id="recom" class="tabcontent">
+    <h3>Recomandări</h3>
+    <div id="updatedtablerecomm"></div>
+    <input type="button" id="adaugarecomm" onclick="adaugarecomm()" value="Adaugă recomandare"/>&nbsp;&nbsp;<input type="button" id="sterge" onclick="stergerecomm()" value="Șterge ultima recomandare"/>
+  </div>
+  <div id="urm" class="tabcontent">
+    <h3>Urmărire</h3>
+    <p>Cura cicatricilor</p>
+    <textarea id="cura" name="cura" rows="4" cols="50">
+      {{{foaie.cura}}}
+    </textarea>
+  </div>
+  <script type="text/x-handlebars-template" id="tableTemplate">
+    __#each arsVV++
+    Gradul:
+    <select id="gradSelect" name="gradSelect" style="width:100px" >
+      <option value="__this.grad++" hidden="hidden" selected="selected">__this.grad++</option>
+      <option value="1">1</option>
+      <option value="2A">2A</option>
+      <option value="2B">2B</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+
+    </select>&nbsp;&nbsp;
+    Localizare
+    <input type="text" id="localizare__this.position++" value="__this.localizare++"/>&nbsp;&nbsp;
+    Veche de  <input type="text" id="vechime__this.position++" value="__this.vechime++"/>&nbsp;(ore)&nbsp;&nbsp;
+    Procent segment <input type="text" id="procent__this.position++" value="__this.procent++"/>&nbsp;%<br/><br/>
+
+    __/each++
+
+  </script>
+  <script type="text/x-handlebars-template" id="tableTemplateRecomm">
+        __#each recomm++
+        __this.position++. <input type="text" style="width:90%" id="recomm__this.position++" value="__this.value++"/> <br/><br/>
+        __/each++
+
+  </script>
+  <script src="/js/jquery-3.6.0.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+  <script src="/js/chart.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/general.js"></script>
+  <script src="/js/chartjs-plugin-dragdata.min.js"></script>
+  <script>
+
+
+  var templateText = $("#tableTemplate").html();
+
+  templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");
+  var tableTemplate = Handlebars.compile(templateText);
+  var arsuri = JSON.parse('{{{arsuriJsonVar}}}');
+
+  $("#updatedtable").html(tableTemplate({arsVV: arsuri }));
+
+  var templateTextRecomm = $("#tableTemplateRecomm").html();
+
+  templateTextRecomm = $("#tableTemplateRecomm").html().replaceAll("_","{").replaceAll("+","}");
+
+  var tableTemplateRecomm = Handlebars.compile(templateTextRecomm);
+  var recomandari = JSON.parse('{{{recomandariJsonVar}}}');
+
+  $("#updatedtablerecomm").html(tableTemplateRecomm({recomm: recomandari }));
+
+    function openTab(evt, tabName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+function adaugarecomm() {
+    var templateText = $("#tableTemplateRecomm").html();
+
+    templateText = $("#tableTemplateRecomm").html().replaceAll("_","{").replaceAll("+","}");
+
+    var tableTemplate = Handlebars.compile(templateText);
+    recomandari.push({position: recomandari.length+1,value:""});
+
+    $("#updatedtablerecomm").html(tableTemplate({recomm: recomandari }));
+}
+function stergerecomm(){
+  var templateText = $("#tableTemplateRecomm").html();
+
+    templateText = $("#tableTemplateRecomm").html().replaceAll("_","{").replaceAll("+","}");
+
+    var tableTemplate = Handlebars.compile(templateText);
+    recomandari.pop();
+
+    $("#updatedtablerecomm").html(tableTemplate({recomm: recomandari }));
+}
+function adauga(){
+    var templateText = $("#tableTemplate").html();
+
+    templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");
+
+    var tableTemplate = Handlebars.compile(templateText);
+    var newArsura = {};
+    newArsura.position = arsuri.length;
+    newArsura.grad =null;
+    newArsura.localizare =null;
+    newArsura.vechime=null;
+    newArsura.procent=null;
+    arsuri.push(newArsura);
+
+    $("#updatedtable").html(tableTemplate({arsVV: arsuri }));
+ }
+ function sterge(){
+   var templateText = $("#tableTemplate").html();
+
+    templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");
+
+    var tableTemplate = Handlebars.compile(templateText);
+    arsuri.pop();
+
+    $("#updatedtable").html(tableTemplate({arsVV: arsuri }));
+ }
+</script>
+
+</section>
