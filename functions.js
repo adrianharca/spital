@@ -2,6 +2,24 @@ const ImageEntity = require('./models/ImageEntity');
 const Image = require('./models/Image');
 var db = require("./config/db.js");
 
+var Handlebars = require('handlebars');
+
+
+Handlebars.registerHelper("afisareSageata",function(analiz) {
+                                            if (analiz.rezultat>analiz.maxLimit)
+                                                return "➚";
+                                            if (analiz.rezultat<analiz.minLimit)
+                                                return  "➘";
+                                              return "&nbsp;&nbsp;&nbsp;";
+                                            });
+Handlebars.registerHelper("afisareRezultat", function(analiz) {
+if (analiz.rezultat>analiz.maxLimit)
+    return analiz.rezultat + " ➚";
+if (analiz.rezultat<analiz.minLimit)
+    return analiz.rezultat + " ➘";
+  return analiz.rezultat;
+});
+
 exports.isEmpty = function (obj) {
   for(var prop in obj) {
     if(obj.hasOwnProperty(prop))
@@ -11,10 +29,10 @@ exports.isEmpty = function (obj) {
   return true;
 };
 exports.getFooter = function(){
-    footer = "Se declara ca raportul de analize se refera numai la proba analizata.<br/>";
-    footer += "Reproducerea sau utilizarea buletinului de analize in alte scopuri decat cele pentru care a fost realizat, este strict interzisa!<br/>";
-    footer += "Analizele marcae cu asterisc * nu sunt acoperite de acreditarea RENAR.<br/>";
-    footer += "Opiniile si interpretarile continute in prezentul raport nu sunt acoperite de acreditarea RENAR.<br/>";
+    footer = "Se declară că raportul de analize se referă numai la proba analizată.<br/>";
+    footer += "Reproducerea sau utilizarea buletinului de analize în alte scopuri decât cele pentru care a fost realizat este strict interzisă!<br/>";
+    footer += "Analizele marcate cu asterisc * nu sunt acoperite de acreditarea RENAR.<br/>";
+    footer += "Opiniile și interpretările conținute în prezentul raport nu sunt acoperite de acreditarea RENAR.<br/>";
     footer += "Punctele de recoltare marcate cu diez # nu sunt acreditate RENAR.";
     return footer;
 };
@@ -33,9 +51,28 @@ exports.createFilename = function (fileNameVar, folder){
     filename = path + "\\" + fileNameVar + ".jpg";
   return filename;
 }
+exports.EpicrizaDeEtapa = function (dataVar){
+
+    this.data= dataVar;
+    return this;
+}
+exports.Bio = function (dataVar){
+
+    this.data= dataVar;
+    return this;
+}
+exports.Hemo = function (dataVar){
+    this.data= dataVar;
+    return this;
+}
+exports.Coagulare = function (dataVar){
+    this.data= dataVar;
+    return this;
+}
 exports.Recomandare = function (positionVar, recomandareVar) {
     this.position = positionVar;
     this.value = recomandareVar;
+    return this;
 }
 
 exports.Arsura = function (positionVar) {
@@ -44,6 +81,7 @@ exports.Arsura = function (positionVar) {
     this.localizare = null;
     this.vechime = null;
     this.procent = null;
+    return this;
 }
 exports.Arsura = function (positionVar, gradVar, localizareVar, vechimeVar, procentVar) {
     this.position = positionVar;
@@ -51,6 +89,7 @@ exports.Arsura = function (positionVar, gradVar, localizareVar, vechimeVar, proc
     this.localizare = localizareVar;
     this.vechime = vechimeVar;
     this.procent = procentVar;
+    return this;
 }
 exports.Analiza = function (tipAnalizaVar, rezultatVar, minLimitVar, maxLimitVar,intervalDeReferintaVar,comentariuVar) {
     this.tipAnaliza = tipAnalizaVar;

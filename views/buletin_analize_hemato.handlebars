@@ -23,8 +23,8 @@ Mail:&nbsp;{{buletin.laborator.mail}}
     </tr>
   </table>
 <h1 style="text-align:center">Buletin de analize medicale</h1>
-  <div style="text-align:center">Data si ora recoltarii: <input type="text" value="{{buletin.data}}"/></div>
-  <div style="text-align:center">Inregistrat de: <input type="text" value="{{buletin.inregistratDe}}"/></div>
+  <div style="text-align:center">Data și ora recoltării: <input type="text" value="{{buletin.data}}"/></div>
+  <div style="text-align:center">Înregistrat de: <input type="text" value="{{buletin.inregistratDe}}"/></div>
   <div style="text-align:right">Cod cerere: {{buletin.codCerere}}</div>
   <br/>
   <table style="width:100%;border:1px solid black" >
@@ -36,13 +36,13 @@ Mail:&nbsp;{{buletin.laborator.mail}}
     <tr>
       <td>C.N.P.: <div style="font-weight: bold">{{pacient.cnp}}</div></td><td>Cod pacient: <div style="font-weight: bold">{{pacient.cod}}</div></td>
       <td></td>
-      <td>Sectia: <div>{{pacient.sectia}}</div></td>
+      <td>Secția: <div>{{pacient.sectia}}</div></td>
     </tr>
 </table>
   <br/>
   <table style="width:100%;border:1px solid black" >
     <tr>
-      <td>Data si ora primirii probei in laborator: <div style="font-weight: bold"><input type="text" value="{{buletin.dataPrimireProba}}"/></div></td>
+      <td>Data și ora primirii probei în laborator: <div style="font-weight: bold"><input type="text" value="{{buletin.dataPrimireProba}}"/></div></td>
     </tr>
   </table>
   <br/>
@@ -51,7 +51,7 @@ Mail:&nbsp;{{buletin.laborator.mail}}
     <tr>
       <td style="background-color: coral;"><span style="font-weight:bold">HEMATOLOGIE - </span><span style="font-weight:bold; font-style:italic;">VALIDAT DE:
         <input type="text" style="width:300px" value="{{hematologie.validataDe}}"/>&nbsp;
-      &nbsp;DATA SI ORA VALIDARII: <input type="text" value="{{hematologie.data}}"/></span></td>
+      &nbsp;DATA ȘI ORA VALIDĂRII: <input type="text" value="{{hematologie.data}}"/></span></td>
     </tr>
   <tr>
     <td>Starea probei: <span style="font-style:italic;"><input type="text" value="{{hematologie.stare}}"/></span></td>
@@ -87,8 +87,8 @@ Mail:&nbsp;{{buletin.laborator.mail}}
   <div>{{{footer}}}</div>
   <hr/>
   <table>
-    <tr><td style="width:40%">Afisat de: <input type="text" value="{{buletin.afisatDe}}"/> </td> <td style="width:40%">Data si ora afisarii:</td><td><input type="text" value="{{buletin.dataAfisare}}"/></td></tr>
-    <tr><td></td> <td>Data si ora primei afisari:</td><td><input type="text" value="{{buletin.dataPrimaAfisare}}"/></td></tr>
+    <tr><td style="width:40%">Afișat de: <input type="text" value="{{buletin.afisatDe}}"/> </td> <td style="width:40%">Data și ora afișării:</td><td><input type="text" value="{{buletin.dataAfisare}}"/></td></tr>
+    <tr><td></td> <td>Data și ora primei afișări:</td><td><input type="text" value="{{buletin.dataPrimaAfisare}}"/></td></tr>
     <tr><td>Cod: <input type="text" value="{{buletin.cod}}"/></td> <td></td><td></td></tr>
   </table>
   <script src="/js/jquery-3.6.0.min.js"></script>
@@ -99,6 +99,7 @@ Mail:&nbsp;{{buletin.laborator.mail}}
   <script src="/js/general.js"></script>
   <script src="/js/chartjs-plugin-dragdata.min.js"></script>
   <script>
+    window.document.title= "Buletin hematologie - " + "{{pacient.nume}}";
     function changeArrow(rez,minV,maxV,tipAnaliza){
    // alert(document.getElementById("rez"+tipAnaliza).value + " " + minV + " " + maxV);
     if (parseFloat(document.getElementById("rez"+tipAnaliza).value)>parseFloat(maxV)) {

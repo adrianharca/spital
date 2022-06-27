@@ -1,6 +1,34 @@
 <!--suppress ALL -->
 <section id="foaie" class="container" style="width:100% !important">
   <h1>Foaie de observație clinică generală</h1>
+  <br/>
+  <div id="detPacient" class=" col-md-9 col-lg-9 ">
+    <h3>Pacient</h3>
+    <table class="table table-user-information">
+      <tr>
+        <td style="font-weight:bold">Nume: </td><td>{{foaie.detaliipacient.nume}}</td>
+      </tr>
+      <tr>
+        <td style="font-weight:bold">Vârsta: </td><td> {{foaie.detaliipacient.varsta}}</td>
+      </tr>
+      <tr>
+        <td style="font-weight:bold">Sex: </td><td>{{foaie.detaliipacient.sex}}</td>
+      </tr>
+      <tr>
+        <td style="font-weight:bold">CNP: </td><td>{{foaie.detaliipacient.cnp}}</td>
+      </tr>
+      <tr>
+        <td style="font-weight:bold">Cod: </td><td>{{foaie.detaliipacient.cod}}</td>
+      </tr>
+      <tr>
+        <td style="font-weight:bold">Medic: </td><td>{{foaie.detaliipacient.medic}}</td>
+      </tr>
+      <tr>
+        <td style="font-weight:bold">Secția: </td><td>{{foaie.detaliipacient.sectia}}</td>
+      </tr>
+    </table>
+ </div>
+  <br/>
   <!-- Tab links -->
   <div class="tab">
     <button class="tablinks" onclick="openTab(event, 'diagnostic')">1. Diagnostic</button>
@@ -11,6 +39,7 @@
     <button class="tablinks" onclick="openTab(event, 'recom')">6. Recomandări</button>
     <button class="tablinks" onclick="openTab(event, 'urm')">7. Urmărire</button>
   </div>
+
 
   <!-- Tab content -->
   <div id="diagnostic" class="tabcontent">
@@ -51,15 +80,23 @@
     <h4>a) Sistemic</h4>
     <h4>b) Local</h4>
     <h4>Analize</h4>
-    <a href="/buletin_analize_biochimie" style="color:red" target="_blank">Biochimie 14 Iunie</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanBio" onclick="adaugaanBio()" value="Adaugă analiză biochimie"/> <br/>
-    <a href="/buletin_analize_coagulare" style="color:red" target="_blank">Coagulare 14 Iunie</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanCo" onclick="adaugaanCo()" value="Adaugă analiză coagulare"/> <br/>
-    <a href="/buletin_analize_hemato" style="color:red"  target="_blank">Sânge 14 Iunie</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanHema" onclick="adaugaanHema()" value="Adaugă analiză hematologie"/> <br/>
-
+    {{#each foaie.buletinebio}}
+    <a href="/buletin_analize_biochimie?pacient=Ana&amp;data={{this.data}}" style="color:red" target="_blank">Biochimie {{this.data}}</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanBio" onclick="adaugaanBio()" value="Adaugă analiză biochimie"/> <br/>
+    {{/each}}
+    {{#each foaie.buletinecoagulare}}
+    <a href="/buletin_analize_coagulare?pacient=Ana&amp;data={{this.data}}" style="color:red" target="_blank">Coagulare {{this.data}}</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanCo" onclick="adaugaanCo()" value="Adaugă analiză coagulare"/> <br/>
+    {{/each}}
+    {{#each foaie.buletinehemo}}
+    <a href="/buletin_analize_hemato?pacient=Ana&amp;data={{this.data}}" style="color:red"  target="_blank">Sânge {{this.data}}</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanHema" onclick="adaugaanHema()" value="Adaugă analiză hematologie"/> <br/>
+    {{/each}}
     <h4></h4>
   </div>
   <div id="epetapa" class="tabcontent">
     <h3>Epicriza de etapă</h3>
-    <p>Tokyo is the capital of Japan.</p>
+
+      {{#each foaie.epicrizedeetapa}}
+      <a href="/fisa_terapie?pacient=Ana&amp;data={{this.data}}" style="color:red" target="_blank">{{this.data}}</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugafisaterapie" onclick="adaugaFisaTerapie()" value="Adaugă fișă terapie"/> <br/>
+      {{/each}}
   </div>
   <div id="epfinala" class="tabcontent">
     <h3>Epicriza finală</h3>
@@ -113,8 +150,19 @@
   <script src="/js/general.js"></script>
   <script src="/js/chartjs-plugin-dragdata.min.js"></script>
   <script>
-
-
+  function adaugaFisaTerapie(){
+    window.open("/fisa_terapie?pacient={{foaie.detaliipacient.nume}}", '_blank').focus();
+  }
+  function adaugaanBio() {
+     window.open("/buletin_analize_biochimie?pacient={{foaie.detaliipacient.nume}}", '_blank').focus();
+  }
+  function adaugaanCo(){
+      window.open("/buletin_analize_coagulare?pacient={{foaie.detaliipacient.nume}}", '_blank').focus();
+  }
+  function adaugaanHema(){
+       window.open("/buletin_analize_hemato?pacient={{foaie.detaliipacient.nume}}", '_blank').focus();
+  }
+  window.document.title= "Foaie de observație - " + "{{foaie.detaliipacient.nume}}";
   var templateText = $("#tableTemplate").html();
 
   templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");

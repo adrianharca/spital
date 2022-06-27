@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const url = require('url');
 var emptyStr = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 var Comment = function (oraV, solPerfuzabilV, tratamentV, diurezaV, scaunV, varsatV, lichideIngerateV) {
     this.ora = oraV,
@@ -12,16 +13,23 @@ var Comment = function (oraV, solPerfuzabilV, tratamentV, diurezaV, scaunV, vars
 }
 
 router.get('/', (req, res) => {
+    const query = url.parse(req.url, true).query;
+    var data = query.data;
+    const pacientName = query.pacient;
 
-    //init
-    salon = "10";
-    nrFo = "3199";
-    data = "28/29.08.22";
-    nume = "Balazs";
-    prenume = "Gina";
-    varsta  = "4a 5l";
     rh = emptyStr;
     diagnostic = emptyStr;
+    //init
+    if (pacientName!=null) {
+        salon = "10";
+        nrFo = "3199";
+        nume = "Balazs";
+        prenume = "Gina";
+        varsta  = "4a 5l";
+        if (data!=null){
+            data = "28/29.08.22";
+        }
+    }
     comments = [];
 
     for(var i=0;i<24;i++){
@@ -38,7 +46,7 @@ router.get('/', (req, res) => {
                       row4col1=row4col2=row4col3=
                       row5col1=row5col2=row5col3=
                       row6col1=row6col2=row6col3=
-                      row7col1=row7col2=row7col3=emptyStr;
+                      row7col1=row7col2=row7col3="";
 
     pacient = {nume, prenume, varsta, rh, diagnostic};
     fisa = {salon, data, nrFo};
