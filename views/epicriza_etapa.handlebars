@@ -1,0 +1,33 @@
+<!--suppress ALL -->
+<section id="foaie" class="container" style="width:100% !important">
+  <h1>Epicriza de etapă  <input type="text" id="dataEpicriza" style="width:10%"  name="dataEpicriza" value="{{epicriza_etapa.dataVar}}"/></h1>
+  <br/>
+  <table width="100%">
+    <tr><td style="width:20%">
+      Semne și simptome
+    </td><td>
+      <input type="text" id="simptome" style="width:100%"  name="simptome" value="{{epicriza_etapa.simptome}}"/>
+    </td></tr>
+    <tr><td style="width:20%">
+      Activitate cotidiană
+    </td><td>
+      <input type="text" id="activitate" style="width:100%"  name="activitate" value="{{epicriza_etapa.activitate}}"/>
+    </td></tr>
+    <tr><td style="width:20%">
+      EKG
+    </td><td>
+      <input type="text" id="ekg" style="width:100%"  name="ekg" value="{{epicriza_etapa.ekg}}"/>
+    </td></tr>
+  </table>
+  <br/>
+  <input style="font-size:12px;height:20px" type="button" id="salveaza" onclick="salveaza()" value="Salvare"/>
+  <script src="/js/jquery-3.6.0.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/general.js"></script>
+  <script>
+
+  </script>
+
+</section>

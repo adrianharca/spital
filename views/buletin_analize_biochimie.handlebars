@@ -97,11 +97,13 @@ Mail:&nbsp;{{buletin.laborator.mail}}
   <script>
     window.document.title= "Buletin biochimie - " + "{{pacient.nume}}";
     function changeArrow(rez,minV,maxV,tipAnaliza){
-   // alert(document.getElementById("rez"+tipAnaliza).value + " " + minV + " " + maxV);
-    if (parseFloat(document.getElementById("rez"+tipAnaliza).value)>parseFloat(maxV)) {
+    if (checkIfNumberNoWarning(document.getElementById("rez"+tipAnaliza).value)==false) {
+        document.getElementById("sageata"+tipAnaliza).innerHTML = "&nbsp;&nbsp;&nbsp;";
+        }
+    else if (parseFloat(document.getElementById("rez"+tipAnaliza).value)>parseFloat(maxV)) {
         document.getElementById("sageata"+tipAnaliza).innerHTML = "➚";
         }
-   else if (parseFloat(document.getElementById("rez"+tipAnaliza).value)<parseFloat(minV)) {
+    else if (parseFloat(document.getElementById("rez"+tipAnaliza).value)<parseFloat(minV)) {
         document.getElementById("sageata"+tipAnaliza).innerHTML = "➘";
         }
    else

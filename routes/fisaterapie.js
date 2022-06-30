@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const url = require('url');
+
+var Global = require("../functions.js");
 var emptyStr = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 var Comment = function (oraV, solPerfuzabilV, tratamentV, diurezaV, scaunV, varsatV, lichideIngerateV) {
     this.ora = oraV,
@@ -19,6 +21,7 @@ router.get('/', (req, res) => {
 
     rh = emptyStr;
     diagnostic = emptyStr;
+    var arsuri = [];
     //init
     if (pacientName!=null) {
         salon = "10";
@@ -29,7 +32,11 @@ router.get('/', (req, res) => {
         if (data!=null){
             data = "28/29.08.22";
         }
+        arsuri.push(new Global.Arsura(1, "3", "erer", "5", "40"));
+        arsuri.push(new Global.Arsura(2, "2A", "ddddd", "2", "20"));
     }
+
+    //end init
     comments = [];
 
     for(var i=0;i<24;i++){
@@ -39,7 +46,6 @@ router.get('/', (req, res) => {
         comments.push(new Comment(oraV,'','','','','',''));
    }
 
-    //end init
     var row1col1=row1col2=row1col3=
                       row2col1=row2col2=row2col3=
                       row3col1=row3col2=row3col3=
@@ -58,7 +64,7 @@ router.get('/', (req, res) => {
                   row6col1,row6col2,row6col3,
                   row7col1,row7col2,row7col3,
                     };
-    res.render('fisaterapie', {fisa, pacient,detaliiFisa, comments} );
+    res.render('fisaterapie', {fisa, pacient,detaliiFisa, comments, arsuri} );
 
 });
 

@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
         etichete = {};
         foaie = {};
         foaie.recomandari = [];
+        foaie.evolutiiList = [];
         foaie.arsuri = [];
         foaie.anamneza = {};
         foaie.detaliipacient = {};
@@ -19,10 +20,14 @@ router.get('/', (req, res) => {
         foaie.buletinehemo = [];
         foaie.buletinecoagulare = [];
         foaie.epicrizedeetapa = [];
+        foaie.fiseterapie= [];
         //init, aici sa se populeze cu detaliile legate de id-ul pacientului
 
         if (pacientName!=null) {
+                foaie.evolutiiList.push(new Global.Evolutie("18 iunie","blablabla","sa puna sare pe rana"));
+                foaie.evolutiiList.push(new Global.Evolutie("19 iunie","arsura in cot","Miere"));
                 foaie.epicrizedeetapa.push(Global.EpicrizaDeEtapa("28/29 iunie 2022"));
+                foaie.fiseterapie.push(Global.FisaTerapie("28/29 iunie 2022"));
                 foaie.buletinebio.push(Global.Bio("14 Iunie"));
                 foaie.buletinehemo.push(Global.Hemo("14 Iunie"));
                 foaie.buletinecoagulare.push(Global.Coagulare("14 Iunie"));
@@ -55,11 +60,13 @@ router.get('/', (req, res) => {
         }
         var arsuriJsonVar = JSON.stringify(foaie.arsuri);
         var recomandariJsonVar = JSON.stringify(foaie.recomandari);
+        var evolutiiJsonList=JSON.stringify(foaie.evolutiiList);
         res.render('foaie_observatie', {
                 etichete,
                 foaie,
                 arsuriJsonVar,
-                recomandariJsonVar
+                recomandariJsonVar,
+                evolutiiJsonList
         });
 
 });

@@ -78,30 +78,42 @@
   <div id="tratament" class="tabcontent">
     <h3>Tratament</h3>
     <h4>a) Sistemic</h4>
+
+      {{#each foaie.fiseterapie}}
+      <a href="/fisa_terapie?pacient={{foaie.detaliipacient.nume}}&amp;data={{this.data}}" style="color:red" target="_blank">{{this.data}}</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugafisaterapie" onclick="adaugaFisaTerapie()" value="Adaugă fișă terapie"/> <br/>
+      {{/each}}
     <h4>b) Local</h4>
-    <h4>Analize</h4>
+    <h4>Dinamica plăgilor</h4>
+      <input style="font-size:10px;height:17px" type="button" id="adaugafoto" onclick="adaugafoto()" value="Adaugă fotografie"/>
+      <h4>Evoluție și tratament</h4>
+      <div id="updatedtableEvolutie"></div>
+      <input type="button" id="adaugareevolutie" onclick="adaugareevolutie()" value="Adaugă evoluție"/>&nbsp;&nbsp;<input type="button" id="stergeEvolutie" onclick="stergereevolutie()" value="Șterge ultima evoluție"/>
+
+      <h4>Analize</h4>
     {{#each foaie.buletinebio}}
-    <a href="/buletin_analize_biochimie?pacient=Ana&amp;data={{this.data}}" style="color:red" target="_blank">Biochimie {{this.data}}</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanBio" onclick="adaugaanBio()" value="Adaugă analiză biochimie"/> <br/>
+    <a href="/buletin_analize_biochimie?pacient={{foaie.detaliipacient.nume}}&amp;data={{this.data}}" style="color:red" target="_blank">Biochimie {{this.data}}</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanBio" onclick="adaugaanBio()" value="Adaugă analiză biochimie"/> <br/>
     {{/each}}
     {{#each foaie.buletinecoagulare}}
-    <a href="/buletin_analize_coagulare?pacient=Ana&amp;data={{this.data}}" style="color:red" target="_blank">Coagulare {{this.data}}</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanCo" onclick="adaugaanCo()" value="Adaugă analiză coagulare"/> <br/>
+    <a href="/buletin_analize_coagulare?pacient={{foaie.detaliipacient.nume}}&amp;data={{this.data}}" style="color:red" target="_blank">Coagulare {{this.data}}</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanCo" onclick="adaugaanCo()" value="Adaugă analiză coagulare"/> <br/>
     {{/each}}
     {{#each foaie.buletinehemo}}
-    <a href="/buletin_analize_hemato?pacient=Ana&amp;data={{this.data}}" style="color:red"  target="_blank">Sânge {{this.data}}</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanHema" onclick="adaugaanHema()" value="Adaugă analiză hematologie"/> <br/>
+    <a href="/buletin_analize_hemato?pacient={{foaie.detaliipacient.nume}}&amp;data={{this.data}}" style="color:red"  target="_blank">Sânge {{this.data}}</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanHema" onclick="adaugaanHema()" value="Adaugă analiză hematologie"/> <br/>
     {{/each}}
     <h4></h4>
+      <h4><a style="color:black" target="_blank" href="/foaie_temperatura?pacient={{foaie.detaliipacient.nume}}">Foaie temperatura</a></h4>
   </div>
   <div id="epetapa" class="tabcontent">
     <h3>Epicriza de etapă</h3>
-
       {{#each foaie.epicrizedeetapa}}
-      <a href="/fisa_terapie?pacient=Ana&amp;data={{this.data}}" style="color:red" target="_blank">{{this.data}}</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugafisaterapie" onclick="adaugaFisaTerapie()" value="Adaugă fișă terapie"/> <br/>
-      {{/each}}
+      <a href="/epicriza_etapa?pacient={{foaie.detaliipacient.nume}}&amp;data={{this.data}}" style="color:red" target="_blank">{{this.data}}</a>&nbsp;&nbsp;
+      <br/>
+      {{/each}}<br/>
+      <input type="button" id="adaugaepicriza" onclick="adaugaEpicriza()" value="Adaugă epicriză"/>
   </div>
   <div id="epfinala" class="tabcontent">
     <h3>Epicriza finală</h3>
     <textarea id="epicrizafinala" name="epicrizafinala" rows="4" cols="50">
-      {{{foaie.epicrizafinala}}}
+      {{foaie.epicrizafinala}}
     </textarea>
   </div>
   <div id="recom" class="tabcontent">
@@ -113,9 +125,11 @@
     <h3>Urmărire</h3>
     <p>Cura cicatricilor</p>
     <textarea id="cura" name="cura" rows="4" cols="50">
-      {{{foaie.cura}}}
+      {{foaie.cura}}
     </textarea>
   </div>
+    <br/>
+    <input style="font-size:16px;height:25px" type="button" id="salveaza" onclick="salveaza()" value="Salvare foaie"/>
   <script type="text/x-handlebars-template" id="tableTemplate">
     __#each arsVV++
     Gradul:
@@ -142,14 +156,31 @@
         __/each++
 
   </script>
-  <script src="/js/jquery-3.6.0.min.js"></script>
+  <script type="text/x-handlebars-template" id="tableTemplateEvolutie">
+        <table width="100%">
+            <tr><td style="width:10%">Data</td><td style="width:40%">Evoluție</td><td style="width:40%">Tratament</td></tr>
 
+        __#each evolutii++
+            <tr>
+                <td><input type="text" style="width:90%" id="recomm__this.dataEvolutiei++" value="__this.dataEvolutiei++"/></td><td> <input type="text" style="width:90%" id="recomm__this.dataEvolutiei++" value="__this.evolutie++"/></td>
+                <td> <input type="text" style="width:90%" id="recomm__this.dataEvolutiei++" value="__this.tratament++"/></td>
+
+            </tr>
+        __/each++
+        </table>
+  </script>
+  <script src="/js/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
-  <script src="/js/chart.js"></script>
   <script src="/js/utils.js"></script>
   <script src="/js/general.js"></script>
-  <script src="/js/chartjs-plugin-dragdata.min.js"></script>
   <script>
+  function adaugaFoto()
+  {
+
+  }
+  function adaugaEpicriza(){
+    window.open("/epicriza_etapa?pacient={{foaie.detaliipacient.nume}}", '_blank').focus();
+  }
   function adaugaFisaTerapie(){
     window.open("/fisa_terapie?pacient={{foaie.detaliipacient.nume}}", '_blank').focus();
   }
@@ -169,6 +200,7 @@
   var tableTemplate = Handlebars.compile(templateText);
   var arsuri = JSON.parse('{{{arsuriJsonVar}}}');
 
+  var evolutiiList = JSON.parse('{{{evolutiiJsonList}}}');
   $("#updatedtable").html(tableTemplate({arsVV: arsuri }));
 
   var templateTextRecomm = $("#tableTemplateRecomm").html();
@@ -179,7 +211,13 @@
   var recomandari = JSON.parse('{{{recomandariJsonVar}}}');
 
   $("#updatedtablerecomm").html(tableTemplateRecomm({recomm: recomandari }));
+    var templateTextEvolutie = $("#tableTemplateEvolutie").html();
 
+    templateTextEvolutie = $("#tableTemplateEvolutie").html().replaceAll("_","{").replaceAll("+","}");
+
+    var tableTemplateEvolutie = Handlebars.compile(templateTextEvolutie);
+
+    $("#updatedtableEvolutie").html(tableTemplateEvolutie({evolutii: evolutiiList }));
     function openTab(evt, tabName) {
   // Declare all variables
   var i, tabcontent, tablinks;
@@ -199,6 +237,26 @@
   // Show the current tab, and add an "active" class to the button that opened the tab
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";
+}
+function adaugareevolutie() {
+    var templateText = $("#tableTemplateEvolutie").html();
+
+    templateText = $("#tableTemplateEvolutie").html().replaceAll("_","{").replaceAll("+","}");
+
+    var tableTemplate = Handlebars.compile(templateText);
+    evolutiiList.push({position: evolutiiList.length+1,value:""});
+
+    $("#updatedtableEvolutie").html(tableTemplate({evolutii: evolutiiList }));
+}
+function stergereevolutie(){
+  var templateText = $("#tableTemplateEvolutie").html();
+
+    templateText = $("#tableTemplateEvolutie").html().replaceAll("_","{").replaceAll("+","}");
+
+    var tableTemplate = Handlebars.compile(templateText);
+    evolutiiList.pop();
+
+    $("#updatedtableEvolutie").html(tableTemplate({evolutii: evolutiiList }));
 }
 function adaugarecomm() {
     var templateText = $("#tableTemplateRecomm").html();

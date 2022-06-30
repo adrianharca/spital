@@ -4,10 +4,16 @@
     <script src="/js/general.js"></script>
     <table style="width:100%">
         <tr>
-            <td colspan="3" style="text-align:center">
+            <td colspan="3" style="text-align:left">
                 ARSURI
+                <table>
+                    {{#each arsuri}}
+                    <tr><td>{{this.position}},{{this.grad}}</td></tr>
+                    {{/each}}
+                </table>
             </td>
         </tr>
+
         <tr>
             <td style="width:26%"></td><td style="width:53%"></td><td style="width:20%">DATA <span class="dottedSpan"><input style="height:16px" type="text" value="{{fisa.data}}"/></span></td>
         </tr>

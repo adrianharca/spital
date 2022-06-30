@@ -73,6 +73,18 @@ router.get('/', (req, res) => {
                         hemoleucograma.tipulProbei = "SANGE";
                         //end init
                 }
+                else{
+                        buletin.analize.push(new Global.Analiza("ALT / TGP", "0", 0, 35, "U/L", "Spectrofotometrie - tip proba Ser"));
+                        buletin.analize.push(new Global.Analiza("AST / TGO", "0", 0, 35, "U/L", "Spectrofotometrie - tip proba Ser"));
+                        buletin.analize.push(new Global.Analiza("CALCIU TOTAL", "0", 8.8, 10.6, "mg/dL", "Spectrofotometrie - tip proba Ser"));
+                        buletin.analize.push(new Global.Analiza("CLOR", "0", 101, 109, "mmol/L", "Spectrofotometrie - tip proba Ser"));
+                        buletin.analize.push(new Global.Analiza("CREATININA", "0", 0.51, 0.95, "mg/dL", "Spectrofotometrie - tip proba Ser"));
+                        buletin.analize.push(new Global.Analiza("GLICEMIE", "0", 60, 100, "mg/dL", "Spectrofotometrie - tip proba Ser"));
+                        buletin.analize.push(new Global.Analiza("POTASIU", "0", 3.5, 5.1, "mmol/L", "Potentiometrie - tip proba Ser"));
+                        buletin.analize.push(new Global.Analiza("PROTEINE TOTALE", "0", 5.7, 8.0, "g/dL", "Spectrofotometrie - tip proba Ser"));
+                        buletin.analize.push(new Global.Analiza("SODIU", "0", 132, 142, "mmol/L", "Potentiometrie - tip proba Ser"));
+                        buletin.analize.push(new Global.Analiza("UREE", "0", 10.8, 38.4, "mg/dL", "Spectrofotometrie - tip proba Ser"));
+                }
         }
         etichete = {};
         res.render('buletin_analize_biochimie', {

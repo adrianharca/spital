@@ -43,6 +43,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 //Routes for interface:
+app.use("/epicriza_etapa", require('./routes/epicrizaetapa'));
 app.use("/foaie_observatie", require('./routes/foaieobservatie'));
 app.use("/buletin_analize_hemato", require('./routes/buletinanalizehemato'));
 app.use("/buletin_analize_coagulare", require('./routes/buletinanalizecoagulare'));

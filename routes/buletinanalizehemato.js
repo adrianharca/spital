@@ -70,6 +70,30 @@ router.get('/', (req, res) => {
 
                         //end init
                 }
+                else{
+                        buletin.analize.push(new Global.Analiza("WBC", "0", 4, 10, "10^9/L", ""));
+                        buletin.analize.push(new Global.Analiza("NEU#", "0", 2, 7, "10^9/L", ""));
+                        buletin.analize.push(new Global.Analiza("LYM#", "0", 0.80, 4, "10^9/L", ""));
+                        buletin.analize.push(new Global.Analiza("MON#", "0", 0.12, 1.20, "10^9/L", ""));
+                        buletin.analize.push(new Global.Analiza("EOS#", "0", 0.02, 0.5, "10^9/L", ""));
+                        buletin.analize.push(new Global.Analiza("BAS#", "0", 0, 0.10, "10^9/L", ""));
+                        buletin.analize.push(new Global.Analiza("NEU%", "0", 50, 70, "%", ""));
+                        buletin.analize.push(new Global.Analiza("LYM%", "0", 20, 40, "%", ""));
+                        buletin.analize.push(new Global.Analiza("MON%", "0", 3, 12, "%", ""));
+                        buletin.analize.push(new Global.Analiza("EOS%", "0", 0.5, 5, "%", ""));
+                        buletin.analize.push(new Global.Analiza("BAS%", "0", 0, 1, "%", ""));
+                        buletin.analize.push(new Global.Analiza("RBC", "0", 3.50, 5.00, "10^12/L", ""));
+                        buletin.analize.push(new Global.Analiza("HGB", "0", 11, 15, "g/dL", ""));
+                        buletin.analize.push(new Global.Analiza("HCT", "0", 37, 47, "%", ""));
+                        buletin.analize.push(new Global.Analiza("MCV", "0", 80, 100, "fL", ""));
+                        buletin.analize.push(new Global.Analiza("MCH", "0", 27, 34, "pg", ""));
+                        buletin.analize.push(new Global.Analiza("MCHC", "0", 32, 36, "g/dL", ""));
+                        buletin.analize.push(new Global.Analiza("RDW-CV", "0", 11, 16, "%", ""));
+                        buletin.analize.push(new Global.Analiza("RDW-SD", "0", 35, 56, "fL", ""));
+                        buletin.analize.push(new Global.Analiza("PLT", "0", 150, 400, "10^9/L", ""));
+                        buletin.analize.push(new Global.Analiza("MPV", "0", 6.5, 12, "fL", ""));
+                        buletin.analize.push(new Global.Analiza("PDW", "0", 15, 17, "", ""));
+                }
         }
         etichete = {};
         res.render('buletin_analize_hemato', {

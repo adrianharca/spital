@@ -10,6 +10,17 @@ function addToAudit(stringVar){
     var current = new Date();
     $("#audit").html($("#audit").html() + "<br/>" + stringVar + "( ora " + formatDate(current) + ")");
 }
+function checkIfNumberNoWarning(numberStr){
+
+    if (numberStr==null || numberStr===null || numberStr==undefined || numberStr=="") {
+        return false;
+    }
+    if (isNaN(numberStr)) {
+            return false;
+    }
+
+    return true;
+}
 function checkIfNumber(label, numberStr, minVar, maxVar){
     errorMessageNotNumber = label + " trebuie să fie număr.";
     if (numberStr==null || numberStr===null || numberStr==undefined || numberStr=="") {

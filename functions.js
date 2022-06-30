@@ -51,15 +51,32 @@ exports.createFilename = function (fileNameVar, folder){
     filename = path + "\\" + fileNameVar + ".jpg";
   return filename;
 }
-exports.EpicrizaDeEtapa = function (dataVar){
+exports.Arsura = function (numeArsuraVar){
+
+    this.numeArsura= numeArsuraVar;
+    return this;
+}
+exports.FisaTerapie = function (dataVar){
 
     this.data= dataVar;
+    return this;
+}
+exports.EpicrizaDeEtapa = function (dataVar, simptomeVar,activitateVar, ekgVar){
+    this.simptome = simptomeVar;
+    this.activitate = activitateVar;
+    this.ekg  = ekgVar;
+    this.data = dataVar;
     return this;
 }
 exports.Bio = function (dataVar){
 
     this.data= dataVar;
     return this;
+}
+exports.Evolutie = function(dataVar, evolutieVar, tratamentVar){
+    this.dataEvolutiei = dataVar;
+    this.evolutie = evolutieVar;
+    this.tratament = tratamentVar;
 }
 exports.Hemo = function (dataVar){
     this.data= dataVar;

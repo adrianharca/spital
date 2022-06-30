@@ -56,6 +56,12 @@ router.get('/', (req, res) => {
                         inr.tipulProbei = "Plasma";
                         //end init
                 }
+                else {
+                        buletin.analize.push(new Global.Analiza("APTT", "0", 24.4, 36.4, " s", "Metoda de lucru: coagulometrie - Tipul probei: plasma"));
+                        buletin.analize2.push(new Global.Analiza("PT", "0", 11.0, 14.0, " sec", ""));
+                        buletin.analize2.push(new Global.Analiza("AP", "0", 70, 140, " %", ""));
+                        buletin.analize2.push(new Global.Analiza("INR", "0", 0.8, 1.3, "", ""));
+                }
         }
         etichete = {};
         res.render('buletin_analize_coagulare', {
