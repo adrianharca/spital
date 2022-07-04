@@ -4,6 +4,11 @@ var Global = require("../functions.js");
 var Handlebars = require('handlebars');
 const url = require('url');
 
+Handlebars.registerHelper('checked', function(value, test) {
+    if (value == undefined) return '';
+    return value==test ? 'checked' : '';
+});
+
 router.get('/', (req, res) => {
         var epicriza_etapa= {};
         const query = url.parse(req.url, true).query;
@@ -12,9 +17,12 @@ router.get('/', (req, res) => {
         //init
         if (dataVar!=null) {
             epicriza_etapa.dataVar = "28 iunie 2022";
-            epicriza_etapa.simptome = "semne/simptome";
-            epicriza_etapa.activitate = "activitate";
-            epicriza_etapa.ekg = "ekg";
+            epicriza_etapa.staregenerala = "ok";
+            epicriza_etapa.intubat = "Da";
+            epicriza_etapa.tranzitreluat = "Da";
+            epicriza_etapa.cantitatediureza = "diureza";
+            epicriza_etapa.extremitati = "Nu";
+            epicriza_etapa.mucoase = "Da";
         }
         //end init
         res.render('epicriza_etapa', {epicriza_etapa});

@@ -96,7 +96,6 @@ exports.Arsura = function (positionVar) {
     this.position = positionVar;
     this.grad = null;
     this.localizare = null;
-    this.vechime = null;
     this.procent = null;
     return this;
 }
@@ -104,7 +103,6 @@ exports.Arsura = function (positionVar, gradVar, localizareVar, vechimeVar, proc
     this.position = positionVar;
     this.grad = gradVar;
     this.localizare = localizareVar;
-    this.vechime = vechimeVar;
     this.procent = procentVar;
     return this;
 }

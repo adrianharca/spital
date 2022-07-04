@@ -11,7 +11,6 @@ router.get('/', (req, res) => {
         const pacientName = query.pacient;
         etichete = {};
         foaie = {};
-        foaie.recomandari = [];
         foaie.evolutiiList = [];
         foaie.arsuri = [];
         foaie.anamneza = {};
@@ -40,12 +39,8 @@ router.get('/', (req, res) => {
                 foaie.detaliipacient.sectia = "CHIRURGIE PLASTICA SI REPARATORIE";
                 foaie.epicrizafinala = "some text";
                 foaie.cura = "cura";
-                foaie.recomandari.push(new Global.Recomandare("1", "sa stea locului"));
-                foaie.recomandari.push(new Global.Recomandare("2", "sa nu se mai joace cu focul"));
-                foaie.recomandari.push(new Global.Recomandare("3", "sa stea in casa"));
-                foaie.recomandari.push(new Global.Recomandare("4", "sa evite sa mai fumeze in benzinarie"));
-                foaie.arsuri.push(new Global.Arsura(1, "3", "erer", "5", "40"));
-                foaie.arsuri.push(new Global.Arsura(2, "2A", "ddddd", "2", "20"));
+                foaie.arsuri.push(new Global.Arsura(1, "3", "erer", "40"));
+                foaie.arsuri.push(new Global.Arsura(2, "2A", "ddddd", "20"));
                 foaie.caiResp = "";
                 foaie.anamneza.loc = "bucatarie";
                 foaie.anamneza.descriere = "uite asa a luat foc";
@@ -59,13 +54,11 @@ router.get('/', (req, res) => {
                 //end init
         }
         var arsuriJsonVar = JSON.stringify(foaie.arsuri);
-        var recomandariJsonVar = JSON.stringify(foaie.recomandari);
         var evolutiiJsonList=JSON.stringify(foaie.evolutiiList);
         res.render('foaie_observatie', {
                 etichete,
                 foaie,
                 arsuriJsonVar,
-                recomandariJsonVar,
                 evolutiiJsonList
         });
 

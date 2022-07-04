@@ -44,16 +44,141 @@
   <!-- Tab content -->
   <div id="diagnostic" class="tabcontent">
     <h3>Diagnostic</h3>
-    <p>Arsuri - etiologia</p>
+      <table width="100%">
+          <tr>
+              <td style="width:20%">
+                  Principal
+              </td>
+              <td>
+                  <input type="text" id="diagprincipal" style="width:100%" value="{{foaie.diagnostic.diagnosticprincipal}}"/>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  La internare
+              </td>
+              <td>
+                  <input type="text" id="diaginternare" style="width:100%" value="{{foaie.diagnostic.diagnosticlainternare}}"/>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  La 24 h
+              </td>
+              <td>
+                  <input type="text" id="diag24h" style="width:100%" value="{{foaie.diagnostic.diag24h}}"/>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  La 72 h
+              </td>
+              <td>
+                  <input type="text" id="diag72h" style="width:100%" value="{{foaie.diagnostic.diag72h}}"/>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Intoxicații asociate
+              </td>
+              <td>
+                  <input type="text" id="intoxicatii" style="width:100%" value="{{foaie.diagnostic.intoxicatii}}"/>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Alergii
+              </td>
+              <td>
+                  <input type="text" id="alergii" style="width:100%" value="{{foaie.diagnostic.alergii}}"/>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Grupa de sânge
+              </td>
+              <td>
+                  <select id="sange">
+                      <option value="o">0</option>
+                      <option value="a">A</option>
+                      <option value="b">B</option>
+                      <option value="ab">AB</option>
+                      <option value="n/a">N/A</option>
+                  </select>
+                  &nbsp;&nbsp;
+                  Rh
+                  <select id="rh">
+                      <option value="pozitiv">Pozitiv</option>
+                      <option value="negativ">Negativ</option>
+                      <option value="n/a">N/A</option>
+                  </select>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  Este însoțit de:
+              </td>
+              <td>
+                  <input type="text" id="insotit" style="width:100%" value="{{foaie.diagnostic.insotit}}"/>
+              </td>
+          </tr>
+      </table>
+
+    <h3>Arsuri - etiologia</h3>
     <div>
+        <table width="70%"><tr><td style="width:30%">Vechimea arsurilor: </td><td> <input type="text" id="vechimearsuri" style="width:10%" value="{{foaie.vechimearsuri}}"/> (ore)</td></tr></table>
         <div id="updatedtable"></div>
         <input type="button" id="adauga" onclick="adauga()" value="Adaugă arsură"/>&nbsp;&nbsp;<input type="button" id="sterge" onclick="sterge()" value="Șterge ultima arsură"/>
         <br/><br/>
-        <input type="checkbox" id="caiResp" name="caiResp" value="{{foaie.caiResp}}">Arsuri de căi respiratorii</input>
+        <input type="checkbox" id="caiResp" name="caiResp" value="{{foaie.caiResp}}">Arsuri de căi respiratorii superioare</input>
 
 
     </div><br/>
+      <table width="100%">
+      <tr>
+          <td style="width:20%">
+              Diagnostic la externare
+          </td>
+          <td colspan="3">
+              <input type="text" id="diagexternare" style="width:100%" value="{{foaie.diagnostic.diagnosticexternare}}"/>
+          </td>
+      </tr>
+          <tr>
+              <td style="width:20%">
+                  Data și ora decesului
+              </td>
+              <td>
+                  <input type="text" id="datadeces" style="width:100%" value="{{foaie.diagnostic.datadeces}}"/>
+              </td>
+          </tr>
+          <tr>
+              <td style="width:20%">
+                  Diagnostic în caz de deces:
+              </td>
+              <td></td>
 
+          </tr>
+          <tr>
+              <td>a) Cauza directă (imediată)</td><td>
+              <input type="text" id="cauzadirectadeces" style="width:100%" value="{{foaie.diagnostic.cauzadirectadeces}}"/>
+          </td>
+          </tr>
+          <tr>
+              <td>b) Cauza antecedentă</td><td>
+              <input type="text" id="cauzaantecedentadeces" style="width:100%" value="{{foaie.diagnostic.cauzaantecedentadeces}}"/>
+          </td>
+          </tr>
+          <tr>
+              <td>Stări morbide inițiale:</td><td>
+              <input type="text" id="starimorbideinitiale" style="width:100%" value="{{foaie.diagnostic.starimorbideinitiale}}"/>
+          </td>
+          </tr>
+          <tr>
+              <td>Alte stări morbide importante</td><td>
+              <input type="text" id="starimorbideimportante" style="width:100%" value="{{foaie.diagnostic.starimorbideimportante}}"/>
+          </td>
+          </tr>
+      </table>
   </div>
 
   <div id="anamneza" class="tabcontent">
@@ -63,16 +188,20 @@
     <input type="checkbox" id="prezentaparinti" name="prezentaparinti" value="{{foaie.anamneza.prezentaparinti}}">A fost în prezența părinților</input><br/><br/>
     Descrierea accidentului: <input style="width:100%" type="text" id="prezentaparinti" name="prezentaparinti" value="{{foaie.anamneza.descriere}}"/><br/><br/>
 
-    Primul ajutor
-    <table style="width:50%" border="1">
-      <tr><td>Locul</td><td>Tratamentul</td></tr>
-      <tr><td><input type="text" style="width:100%"  id="locajutor" name="locajutor" value="{{foaie.anamneza.locprimajutor}}"/></td>
-           <td><input type="text"  style="width:100%" id="tratamentajutor" name="tratamentajutor" value="{{foaie.anamneza.tratamentprimajutor}}"/></td></tr>
-    </table><br/><br/>
+    Primul ajutor<br/>
+      Locul <input type="text" style="width:100%"  id="locajutor" name="locajutor" value="{{foaie.anamneza.locprimajutor}}"/><br/><br/>
+      Tratamentul <input type="text"  style="width:100%" id="tratamentajutor" name="tratamentajutor" value="{{foaie.anamneza.tratamentprimajutor}}"/><br/>
+   <br/>
+      Alte unități intermediare<br/>
+      <input type="text"  style="width:100%" id="unitatiintermediare" name="unitatiintermediare" value="{{foaie.anamneza.unitatiintermediare}}"/>
+      <br/><br/>
+      Tratament primit anterior<br/>
+      <input type="text"  style="width:100%" id="tratamentanterior" name="tratamentanterior" value="{{foaie.anamneza.tratamentanterior}}"/>
+      <br/><br/>
     Mijloc de transport la spital <input type="text" id="transport" style="width:100%"  name="transport" value="{{foaie.anamneza.transport}}"/><br/><br/>
-    Timpul trecut de la producerea accidentului: <input type="text" style="width:100%"  id="timp" name="timp" value="{{foaie.anamneza.timp}}"/><br/><br/>
-    Starea pacientului în momentul sosirii la spital/UPU: <input type="text" style="width:100%"  id="starepacient" name="starepacient" value="{{foaie.anamneza.stare}}"/><br/><br/>
     Tratamentul primit în timpul transportului: <input type="text" id="tratasport" style="width:100%"  name="tratasport" value="{{foaie.anamneza.tratasport}}"/><br/><br/>
+      Starea pacientului în momentul sosirii la spital/UPU: <input type="text" style="width:100%"  id="starepacient" name="starepacient" value="{{foaie.anamneza.stare}}"/><br/><br/>
+      Timpul trecut de la producerea accidentului: <input type="text" style="width:100%"  id="timp" name="timp" value="{{foaie.anamneza.timp}}"/><br/><br/>
   </div>
 
   <div id="tratament" class="tabcontent">
@@ -81,9 +210,19 @@
 
       {{#each foaie.fiseterapie}}
       <a href="/fisa_terapie?pacient={{foaie.detaliipacient.nume}}&amp;data={{this.data}}" style="color:red" target="_blank">{{this.data}}</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugafisaterapie" onclick="adaugaFisaTerapie()" value="Adaugă fișă terapie"/> <br/>
-      {{/each}}
+      {{/each}}<br/>
+      <table><tr><td>Cantitatea de lichide pe 24 de ore </td><td><input type="text" id="cantitatelichide" style="width:100%"  name="cantitatelichide" value="{{foaie.anamneza.cantitatelichide}}"/></td></tr>
+          <tr><td></td><td>Formule pentru 0-6 ani: Galveston</td></tr>
+          <tr><td></td><td> Formule pentru 7-18 ani: Parkland</td></tr>
+          <tr><td>Cantitate pentru primele</td><td></td></tr>
+          <tr><td style="text-align:right">8 h</td><td><input type="text" id="cantlichide8h" style="width:100%"  name="cantlichide8h" value="{{foaie.anamneza.cantlichide8h}}"/></td></tr>
+          <tr><td style="text-align:right">16 h</td><td><input type="text" id="cantlichide16h" style="width:100%"  name="cantlichide16h" value="{{foaie.anamneza.cantlichide16h}}"/></td></tr>
+          <tr><td style="text-align:right">24 h</td><td><input type="text" id="cantlichide24h" style="width:100%"  name="cantlichide24h" value="{{foaie.anamneza.cantlichide24h}}"/></td></tr>
+      </table>
+      <br/><br/>
     <h4>b) Local</h4>
     <h4>Dinamica plăgilor</h4>
+      <input type="text" id="dinamicaplagi" style="width:100%"  name="dinamicaplagi" value="{{foaie.anamneza.dinamicaplagi}}"/><br/><br/>
       <input style="font-size:10px;height:17px" type="button" id="adaugafoto" onclick="adaugafoto()" value="Adaugă fotografie"/>
       <h4>Evoluție și tratament</h4>
       <div id="updatedtableEvolutie"></div>
@@ -118,15 +257,32 @@
   </div>
   <div id="recom" class="tabcontent">
     <h3>Recomandări</h3>
-    <div id="updatedtablerecomm"></div>
-    <input type="button" id="adaugarecomm" onclick="adaugarecomm()" value="Adaugă recomandare"/>&nbsp;&nbsp;<input type="button" id="sterge" onclick="stergerecomm()" value="Șterge ultima recomandare"/>
-  </div>
+      Medicație <input type="text" id="medicatie" style="width:100%"  name="medicatie" value="{{foaie.medicatie}}"/>
+      Kinetoterapie <input type="text" id="kineto" style="width:100%"  name="kineto" value="{{foaie.kineto}}"/>
+      Alte comentarii
+      <input type="text" id="recomments" style="width:100%"  name="recomments" value="{{foaie.comments}}"/>
+      </div>
   <div id="urm" class="tabcontent">
     <h3>Urmărire</h3>
     <p>Cura cicatricilor</p>
     <textarea id="cura" name="cura" rows="4" cols="50">
       {{foaie.cura}}
     </textarea>
+      <br/> <br/>
+      <table width="100%">
+          <tr><td style="font-weight:bold;width:5%">Luna</td><td style="font-weight:bold">Descriere</td><td style="font-weight:bold">Analize laborator</td><td style="font-weight:bold; width:15%">Rx</td><td style="font-weight:bold">Spital</td><td style="font-weight:bold">Online</td></tr>
+          <tr><td>1</td><td><input type="text" id="descriere1"  style="width:90%" name="descriere1" value="{{foaie.descriere1}}"/></td><td><input type="text" id="analize1"  style="width:90%" name="analize1" value="{{foaie.analize1}}"/></td><td><input style="font-size:10px;height:17px" type="button" id="adaugafoto1" onclick="adaugafoto(1)" value="+"/></td><td><input type="checkbox" id="spital1" name="spital1" value="{{foaie.spital1}}"/></td><td><input type="checkbox" id="online1" name="online1" value="{{foaie.online1}}"/></td></tr>
+          <tr><td>2</td><td><input type="text" id="descriere2"  style="width:90%" name="descriere2" value="{{foaie.descriere2}}"/></td><td><input type="text" id="analize2"  style="width:90%" name="analize2" value="{{foaie.analize2}}"/></td><td><input style="font-size:10px;height:17px" type="button" id="adaugafoto2" onclick="adaugafoto(2)" value="+"/></td><td><input type="checkbox" id="spital2" name="spital2" value="{{foaie.spital2}}"/></td><td><input type="checkbox" id="online2" name="online2" value="{{foaie.online2}}"/></td></tr>
+          <tr><td>3</td><td><input type="text" id="descriere3"  style="width:90%" name="descriere3" value="{{foaie.descriere3}}"/></td><td><input type="text" id="analize3"  style="width:90%" name="analize3" value="{{foaie.analize3}}"/></td><td><input style="font-size:10px;height:17px" type="button" id="adaugafoto3" onclick="adaugafoto(3)" value="+"/></td><td><input type="checkbox" id="spital3" name="spital3" value="{{foaie.spital3}}"/></td><td><input type="checkbox" id="online3" name="online3" value="{{foaie.online3}}"/></td></tr>
+          <tr><td>4</td><td><input type="text" id="descriere4"  style="width:90%" name="descriere4" value="{{foaie.descriere4}}"/></td><td><input type="text" id="analize4"  style="width:90%" name="analize4" value="{{foaie.analize4}}"/></td><td><input style="font-size:10px;height:17px" type="button" id="adaugafoto4" onclick="adaugafoto(4)" value="+"/></td><td><input type="checkbox" id="spital4" name="spital4" value="{{foaie.spital4}}"/></td><td><input type="checkbox" id="online4" name="online4" value="{{foaie.online4}}"/></td></tr>
+          <tr><td>5</td><td><input type="text" id="descriere5" style="width:90%"  name="descriere5" value="{{foaie.descriere5}}"/></td><td><input type="text" id="analize5"  style="width:90%" name="analize5" value="{{foaie.analize5}}"/></td><td><input style="font-size:10px;height:17px" type="button" id="adaugafoto5" onclick="adaugafoto(5)" value="+"/></td><td><input type="checkbox" id="spital5" name="spital5" value="{{foaie.spital5}}"/></td><td><input type="checkbox" id="online5" name="online5" value="{{foaie.online5}}"/></td></tr>
+          <tr><td>6-9</td><td><input type="text" id="descriere69"  style="width:90%" name="descriere69" value="{{foaie.descriere69}}"/></td><td><input type="text" id="analize69"  style="width:90%" name="analize69" value="{{foaie.analize69}}"/></td><td><input style="font-size:10px;height:17px" type="button" id="adaugafoto69" onclick="adaugafoto(69)" value="+"/></td><td><input type="checkbox" id="spital69" name="spital69" value="{{foaie.spital69}}"/></td><td><input type="checkbox" id="online69" name="online69" value="{{foaie.online69}}"/></td></tr>
+          <tr><td>9-12</td><td><input type="text" id="descriere912"  style="width:90%" name="descriere912" value="{{foaie.descriere912}}"/></td><td><input type="text" id="analize912"  style="width:90%" name="analize912" value="{{foaie.analize912}}"/></td><td><input style="font-size:10px;height:17px" type="button" id="adaugafoto912" onclick="adaugafoto(912)" value="+"/></td><td><input type="checkbox" id="spital912" name="spital912" value="{{foaie.spital912}}"/></td><td><input type="checkbox" id="online912" name="online912" value="{{foaie.online912}}"/></td></tr>
+          <tr><td>12-18</td><td><input type="text" id="descriere1218" style="width:90%"  name="descriere1218" value="{{foaie.descriere1218}}"/></td><td><input type="text" id="analize1218"  style="width:90%" name="analize1218" value="{{foaie.analize1218}}"/></td><td><input style="font-size:10px;height:17px" type="button" id="adaugafoto1218" onclick="adaugafoto(1218)" value="+"/></td><td><input type="checkbox" id="spital1218" name="spital1218" value="{{foaie.spital1218}}"/></td><td><input type="checkbox" id="online1218" name="online1218" value="{{foaie.online1218}}"/></td></tr>
+          <tr><td>18-24</td><td><input type="text" id="descriere1824"  style="width:90%" name="descriere1824" value="{{foaie.descriere1824}}"/></td><td><input type="text" id="analize1824"  style="width:90%" name="analize1824" value="{{foaie.analize1824}}"/></td><td><input style="font-size:10px;height:17px" type="button" id="adaugafoto1824" onclick="adaugafoto(1824)" value="+"/></td><td><input type="checkbox" id="spital1824" name="spital1824" value="{{foaie.spital1824}}"/></td><td><input type="checkbox" id="online1824" name="online1824" value="{{foaie.online1824}}"/></td></tr>
+          <tr><td>24-30</td><td><input type="text" id="descriere2430"  style="width:90%" name="descriere2430" value="{{foaie.descriere2430}}"/></td><td><input type="text" id="analize2430"  style="width:90%" name="analize2430" value="{{foaie.analize2430}}"/></td><td><input style="font-size:10px;height:17px" type="button" id="adaugafoto2430" onclick="adaugafoto(2430)" value="+"/></td><td><input type="checkbox" id="spital2430" name="spital2430" value="{{foaie.spital2430}}"/></td><td><input type="checkbox" id="online2430" name="online2430" value="{{foaie.online2430}}"/></td></tr>
+          <tr><td>30-36</td><td><input type="text" id="descriere3036" style="width:90%"  name="descriere3036" value="{{foaie.descriere3036}}"/></td><td><input type="text" id="analize3036"  style="width:90%" name="analize3036" value="{{foaie.analize3036}}"/></td><td><input style="font-size:10px;height:17px" type="button" id="adaugafoto3036" onclick="adaugafoto(3036)" value="+"/></td><td><input type="checkbox" id="spital3036" name="spital3036" value="{{foaie.spital3036}}"/></td><td><input type="checkbox" id="online3036" name="online3036" value="{{foaie.online3036}}"/></td></tr>
+      </table>
   </div>
     <br/>
     <input style="font-size:16px;height:25px" type="button" id="salveaza" onclick="salveaza()" value="Salvare foaie"/>
@@ -144,7 +300,6 @@
     </select>&nbsp;&nbsp;
     Localizare
     <input type="text" id="localizare__this.position++" value="__this.localizare++"/>&nbsp;&nbsp;
-    Veche de  <input type="text" id="vechime__this.position++" value="__this.vechime++"/>&nbsp;(ore)&nbsp;&nbsp;
     Procent segment <input type="text" id="procent__this.position++" value="__this.procent++"/>&nbsp;%<br/><br/>
 
     __/each++
@@ -158,14 +313,12 @@
   </script>
   <script type="text/x-handlebars-template" id="tableTemplateEvolutie">
         <table width="100%">
-            <tr><td style="width:10%">Data</td><td style="width:40%">Evoluție</td><td style="width:40%">Tratament</td></tr>
-
-        __#each evolutii++
+            __#each evolutii++
             <tr>
-                <td><input type="text" style="width:90%" id="recomm__this.dataEvolutiei++" value="__this.dataEvolutiei++"/></td><td> <input type="text" style="width:90%" id="recomm__this.dataEvolutiei++" value="__this.evolutie++"/></td>
-                <td> <input type="text" style="width:90%" id="recomm__this.dataEvolutiei++" value="__this.tratament++"/></td>
-
-            </tr>
+                <td style="width:10%;font-weight:bold">Data</td><td> <input type="text" style="width:90%" id="recomm__this.dataEvolutiei++" value="__this.dataEvolutiei++"/></td></tr>
+            <tr><td>Evoluție</td><td><input type="text" style="width:90%" id="recomm__this.dataEvolutiei++" value="__this.evolutie++"/></td></tr>
+            <tr><td>Tratament</td><td><input type="text" style="width:90%" id="recomm__this.dataEvolutiei++" value="__this.tratament++"/></td></tr>
+            <tr><td>&nbsp;</td></tr>
         __/each++
         </table>
   </script>
@@ -177,6 +330,10 @@
   function adaugaFoto()
   {
 
+  }
+  function adaugafoto(varS)
+  {
+alert(varS)
   }
   function adaugaEpicriza(){
     window.open("/epicriza_etapa?pacient={{foaie.detaliipacient.nume}}", '_blank').focus();
@@ -208,9 +365,7 @@
   templateTextRecomm = $("#tableTemplateRecomm").html().replaceAll("_","{").replaceAll("+","}");
 
   var tableTemplateRecomm = Handlebars.compile(templateTextRecomm);
-  var recomandari = JSON.parse('{{{recomandariJsonVar}}}');
 
-  $("#updatedtablerecomm").html(tableTemplateRecomm({recomm: recomandari }));
     var templateTextEvolutie = $("#tableTemplateEvolutie").html();
 
     templateTextEvolutie = $("#tableTemplateEvolutie").html().replaceAll("_","{").replaceAll("+","}");
@@ -258,26 +413,7 @@ function stergereevolutie(){
 
     $("#updatedtableEvolutie").html(tableTemplate({evolutii: evolutiiList }));
 }
-function adaugarecomm() {
-    var templateText = $("#tableTemplateRecomm").html();
 
-    templateText = $("#tableTemplateRecomm").html().replaceAll("_","{").replaceAll("+","}");
-
-    var tableTemplate = Handlebars.compile(templateText);
-    recomandari.push({position: recomandari.length+1,value:""});
-
-    $("#updatedtablerecomm").html(tableTemplate({recomm: recomandari }));
-}
-function stergerecomm(){
-  var templateText = $("#tableTemplateRecomm").html();
-
-    templateText = $("#tableTemplateRecomm").html().replaceAll("_","{").replaceAll("+","}");
-
-    var tableTemplate = Handlebars.compile(templateText);
-    recomandari.pop();
-
-    $("#updatedtablerecomm").html(tableTemplate({recomm: recomandari }));
-}
 function adauga(){
     var templateText = $("#tableTemplate").html();
 
