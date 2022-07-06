@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
         const pacientName = query.pacient;
         //init
         if (dataVar!=null) {
-            epicriza_etapa.dataVar = "28 iunie 2022";
+            epicriza_etapa.dataV = "28 iunie 2022";
             epicriza_etapa.staregenerala = "ok";
             epicriza_etapa.intubat = "Da";
             epicriza_etapa.tranzitreluat = "Da";

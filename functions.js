@@ -57,35 +57,54 @@ exports.Arsura = function (numeArsuraVar){
     return this;
 }
 exports.FisaTerapie = function (dataVar){
-
     this.data= dataVar;
     return this;
 }
-exports.EpicrizaDeEtapa = function (dataVar, simptomeVar,activitateVar, ekgVar){
-    this.simptome = simptomeVar;
-    this.activitate = activitateVar;
-    this.ekg  = ekgVar;
-    this.data = dataVar;
+
+exports.EpicrizaDeEtapa = function (dataVar){
+    this.staregenerala = null;
+    this.intubat = null;
+    this.tranzitreluat = null;
+    this.cantitatediureza = null;
+    this.extremitati = null;
+    this.mucoase = null;
+    this.dataV = dataVar;
     return this;
 }
+
+exports.EpicrizaDeEtapa = function (dataVar, stareGeneralaVar, intubatVar,tranzitreluatVar, cantitatediurezaVar, extremitatiVar, mucoaseVar){
+    this.staregenerala = stareGeneralaVar;
+    this.intubat = intubatVar;
+    this.tranzitreluat = tranzitreluatVar;
+    this.cantitatediureza = cantitatediurezaVar;
+    this.extremitati = extremitatiVar;
+    this.mucoase = mucoaseVar;
+    this.dataV = dataVar;
+    return this;
+}
+
 exports.Bio = function (dataVar){
-
     this.data= dataVar;
     return this;
 }
-exports.Evolutie = function(dataVar, evolutieVar, tratamentVar){
+
+exports.Evolutie = function(positionVar, dataVar, evolutieVar, tratamentVar){
+    this.position = positionVar;
     this.dataEvolutiei = dataVar;
     this.evolutie = evolutieVar;
     this.tratament = tratamentVar;
 }
+
 exports.Hemo = function (dataVar){
     this.data= dataVar;
     return this;
 }
+
 exports.Coagulare = function (dataVar){
     this.data= dataVar;
     return this;
 }
+
 exports.Recomandare = function (positionVar, recomandareVar) {
     this.position = positionVar;
     this.value = recomandareVar;
@@ -99,13 +118,15 @@ exports.Arsura = function (positionVar) {
     this.procent = null;
     return this;
 }
-exports.Arsura = function (positionVar, gradVar, localizareVar, vechimeVar, procentVar) {
+
+exports.Arsura = function (positionVar, gradVar, localizareVar, procentVar) {
     this.position = positionVar;
     this.grad = gradVar;
     this.localizare = localizareVar;
     this.procent = procentVar;
     return this;
 }
+
 exports.Analiza = function (tipAnalizaVar, rezultatVar, minLimitVar, maxLimitVar,intervalDeReferintaVar,comentariuVar) {
     this.tipAnaliza = tipAnalizaVar;
     this.rezultat = rezultatVar;
@@ -115,6 +136,7 @@ exports.Analiza = function (tipAnalizaVar, rezultatVar, minLimitVar, maxLimitVar
     this.comentariu = comentariuVar;
     return this;
 };
+
 exports.createFile = function (imageBody, fileNameVar, folder) {
 
   //var mainPath = __dirname + "\\.." + "\\public\\img\\";

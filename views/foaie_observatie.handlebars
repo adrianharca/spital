@@ -1,15 +1,16 @@
 <!--suppress ALL -->
 <section id="foaie" class="container" style="width:100% !important">
+
   <h1>Foaie de observație clinică generală</h1>
   <br/>
   <div id="detPacient" class=" col-md-9 col-lg-9 ">
     <h3>Pacient</h3>
     <table class="table table-user-information">
       <tr>
-        <td style="font-weight:bold">Nume: </td><td>{{foaie.detaliipacient.nume}}</td>
+        <td style="font-weight:bold">Nume: </td><td id="numepacient">{{foaie.detaliipacient.nume}}</td>
       </tr>
       <tr>
-        <td style="font-weight:bold">Vârsta: </td><td> {{foaie.detaliipacient.varsta}}</td>
+        <td style="font-weight:bold">Vârsta: </td><td id="varstapacient"> {{foaie.detaliipacient.varsta}}</td>
       </tr>
       <tr>
         <td style="font-weight:bold">Sex: </td><td>{{foaie.detaliipacient.sex}}</td>
@@ -40,8 +41,6 @@
     <button class="tablinks" onclick="openTab(event, 'urm')">7. Urmărire</button>
   </div>
 
-
-  <!-- Tab content -->
   <div id="diagnostic" class="tabcontent">
     <h3>Diagnostic</h3>
       <table width="100%">
@@ -244,7 +243,7 @@
   <div id="epetapa" class="tabcontent">
     <h3>Epicriza de etapă</h3>
       {{#each foaie.epicrizedeetapa}}
-      <a href="/epicriza_etapa?pacient={{foaie.detaliipacient.nume}}&amp;data={{this.data}}" style="color:red" target="_blank">{{this.data}}</a>&nbsp;&nbsp;
+      <a href="/epicriza_etapa?pacient={{foaie.detaliipacient.nume}}&amp;data={{this.dataV}}" style="color:red" target="_blank">{{this.dataV}}</a>&nbsp;&nbsp;
       <br/>
       {{/each}}<br/>
       <input type="button" id="adaugaepicriza" onclick="adaugaEpicriza()" value="Adaugă epicriză"/>
@@ -285,11 +284,13 @@
       </table>
   </div>
     <br/>
-    <input style="font-size:16px;height:25px" type="button" id="salveaza" onclick="salveaza()" value="Salvare foaie"/>
+
+    <button onclick="save()" id="salveaza" style="font-size:16px;height:25px">Salvare foaie</button>
+
   <script type="text/x-handlebars-template" id="tableTemplate">
     __#each arsVV++
     Gradul:
-    <select id="gradSelect" name="gradSelect" style="width:100px" >
+    <select id="gradSelect__this.position++" name="gradSelect__this.position++" style="width:100px" >
       <option value="__this.grad++" hidden="hidden" selected="selected">__this.grad++</option>
       <option value="1">1</option>
       <option value="2A">2A</option>
@@ -315,9 +316,9 @@
         <table width="100%">
             __#each evolutii++
             <tr>
-                <td style="width:10%;font-weight:bold">Data</td><td> <input type="text" style="width:90%" id="recomm__this.dataEvolutiei++" value="__this.dataEvolutiei++"/></td></tr>
-            <tr><td>Evoluție</td><td><input type="text" style="width:90%" id="recomm__this.dataEvolutiei++" value="__this.evolutie++"/></td></tr>
-            <tr><td>Tratament</td><td><input type="text" style="width:90%" id="recomm__this.dataEvolutiei++" value="__this.tratament++"/></td></tr>
+                <td style="width:10%;font-weight:bold">Data</td><td> <input type="text" style="width:90%" id="evoldata__this.position++" value="__this.dataEvolutiei++"/></td></tr>
+            <tr><td>Evoluție</td><td><input type="text" style="width:90%" id="evol__this.position++" value="__this.evolutie++"/></td></tr>
+            <tr><td>Tratament</td><td><input type="text" style="width:90%" id="trat__this.position++" value="__this.tratament++"/></td></tr>
             <tr><td>&nbsp;</td></tr>
         __/each++
         </table>
@@ -327,13 +328,21 @@
   <script src="/js/utils.js"></script>
   <script src="/js/general.js"></script>
   <script>
+  function save() {
+    // Run the test and do something with the results...
+    fetch("/foaie_observatie",{
+  method: "POST"}).then (res => {
+    alert("Salvat!");
+    console.log("Request complete! response:", res);
+});
+  }
   function adaugaFoto()
   {
 
   }
   function adaugafoto(varS)
   {
-alert(varS)
+    alert(varS);
   }
   function adaugaEpicriza(){
     window.open("/epicriza_etapa?pacient={{foaie.detaliipacient.nume}}", '_blank').focus();
@@ -399,7 +408,25 @@ function adaugareevolutie() {
     templateText = $("#tableTemplateEvolutie").html().replaceAll("_","{").replaceAll("+","}");
 
     var tableTemplate = Handlebars.compile(templateText);
-    evolutiiList.push({position: evolutiiList.length+1,value:""});
+    var lengthEvolutii = evolutiiList.length;
+
+
+     var newEvolutiiList = [];
+    for (var index = 0; index < lengthEvolutii; index++) {
+       var newEvolutie = {};
+       newEvolutie.position = index;
+       newEvolutie.dataEvolutiei = document.getElementById("evoldata"+index).value;
+
+       newEvolutie.evolutie = document.getElementById("evol"+index).value;
+       newEvolutie.tratament = document.getElementById("trat"+index).value;
+       newEvolutiiList.push(newEvolutie);
+    }
+    evolutiiList = [];
+    for (var i = 0; i < newEvolutiiList.length;i++){
+        evolutiiList.push(newEvolutiiList[i]);
+    }
+
+    evolutiiList.push({position: evolutiiList.length,value:""});
 
     $("#updatedtableEvolutie").html(tableTemplate({evolutii: evolutiiList }));
 }
@@ -420,11 +447,21 @@ function adauga(){
     templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");
 
     var tableTemplate = Handlebars.compile(templateText);
-    var newArsura = {};
+    var lengthArsuri = arsuri.length;
+    arsuri = [];
+
+    for (var index = 0; index < lengthArsuri; index++) {
+        var newArsura = {};
+        newArsura.position = index;
+        newArsura.grad =document.getElementById("gradSelect"+index).value;
+        newArsura.localizare =document.getElementById("localizare"+index).value;
+        newArsura.procent=document.getElementById("procent"+index).value;
+        arsuri.push(newArsura);
+    }
+     var newArsura = {};
     newArsura.position = arsuri.length;
     newArsura.grad =null;
     newArsura.localizare =null;
-    newArsura.vechime=null;
     newArsura.procent=null;
     arsuri.push(newArsura);
 

@@ -4,6 +4,12 @@ var Global = require("../functions.js");
 var Handlebars = require('handlebars');
 const url = require('url');
 
+router.post('/',function(req,res){
+   var username = req.body;
+   var htmlData = 'Hello:' + JSON.stringify(username);
+   res.send(htmlData);
+});
+
 router.get('/', (req, res) => {
 
         const query = url.parse(req.url, true).query;
@@ -23,8 +29,8 @@ router.get('/', (req, res) => {
         //init, aici sa se populeze cu detaliile legate de id-ul pacientului
 
         if (pacientName!=null) {
-                foaie.evolutiiList.push(new Global.Evolutie("18 iunie","blablabla","sa puna sare pe rana"));
-                foaie.evolutiiList.push(new Global.Evolutie("19 iunie","arsura in cot","Miere"));
+                foaie.evolutiiList.push(new Global.Evolutie(0,"18 iunie","blablabla","sa puna sare pe rana"));
+                foaie.evolutiiList.push(new Global.Evolutie(1,"19 iunie","arsura in cot","Miere"));
                 foaie.epicrizedeetapa.push(Global.EpicrizaDeEtapa("28/29 iunie 2022"));
                 foaie.fiseterapie.push(Global.FisaTerapie("28/29 iunie 2022"));
                 foaie.buletinebio.push(Global.Bio("14 Iunie"));
@@ -39,6 +45,7 @@ router.get('/', (req, res) => {
                 foaie.detaliipacient.sectia = "CHIRURGIE PLASTICA SI REPARATORIE";
                 foaie.epicrizafinala = "some text";
                 foaie.cura = "cura";
+                foaie.arsuri.push(new Global.Arsura(0, "2A", "iiii", "10"));
                 foaie.arsuri.push(new Global.Arsura(1, "3", "erer", "40"));
                 foaie.arsuri.push(new Global.Arsura(2, "2A", "ddddd", "20"));
                 foaie.caiResp = "";
