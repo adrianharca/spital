@@ -83,6 +83,15 @@ exports.EpicrizaDeEtapa = function (dataVar, stareGeneralaVar, intubatVar,tranzi
     return this;
 }
 
+
+function doUpload(fileElementId) {
+    let data = document.getElementById(fileElementId).files[0];
+    let entry = document.getElementById(fileElementId).files[0];
+    fetch('uploads/' + encodeURIComponent(entry.name), {method:'PUT',body:data});
+    alert('your file has been uploaded');
+    location.reload();
+};
+
 exports.Bio = function (dataVar){
     this.data= dataVar;
     return this;
