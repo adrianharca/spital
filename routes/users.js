@@ -132,19 +132,22 @@ else {
   }    
   });
 // // Display add user form
-router.get('/adduser', (req, res) => res.render('adduser'));
+router.get('/adduser', (req, res) => {
+
+  cetatenie = "Română";
+res.render('adduser',{cetatenie});
+});
 
 // Add a gig
 router.post('/adduser', (req, res) => {
   let { firstname, lastname, email } = req.body;
   let errors = [];
 
-
   // Check for errors
   if (errors.length > 0) {
     res.render('adduser', {
       errors,
-      firstname, lastname, email
+      firstname, lastname, email,cetatenie
     });
   } else {
 
