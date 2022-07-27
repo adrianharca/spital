@@ -2,19 +2,21 @@
 <section id="foaie" class="container" style="width:100% !important">
   <h1>Epicriza de etapă  <input type="text" id="dataEpicriza" style="width:10%"  name="dataEpicriza" value="{{epicriza_etapa.dataVar}}"/></h1>
   <br/>
-  <table width="100%">
-    <tr><td style="width:20%">Stare generală</td><td><input type="text" id="stare" style="width:100%"  name="stare" value="{{epicriza_etapa.staregenerala}}"/></td></tr>
+  <div id="#epiEtapa" class="tabcontent" style="display: block;">
+    <table width="100%">
+      <tr><td style="width:20%">Stare generală</td><td><input type="text" id="stare" style="width:100%"  name="stare" value="{{epicriza_etapa.staregenerala}}"/></td></tr>
 
-    <tr>
-      <td style="width:20%">Intubat?</td><td><input  type="radio"  id="intubatDa" name="intubat" value="Da" {{{checked epicriza_etapa.intubat 'Da'}}} />Da<input  type="radio" value="Nu" id="intubatNu" name="intubat" {{{checked epicriza_etapa.intubat 'Nu'}}}/>Nu</td>
-     </tr>
-    <tr><td style="width:20%">Tranzit reluat?</td><td><input  type="radio"  id="tranzitreluatDa" name="tranzitreluat" value="Da" {{{checked epicriza_etapa.tranzitreluat 'Da'}}}/>Da<input  type="radio"  id="tranzitreluatNu" name="tranzitreluat" value="Nu" {{{checked epicriza_etapa.tranzitreluat 'Nu'}}}/>Nu</td></tr>
-    <tr><td style="width:20%">Cantitate diureză</td><td><input type="text" id="diureza" style="width:100%"  name="diureza" value="{{epicriza_etapa.cantitatediureza}}"/></td></tr>
-    <tr><td style="width:20%">Extremități calde?</td><td><input  type="radio"  id="extremitatiDa" name="extremitati" value="Da" {{{checked epicriza_etapa.extremitati 'Da'}}}/>Da<input  type="radio"  id="extremitatiNu" name="extremitati" value="Nu" {{{checked epicriza_etapa.extremitati 'Nu'}}}/>Nu</td></tr>
-    <tr><td style="width:20%">Mucoase umede?</td><td><input  type="radio"  id="mucoaseDa" name="mucoase" value="Da"  {{{checked epicriza_etapa.mucoase 'Da'}}}/>Da<input  type="radio"  id="mucoaseNu" name="mucoase" value="Nu"  {{{checked epicriza_etapa.mucoase 'Nu'}}}/>Nu</td></tr>
-  </table>
-  <br/>
-  <input style="font-size:12px;height:20px" type="button" id="salveaza" onclick="salveaza()" value="Salvare"/>
+      <tr>
+        <td style="width:20%">Intubat?</td><td><input  type="radio"  id="intubatDa" name="intubat" value="Da" {{{checked epicriza_etapa.intubat 'Da'}}} />Da<input  type="radio" value="Nu" id="intubatNu" name="intubat" {{{checked epicriza_etapa.intubat 'Nu'}}}/>Nu</td>
+      </tr>
+      <tr><td style="width:20%">Tranzit reluat?</td><td><input  type="radio"  id="tranzitreluatDa" name="tranzitreluat" value="Da" {{{checked epicriza_etapa.tranzitreluat 'Da'}}}/>Da<input  type="radio"  id="tranzitreluatNu" name="tranzitreluat" value="Nu" {{{checked epicriza_etapa.tranzitreluat 'Nu'}}}/>Nu</td></tr>
+      <tr><td style="width:20%">Cantitate diureză</td><td><input type="text" id="diureza" style="width:100%"  name="diureza" value="{{epicriza_etapa.cantitatediureza}}"/></td></tr>
+      <tr><td style="width:20%">Extremități calde?</td><td><input  type="radio"  id="extremitatiDa" name="extremitati" value="Da" {{{checked epicriza_etapa.extremitati 'Da'}}}/>Da<input  type="radio"  id="extremitatiNu" name="extremitati" value="Nu" {{{checked epicriza_etapa.extremitati 'Nu'}}}/>Nu</td></tr>
+      <tr><td style="width:20%">Mucoase umede?</td><td><input  type="radio"  id="mucoaseDa" name="mucoase" value="Da"  {{{checked epicriza_etapa.mucoase 'Da'}}}/>Da<input  type="radio"  id="mucoaseNu" name="mucoase" value="Nu"  {{{checked epicriza_etapa.mucoase 'Nu'}}}/>Nu</td></tr>
+    </table>
+    <br/>
+    <input style="font-size:12px;height:20px" type="button" id="salveaza" onclick="salveaza()" value="Salvare"/>
+  </div>
   <script src="/js/jquery-3.6.0.min.js"></script>
 
   <script src="/js/handlebars.min.js"></script>
