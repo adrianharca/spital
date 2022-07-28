@@ -418,6 +418,18 @@ input[type='button']:active{
   text-decoration-color:#333;
 }
 
+body, select, input, textarea {
+    background-color:#FFFFE0;
+}
+
+button {
+    background-color:#FFFF54;
+}
+
+
+input[type="button"] {
+    background-color:#FFFFE0;
+}
 
 h4{
   text-decoration:underline;
@@ -430,5 +442,43 @@ h4{
   border-width: 2px;
 }
 
+.inputfile {
+	width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    display: inline-block;
+}
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    height: 15px;
+    width: 15px;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    border: 1px solid #34495E;
+    border-radius: 4px;
+    outline: none;
+    transition-duration: 0.3s;
+    background-color: #FFFFE0;
+    cursor: pointer;
+}
+input[type="checkbox"]:checked {
+    border: 1px solid #41B883;
+    background-color: #34495E;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    cursor: pointer;
+}
 
 
