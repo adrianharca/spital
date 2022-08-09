@@ -234,6 +234,7 @@ label {
   font-size: 18px;
   width: 100%;
   margin-bottom: 1.2rem;
+  border-radius: 10px;
 }
 
 /* Tablets */
@@ -356,7 +357,7 @@ div .tab{
   background-color: #00ffe1 ;
 }
 
-.tabcontent, #epiEtapa, #updatedtable, #addDayDiv{
+.tabcontent, #epiEtapa, #updatedtable, #addDayDiv, #buletin table, #adduser .form-wrap, #add .form-wrap{
  background-color: #96f2e7;
  border-bottom-left-radius: 15px;
  border-bottom-right-radius: 15px;
@@ -369,9 +370,100 @@ div .tab{
 }
 
 .tabcontent table tbody tr td{
-  border-bottom: 2px solid #333;
-
+  border-bottom:  #333;
 }
+
+/*buletin analize-start*/
+
+#buletin div[style="text-align:center"], #buletin div[style="text-align:right"]{
+  text-decoration:underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color:#333;
+}
+
+#buletin div[style="text-align:center"] input{
+  border-radius: 10px;
+  border-width: 1px;
+}
+
+#buletin table tbody tr td[style="background-color: coral;"]{
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: #333;
+  border-style: solid;
+}
+
+#buletin table[style="width:33%"]{
+  border-width: 1px;
+  border-color: #333;
+  border-style: solid;
+}
+
+#buletin table tbody tr td[style="border:1px solid black;text-align:center"]{
+  background-color:#70e0d3;
+}
+
+/*buletin analize-finish*/
+
+/*adauga pacient-start*/
+
+#adduser .form-wrap{
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: #333;
+  border-style: solid;
+}
+
+#adduser .form-wrap span, #adduser .form-wrap h1{
+  color: #333;
+}
+
+#adduser .form-wrap input[type="button"]{
+  color: #333;
+}
+
+#adduser .form-wrap label{
+  text-decoration:underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color:#333;
+  color: red;
+}
+
+#adduser .form-wrap input[type="submit"]{
+  border-radius: 10px;
+}
+
+/*adauga pacient-finish*/
+
+/*add circle-start*/
+
+#add .form-wrap{
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: #333;
+  border-style: solid;
+}
+
+#add .form-wrap span, #add .form-wrap h1{
+  color: #333;
+}
+
+#add .form-wrap input[type="button"]{
+  color: #333;
+}
+
+#add .form-wrap label{
+  text-decoration:underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color:#333;
+  color: red;
+}
+
+#add .form-wrap input[type="submit"]{
+  border-radius: 10px;
+}
+
+/*add circle-finish*/
 
 input[type='text']{
   border-radius: 10px;
