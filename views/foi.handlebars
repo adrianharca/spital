@@ -1,0 +1,15 @@
+<section id="circles" class="container">
+    <b style="color:red">Foile de observație</b><br/><br/>
+    {{#each this}}
+    {{#ifNotNull medic}}
+    <div ><b><a href="/foaie_observatie?pacient={{idpacient}}&foaie={{idfoaie_observatie}}" style="color:red">Medic: {{medic}}</a></b><br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;Pacient: {{prenume}} {{numefamilie}}<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;Secția: {{sectia}}<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;Data: {{convertdate timeCol}}
+        <br/>
+    </div>
+    {{/ifNotNull}}
+    {{else}}
+    <p>Nu am găsit nicio foaie de observație în baza de date.</p>
+    {{/each}}
+</section>

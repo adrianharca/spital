@@ -19,7 +19,7 @@ app.use(cors());
 
 app.set('json spaces', 40);
 //Handlebars
-app.engine('handlebars', exphbs({
+app.engine('handlebars', exphbs.engine({
     extname: 'handlebars',
     defaultLayout: 'main',
     defaultView: 'main',
@@ -55,6 +55,7 @@ app.use("/users", require('./routes/users'));
 app.use("/votes", require('./routes/votes'));
 app.use("/categories", require('./routes/categories'));
 app.use("/interests", require('./routes/interests'));
+app.use("/pacients", require('./routes/pacients'));
 //JSON routes
 app.use("/json", router);
 //default route:

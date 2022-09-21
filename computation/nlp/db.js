@@ -9,12 +9,27 @@ const OrientDBClient = require("orientjs").OrientDBClient;
 // var db = server.use('circ');
 // console.log('Using Database:', db.name);
 // module.exports = db;
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "adrianharca",
+  port: "3306",
+  password: "adr04har"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
 
 
 const clientt = new OrientDBClient({//.connect
     host: "localhost",
     port: 2424
 });
+module.exports.con = con;
 module.exports.client = clientt;
 module.exports.on = OrientDBClient.connect({//
     host: "localhost",

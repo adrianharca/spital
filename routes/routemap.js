@@ -8,8 +8,9 @@ var router = express.Router();
 //Routes
 
 var relatedController = require("../controllers/related_json_ctrl");
-
+var patientController = require("../controllers/pacient_json_ctrl");
 var circleController = require("../controllers/circle_json_ctrl");
+var fileController = require("../controllers/file_json_ctrl");
 var memberController = require("../controllers/membas_json_ctrl");
 var userController = require("../controllers/users_json_ctrl");
 var imageController = require("../controllers/image_json_ctrl");
@@ -54,6 +55,16 @@ router.route("/votes").get(voteController.getAll);
 router.route("/votes").post(voteController.addVote).delete(voteController.deleteVoteByid);
 // router.route("/circles/:id/votes/:voteid").get(circleController.getVotesByCircle);
 
+router.route("/foaie_observatie").get(patientController.getAllPacients)//not needed
+    .post(patientController.createPacient)
+    .put(patientController.updatePacientById)
+    .delete(patientController.delete);
+router.route("/foaie_observatie/allFiles").get(fileController.getAll);
+router.route("/pacients").get(patientController.getAllPacients)//not needed
+    .post(patientController.createPacient)
+    .put(patientController.updatePacientById)
+    .delete(patientController.delete);
+
 router.route("/users").get(userController.getAllUsers)//not needed
     .post(userController.createUser)
     .put(userController.updateUserById)
@@ -76,7 +87,10 @@ router.route("/users/:id").get(userController.getUserById)
 
 //router.route("/chat").get(chatController.getChatPage);
 router.route("/usersEmail/:email").get(userController.getUserByEmail);
-
+router.route("/images").get(imageController.getImages)
+    .post(imageController.addImage)
+    .put(imageController.updateImage)
+    .delete(imageController.delete);
 router.route("/images").get(imageController.getImages)
     .post(imageController.addImage)
     .put(imageController.updateImage)

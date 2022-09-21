@@ -1,17 +1,15 @@
 <section id="users" class="container">
-    <h1>All Users</h1>
-    {{#each c}}
-
-
+    <input type="button" onClick=" window.open('/users/adduser','_self');" value="Adaugă utilizator" class="btn btn-reverse" style="background: var(--primary-color);border: 1px solid var(--primary-color);"/>
+    <h1>Toți utilizatorii</h1>
+    {{#each this}}
+    {{#ifNotNull email}}
     <div class="users">
-        <h3>Name: {{firstname}} {{lastname}}</h3>
-        <p>First name: {{firstname}}</p>
-        <p>Last name: {{lastname}}</p>
+        <a href="/users/adduser?id={{idutilizator}}" style="color:red"><h3>Nume: {{nume}}</h3></a>
         <p>E-mail: {{email}}</p>
-        <p>Account type: {{acctype}}</p>
+        <p>Roluri: {{rol}}</p>
     </div>
-
+    {{/ifNotNull}}
     {{else}}
-    <p>No users in db</p>
+    <p>Niciun utilizator în baza de date</p>
     {{/each}}
 </section>

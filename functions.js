@@ -2,9 +2,93 @@ const ImageEntity = require('./models/ImageEntity');
 const Image = require('./models/Image');
 var db = require("./config/db.js");
 
+var host = "localhost";
+var user = "adrianharca";
+var parolaUser = "adr04har";
+
+const months = [
+  'Ianuarie',
+  'Februarie',
+  'Martie',
+  'Aprilie',
+  'Mai',
+  'Iunie',
+  'Iulie',
+  'August',
+  'Septembrie',
+  'Octombrie',
+  'Noiembrie',
+  'Decembrie'
+]
+
+
 var Handlebars = require('handlebars');
+Handlebars.registerHelper('convertdate', function (v1) {
+    var dateS = new Date(v1);
+    return dateS.getDate() + " " + months.at(dateS.getMonth()) + " " + dateS.getFullYear() + " " + dateS.getHours() + ":" + dateS.getMinutes();
+});
+Handlebars.registerHelper('ifNotNull', function (v1,options) {
+     if (v1==null)
+            return options.inverse(this);
+     if (v1==undefined)
+            return options.inverse(this);
+     if (v1=="")
+            return options.inverse(this);
+     if (v1==" ")
+            return options.inverse(this);
+     else return options.fn(this);
+});
+Handlebars.registerHelper('transformvaluetophotolink', function (value) {
+    var returnedValue = value;
+    if (value==undefined)
+        returnedValue = "";
+     if (value=='')
+        returnedValue = "";
+    return returnedValue.replaceAll(" ","-");
+});
+Handlebars.registerHelper('transformvaluetophoto', function (value) {
+    var returnedValue = value;
+    if (value==undefined)
+        returnedValue = "";
+     if (value=='')
+        returnedValue = "";
+    return returnedValue.replace("adaugafoto0","").replace("adaugafoto1","").replace("adaugafoto2","").replace("adaugafoto3","").replace("adaugafoto4","").replace("adaugafoto5","").replace("adaugafoto69","").replace("adaugafoto912","").replace("adaugafoto1224","").replace("adaugafoto2430","").replace("adaugafoto3036","");
+});
+Handlebars.registerHelper('transformvaluetochecked', function (value) {
+    var returnedValue = "checked";
+    if (value==undefined)
+        returnedValue = "";
+     if (value==0)
+        returnedValue = "";
+    return returnedValue;
+});
+Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
 
-
+    switch (operator) {
+        case '==':
+            return (v1 == v2) ? options.fn(this) : options.inverse(this);
+        case '===':
+            return (v1 === v2) ? options.fn(this) : options.inverse(this);
+        case '!=':
+            return (v1 != v2) ? options.fn(this) : options.inverse(this);
+        case '!==':
+            return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+        case '<':
+            return (v1 < v2) ? options.fn(this) : options.inverse(this);
+        case '<=':
+            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+        case '>':
+            return (v1 > v2) ? options.fn(this) : options.inverse(this);
+        case '>=':
+            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+        case '&&':
+            return (v1 && v2) ? options.fn(this) : options.inverse(this);
+        case '||':
+            return (v1 || v2) ? options.fn(this) : options.inverse(this);
+        default:
+            return options.inverse(this);
+    }
+});
 Handlebars.registerHelper("afisareSageata",function(analiz) {
                                             if (analiz.rezultat>analiz.maxLimit)
                                                 return "➚";
@@ -20,6 +104,63 @@ if (analiz.rezultat<analiz.minLimit)
   return analiz.rezultat;
 });
 
+
+exports.convertToCheckbox= function (value) {
+    if (value==0)
+        return "";
+    else return value;
+}
+
+exports.transformCheckboxField=function (field) {
+               if (field==undefined)
+                return 0;
+               if (field=="")
+                return 0;
+
+               else return 1;
+        }
+exports.convertLuna = function(luna) {
+
+    return months.indexOf(luna);
+}
+
+exports.convertNumberToMonth = function(numberOfMonth) {
+    return months.at(numberOfMonth);
+}
+
+function monthDiff(dateFrom, dateTo) {
+ return dateTo.getMonth() - dateFrom.getMonth() +
+   (12 * (dateTo.getFullYear() - dateFrom.getFullYear()));
+};
+
+exports.calculateAge = function(zi, luna, an) {
+    if (an==null)
+        return "-";
+    else {
+        var birthdate = new Date(an, luna, zi);
+        var month_diff = monthDiff(birthdate,new Date());
+        var years = parseInt(month_diff / 12);
+        var numberOfMonths = month_diff - (years * 12);
+        return years + "ani, " + numberOfMonths + " luni";
+    }
+}
+
+exports.appendToSQL = function(sql, alreadyFiltered, fieldName, value) {
+ if (alreadyFiltered)
+     sql = sql + " and " + fieldName + "='" + value + "'";
+ else
+     sql = sql + " where " + fieldName+ "='" + value + "'";
+  return sql;
+}
+exports.getHost =function(){
+   return host;
+}
+exports.getUser =function(){
+   return user;
+}
+exports.getParola =function(){
+   return parolaUser;
+}
 exports.isEmpty = function (obj) {
   for(var prop in obj) {
     if(obj.hasOwnProperty(prop))
