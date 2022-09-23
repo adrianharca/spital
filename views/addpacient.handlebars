@@ -134,10 +134,11 @@
                  maxlength="100" value="{{cod}}"/>
         </div>
         <input type="submit" value="Salvează pacient" class="btn btn-reverse"/>
-        <input type="button" onClick=" window.open('http://127.0.0.1:3000/foaie_observatie?pacient={{idInUI}}');" value="Bagă-l în spital" class="btn btn-reverse" style="background: var(--primary-color);border: 1px solid var(--primary-color);"/>
+        <input type="button" onClick="window.open('http://127.0.0.1:3000/foaie_observatie?pacient={{idInUI}}');" value="Internează pacient" class="btn btn-reverse" style="visibility:{{transformvaluetostylevisibility idInUI}}; background: var(--primary-color);border: 1px solid var(--primary-color);"/>
       </form>
       <br/><br/><br/>
-      <b style="color:red">Foile de observație</b><br/><br/>
+      <div style="visibility:{{transformvaluetostylevisibility idInUI}}">
+      <b style="color:red;">Foile de observație</b><br/><br/>
       {{#each foaie}}
       {{#ifNotNull medic}}
       <div ><b><a href="/foaie_observatie?pacient={{idpacient}}&foaie={{idfoaie_observatie}}" style="color:red">Medic: {{medic}}</a></b><br/>
@@ -149,6 +150,7 @@
       {{else}}
       <p>Nu am găsit nicio foaie de observație pentru pacient.</p>
       {{/each}}
+      </div>
     </div>
   <script src="/js/general.js"></script>
   <script>

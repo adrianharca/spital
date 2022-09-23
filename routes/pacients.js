@@ -8,7 +8,7 @@ const Sequelize = require('sequelize');
 const User = require('../models/User');
 const url = require('url');
 var taskController = require("../controllers/circle_json_ctrl");
-
+var idInUI=null;
 var Global = require("../functions.js");
 const Op = Sequelize.Op;
 
@@ -107,7 +107,7 @@ router.get('/json', (req, res) => {
   res.contentType('application/json');
   res.removeHeader;
   var result = [];
-  res.json({ "ca" : "aa" });
+  res.json({ });
 
 });
 
@@ -167,7 +167,7 @@ else {
   }    
   });
 // // Display add user form
-var idInUI=null;
+
 router.get('/addpacient', (req, res) => {
  const query = url.parse(req.url, true).query;
  var id = query.id;

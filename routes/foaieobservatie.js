@@ -27,7 +27,7 @@ const isFileValid = (file) => {
 async function uploadFile(fileVar, newNameOfFile) {
 
   const file = fileVar;
-  const uploadFolder  = "..\\public\\uploads";
+  const uploadFolder  = "..\\"+Global.getUploadFolder();
   // checks if the file is valid
   const isValid = isFileValid(file);
 
@@ -51,11 +51,10 @@ function checkFile (fileVar, newNameOfFile) {
             uploadFile (fileVar, newNameOfFile);
           }
 }
-
-function insertOrUpdateInDB(req, fields, files){
+var oldFiles= {};
+function insertOrUpdateInDB(req, fields, files, oldFiles){
  let errors = [];
     try {
-
             let {medic, sectia,diagprincipal,diaginternare,diag24h,diag72h,intoxicatii,alergii,sange,rh,
                               insotit,vechimearsuri,diagexternare,datadeces,cauzadirectadeces,
                               cauzaantecedentadeces,starimorbideinitiale,starimorbideimportante,
@@ -90,7 +89,6 @@ function insertOrUpdateInDB(req, fields, files){
                               indexEvolutii++;
             }
             if (errors.length==0) {
-
 
 
             var con = mysql.createConnection({
@@ -162,21 +160,21 @@ function insertOrUpdateInDB(req, fields, files){
                                                                    if (err) throw err;
 
                                                                      var tempId = result.insertId;
-                                                                     console.log(tempId);
-                                                                     var sqlPhotos = "update spital.foaie_observatie set adaugafoto0='"+ fileNameForField(files.adaugafoto0, idfoaie+"adaugafoto0")+ "', " +
-                                                                     "adaugafoto1 ='" + fileNameForField(files.adaugafoto1, idfoaie+"adaugafoto1") + "', "
-                                                                     "adaugafoto2 ='" + fileNameForField(files.adaugafoto2, idfoaie+"adaugafoto2") + "', "
-                                                                     "adaugafoto3 ='" + fileNameForField(files.adaugafoto3, idfoaie+"adaugafoto3") + "', "
-                                                                     "adaugafoto4 ='" + fileNameForField(files.adaugafoto4, idfoaie+"adaugafoto4") + "', "
-                                                                     "adaugafoto5 ='" + fileNameForField(files.adaugafoto5, idfoaie+"adaugafoto5") + "', "
-                                                                     "adaugafoto69 ='" + fileNameForField(files.adaugafoto69, idfoaie+"adaugafoto69") + "', "
-                                                                     "adaugafoto912 ='" + fileNameForField(files.adaugafoto912, idfoaie+"adaugafoto912") + "', "
-                                                                     "adaugafoto1218 ='" + fileNameForField(files.adaugafoto1218, idfoaie+"adaugafoto1218") + "', "
-                                                                     "adaugafoto1824 ='" + fileNameForField(files.adaugafoto1824, idfoaie+"adaugafoto1824") + "', "
-                                                                     "adaugafoto2430 ='" + fileNameForField(files.adaugafoto2430, idfoaie+"adaugafoto2430") + "', "
-                                                                     "adaugafoto3036 ='" + fileNameForField(files.adaugafoto3036, idfoaie+"adaugafoto3036") + "' "
+                                                                     console.log("temp id: " +tempId);
+                                                                     var sqlPhotos = "update spital.foaie_observatie set adaugafoto0='"+ fileNameForField(files.adaugafoto0, idfoaie+"adaugafoto0",oldFiles.adaugafoto0)+ "', " +
+                                                                     "adaugafoto1 ='" + fileNameForField(files.adaugafoto1, idfoaie+"adaugafoto1",oldFiles.adaugafoto1) + "', "
+                                                                     "adaugafoto2 ='" + fileNameForField(files.adaugafoto2, idfoaie+"adaugafoto2",oldFiles.adaugafoto2) + "', "
+                                                                     "adaugafoto3 ='" + fileNameForField(files.adaugafoto3, idfoaie+"adaugafoto3",oldFiles.adaugafoto3) + "', "
+                                                                     "adaugafoto4 ='" + fileNameForField(files.adaugafoto4, idfoaie+"adaugafoto4",oldFiles.adaugafoto4) + "', "
+                                                                     "adaugafoto5 ='" + fileNameForField(files.adaugafoto5, idfoaie+"adaugafoto5",oldFiles.adaugafoto5) + "', "
+                                                                     "adaugafoto69 ='" + fileNameForField(files.adaugafoto69, idfoaie+"adaugafoto69",oldFiles.adaugafoto69) + "', "
+                                                                     "adaugafoto912 ='" + fileNameForField(files.adaugafoto912, idfoaie+"adaugafoto912",oldFiles.adaugafoto912) + "', "
+                                                                     "adaugafoto1218 ='" + fileNameForField(files.adaugafoto1218, idfoaie+"adaugafoto1218",oldFiles.adaugafoto1218) + "', "
+                                                                     "adaugafoto1824 ='" + fileNameForField(files.adaugafoto1824, idfoaie+"adaugafoto1824",oldFiles.adaugafoto1824) + "', "
+                                                                     "adaugafoto2430 ='" + fileNameForField(files.adaugafoto2430, idfoaie+"adaugafoto2430",oldFiles.adaugafoto2430) + "', "
+                                                                     "adaugafoto3036 ='" + fileNameForField(files.adaugafoto3036, idfoaie+"adaugafoto3036",oldFiles.adaugafoto3036) + "' "
                                                                      " where idfoaie_observatie="+tempId;
-                                                                     con.query(sql, [values], function (err, result) {
+                                                                     con.query(sqlPhotos, [values], function (err, result) {
                                                                                     if (err) throw err;
                                                                                     con.end();
                                                                               });
@@ -190,17 +188,17 @@ function insertOrUpdateInDB(req, fields, files){
                                             "diagnosticexternare='"+ diagexternare + "',datadeces='"+ datadeces+ "', cauzadirectadeces='"+ cauzadirectadeces+ "', cauzaantecedentadeces='"+ cauzaantecedentadeces+ "', starimorbideinitiale='"+starimorbideinitiale + "', starimorbideimportante='"+ starimorbideimportante + "',prezentaparinti='"+ Global.transformCheckboxField(prezentaparinti)+ "',descriere='"+ descriere + "',locprimajutor='"+ locajutor+ "',"+
                                             "tratamentprimajutor='"+ tratamentajutor+ "',unitatiintermediare='"+ unitatiintermediare+ "',tratamentanterior='"+ tratamentanterior+ "',transport='"+ transport+ "',tratasport='"+ tratasport+ "',stare='"+ starepacient+ "',timp='"+ timp+ "', epicrizafinala='"+ epicrizafinala+ "',medicatie='"+ medicatie+ "',kineto='"+ kineto+ "', comments='"+ recomments+ "',"+
                                             "cantitatelichide='"+ cantitatelichide+ "', cantlichide8h='"+ cantlichide8h+ "', cantlichide16h='"+ cantlichide16h+ "', cantlichide24h='"+ cantlichide24h+ "', dinamicaplagi='"+ dinamicaplagi+ "', cura='"+ cura+ "', caiResp='"+ Global.transformCheckboxField(caiResp)+ "',"+
-                                            "descriere1='"+ descriere1 + "',analize1='"+ analize1+ "',adaugafoto1='"+ fileNameForField(files.adaugafoto1, idfoaie+"adaugafoto1") + "',spital1='"+ Global.transformCheckboxField(spital1) + "',online1='"+ Global.transformCheckboxField(online1) + "',"+
-                                            "descriere2='"+ descriere2 + "',analize2='"+ analize2+ "',adaugafoto2='"+ fileNameForField(files.adaugafoto2, idfoaie+"adaugafoto2") + "',spital2='"+ Global.transformCheckboxField(spital2) + "',online2='"+ Global.transformCheckboxField(online2) + "',"+
-                                            "descriere3='"+ descriere3 + "',analize3='"+ analize3 + "',adaugafoto3='"+ fileNameForField(files.adaugafoto3, idfoaie+"adaugafoto3") + "',spital3='"+ Global.transformCheckboxField(spital3) + "',online3='"+ Global.transformCheckboxField(online3) + "',"+
-                                            "descriere4='"+ descriere4 + "',analize4='"+ analize4 + "',adaugafoto4='"+ fileNameForField(files.adaugafoto4, idfoaie+"adaugafoto4") + "',spital4='"+ Global.transformCheckboxField(spital4) + "',online4='"+ Global.transformCheckboxField(online4) + "',"+
-                                            "descriere5='"+ descriere5 + "',analize5='"+ analize5 + "',adaugafoto5='"+ fileNameForField(files.adaugafoto5, idfoaie+"adaugafoto5") + "',spital5='"+ Global.transformCheckboxField(spital5) + "',online5='"+ Global.transformCheckboxField(online5) + "',"+
-                                            "descriere69='"+ descriere69 + "',analize69='"+ analize69 + "',adaugafoto69='"+ fileNameForField(files.adaugafoto69, idfoaie+"adaugafoto69") + "',spital69='"+ Global.transformCheckboxField(spital69) + "',online69='"+ Global.transformCheckboxField(online69) + "',"+
-                                            "descriere912='"+ descriere912 + "',analize912='"+ analize912 + "',adaugafoto912='"+ fileNameForField(files.adaugafoto912, idfoaie+"adaugafoto912") + "',spital912='"+ Global.transformCheckboxField(spital912) + "',online912='"+ Global.transformCheckboxField(online912) + "',"+
-                                            "descriere1218='"+ descriere1218 + "',analize1218='"+ analize1218 + "',adaugafoto1218='"+ fileNameForField(files.adaugafoto1218, idfoaie+"adaugafoto1218") + "',spital1218='"+ Global.transformCheckboxField(spital1218) + "',online1218='"+ Global.transformCheckboxField(online1218) + "',"+
-                                            "descriere1824='"+ descriere1824+ "',analize1824='"+ analize1824 + "',adaugafoto1824='"+ fileNameForField(files.adaugafoto1824, idfoaie+"adaugafoto1824") + "',spital1824='"+ Global.transformCheckboxField(spital1824) + "',online1824='"+ Global.transformCheckboxField(online1824) + "',"+
-                                            "descriere2430='"+ descriere2430+ "',analize2430='"+ analize2430 + "',adaugafoto2430='"+ fileNameForField(files.adaugafoto2430, idfoaie+"adaugafoto2430") + "',spital2430='"+ Global.transformCheckboxField(spital2430) + "',online2430='"+ Global.transformCheckboxField(online2430) + "',"+
-                                            "descriere3036='"+ descriere3036+ "',analize3036='"+ analize3036 + "',adaugafoto3036='"+ fileNameForField(files.adaugafoto3036, idfoaie+"adaugafoto3036") + "',spital3036='"+ Global.transformCheckboxField(spital3036) + "',online3036='"+ Global.transformCheckboxField(online3036) + "', arsuri='"+ JSON.stringify(arsuri) +"', evolutii='" + JSON.stringify(evolutii) + "', adaugafoto0='"+ fileNameForField(files.adaugafoto0, idfoaie+"adaugafoto0") + "' where idfoaie_observatie="+idfoaie;
+                                            "descriere1='"+ descriere1 + "',analize1='"+ analize1+ "',adaugafoto1='"+ fileNameForField(files.adaugafoto1, idfoaie+"adaugafoto1",oldFiles.adaugafoto1) + "',spital1='"+ Global.transformCheckboxField(spital1) + "',online1='"+ Global.transformCheckboxField(online1) + "',"+
+                                            "descriere2='"+ descriere2 + "',analize2='"+ analize2+ "',adaugafoto2='"+ fileNameForField(files.adaugafoto2, idfoaie+"adaugafoto2",oldFiles.adaugafoto2) + "',spital2='"+ Global.transformCheckboxField(spital2) + "',online2='"+ Global.transformCheckboxField(online2) + "',"+
+                                            "descriere3='"+ descriere3 + "',analize3='"+ analize3 + "',adaugafoto3='"+ fileNameForField(files.adaugafoto3, idfoaie+"adaugafoto3",oldFiles.adaugafoto3) + "',spital3='"+ Global.transformCheckboxField(spital3) + "',online3='"+ Global.transformCheckboxField(online3) + "',"+
+                                            "descriere4='"+ descriere4 + "',analize4='"+ analize4 + "',adaugafoto4='"+ fileNameForField(files.adaugafoto4, idfoaie+"adaugafoto4",oldFiles.adaugafoto4) + "',spital4='"+ Global.transformCheckboxField(spital4) + "',online4='"+ Global.transformCheckboxField(online4) + "',"+
+                                            "descriere5='"+ descriere5 + "',analize5='"+ analize5 + "',adaugafoto5='"+ fileNameForField(files.adaugafoto5, idfoaie+"adaugafoto5",oldFiles.adaugafoto5) + "',spital5='"+ Global.transformCheckboxField(spital5) + "',online5='"+ Global.transformCheckboxField(online5) + "',"+
+                                            "descriere69='"+ descriere69 + "',analize69='"+ analize69 + "',adaugafoto69='"+ fileNameForField(files.adaugafoto69, idfoaie+"adaugafoto69",oldFiles.adaugafoto69) + "',spital69='"+ Global.transformCheckboxField(spital69) + "',online69='"+ Global.transformCheckboxField(online69) + "',"+
+                                            "descriere912='"+ descriere912 + "',analize912='"+ analize912 + "',adaugafoto912='"+ fileNameForField(files.adaugafoto912, idfoaie+"adaugafoto912",oldFiles.adaugafoto912) + "',spital912='"+ Global.transformCheckboxField(spital912) + "',online912='"+ Global.transformCheckboxField(online912) + "',"+
+                                            "descriere1218='"+ descriere1218 + "',analize1218='"+ analize1218 + "',adaugafoto1218='"+ fileNameForField(files.adaugafoto1218, idfoaie+"adaugafoto1218",oldFiles.adaugafoto1218) + "',spital1218='"+ Global.transformCheckboxField(spital1218) + "',online1218='"+ Global.transformCheckboxField(online1218) + "',"+
+                                            "descriere1824='"+ descriere1824+ "',analize1824='"+ analize1824 + "',adaugafoto1824='"+ fileNameForField(files.adaugafoto1824, idfoaie+"adaugafoto1824",oldFiles.adaugafoto1824) + "',spital1824='"+ Global.transformCheckboxField(spital1824) + "',online1824='"+ Global.transformCheckboxField(online1824) + "',"+
+                                            "descriere2430='"+ descriere2430+ "',analize2430='"+ analize2430 + "',adaugafoto2430='"+ fileNameForField(files.adaugafoto2430, idfoaie+"adaugafoto2430",oldFiles.adaugafoto2430) + "',spital2430='"+ Global.transformCheckboxField(spital2430) + "',online2430='"+ Global.transformCheckboxField(online2430) + "',"+
+                                            "descriere3036='"+ descriere3036+ "',analize3036='"+ analize3036 + "',adaugafoto3036='"+ fileNameForField(files.adaugafoto3036, idfoaie+"adaugafoto3036",oldFiles.adaugafoto3036) + "',spital3036='"+ Global.transformCheckboxField(spital3036) + "',online3036='"+ Global.transformCheckboxField(online3036) + "', arsuri='"+ JSON.stringify(arsuri) +"', evolutii='" + JSON.stringify(evolutii) + "', adaugafoto0='"+ fileNameForField(files.adaugafoto0, idfoaie+"adaugafoto0",oldFiles.adaugafoto0) + "' where idfoaie_observatie="+idfoaie;
 
                                             con.query(sql, function (err, result) {
                                                         if (err) throw err;
@@ -212,11 +210,11 @@ function insertOrUpdateInDB(req, fields, files){
                       });
                       }
                         else {
-                        /*res.render('foaie_observatie', {
+                        res.render('foaie_observatie', {
                                                           errors,
                                                           foaie
                                                         });
-                        */
+
                         }
         }
      catch(e){
@@ -230,54 +228,67 @@ function insertOrUpdateInDB(req, fields, files){
       }
 
 }
-function fileNameForField(field, fieldName){
+function fileNameForField(field, fieldName, oldValue){
     if (field.size!=0)
         return fieldName + field.originalFilename;
     else
-        return "";
+        return oldValue;
 }
 router.post('/', (req, res) => {
     var formData = new formidable.IncomingForm();
     const query = url.parse(req.url, true).query;
-    if (req.body.medic=="") {
-         errors.push ({"text": "Numele medicului trebuie să fie precizat."});
-    }
 
-    if (req.body.sectia=="") {
-         errors.push ({"text": "Numele secției trebuie să fie precizat."});
-    }
     const data = query.data;
     pacientId = query.pacient;
     idfoaie = query.foaie;
 
 
+
+
     //+ "." + file.originalFilename.split('.').pop()
     formData.parse(req, async (err, fields, files) => {
+    errors = [];
+    if (fields.medic=='') {
+              errors.push ({"text": "Medicul nu este completat."});
+                };
+    if (fields.sectia=='') {
+                  errors.push ({"text": "Secția nu este completată."});
+                    };
+    if (errors.length>0){
+        medic = fields.medic;
 
-    insertOrUpdateInDB(req, fields, files);
-    checkFile (files.adaugafoto0, idfoaie+ "adaugafoto0");
-    checkFile (files.adaugafoto1, idfoaie+ "adaugafoto1");
-    checkFile (files.adaugafoto2, idfoaie+  "adaugafoto2");
-    checkFile (files.adaugafoto3,idfoaie+  "adaugafoto3");
-    checkFile (files.adaugafoto4, idfoaie+  "adaugafoto4");
-    checkFile (files.adaugafoto5, idfoaie+  "adaugafoto5");
-    checkFile (files.adaugafoto69, idfoaie+ "adaugafoto69");
-    checkFile (files.adaugafoto912, idfoaie+  "adaugafoto912");
-    checkFile (files.adaugafoto1218,idfoaie+  "adaugafoto1218");
-    checkFile (files.adaugafoto1824, idfoaie+ "adaugafoto1824");
-    checkFile (files.adaugafoto2430,idfoaie+  "adaugafoto2430");
-    checkFile (files.adaugafoto3036,idfoaie+  "adaugafoto3036");
-    if (err) {
-        console.log("Error parsing the files");
-        return res.status(400).json({
-          status: "Fail",
-          message: "There was an error parsing the files",
-          error: err,
-        });
+        sectia = fields.sectia;
+        constructFoaie(errors, req, res);
     }
     else {
+        insertOrUpdateInDB(req, fields, files, oldFiles);
+        checkFile (files.adaugafoto0, idfoaie+ "adaugafoto0");
+        checkFile (files.adaugafoto1, idfoaie+ "adaugafoto1");
+        checkFile (files.adaugafoto2, idfoaie+  "adaugafoto2");
+        checkFile (files.adaugafoto3,idfoaie+  "adaugafoto3");
+        checkFile (files.adaugafoto4, idfoaie+  "adaugafoto4");
+        checkFile (files.adaugafoto5, idfoaie+  "adaugafoto5");
+        checkFile (files.adaugafoto69, idfoaie+ "adaugafoto69");
+        checkFile (files.adaugafoto912, idfoaie+  "adaugafoto912");
+        checkFile (files.adaugafoto1218,idfoaie+  "adaugafoto1218");
+        checkFile (files.adaugafoto1824, idfoaie+ "adaugafoto1824");
+        checkFile (files.adaugafoto2430,idfoaie+  "adaugafoto2430");
+        checkFile (files.adaugafoto3036,idfoaie+  "adaugafoto3036");
+        deleteOldFiles(files, oldFiles, idfoaie);
+        if (err) {
+            console.log("Error parsing the files");
+            return res.status(400).json({
+            status: "Fail",
+            message: "There was an error parsing the files",
+            error: err,
+        });
+        }
+     else {
+       // res.redirect('back');
         res.redirect(301,'/foaie_observatie/allFiles');
     }
+    }
+
     });
 
 });
@@ -303,22 +314,45 @@ var con = mysql.createConnection({
     });
     });
 });
-router.get('/', (req, res) => {
-        const query = url.parse(req.url, true).query;
-        const data = query.data;
-        pacientId = query.pacient;
-        idfoaie = query.foaie;
-        etichete = {};
-        foaie = {};
-        foaie.evolutiiList = [];
-        foaie.arsuri = [];
-        foaie.anamneza = {};
-        foaie.detaliipacient = {};
-        foaie.buletinebio = [];
-        foaie.buletinehemo = [];
-        foaie.buletinecoagulare = [];
-        foaie.epicrizedeetapa = [];
-        foaie.fiseterapie= [];
+function deleteOldFile(value,files, oldFiles, idfoaie) {
+        if (oldFiles[value]!=undefined) {
+        oldFileName = Global.getUploadFolder() + "\\" + encodeURIComponent(oldFiles[value].replace(/\s/g, "-"));
+        console.log(files[value].originalFilename +" " + oldFiles[value]);
+        if (files[value].originalFilename.localeCompare("")!=0 ) {
+            fs.unlink(oldFileName,function(err){
+                                    if(err) return console.log(err);
+                                    console.log('Fisierul ' + oldFiles[value] + " sters");
+                               });
+        }
+        }
+}
+function deleteOldFiles(files, oldFiles, idfoaie){
+    deleteOldFile("adaugafoto0",files, oldFiles, idfoaie);
+    deleteOldFile("adaugafoto1",files, oldFiles, idfoaie);
+    deleteOldFile("adaugafoto2",files, oldFiles, idfoaie);
+    deleteOldFile("adaugafoto3",files, oldFiles, idfoaie);
+    deleteOldFile("adaugafoto4",files, oldFiles, idfoaie);
+    deleteOldFile("adaugafoto5",files, oldFiles, idfoaie);
+    deleteOldFile("adaugafoto69",files, oldFiles, idfoaie);
+    deleteOldFile("adaugafoto912",files, oldFiles, idfoaie);
+    deleteOldFile("adaugafoto1218",files, oldFiles, idfoaie);
+    deleteOldFile("adaugafoto1824",files, oldFiles, idfoaie);
+    deleteOldFile("adaugafoto2430",files, oldFiles, idfoaie);
+    deleteOldFile("adaugafoto3036",files, oldFiles, idfoaie);
+}
+function constructFoaie(errors, req, res) {
+
+    etichete = {};
+    foaie = {};
+    foaie.evolutiiList = [];
+    foaie.arsuri = [];
+    foaie.anamneza = {};
+    foaie.detaliipacient = {};
+    foaie.buletinebio = [];
+    foaie.buletinehemo = [];
+    foaie.buletinecoagulare = [];
+    foaie.epicrizedeetapa = [];
+    foaie.fiseterapie= [];
 
         if (pacientId!=null)
             {
@@ -344,7 +378,7 @@ router.get('/', (req, res) => {
                                 foaie.detaliipacient.sex = results[0].sex;
                                 foaie.detaliipacient.cnp = results[0].cnp;
                                 foaie.detaliipacient.cod = results[0].cod;
-
+                                oldFiles = [];
                                 if (idfoaie!=null) {
                                     var selectFoaieObservatie = "SELECT * FROM spital.foaie_observatie where idfoaie_observatie=" + idfoaie;
                                     con.query(selectFoaieObservatie, (error, results, fields) => {
@@ -398,56 +432,67 @@ router.get('/', (req, res) => {
                                     foaie.spital1 = results[0].spital1;
                                     foaie.online1 = results[0].online1;
                                     foaie.adaugafoto1 = results[0].adaugafoto1;
+                                    oldFiles.adaugafoto1 = results[0].adaugafoto1;
                                     foaie.descriere2 = results[0].descriere2;
                                     foaie.analize2 = results[0].analize2;
                                     foaie.spital2 = results[0].spital2;
                                     foaie.online2 = results[0].online2;
                                     foaie.adaugafoto2 = results[0].adaugafoto2;
+                                    oldFiles.adaugafoto2 = results[0].adaugafoto2;
                                     foaie.descriere3 = results[0].descriere3;
                                     foaie.analize3 = results[0].analize3;
                                     foaie.spital3 = results[0].spital3;
                                     foaie.online3 = results[0].online3;
                                     foaie.adaugafoto3 = results[0].adaugafoto3;
+                                    oldFiles.adaugafoto3 = results[0].adaugafoto3;
                                     foaie.descriere4 = results[0].descriere4;
                                     foaie.analize4 = results[0].analize4;
                                     foaie.spital4 = results[0].spital4;
                                     foaie.online4 = results[0].online4;
                                     foaie.adaugafoto4 = results[0].adaugafoto4;
+                                    oldFiles.adaugafoto4 = results[0].adaugafoto4;
                                     foaie.descriere5 = results[0].descriere5;
                                     foaie.analize5 = results[0].analize5;
                                     foaie.spital5 = results[0].spital5;
                                     foaie.online5 = results[0].online5;
                                     foaie.adaugafoto5 = results[0].adaugafoto5;
+                                    oldFiles.adaugafoto5 = results[0].adaugafoto5;
                                     foaie.descriere69 = results[0].descriere69;
                                     foaie.analize69 = results[0].analize69;
                                     foaie.spital69 = results[0].spital69;
                                     foaie.online69 = results[0].online69;
+                                    oldFiles.adaugafoto69 = results[0].adaugafoto69;
                                     foaie.adaugafoto69 = results[0].adaugafoto69;
                                     foaie.descriere912 = results[0].descriere912;
                                     foaie.analize912 = results[0].analize912;
                                     foaie.spital912 = results[0].spital912;
                                     foaie.online912 = results[0].online912;
+                                    oldFiles.adaugafoto912 = results[0].adaugafoto912;
                                     foaie.adaugafoto912 = results[0].adaugafoto912;
                                     foaie.descriere1218 = results[0].descriere1218;
                                     foaie.analize1218 = results[0].analize1218;
                                     foaie.spital1218 = results[0].spital1218;
                                     foaie.online1218 = results[0].online1218;
+                                    oldFiles.adaugafoto1218 = results[0].adaugafoto1218;
                                     foaie.adaugafoto1218 = results[0].adaugafoto1218;
                                     foaie.descriere1824 = results[0].descriere1824;
                                     foaie.analize1824 = results[0].analize1824;
                                     foaie.spital1824 = results[0].spital1824;
                                     foaie.online1824 = results[0].online1824;
+                                    oldFiles.adaugafoto1824 = results[0].adaugafoto1824;
                                     foaie.adaugafoto1824 = results[0].adaugafoto1824;
                                     foaie.descriere2430 = results[0].descriere2430;
                                     foaie.analize2430 = results[0].analize2430;
                                     foaie.spital2430 = results[0].spital2430;
                                     foaie.online2430 = results[0].online2430;
                                     foaie.adaugafoto2430 = results[0].adaugafoto2430;
+                                    oldFiles.adaugafoto2430 = results[0].adaugafoto2430;
                                     foaie.descriere3036 = results[0].descriere3036;
                                     foaie.analize3036 = results[0].analize3036;
                                     foaie.spital3036 = results[0].spital3036;
                                     foaie.online3036 = results[0].online3036;
                                     foaie.adaugafoto3036 = results[0].adaugafoto3036;
+                                    oldFiles.adaugafoto3036 = results[0].adaugafoto3036;
                                     con.end();
                                     foaie.evolutiiList.push(new Global.Evolutie(0,"18 iunie","blablabla","sa puna sare pe rana"));
                                     foaie.evolutiiList.push(new Global.Evolutie(1,"19 iunie","arsura in cot","Miere"));
@@ -458,7 +503,7 @@ router.get('/', (req, res) => {
                                     foaie.buletinecoagulare.push(Global.Coagulare("14 Iunie"));
                                     var arsuriJsonVar = results[0].arsuri;
                                     var evolutiiJsonList= results[0].evolutii;
-                                    res.render('foaie_observatie', {etichete,foaie,arsuriJsonVar,evolutiiJsonList});
+                                    res.render('foaie_observatie', {errors, etichete,foaie,arsuriJsonVar,evolutiiJsonList});
                                     });
                                 }
                                 else {
@@ -473,20 +518,26 @@ router.get('/', (req, res) => {
 
                                     var arsuriJsonVar = [];
                                     var evolutiiJsonList=[];
-                                    res.render('foaie_observatie', {etichete,foaie,arsuriJsonVar,evolutiiJsonList});
+                                    res.render('foaie_observatie', {errors,etichete,foaie,arsuriJsonVar,evolutiiJsonList});
                                 }
 
 
 
 
                                 });
+         }
+}
+router.get('/', (req, res) => {
+        const query = url.parse(req.url, true).query;
+        const data = query.data;
+        pacientId = query.pacient;
+        idfoaie = query.foaie;
+        constructFoaie([], req, res);
+
 
             }
         //init, aici sa se populeze cu detaliile legate de id-ul pacientului
-
-
-
-});
+);
 
 
 

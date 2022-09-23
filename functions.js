@@ -5,6 +5,7 @@ var db = require("./config/db.js");
 var host = "localhost";
 var user = "adrianharca";
 var parolaUser = "adr04har";
+const uploadFolder = "public\\uploads";
 
 const months = [
   'Ianuarie',
@@ -45,6 +46,14 @@ Handlebars.registerHelper('transformvaluetophotolink', function (value) {
      if (value=='')
         returnedValue = "";
     return returnedValue.replaceAll(" ","-");
+});
+Handlebars.registerHelper('transformvaluetostylevisibility', function (value) {
+    var returnedValue = "visible";
+    if (value==undefined)
+        returnedValue = "hidden";
+     if (value=='')
+        returnedValue = "hidden";
+    return returnedValue;
 });
 Handlebars.registerHelper('transformvaluetophoto', function (value) {
     var returnedValue = value;
@@ -103,7 +112,9 @@ if (analiz.rezultat<analiz.minLimit)
     return analiz.rezultat + " ➘";
   return analiz.rezultat;
 });
-
+exports.getUploadFolder=function(){
+    return uploadFolder;
+}
 
 exports.convertToCheckbox= function (value) {
     if (value==0)

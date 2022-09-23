@@ -1,11 +1,11 @@
 <!--suppress ALL -->
 <section id="buletin" class="container" style="width:100% !important">
-  <table style="width:33%">
-<tr>
-  <td>
-{{buletin.laborator.nume}}
-  </td>
-</tr>
+  <table class="lab-adress-table" style="width:33%">
+    <tr>
+      <td>
+        {{buletin.laborator.nume}}
+      </td>
+    </tr>
     <tr>
       <td>
         {{buletin.laborator.adresa}}
@@ -13,80 +13,80 @@
     </tr>
     <tr>
       <td>
-Tel.:&nbsp;{{buletin.laborator.telefon}}
+        Tel.:&nbsp;{{buletin.laborator.telefon}}
       </td>
     </tr>
     <tr>
       <td>
-Mail:&nbsp;{{buletin.laborator.mail}}
+        Mail:&nbsp;{{buletin.laborator.mail}}
       </td>
     </tr>
   </table>
-<h1 style="text-align:center">Buletin de analize medicale</h1>
+  <h1 style="text-align:center">Buletin de analize medicale</h1>
   <div style="text-align:center">Data și ora recoltării: <input type="text" value="{{buletin.data}}"/></div>
   <div style="text-align:center">Înregistrat de: <input type="text" value="{{buletin.inregistratDe}}"/></div>
   <div style="text-align:right">Cod cerere: {{buletin.codCerere}}</div>
   <br/>
-  <table style="width:100%;border:1px solid black" >
-  <tr>
-    <td>Nume: <div style="font-weight: bold">{{pacient.nume}}</div></td><td>Varsta: <div style="font-weight: bold">{{pacient.varsta}}</div></td>
-    <td>Sex: <div style="font-weight: bold">{{pacient.sex}}</div></td>
-    <td>Medic: <div>{{pacient.medic}}</div></td>
-  </tr>
+  <table class="pacient-table" style="width:100%;" >
+    <tr>
+      <td>Nume: <div style="font-weight: bold">{{pacient.nume}}</div></td><td>Varsta: <div style="font-weight: bold">{{pacient.varsta}}</div></td>
+      <td>Sex: <div style="font-weight: bold">{{pacient.sex}}</div></td>
+      <td>Medic: <div>{{pacient.medic}}</div></td>
+    </tr>
     <tr>
       <td>C.N.P.: <div style="font-weight: bold">{{pacient.cnp}}</div></td><td>Cod pacient: <div style="font-weight: bold">{{pacient.cod}}</div></td>
       <td></td>
       <td>Secția: <div>{{pacient.sectia}}</div></td>
     </tr>
-</table>
+  </table>
   <br/>
-  <table style="width:100%;border:1px solid black" >
+  <table class="ora-primirii-table" style="width:100%;" >
     <tr>
       <td>Data și ora primirii probei în laborator: <div style="font-weight: bold"><input type="text" value="{{buletin.dataPrimireProba}}"/></div></td>
     </tr>
   </table>
   <br/>
-  <table style="width:100%;border:1px solid black">
+  <table class="analize-table" style="width:100%;">
     <tr><td>&nbsp;</td></tr>
     <tr>
-      <td style="background-color: coral;"><span style="font-weight:bold">HEMATOLOGIE - </span><span style="font-weight:bold; font-style:italic;">VALIDAT DE:
+      <td style="background-color: var(--palette-light-red);"><span style="font-weight:bold">HEMATOLOGIE - </span><span style="font-weight:bold; font-style:italic;">VALIDAT DE:
         <input type="text" style="width:300px" value="{{hematologie.validataDe}}"/>&nbsp;
       &nbsp;DATA ȘI ORA VALIDĂRII: <input type="text" value="{{hematologie.data}}"/></span></td>
     </tr>
-  <tr>
-    <td>Starea probei: <span style="font-style:italic;"><input type="text" value="{{hematologie.stare}}"/></span></td>
-  </tr>
     <tr>
-      <td style="background-color: coral;"><span style="font-weight:bold">HEMOLEUCOGRAMA&nbsp;&nbsp;</span><span style="font-style:italic;">(Metoda de lucru:
+      <td>Starea probei: <span style="font-style:italic;"><input type="text" value="{{hematologie.stare}}"/></span></td>
+    </tr>
+    <tr>
+      <td style="background-color: var(--palette-light-red);"><span style="font-weight:bold">HEMOLEUCOGRAMA&nbsp;&nbsp;</span><span style="font-style:italic;">(Metoda de lucru:
         <input type="text" style="width:300px" value="{{hemoleucograma.metodaLucru}}"/>) *
         Tipul probei: <input type="text" value="{{hemoleucograma.tipulProbei}}"/></span></td>
     </tr>
     <tr><td>
-    <table style="width:100%;border-collapse: collapse;">
-    <tr><td style="border:1px solid black;text-align:center">ANALIZE</td><td  style="border:1px solid black;text-align:center">REZULTATE</td><td  style="border:1px solid black;text-align:center">Interval de referinta / UM</td><td  style="border:1px solid black;text-align:center">Comentarii</td></tr>
-      {{#each buletin.analize}}
-      <tr style="border-bottom: 1pt solid black;">
-        <td>
-          {{this.tipAnaliza}}
-        </td>
-        <td style="text-align:center">
-          <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');changeArrow({{this.rezultat}},{{this.minLimit}},{{this.maxLimit}},'{{this.tipAnaliza}}')"
-                 type="text"  value="{{this.rezultat}}" id="rez{{this.tipAnaliza}}" style="width:40%"/> <span id="sageata{{this.tipAnaliza}}">{{{afisareSageata this }}}</span>&nbsp;&nbsp;
-        </td>
-        <td style="text-align:center">
-          {{this.minLimit }} - {{this.maxLimit}} / {{this.intervalDeReferinta}}
-        </td>
-        <td>
-         <input type="text" style="width:100%" value="{{this.comentariu}}"/>
-        </td>
-      </tr>
-      {{/each}}
-    </table>
+      <table style="width:100%;border-collapse: collapse;">
+        <tr><td style="border:1px solid black;text-align:center">ANALIZE</td><td  style="border:1px solid black;text-align:center">REZULTATE</td><td  style="border:1px solid black;text-align:center">Interval de referinta / UM</td><td  style="border:1px solid black;text-align:center">Comentarii</td></tr>
+        {{#each buletin.analize}}
+        <tr style="border-bottom: 1pt solid black;">
+          <td>
+            {{this.tipAnaliza}}
+          </td>
+          <td style="text-align:center">
+            <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');changeArrow({{this.rezultat}},{{this.minLimit}},{{this.maxLimit}},'{{this.tipAnaliza}}')"
+                   type="text"  value="{{this.rezultat}}" id="rez{{this.tipAnaliza}}" style="width:40%"/> <span id="sageata{{this.tipAnaliza}}">{{{afisareSageata this }}}</span>&nbsp;&nbsp;
+          </td>
+          <td style="text-align:center">
+            {{this.minLimit }} - {{this.maxLimit}} / {{this.intervalDeReferinta}}
+          </td>
+          <td>
+            <input type="text" style="width:100%" value="{{this.comentariu}}"/>
+          </td>
+        </tr>
+        {{/each}}
+      </table>
     </td></tr>
   </table><br/><br/>
   <div>{{{footer}}}</div>
   <hr/>
-  <table>
+  <table class="afisare-table">
     <tr><td style="width:40%">Afișat de: <input type="text" value="{{buletin.afisatDe}}"/> </td> <td style="width:40%">Data și ora afișării:</td><td><input type="text" value="{{buletin.dataAfisare}}"/></td></tr>
     <tr><td></td> <td>Data și ora primei afișări:</td><td><input type="text" value="{{buletin.dataPrimaAfisare}}"/></td></tr>
     <tr><td>Cod: <input type="text" value="{{buletin.cod}}"/></td> <td></td><td></td></tr>
