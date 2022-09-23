@@ -24,10 +24,8 @@ router.get('/', (req, res) => {
   const page = query.page;
   const sorting = query.sortBy;
   var alreadyFiltered =false;
-  var sql = "SELECT idpacient, numefamilie, prenume, sex, cetatenie FROM spital.pacient order by idpacient limit 100";
-    if (page!=null) {
-     sql = sql + " offset " + page*100;
-    }
+  var sql = "SELECT idpacient, numefamilie, prenume, sex, cetatenie FROM spital.pacient ";
+
   if (query.numefamilie!=null) {
           sql = sql + " where numefamilie='" + query.numefamilie + "'";
           alreadyFiltered = true;
@@ -86,7 +84,10 @@ router.get('/', (req, res) => {
                     sql = sql + " " + query.sortingOrder;
                 }
     }
-
+    sql = sql + "order by idpacient limit 100";
+     if (page!=null) {
+         sql = sql + " offset " + page*100;
+        }
  var con = mysql.createConnection({
         host: Global.getHost(),
         user: Global.getUser(),
