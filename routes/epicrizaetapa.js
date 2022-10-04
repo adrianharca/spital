@@ -3,29 +3,133 @@ const router = express.Router();
 var Global = require("../functions.js");
 var Handlebars = require('handlebars');
 const url = require('url');
+var mysql = require('mysql');
 
 Handlebars.registerHelper('checked', function(value, test) {
     if (value == undefined) return '';
     return value==test ? 'checked' : '';
 });
 
+router.post('/', (req, res) => {
+    let errors = [];
+    const query = url.parse(req.url, true).query;
+    var idfoaie = query.idfoaie;
+    var idepicriza = query.idepicriza;
+    let { stare, dataEpicriza, intubat, tranzitreluat, diureza, extremitati, mucoase} = req.body;
+    epicriza_etapa = {};
+    epicriza_etapa.dataVar = dataEpicriza;
+    epicriza_etapa.staregenerala = stare;
+    epicriza_etapa.intubat = intubat;
+    epicriza_etapa.tranzitreluat = tranzitreluat;
+    epicriza_etapa.cantitatediureza = diureza;
+    epicriza_etapa.extremitati = extremitati;
+    epicriza_etapa.mucoase = mucoase;
+
+     if (dataEpicriza=='') {
+            errors.push ({"text": "Data epicrizei nu este completata"});
+        };
+     if (stare =='') {
+                 errors.push ({"text": "Starea pacientului nu a fost completata"});
+             };
+     if (errors.length > 0) {
+         res.render('epicriza_etapa', {
+           errors,
+           epicriza_etapa
+         });
+         }
+     else {
+         var con = mysql.createConnection({host: Global.getHost(),user: Global.getUser(),
+                                password: Global.getParola(),port: 3306});
+                          con.connect(function(err) {
+                            if (err) throw err;
+
+                          });
+         if (idepicriza==null)
+            idepicriza = -1;
+         var select = "SELECT * FROM spital.epicrize_etapa where idepicrize_etapa = " + idepicriza;
+         con.query(select, (error, results, fields) => {
+                               if (error) {
+                                           return console.error(error.message);
+                               }
+                               sizeOfSelect = results.length;
+                               var con = mysql.createConnection({
+                                                     host: Global.getHost(),
+                                                     user: Global.getUser(),
+                                                     password: Global.getParola()
+                               });
+                               con.connect(function(err) {
+                                                   if (err) throw err;
+
+                               });
+                               var changeQuery;
+                               if (sizeOfSelect==0) {
+                                        changeQuery = " insert into spital.epicrize_etapa(idfoaie, dataVar, staregenerala, intubat, tranzitreluat, cantitatediureza, extremitati, mucoase) values("
+                                        + idfoaie + ",'"+ dataEpicriza+"','"+ stare +"','"+ Global.convertDa(intubat)+ "','"+ Global.convertDa(tranzitreluat) +"','"+ diureza +"','"+ Global.convertDa(extremitati) +"','"+ Global.convertDa(mucoase) +"')";
+                               }
+                               else {
+                                         changeQuery = " update spital.epicrize_etapa set dataVar='"+ dataEpicriza +"', staregenerala='"+ stare+"', " +
+                                         " intubat = '" + Global.convertDa(intubat) + "', tranzitreluat='" + Global.convertDa(tranzitreluat) + "', cantitatediureza='" + diureza + "', "
+                                         + " extremitati='" + Global.convertDa(extremitati) + "', mucoase='" + Global.convertDa(mucoase) + "' where idepicrize_etapa = " + idepicriza;
+                               }
+                               con.query(changeQuery, function (err, result) {
+                                                 if (err) throw err;
+                                                 con.end();
+                                     });
+                               });
+        res.render('epicriza_etapa', {
+                   epicriza_etapa
+                 });
+     }
+});
+
 router.get('/', (req, res) => {
         var epicriza_etapa= {};
         const query = url.parse(req.url, true).query;
-        const dataVar = query.data;
-        const pacientName = query.pacient;
+        var idfoaie = query.idfoaie;
+        var idepicriza = query.idepicriza;
+        epicriza_etapa = {};
+        var con = mysql.createConnection({host: Global.getHost(),user: Global.getUser(),
+                                        password: Global.getParola(),port: 3306});
+                                  con.connect(function(err) {
+                                    if (err) throw err;
+
+                                  });
         //init
-        if (dataVar!=null) {
-            epicriza_etapa.dataV = "28 iunie 2022";
-            epicriza_etapa.staregenerala = "ok";
-            epicriza_etapa.intubat = "Da";
-            epicriza_etapa.tranzitreluat = "Da";
-            epicriza_etapa.cantitatediureza = "diureza";
-            epicriza_etapa.extremitati = "Nu";
-            epicriza_etapa.mucoase = "Da";
+        if (idfoaie!=null) {
+            if (idepicriza!=null) {
+                    var select = "SELECT * FROM spital.epicrize_etapa where idepicrize_etapa=" + idepicriza;
+                    con.query(select, (error, results, fields) => {
+                          if (error) {
+                                return console.error(error.message);
+                          }
+                           if (results[0]!=undefined) {
+                                epicriza_etapa.idfoaie = results[0].idfoaie;
+                                epicriza_etapa.idepicrize_etapa = results[0].idepicrize_etapa;
+
+                                epicriza_etapa.staregenerala = results[0].staregenerala;
+                                epicriza_etapa.intubat = Global.convertToDa(results[0].intubat);
+                                epicriza_etapa.tranzitreluat = Global.convertToDa(results[0].tranzitreluat);
+                                epicriza_etapa.cantitatediureza = results[0].cantitatediureza;
+                                epicriza_etapa.extremitati = Global.convertToDa(results[0].extremitati);
+                                epicriza_etapa.mucoase = Global.convertToDa(results[0].mucoase);
+                                epicriza_etapa.dataVar = results[0].dataVar;
+                                res.render('epicriza_etapa', {epicriza_etapa});
+                           }
+                           else {
+                                res.send("Nu am gasit epicriza de etapa cu acest identificator:" + idepicriza);
+                           }
+                    });
+
+            }
+            else {
+                res.render('epicriza_etapa', {epicriza_etapa});
+            }
+        }
+        else {
+            res.send("Epicriza de etapa nu a putut fi genereata, pentru ca id-ul foii de observatie nu a fost completat in query string (adica adresa arata asa: https://site/epicriza_etapa , fara '?idfoaie=numar'). Duceti-va in aplicatie pe o foaie de observatie si alegeti o epicriza sau generati una noua din buton");
         }
         //end init
-        res.render('epicriza_etapa', {epicriza_etapa});
+
 
 });
 

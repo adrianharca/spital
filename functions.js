@@ -43,7 +43,8 @@ Handlebars.registerHelper('transformvaluetophotolink', function (value) {
     var returnedValue = value;
     if (value==undefined)
         returnedValue = "";
-     if (value=='')
+
+    else if (value.trim().localeCompare('')==0)
         returnedValue = "";
     return returnedValue.replaceAll(" ","-");
 });
@@ -51,7 +52,7 @@ Handlebars.registerHelper('transformvaluetostylevisibility', function (value) {
     var returnedValue = "visible";
     if (value==undefined)
         returnedValue = "hidden";
-     if (value=='')
+    else if (value.trim().localeCompare('')==0)
         returnedValue = "hidden";
     return returnedValue;
 });
@@ -112,8 +113,18 @@ if (analiz.rezultat<analiz.minLimit)
     return analiz.rezultat + " ➘";
   return analiz.rezultat;
 });
-exports.getUploadFolder=function(){
+exports.getUploadFolder=function() {
     return uploadFolder;
+}
+
+exports.checkNull = function (value) {
+    var returnedValue = "";
+    if (value==undefined)
+        return returnedValue;
+    else if (value==null)
+        return returnedValue;
+    else
+        return value;
 }
 
 exports.convertToCheckbox= function (value) {
@@ -152,7 +163,7 @@ exports.calculateAge = function(zi, luna, an) {
         var month_diff = monthDiff(birthdate,new Date());
         var years = parseInt(month_diff / 12);
         var numberOfMonths = month_diff - (years * 12);
-        return years + "ani, " + numberOfMonths + " luni";
+        return years + " ani, " + numberOfMonths + " luni";
     }
 }
 
@@ -213,7 +224,14 @@ exports.FisaTerapie = function (dataVar){
     return this;
 }
 
-exports.EpicrizaDeEtapa = function (dataVar){
+exports.FisaTerapie = function (dataVar, idVar, idFoaieVar){
+    this.data= dataVar;
+    this.idFisa = idVar;
+    this.idFoaie = idFoaieVar;
+    return this;
+}
+
+exports.Epicrisis = function (dataVar, idVar) {
     this.staregenerala = null;
     this.intubat = null;
     this.tranzitreluat = null;
@@ -221,10 +239,37 @@ exports.EpicrizaDeEtapa = function (dataVar){
     this.extremitati = null;
     this.mucoase = null;
     this.dataV = dataVar;
+    this.idVary = idVar;
     return this;
-}
+};
 
-exports.EpicrizaDeEtapa = function (dataVar, stareGeneralaVar, intubatVar,tranzitreluatVar, cantitatediurezaVar, extremitatiVar, mucoaseVar){
+exports.EpicrizaDeEtapa = function (dataVar){
+    this.staregenerala = null;
+    console.log("aaa: " + idVar);
+    this.intubat = null;
+    this.tranzitreluat = null;
+    this.cantitatediureza = null;
+    this.extremitati = null;
+    this.mucoase = null;
+    this.dataV = dataVar;
+    this.idVary =null;
+    return this;
+};
+exports.convertDa = function (value){
+    var returned;
+    if (value==undefined) return 0;
+    else if (value==null) return 0;
+    else if (value.trim().localeCompare("")==0) return 0;
+    else if (value.trim().localeCompare("Nu")==0) return 0;
+    else return 1;
+}
+exports.convertToDa = function (value){
+    if (value==undefined) return "Nu";
+    else if (value==null) return "Nu";
+    else if (value.toString().trim().localeCompare("0")==0) return "Nu";
+    else return "Da";
+}
+exports.EpicrizaDeEtapa = function (dataVar, stareGeneralaVar, intubatVar,tranzitreluatVar, cantitatediurezaVar, extremitatiVar, mucoaseVar, idVar){
     this.staregenerala = stareGeneralaVar;
     this.intubat = intubatVar;
     this.tranzitreluat = tranzitreluatVar;
@@ -232,6 +277,7 @@ exports.EpicrizaDeEtapa = function (dataVar, stareGeneralaVar, intubatVar,tranzi
     this.extremitati = extremitatiVar;
     this.mucoase = mucoaseVar;
     this.dataV = dataVar;
+    this.idVary = idVar;
     return this;
 }
 
