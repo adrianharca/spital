@@ -134,10 +134,14 @@ router.get('/', (req, res) => {
                   rh = Global.checkNull(result[0].sange).toUpperCase() + " " + Global.checkNull(result[0].rh);
                   diagnostic = result[0].diagnosticprincipal;
                   var arsuriList = JSON.parse(result[0].arsuri);
+                                    if (arsuriList!=undefined) {
                                     for (var i=0;i<arsuriList.length;i++){
                                       arsuri.push(new Global.Arsura(i,arsuriList[i].position, arsuriList[i].grad, arsuriList[i].localizare, arsuriList[i].procent));
                                     }
+                                    }
+                                    else {
 
+                                    }
                   pacient = {nume, prenume, varsta, rh, diagnostic};
                   if (idfisa!=undefined) {
                         var selectFisa = "select * from spital.fisa_terapie_intensiva where idfisa_terapie_intensiva=" + idfisa;
