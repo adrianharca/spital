@@ -219,10 +219,7 @@ exports.Arsura = function (numeArsuraVar){
     this.numeArsura= numeArsuraVar;
     return this;
 }
-exports.FisaTerapie = function (dataVar){
-    this.data= dataVar;
-    return this;
-}
+
 
 exports.FisaTerapie = function (dataVar, idVar, idFoaieVar){
     this.data= dataVar;

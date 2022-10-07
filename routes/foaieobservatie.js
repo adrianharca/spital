@@ -92,7 +92,7 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                               descriere1218,analize1218,adaugafoto1218,spital1218,online1218,
                               descriere1824,analize1824,adaugafoto1824,spital1824,online1824,
                               descriere2430,analize2430,adaugafoto2430,spital2430,online2430,
-                              descriere3036,analize3036,adaugafoto3036,spital3036,online3036} = fields;
+                              descriere3036,analize3036,adaugafoto3036,spital3036,online3036, greutateactuala, zi, luna, an, indiceponderal, salon, pat} = fields;
 
 
             var indexArsura = 0;
@@ -145,7 +145,7 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                                "descriere1218,analize1218,spital1218,online1218,"+
                                "descriere1824,analize1824,spital1824,online1824,"+
                                "descriere2430,analize2430,spital2430,online2430,"+
-                               "descriere3036,analize3036,spital3036,online3036, arsuri, evolutii) VALUES ?";
+                               "descriere3036,analize3036,spital3036,online3036, arsuri, evolutii, greutateactuala, zi, luna, an, indiceponderal, salon, pat) VALUES ?";
                                                                    var values = [
                                                                    [pacientId, medic, sectia, diagprincipal,diaginternare,diag24h,diag72h,intoxicatii,alergii,sange,rh,
                                                                                                   insotit,vechimearsuri,diagexternare,datadeces,cauzadirectadeces,
@@ -165,7 +165,7 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                                                                                                   descriere1218,analize1218,Global.transformCheckboxField(spital1218),Global.transformCheckboxField(online1218),
                                                                                                   descriere1824,analize1824,Global.transformCheckboxField(spital1824),Global.transformCheckboxField(online1824),
                                                                                                   descriere2430,analize2430,Global.transformCheckboxField(spital2430),Global.transformCheckboxField(online2430),
-                                                                                                  descriere3036,analize3036,Global.transformCheckboxField(spital3036),Global.transformCheckboxField(online3036),JSON.stringify(arsuri),JSON.stringify(evolutii)]
+                                                                                                  descriere3036,analize3036,Global.transformCheckboxField(spital3036),Global.transformCheckboxField(online3036),JSON.stringify(arsuri),JSON.stringify(evolutii), greutateactuala, zi, luna, an, indiceponderal, salon, pat]
                                                                    ];
                                                                    con.query(sql, [values], function (err, result) {
                                                                    if (err) throw err;
@@ -223,7 +223,8 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                                             "descriere1218='"+ descriere1218 + "',analize1218='"+ analize1218 + "',adaugafoto1218='"+ fileNameForField(files.adaugafoto1218, idfoaie,"adaugafoto1218",oldFiles.adaugafoto1218) + "',spital1218='"+ Global.transformCheckboxField(spital1218) + "',online1218='"+ Global.transformCheckboxField(online1218) + "',"+
                                             "descriere1824='"+ descriere1824+ "',analize1824='"+ analize1824 + "',adaugafoto1824='"+ fileNameForField(files.adaugafoto1824, idfoaie,"adaugafoto1824",oldFiles.adaugafoto1824) + "',spital1824='"+ Global.transformCheckboxField(spital1824) + "',online1824='"+ Global.transformCheckboxField(online1824) + "',"+
                                             "descriere2430='"+ descriere2430+ "',analize2430='"+ analize2430 + "',adaugafoto2430='"+ fileNameForField(files.adaugafoto2430, idfoaie,"adaugafoto2430",oldFiles.adaugafoto2430) + "',spital2430='"+ Global.transformCheckboxField(spital2430) + "',online2430='"+ Global.transformCheckboxField(online2430) + "',"+
-                                            "descriere3036='"+ descriere3036+ "',analize3036='"+ analize3036 + "',adaugafoto3036='"+ fileNameForField(files.adaugafoto3036, idfoaie,"adaugafoto3036",oldFiles.adaugafoto3036) + "',spital3036='"+ Global.transformCheckboxField(spital3036) + "',online3036='"+ Global.transformCheckboxField(online3036) + "', arsuri='"+ JSON.stringify(arsuri) +"', evolutii='" + JSON.stringify(evolutii) + "', adaugafoto0='"+ fileNameForField(files.adaugafoto0, idfoaie,"adaugafoto0",oldFiles.adaugafoto0) + "' where idfoaie_observatie="+idfoaie;
+                                            "descriere3036='"+ descriere3036+ "',analize3036='"+ analize3036 + "',adaugafoto3036='"+ fileNameForField(files.adaugafoto3036, idfoaie,"adaugafoto3036",oldFiles.adaugafoto3036) + "',spital3036='"+ Global.transformCheckboxField(spital3036) + "',online3036='"+ Global.transformCheckboxField(online3036) + "', " +
+                                            "arsuri='"+ JSON.stringify(arsuri) +"', evolutii='" + JSON.stringify(evolutii) + "', adaugafoto0='"+ fileNameForField(files.adaugafoto0, idfoaie,"adaugafoto0",oldFiles.adaugafoto0) + "', greutateactuala='"+ greutateactuala + "', zi='"+ zi+"', luna='" + luna + "', an='" + an + "', indiceponderal='" + indiceponderal +"', salon='" + salon +"',pat='" +pat + "' where idfoaie_observatie="+idfoaie;
 
                                             con.query(sql, function (err, result) {
                                                         if (err) throw err;
@@ -286,6 +287,16 @@ router.post('/', (req, res) => {
     if (fields.sectia=='') {
                   errors.push ({"text": "Secția nu este completată."});
                     };
+    if (fields.indiceponderal!=undefined) {
+        if (isNaN(fields.indiceponderal)) {
+            errors.push ({"text": "Indicele ponderal nu este numeric."});
+        }
+    }
+    if (fields.greutateactuala!=undefined) {
+            if (isNaN(fields.greutateactuala)) {
+                errors.push ({"text": "Greutatea actuală nu este numerică."});
+            }
+        }
     if (errors.length>0){
         medic = fields.medic;
 
@@ -415,6 +426,7 @@ function constructFoaie(errors, req, res) {
                                 foaie.detaliipacient.sex = results[0].sex;
                                 foaie.detaliipacient.cnp = results[0].cnp;
                                 foaie.detaliipacient.cod = results[0].cod;
+
                                 oldFiles = {};
                                 markedDel = {};
                                 if (idfoaie!=null) {
@@ -441,11 +453,18 @@ function constructFoaie(errors, req, res) {
                                     foaie.anamneza.stare = results[0].stare;
                                     foaie.anamneza.tratasport = results[0].tratasport;
                                     foaie.rh = results[0].rh;
+                                    foaie.zi = results[0].zi;
+                                    foaie.luna = results[0].luna;
+                                    foaie.an = results[0].an;
+                                    foaie.greutateactuala = results[0].greutateactuala;
                                     foaie.sange = results[0].sange;
                                     foaie.alergii = results[0].alergii;
                                     foaie.intoxicatii = results[0].intoxicatii;
                                     foaie.diag72h = results[0].diag72h;
                                     foaie.diag24h = results[0].diag24h;
+                                    foaie.indiceponderal = results[0].indiceponderal;
+                                    foaie.salon = results[0].salon;
+                                    foaie.pat = results[0].pat;
                                     foaie.diagnosticprincipal = results[0].diagnosticprincipal;
                                     foaie.diagnosticlainternare = results[0].diagnosticlainternare;
                                     foaie.insotit = results[0].insotit;
@@ -568,7 +587,7 @@ function constructFoaie(errors, req, res) {
                                                                         }
                                                                         if (results!=null) {
                                                                             for (var i=0;i<results.length;i++){
-                                                                                foaie.epicrizedeetapa.push(new Global.FisaTerapie(results[i].data, results[i].idepicrize_etapa));
+                                                                                foaie.epicrizedeetapa.push(new Global.FisaTerapie(results[i].dataVar, results[i].idepicrize_etapa, idfoaie));
                                                                             }
                                                                         }
                                                                         //foaie.fiseterapie.push(Global.FisaTerapie("28/29 iunie 2022"));
@@ -591,7 +610,9 @@ function constructFoaie(errors, req, res) {
                                 }
                                 else {
                                     con.end();
-
+                                    foaie.zi = new Date().getDate();
+                                    foaie.luna = new Date().getMonth();
+                                    foaie.an = new Date().getFullYear();
                                     //foaie.fiseterapie.push(Global.FisaTerapie("28/29 iunie 2022"));
                                     foaie.buletinebio.push(Global.Bio("14 Iunie"));
                                     foaie.buletinehemo.push(Global.Hemo("14 Iunie"));

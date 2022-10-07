@@ -6,6 +6,8 @@ var mysql = require('mysql');
 
 var Global = require("../functions.js");
 var emptyStr = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+
+var arsuri;
 var Comment = function (oraV, solPerfuzabilV, tratamentV, diurezaV, scaunV, varsatV, lichideIngerateV) {
     this.ora = oraV,
     this.solPerfuzabil = solPerfuzabilV,
@@ -20,6 +22,7 @@ router.post('/', (req, res) => {
     var pacientName = query.pacient;
     var idfoaie = query.idfoaie;
     var idfisa = query.idfisa;
+
     let {dataForm, row1col1,row1col2,row1col3,
     row2col1,row2col2,row2col3,
     row3col1,row3col2,row3col3,
@@ -27,8 +30,29 @@ router.post('/', (req, res) => {
     row5col1,row5col2,row5col3,
     row6col1,row6col2,row6col3,
     row7col1,row7col2,row7col3, comments} = req.body;
+    errors = [];
+    detaliiFisa = {row1col1,row1col2,row1col3,
+                    row2col1,row2col2,row2col3,
+                    row3col1,row3col2,row3col3,
+                    row4col1,row4col2,row4col3,
+                    row5col1,row5col2,row5col3,
+                    row6col1,row6col2,row6col3,
+                    row7col1,row7col2,row7col3 };
+    comments = [];
+    for(var i=0;i<24;i++){
+          var oraV =  i;
+          comments.push(new Comment(oraV,req.body["commsol"+oraV],req.body["commtrat"+oraV],req.body["commdiureza"+oraV],req.body["commscaun"+oraV],req.body["commvarsat"+oraV],req.body["commlichide"+oraV]));
+    }
+    if (dataForm=='') {
+         errors.push ({"text": "Data nu este completată."});
+         res.render('fisaterapie', {errors,fisa, pacient,detaliiFisa, comments, arsuri} );
+         return;
+    };
+
+
     if (idfisa==undefined)
           idfisa = -1;
+
     var select = "select * from spital.fisa_terapie_intensiva where idfisa_terapie_intensiva=" + idfisa;
                       var con = mysql.createConnection({ host: Global.getHost(), user: Global.getUser(),password: Global.getParola()});
                       con.connect(function(err) {
@@ -42,9 +66,6 @@ router.post('/', (req, res) => {
                              comments = [];
                              for(var i=0;i<24;i++){
                                    var oraV =  i;
-                                  // if (oraV.length<2)
-                                   //      oraV = "0"+i;
-                                   //oraV, solPerfuzabilV, tratamentV, diurezaV, scaunV, varsatV, lichideIngerateV
                                    comments.push(new Comment(oraV,req.body["commsol"+oraV],req.body["commtrat"+oraV],req.body["commdiureza"+oraV],req.body["commscaun"+oraV],req.body["commvarsat"+oraV],req.body["commlichide"+oraV]));
                                    }
                              var changeQuery;
@@ -55,7 +76,7 @@ router.post('/', (req, res) => {
                                                "row2col1,row2col2,row2col3,"+
                                                "row3col1,row3col2,row3col3,"+
                                                "row4col1,row4col2,row4col3,"+
-                                               "row5col3,row5col2,row5col1,"+
+                                               "row5col1,row5col2,row5col3,"+
                                                "row6col1,row6col2,row6col3,"+
                                                "row7col1,row7col2, row7col3, comments)"+
                                                "VALUES("+idfoaie+",'"+ dataForm + "'," +
@@ -73,7 +94,7 @@ router.post('/', (req, res) => {
                                                "row2col1 = '"+ row2col1 +"',row2col2 = '"+ row2col2 +"',row2col3 = '"+ row2col3 +"',"+
                                                "row3col1 = '"+ row3col1 +"',row3col2 = '"+ row3col2 +"',row3col3 = '"+ row3col3 +"',"+
                                                "row4col1 = '"+ row4col1 +"',row4col2 = '"+ row4col2 +"',row4col3 = '"+ row4col3 +"',"+
-                                               "row5col3 = '"+ row5col1 +"',row5col2 = '"+ row5col2 +"',row5col1 = '"+ row5col3 +"',"+
+                                               "row5col1 = '"+ row5col1 +"',row5col2 = '"+ row5col2 +"',row5col3 = '"+ row5col3 +"',"+
                                                "row6col1 = '"+ row6col1 +"',row6col2 = '"+ row6col2 +"',row6col3 = '"+ row6col3 +"',"+
                                                "row7col1 = '"+ row7col1 +"',row7col2 = '"+ row7col2 +"',row7col3 = '"+ row7col3 +"',"+
                                                "comments= '"+JSON.stringify(comments) +"' " +
@@ -94,8 +115,16 @@ router.post('/', (req, res) => {
 
                       });
 });
-var arsuri;
-
+function createComments(){
+    comms = [];
+    for(var i=0;i<24;i++){
+           var oraV =  i;
+           if (oraV.length<2)
+                oraV = "0"+i;
+           comms.push(new Comment(oraV,'','','','','',''));
+    }
+return comms;
+}
 router.get('/', (req, res) => {
     const query = url.parse(req.url, true).query;
     var data = query.data;
@@ -103,10 +132,11 @@ router.get('/', (req, res) => {
     var idfoaie = query.idfoaie;
 
     var idfisa = query.idfisa;
+
     if (idfoaie!=undefined) {
 
     arsuri = [];
-    var sql = "SELECT prenume, numefamilie, zi, luna, an, sex, cnp, cod, f.medic as medic, f.sectia as sectia, f.arsuri as arsuri, f.sange, f.rh, f.diagnosticprincipal  FROM spital.pacient p left join spital.foaie_observatie f on f.idpacient = p.idpacient where p.idpacient=(select idpacient from spital.foaie_observatie where idfoaie_observatie=" + idfoaie + ")";
+    var sql = "SELECT prenume, numefamilie, p.zi, p.luna, p.an, sex, cnp, cod, f.medic as medic, f.sectia as sectia, f.salon as salon, f.arsuri as arsuri, f.sange, f.rh, f.diagnosticprincipal  FROM spital.pacient p left join spital.foaie_observatie f on f.idpacient = p.idpacient where p.idpacient=(select idpacient from spital.foaie_observatie where idfoaie_observatie=" + idfoaie + ")";
     var row1col1=row1col2=row1col3=
         row2col1=row2col2=row2col3=
         row3col1=row3col2=row3col3=
@@ -125,7 +155,7 @@ router.get('/', (req, res) => {
           if (err) throw err;
 
            if (result[0]!=null) {
-                  salon = result[0].sectia;
+                  salon = result[0].salon;
                   nrFo = idfoaie;
                   nume = result[0].numefamilie;
                   prenume = result[0].prenume;
@@ -136,7 +166,7 @@ router.get('/', (req, res) => {
                   var arsuriList = JSON.parse(result[0].arsuri);
                                     if (arsuriList!=undefined) {
                                     for (var i=0;i<arsuriList.length;i++){
-                                      arsuri.push(new Global.Arsura(i,arsuriList[i].position, arsuriList[i].grad, arsuriList[i].localizare, arsuriList[i].procent));
+                                      arsuri.push(new Global.Arsura(arsuriList[i].position, arsuriList[i].grad, arsuriList[i].localizare, arsuriList[i].procent));
                                     }
                                     }
                                     else {
@@ -174,13 +204,7 @@ router.get('/', (req, res) => {
 
                                            comments = JSON.parse(result[0].comments);
                                            if (comments==undefined || comments == null) {
-                                             comments = [];
-                                              for(var i=0;i<24;i++){
-                                                      var oraV =  i;
-                                                      if (oraV.length<2)
-                                                            oraV = "0"+i;
-                                                      comments.push(new Comment(oraV,'','','','','',''));
-                                               }
+                                                comments = createComments();
                                              }
                                              else {
 
@@ -208,13 +232,7 @@ router.get('/', (req, res) => {
                                                      con.end();
                                    }
                                    else {
-                                         comments = [];
-                                         for(var i=0;i<24;i++){
-                                              var oraV =  i;
-                                              if (oraV.length<2)
-                                                   oraV = "0"+i;
-                                              comments.push(new Comment(oraV,'','','','','',''));
-                                              }
+                                         comments = createComments();
                                         fisa = {salon, data, nrFo};
                                         res.render('fisaterapie', {fisa, pacient, comments} );
                                         con.end();
@@ -223,13 +241,7 @@ router.get('/', (req, res) => {
 
                   }
                    else {
-                        comments = [];
-                        for(var i=0;i<24;i++){
-                            var oraV =  i;
-                            if (oraV.length<2)
-                                 oraV = "0"+i;
-                            comments.push(new Comment(oraV,'','','','','',''));
-                        }
+                        comments = createComments();
                         fisa = {salon, data, nrFo};
                         res.render('fisaterapie', {fisa,pacient, comments} );
                                                                 con.end();

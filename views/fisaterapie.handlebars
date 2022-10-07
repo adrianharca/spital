@@ -2,6 +2,8 @@
 <section id="chart1" class="container" style="width:100% !important">
     <script src="/js/jquery-3.6.0.min.js"></script>
     <script src="/js/general.js"></script>
+
+
     <form method="post" name="formfisaterap">
     <table style="width:100%">
         <tr>
@@ -9,7 +11,7 @@
                 ARSURI
                 <table>
                     {{#each arsuri}}
-                    <tr><td>{{this.position}},{{this.grad}}</td></tr>
+                    <tr><td>{{this.position}}, {{this.grad}} ({{this.localizare}})</td></tr>
                     {{/each}}
                 </table>
             </td>
@@ -27,6 +29,11 @@
             <td></td><td></td><td>NR. FO <span class="dottedSpan">{{{fisa.nrFo}}}</span></td>
         </tr>
     </table>
+        {{#each errors}}
+        <div class="error" style="color:red">
+            <p>{{text}}</p>
+        </div>
+        {{/each}}
     <h1 style="font-style:italic; text-align:center">FIȘĂ TERAPIE INTENSIVĂ</h1>
     <table style="width:100%">
         <tr>

@@ -33,6 +33,15 @@
                 <tr>
                     <td style="font-weight:bold">Secția: </td><td><input type="text" id="sectia" name="sectia" style="width:400px; background: white; color: red;" value="{{foaie.sectia}}"/></td>
                 </tr>
+                <tr>
+                    <td style="font-weight:bold">Salon: </td><td><input type="text" id="salon" name="salon" style="width:400px; background: white; color: red;" value="{{foaie.salon}}"/></td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Pat: </td><td><input type="text" id="pat" name="pat" style="width:400px; background: white; color: red;" value="{{foaie.pat}}"/></td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Data internării: </td><td>Zi:&nbsp;<input type="text" id="zi" name="zi" style="width:60px; background: white; color: red;" value="{{foaie.zi}}"/>&nbsp;Lună:&nbsp;<input type="text" id="luna" name="luna" style="width:100px; background: white; color: red;" value="{{foaie.luna}}"/>&nbsp;An:&nbsp;<input type="text" id="an" name="an" style="width:100px; background: white; color: red;" value="{{foaie.an}}"/></td>
+                </tr>
             </table>
         </div>
         <br/>
@@ -96,6 +105,22 @@
                     </td>
                     <td>
                         <input type="text" id="alergii" name="alergii" style="width:100%" value="{{foaie.alergii}}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Indice ponderal
+                    </td>
+                    <td>
+                        <input type="text" id="indiceponderal" name="indiceponderal" style="width:100%" value="{{foaie.indiceponderal}}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Greutate actuală (kg)
+                    </td>
+                    <td>
+                        <input type="text" id="greutateactuala" name="greutateactuala" style="width:100%" value="{{foaie.greutateactuala}}"/>
                     </td>
                 </tr>
                 <tr>
@@ -213,11 +238,11 @@
 <div id="tratament" class="tabcontent">
 <h3>Tratament</h3>
 <h4>a) Sistemic</h4>
-
+<h5>Fișe de terapie</h5>
 {{#each foaie.fiseterapie}}
-<a href="/fisa_terapie?idfoaie={{this.idFoaie}}&amp;idfisa={{this.idFisa}}" style="color:red" target="_blank">{{this.data}}</a>&nbsp;&nbsp;
+<a href="/fisa_terapie?idfoaie={{this.idFoaie}}&amp;idfisa={{this.idFisa}}" style="color:red; text-align:left " target="_blank">{{this.data}}</a><br/>&nbsp;&nbsp;
 {{/each}}<br/>
-<input style="font-size:10px;height:17px" type="button" id="adaugafisaterapie" onclick="adaugaFisaTerapie()" value="Adaugă fișă terapie"/> <br/>
+<input style="font-size:10px;height:17px" type="button" id="adaugafisaterapie" onclick="adaugaFisaTerapie()" value="Adaugă fișă terapie"/><br/><br/>
 <table><tr><td>Cantitatea de lichide pe 24 de ore </td><td><input type="text" id="cantitatelichide" style="width:100%"  name="cantitatelichide" value="{{foaie.anamneza.cantitatelichide}}"/></td></tr>
     <tr><td></td><td>Formule pentru 0-6 ani: Galveston</td></tr>
     <tr><td></td><td>Formule pentru 7-18 ani: Parkland</td></tr>
@@ -226,7 +251,7 @@
     <tr><td style="text-align:right">16 h</td><td><input type="text" id="cantlichide16h" style="width:100%"  name="cantlichide16h" value="{{foaie.anamneza.cantlichide16h}}"/></td></tr>
     <tr><td style="text-align:right">24 h</td><td><input type="text" id="cantlichide24h" style="width:100%"  name="cantlichide24h" value="{{foaie.anamneza.cantlichide24h}}"/></td></tr>
 </table>
-<br/><br/>
+<br/>
 <h4>b) Local</h4>
 <h4>Dinamica plăgilor</h4>
 <input type="text" id="dinamicaplagi" style="width:100%"  name="dinamicaplagi" value="{{foaie.anamneza.dinamicaplagi}}"/><br/><br/>
@@ -247,8 +272,9 @@
 <h4>Evoluție și tratament</h4>
 <div id="updatedtableEvolutie"></div>
 <input type="button" id="adaugareevolutie" onclick="adaugareEvolutie()" value="Adaugă evoluție"/>&nbsp;&nbsp;<input type="button" id="stergeEvolutie" onclick="stergereevolutie()" value="Șterge ultima evoluție"/>
-
+<!--
 <h4>Analize</h4>
+
 {{#each foaie.buletinebio}}
 <a href="/buletin_analize_biochimie?pacient={{foaie.detaliipacient.nume}}&amp;data={{this.data}}" style="color:red" target="_blank">Biochimie {{this.data}}</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanBio" onclick="adaugaanBio()" value="Adaugă analiză biochimie"/> <br/>
 {{/each}}
@@ -258,13 +284,14 @@
 {{#each foaie.buletinehemo}}
 <a href="/buletin_analize_hemato?pacient={{foaie.detaliipacient.nume}}&amp;data={{this.data}}" style="color:red"  target="_blank">Sânge {{this.data}}</a>&nbsp;&nbsp;<input style="font-size:10px;height:17px" type="button" id="adaugaanHema" onclick="adaugaanHema()" value="Adaugă analiză hematologie"/> <br/>
 {{/each}}
+-->
 <h4></h4>
-<h4><a style="color:black" target="_blank" href="/foaie_temperatura?pacient={{foaie.detaliipacient.nume}}">Foaie temperatura</a></h4>
+<h4><a style="color:black" target="_blank" href="/foaie_temperatura?foaie={{foaie.detaliipacient.idfoaie}}">Foaie temperatura</a></h4>
 </div>
 <div id="epetapa" class="tabcontent">
 <h3>Epicriza de etapă</h3>
 {{#each foaie.epicrizedeetapa}}
-<a href="/epicriza_etapa?idepicriza={{this.idVary}}&amp;idfoaie={{foaie.detaliipacient.idfoaie}}" style="color:red" target="_blank">{{this.dataV}}</a>&nbsp;&nbsp;
+<a href="/epicriza_etapa?idepicriza={{this.idFisa}}&amp;idfoaie={{this.idFoaie}}" style="color:red" target="_blank">{{this.data}}</a>&nbsp;&nbsp;
 <br/>
 {{/each}}<br/>
 <input type="button" id="adaugaepicriza" onclick="adaugaEpicriza()" value="Adaugă epicriză"/>

@@ -1,6 +1,10 @@
 const express = require('express');
-const router = express.Router();
 
+var Global = require("../functions.js");
+const router = express.Router();
+const url = require('url');
+
+var mysql = require('mysql');
 global.chart = require('chart');
 var emptyStr = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 var ziuadeboalaLabel = "Ziua de boală";
@@ -55,9 +59,12 @@ var   labels   = [],
                     diureza = [],
                     scaune = [],
                     dieta = [];
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
 
-    var arr = [];
+});
+
+function constructFoaie(results, res){
+var arr = [];
     ////// initialize sample data
     var startDay = 7;
 
@@ -77,20 +84,24 @@ router.get('/', (req, res) => {
     arr.push(new FTchart(day++,illnessDay++,"S",28,24,140,36.8,125,1200,1,"V"));
     arr.push(new FTchart(day,illnessDay,"D",29,21,150,36.2));
     arr.push(new FTchart(day++,illnessDay++,"S",28,22,155,36.6,125,1200,1,"V"));
+// "SELECT prenume, numefamilie, f.greutateactuala, f.inaltime, zi, luna, an, sex, cnp, cod, greutatenastere, f.medic as medic, f.sectia as sectia, f.arsuri as arsuri, f.greutateactuala as greutateactuala, f.sange, f.rh, f.diagnosticprincipal  FROM spital.pacient p left join spital.foaie_observatie f on f.idpacient = p.idpacient where p.idpacient=(select idpacient from spital.foaie_observatie where idfoaie_observatie=" + idfoaie + ")";
 
-    cnp = '6171002160667';
-    prenumeStr = "Gina";
-    numeStr = "Balazs";
-    nr = 3199;
-    an = 2022;
-    luna = "03";
-    salon = emptyStr;
-    pat = emptyStr;
-    greutateactuala = "19 Kg.";
-    greutatenastere = emptyStr;
-    indiceponderal = emptyStr;
+    cnp = results[0].cnp;
+    prenumeStr = results[0].prenume;
+    numeStr = results[0].numefamilie;
+    nr = idfoaie;
+    an = results[0].an;
+    luna = results[0].luna;
+
+    greutateactuala = results[0].greutateactuala;
+    greutatenastere = results[0].greutatenastere;
+    indiceponderal = results[0].indiceponderal;
+    salon = results[0].salon;
+    pat = results[0].pat;
+    /// ??? ce facem cu campul acesta ???
+
     suprafatacorporala = emptyStr;
-    //// end init
+    //// end ce facem ???
     var nonVoidEntries = arr.length;
     // do we need to add also the rest of the days in that particular month????? if so, let's uncomment
 /*
@@ -132,6 +143,27 @@ router.get('/', (req, res) => {
 
     etichete = {ziuadeboalaLabel, lichLabel,diurezaLabel,scauneLabel,dietaLabel,tempLongLabel,tempLabel,pulsLabel,respLabel,respLongLabel,taLabel};
     res.render('chart', { foaieTemperatura, pacient, detaliiFoaie, etichete} );
+
+}
+
+router.get('/', (req, res) => {
+    const query = url.parse(req.url, true).query;
+
+    idfoaie = query.foaie;
+    var sql = "SELECT prenume, numefamilie, f.greutateactuala, f.indiceponderal, f.zi as zi, f.luna as luna, f.an as an, sex, cnp, cod, greutatenastere, f.medic as medic, f.sectia as sectia, f.salon as salon, f.pat as pat, f.arsuri as arsuri, f.greutateactuala as greutateactuala, f.sange, f.rh, f.diagnosticprincipal  FROM spital.pacient p left join spital.foaie_observatie f on f.idpacient = p.idpacient where p.idpacient=(select idpacient from spital.foaie_observatie where idfoaie_observatie=" + idfoaie + ")";
+    var con = mysql.createConnection({host: Global.getHost(),user: Global.getUser(),password: Global.getParola(),port: 3306});
+    con.connect(function(err) {
+        if (err) throw err;
+
+    });
+    con.query(sql, (error, results, fields) => {
+          if (error) {
+                 return console.error(error.message);
+          }
+          constructFoaie(results, res);
+    });
+
+
 
 });
 
