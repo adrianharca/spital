@@ -103,7 +103,7 @@ router.post('/', (req, res) => {
                  foaieTemperaturaSaved.dietaL = req.body.dietaL;
 
                  sizeOfSelect = results.length;
-                 if (req.body.labelsVarArr!=undefined)
+                 if (req.body.labelsVarArr!=undefined && req.body.labelsVarArr[0]!=undefined )
                         startDay = req.body.labelsVarArr[0].split(" ")[0];
                     else
                         startDay = 1;

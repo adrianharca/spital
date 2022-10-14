@@ -30,35 +30,35 @@
             <tr><td style="width:22%; text-align:left">Ziua</td>
                 __#each serialList++
                 <td>
-                    <div class="rowLichide">__this++</div>
+                    <div class="rowLichide" >__this++</div>
                 </td>
                 __/each++
             </tr>
               <tr> <td style="width:22%; text-align:left">{{etichete.lichLabel}}</td>
                   __#each lichideV++
                   <td>
-                      <input type="text" style="width:50px" class="rowLichide" value="__this++"/>
+                      <input type="text" style="width:50px" class="rowLichide" id="lichide__@index++" name="lichide__@index++" value="__this++"/>
                   </td>
                   __/each++
               </tr>
               <tr><td style="width:22%; text-align:left">{{etichete.diurezaLabel}}</td>
                   __#each diurezaV++
                   <td>
-                      <input type="text" style="width:50px" class="rowDiureza" value="__this++"/>
+                      <input type="text" style="width:50px" class="rowDiureza" id="diureza__@index++" name="diureza__@index++" value="__this++"/>
                   </td>
                   __/each++
               </tr>
               <tr><td style="width:22%; text-align:left">{{etichete.scauneLabel}}</td>
                   __#each scauneV++
                   <td>
-                      <input type="text" style="width:50px" class="rowScaune" value="__this++"/>
+                      <input type="text" style="width:50px" class="rowScaune" id="scaune__@index++" name="scaune__@index++" value="__this++"/>
                   </td>
                   __/each++
               </tr>
               <tr><td style="width:22%; text-align:left">{{etichete.dietaLabel}}</td>
                   __#each dietaV++
                   <td>
-                      <input type="text" style="width:50px" class="rowDieta" value="__this++"/>
+                      <input type="text" style="width:50px" class="rowDieta" id="dieta__@index++" name="dieta__@index++" value="__this++"/>
                   </td>
                   __/each++
               </tr>
@@ -174,13 +174,32 @@ var pointHitRadiusVar = 10;
 var templateText;
 var tableTemplate;
 
+var labelsVarFinal = [];
+var i = 0;
 function salvareInBaza(){
     document.getElementById("respVar").value=respVar;
     document.getElementById("taVar").value=taVar;
     document.getElementById("pulsVar").value=pulsVar;
     document.getElementById("tempVar").value=tempVar;
     document.getElementById("labelsVarArr").value=labelsVarArr;
-    document.getElementById("labels2VarArr").value=labels2VarArr;
+    var labels2VarInserted = [];
+     for(i1 = 0;i1<labelsVarFinal.length; i1++){
+         if (labelsVarFinal[i1][1]!=undefined)
+            labels2VarInserted.push(labelsVarFinal[i1][1]);
+    }
+    document.getElementById("labels2VarArr").value=labels2VarInserted;
+    lichideL = [];
+    diurezaL = [];
+    scauneL = [];
+    dietaL = [];
+    var i = 0;
+    while (document.getElementById("lichide" +i)!=undefined) {
+        lichideL.push(document.getElementById("lichide" + i).value);
+        diurezaL.push(document.getElementById("diureza" + i).value);
+        scauneL.push(document.getElementById("scaune" + i).value);
+        dietaL.push(document.getElementById("dieta" + i).value);
+        i++;
+    }
     document.getElementById("lichideL").value=lichideL;
     document.getElementById("uniqDaysV").value=uniqDaysV;
     document.getElementById("diurezaL").value=diurezaL;
@@ -277,6 +296,7 @@ function remove(){
         var indexElementUniq = uniqDaysV.indexOf(dayEraseWithoutTime);
         if (dayErase.includes(" S")) {
             if (indexElementUniq>=0) {
+
                 uniqDaysV.splice(indexElementUniq,1);
                 lichideL.splice(indexElementUniq,1);
                 diurezaL.splice(indexElementUniq,1);
@@ -505,8 +525,6 @@ var labels2VarArr = labels2Var.split(",");
 if (labelsVarArr[0]=="") labelsVarArr = [];
 if (labels2VarArr[0]=="") labels2VarArr = [];
 
-var labelsVarFinal = [];
-var i = 0;
 labelsVarArr.forEach(element => {
                 labelsVarFinal.push([element, labels2VarArr[i]])
                 i = i+1;

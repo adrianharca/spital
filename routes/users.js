@@ -20,6 +20,33 @@ Object.prototype.parseSqlResult = function () {
 function test(results){
     return Object.values(JSON.parse(JSON.stringify(results)));
 };
+
+router.get('/delete', (req,res) => {
+    const query = url.parse(req.url, true).query;
+    const data = query.data;
+    var id = query.id;
+    if (id!=undefined){
+        var con = mysql.createConnection({
+              host: Global.getHost(),
+              user: Global.getUser(),
+              password: Global.getParola()
+              });
+              deleteSql = "delete from spital.utilizator where idutilizator=" + id;
+          con.connect(function(err) {
+            if (err) throw err;
+            con.query(deleteSql, function (err, result, fields) {
+              if (err) throw err;
+              con.end();
+              res.redirect('/users' );
+            });
+          });
+
+    }
+    else {
+       res.redirect('/users' );
+    }
+
+});
 // Get user list
 router.get('/', (req, res) => {
   const query = url.parse(req.url, true).query;
@@ -51,7 +78,6 @@ router.get('/', (req, res) => {
     if (err) throw err;
     con.query(sql, function (err, result, fields) {
       if (err) throw err;
-      console.log(result);
       con.end();
       res.render('users', result  );
     });
@@ -70,7 +96,6 @@ router.get('/json', (req, res) => {
 
         res.json({ c })
 
-        console.log('result: ' + result + ' ');
       })
 
     .catch(err => console.log(err));
@@ -268,7 +293,8 @@ router.post('/adduser', (req, res) => {
                              if (err) throw err;
                              console.log("Number of records inserted: " + result.affectedRows);
                              errors.push ({"text": "Utilizatorul " + nume + " a fost creat în bază."});
-                             res.render('adduser', {errors,nume, rol, email});
+                             parolaConfirm = parola;
+                             res.render('adduser', {errors,nume, rol, email, parola, parolaConfirm});
                              });
                   }
                   else {
@@ -278,9 +304,10 @@ router.post('/adduser', (req, res) => {
                          console.log(result.affectedRows + " record(s) updated");
                          errors.push ({"text": "Utilizatorul " + nume + " există în baza de date: a fost actualizat cu noile informații."});
                        });
+                       parolaConfirm = parola;
                       res.render('adduser', {
                               errors,
-                              nume, rol, email
+                              nume, rol, email, parola, parolaConfirm
                             });
                   }
                   con.end();

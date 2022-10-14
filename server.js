@@ -3,7 +3,7 @@ var bodyParser = require("body-parser");
 const exphbs = require('express-handlebars');
 const path = require("path");
 const router = require("./routes/routemap");
-
+const fs = require('fs');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan'); 
@@ -15,7 +15,14 @@ const chart = require('chart');
 var app = express();
 app.use(cors());
 
+var folder = 'public/uploads2';
 
+if (!fs.existsSync(folder)){
+
+    fs.mkdirSync(folder);
+    console.log('Folder to upload images was created successfully.');
+
+}
 
 app.set('json spaces', 40);
 //Handlebars
@@ -43,6 +50,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 //Routes for interface:
+app.use("/setup", require('./routes/setup'));
 app.use("/epicriza_etapa", require('./routes/epicrizaetapa'));
 app.use("/foaie_observatie", require('./routes/foaieobservatie'));
 app.use("/buletin_analize_hemato", require('./routes/buletinanalizehemato'));

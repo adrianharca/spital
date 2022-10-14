@@ -1,7 +1,7 @@
 <section id="adduser" class="container">
   <div class="form-wrap">
     <a href="../users/" style="color:red;text-align:left !important">&lt;&lt;&lt; Înapoi</a>
-    <h1>Adaugă utilizator</h1>
+    <h1>Salvează utilizator</h1>
     {{#each errors}}
     <div class="error" style="color:red">
       <p>{{text}}</p>
@@ -25,15 +25,15 @@
       </div>
       <div class="input-group">
         <label for="parola">Parola</label>
-        <input type="text" name="parola" id="parola" class="input-box" placeholder="parola"
+        <input type="password" name="parola" id="parola" class="input-box" placeholder="parola"
                maxlength="100" value="{{parola}}"/>
       </div>
       <div class="input-group">
         <label for="parolaConfirm">Confirmă Parola</label>
-        <input type="text" name="parolaConfirm" id="parolaConfirm" class="input-box" placeholder="parolaConfirm"
+        <input type="password" name="parolaConfirm" id="parolaConfirm" class="input-box" placeholder="parolaConfirm"
                maxlength="100" value="{{parolaConfirm}}"/>
       </div>
-      <input type="submit" value="Adaugă utilizator" class="btn btn-reverse"/>
+      <input type="submit" value="Salvează utilizator" class="btn btn-reverse"/>
     </form>
   </div>
 </section>

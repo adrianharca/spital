@@ -1,0 +1,18 @@
+<section id="adduser" class="container">
+  <div class="form-wrap">
+    <h1>Configurația aplicației</h1>
+    {{#each errors}}
+    <div class="error" style="color:red">
+      <p>{{text}}</p>
+    </div>
+    {{/each}}
+    <form action="/setup" method='post'>
+      <div class="input-group">
+        <label for="roles">Roluri (separate prin virgulă: ex. medic, asistentă, etc.)</label>
+        <input type="text" name="roles" id="roles" class="input-box" placeholder="Roluri"
+               maxlength="100" value="{{setup.roles}}"/>
+      </div>
+      <input type="submit" value="Salvează configurația" class="btn btn-reverse"/>
+    </form>
+  </div>
+</section>
