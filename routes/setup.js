@@ -28,7 +28,12 @@ router.get('/', (req, res) => {
       con.end();
       var setup = {};
       if (result[0]!=undefined) {
+
         setup.roles = result[0].roles;
+        if (result[0].sectii!=undefined)
+            setup.sectiiJsonVar = result[0].sectii;
+        else
+            setup.sectiiJsonVar = [];
         }
         res.render('setup',{ setup}  );
     });
@@ -64,6 +69,19 @@ router.post('/', (req, res) => {
         res.render('setup',{errors, setup});
         return;
   }
+  var indexSectie = 0;
+  var sectii = [];
+  while (req.body["nume"+indexSectie]!=undefined || req.body["saloane"+indexSectie]!=undefined ){
+        sectii.push(new Global.Sectie(indexSectie, req.body["nume"+indexSectie], req.body["saloane"+indexSectie]));
+        indexSectie++;
+  }
+  if (indexSectie==0){
+        errors.push ({"text": "Completați configurația cu cel puțin o secție."});
+        setup = {};
+        setup.roles = req.body.roles;
+        res.render('setup',{errors, setup});
+        return;
+  }
   modifieddate= creationdate = new Date();
 
   var con = mysql.createConnection({
@@ -80,11 +98,12 @@ router.post('/', (req, res) => {
               return console.error(error.message);
             }
              var sizeOfSelect = results.length;
+
              if (sizeOfSelect==0)  {
-                    updateInsertSql = "insert into spital.setup(roles,modifieddate,creationdate) values ('"+ req.body.roles + "','" +modifieddate + "','" + creationdate+"')";
+                    updateInsertSql = "insert into spital.setup(roles,modifieddate,creationdate,sectii) values ('"+ req.body.roles + "','" +modifieddate + "','" + creationdate+"','" + JSON.stringify(sectii)+"')";
              }
              else {
-                    updateInsertSql =  "update spital.setup set roles='" + req.body.roles + "', modifieddate='" + modifieddate+ "'";
+                    updateInsertSql =  "update spital.setup set roles='" + req.body.roles + "', modifieddate='" + modifieddate+ "', sectii='"+ JSON.stringify(sectii) + "'";
              }
              var setup = {};
              con.query(updateInsertSql, (error2, results2, fields2) => {
@@ -92,7 +111,8 @@ router.post('/', (req, res) => {
                                                return console.error(error2.message);
                                    }
                                     setup.roles = req.body.roles;
-                                     res.render('setup',{errors, setup});
+                                    setup.sectiiJsonVar = JSON.stringify(sectii);
+                                    res.render('setup',{errors, setup});
                                    });
 
 

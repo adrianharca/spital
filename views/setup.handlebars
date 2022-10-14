@@ -1,5 +1,5 @@
 <section id="adduser" class="container">
-  <div class="form-wrap">
+  <div>
     <h1>Configurația aplicației</h1>
     {{#each errors}}
     <div class="error" style="color:red">
@@ -12,7 +12,75 @@
         <input type="text" name="roles" id="roles" class="input-box" placeholder="Roluri"
                maxlength="100" value="{{setup.roles}}"/>
       </div>
+      <h3 style="text-align:left">Secții</h3>
+      <div id="updatedtable" class="input-group"></div>
+      <input type="button" id="adauga" onclick="adaugaSectie()" value="Adaugă secție" />&nbsp;&nbsp;<input
+            type="button" id="sterge" onclick="stergeSectie()" value="Șterge ultima secție" />
+      <br/><br/>
       <input type="submit" value="Salvează configurația" class="btn btn-reverse"/>
     </form>
   </div>
 </section>
+<script type="text/x-handlebars-template" id="tableTemplateSectii">
+__#each sectiiVV++
+
+Nume secție
+<input type="text" style="width:300px" name="nume__this.position++" id="nume__this.position++" value="__this.nume++"/><br/>
+Saloane (separate prin virgulă) <input type="text" style="width:500px" name="saloane__this.position++"  id="saloane__this.position++" value="__this.saloane++"/>&nbsp;<br/><br/>
+
+__/each++
+
+</script>
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js/handlebars.min.js"></script>
+<script src="/js/bootstrap-filestyle.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/general.js"></script>
+<script>
+var templateText = $("#tableTemplateSectii").html();
+
+templateText = $("#tableTemplateSectii").html().replaceAll("_", "{").replaceAll("+", "}");
+var tableTemplateSectii = Handlebars.compile(templateText);
+var sectiiStr = '{{{setup.sectiiJsonVar}}}';
+var sectii;
+if (sectiiStr!='')
+  sectii = JSON.parse(sectiiStr);
+else
+  sectii = {};
+$("#updatedtable").html(tableTemplateSectii({ sectiiVV: sectii }));
+
+function adaugaSectie() {
+            var templateText = $("#tableTemplateSectii").html();
+
+            templateText = $("#tableTemplateSectii").html().replaceAll("_", "{").replaceAll("+", "}");
+
+            var tableTemplate = Handlebars.compile(templateText);
+            var lengthSectii = sectii.length;
+            sectii = [];
+            for (var index = 0; index < lengthSectii; index++) {
+                var newSectie = {};
+                var ind = index; ind++;
+                newSectie.position = index;
+                newSectie.nume = document.getElementById("nume" + index).value;
+                newSectie.saloane = document.getElementById("saloane" + index).value;
+                sectii.push(newSectie);
+            }
+            var newSectie = {};
+            newSectie.position = sectii.length;
+            newSectie.nume = null;
+            newSectie.saloane = null;
+            sectii.push(newSectie);
+
+            $("#updatedtable").html(tableTemplateSectii({ sectiiVV: sectii }));
+        }
+        function stergeSectie() {
+            var templateText = $("#tableTemplateSectii").html();
+
+            templateText = $("#tableTemplateSectii").html().replaceAll("_", "{").replaceAll("+", "}");
+
+            var tableTemplate = Handlebars.compile(templateText);
+            sectii.pop();
+
+            $("#updatedtable").html(tableTemplateSectii({ sectiiVV: sectii }));
+        }
+</script>

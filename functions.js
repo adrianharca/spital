@@ -315,6 +315,13 @@ exports.Recomandare = function (positionVar, recomandareVar) {
     return this;
 }
 
+exports.Sectie = function (positionVar, numeVar, saloaneVar) {
+    this.position = positionVar;
+    this.nume = numeVar;
+    this.saloane = saloaneVar;
+    return this;
+}
+
 exports.Arsura = function (positionVar) {
     this.position = positionVar;
     this.grad = null;
