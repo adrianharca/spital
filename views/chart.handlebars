@@ -1,5 +1,6 @@
 <!--suppress ALL -->
 <section id="chart1" class="container" style="width:100% !important">
+    <form method="post" name="formfoaietemperatura">
     <table style="width:100%">
         <tr>
             <td><div>Greutatea actuală:<span class="dottedSpan">{{{pacient.greutateactuala}}}</span></div>
@@ -14,7 +15,7 @@
             <h1 style="text-align:center">Foaie de temperatură</h1>
             <div style="text-align:center">CNP <span class="dottedSpan">{{{pacient.cnp}}}</span></div>
             <div style="text-align:center">&nbsp;</div>
-            <div style="text-align:center">Numele <span class="dottedSpan">{{{pacient.nume}}}</span> &nbsp; &nbsp; &nbsp; Prenumele <span class="dottedSpan">{{{pacient.prenume}}}</span></div>
+            <div style="text-align:center">Numele <span class="dottedSpan"><a style="color:red" href="/pacients/addpacient?id={{pacient.idpacient}}">{{{pacient.nume}}}</a></span> &nbsp; &nbsp; &nbsp; Prenumele <span class="dottedSpan">{{{pacient.prenume}}}</span></div>
             <div style="text-align:center">&nbsp;</div>
             <div style="text-align:center">Anul <span class="dottedSpan" id="an">{{{detaliiFoaie.an}}}</span> &nbsp; &nbsp; &nbsp; luna <span class="dottedSpan" id="luna" >{{{detaliiFoaie.luna}}}</span> &nbsp; &nbsp; &nbsp; Nr. foii de observație <span class="dottedSpan">{{{detaliiFoaie.nr}}}</span> &nbsp; &nbsp; &nbsp; Nr. salon <span class="dottedSpan">{{{detaliiFoaie.salon}}}</span> &nbsp; &nbsp; &nbsp; Nr. pat <span class="dottedSpan">{{{detaliiFoaie.pat}}}</span></div>
             <div style="text-align:center">&nbsp;</div>
@@ -23,6 +24,7 @@
         </td>
         </tr>
     </table>
+
     <script type="text/x-handlebars-template" id="tableTemplate">
           <table style="width:100%;text-align:center">
             <tr><td style="width:22%; text-align:left">Ziua</td>
@@ -62,7 +64,7 @@
               </tr>
         </table>
     </script>
-    <canvas id="myChart"></canvas>
+    <canvas id="myChart" ></canvas>
 
     <div id="updatedtable"></div>
 
@@ -79,15 +81,15 @@
                  <select id="selectExistingOrNewDay" onchange="disableElements()" name="selectExistingOrNewDay">
                  </select>
                  </td></tr>
-        <tr><td>Ziua de boală</td><td style="text-align:left"><input id="ziuadeboala" type="text" value="" disabled="" /></td></tr>
-        <tr><td><span id="respspan"/></td><td style="text-align:left"><input id="resp" type="text" value=""/></td></tr>
-        <tr><td><span id="taspan"/></td><td style="text-align:left"><input id="ta" type="text" value=""/></td></tr>
-        <tr><td><span id="pulsspan"/></td><td style="text-align:left"><input id="puls" type="text" value=""/></td></tr>
-        <tr><td><span id="tempspan"/></td><td style="text-align:left"><input id="temperatura" type="text" value=""/></td></tr>
-        <tr><td><span id="lichspan"/></td><td style="text-align:left"><input id="lichideingerate" type="text" value=""/></td></tr>
-        <tr><td><span id="diurezaspan"/></td><td style="text-align:left"><input id="diureza" type="text" value=""/></td></tr>
-        <tr><td><span id="scaunespan"/></td><td style="text-align:left"><input id="scaune" type="text" value=""/></td></tr>
-        <tr><td><span id="dietaspan"/></td><td style="text-align:left"><input id="dieta" type="text" value=""/></td></tr>
+        <tr><td>Ziua de boală</td><td style="text-align:left"><input id="ziuadeboala" name="ziuadeboala" type="text" value="" disabled="" /></td></tr>
+        <tr><td><span id="respspan" /></td><td style="text-align:left"><input id="resp" name="resp" type="text" value=""/></td></tr>
+        <tr><td><span id="taspan" /></td><td style="text-align:left"><input id="ta" name="ta" type="text" value=""/></td></tr>
+        <tr><td><span id="pulsspan" /></td><td style="text-align:left"><input id="puls" name="puls" type="text" value=""/></td></tr>
+        <tr><td><span id="tempspan" /></td><td style="text-align:left"><input id="temperatura" name="temperatura" type="text" value=""/></td></tr>
+        <tr><td><span id="lichspan" /></td><td style="text-align:left"><input id="lichideingerate" name="lichideingerate" type="text" value=""/></td></tr>
+        <tr><td><span id="diurezaspan" /></td><td style="text-align:left"><input id="diureza" name="diureza" type="text" value=""/></td></tr>
+        <tr><td><span id="scaunespan" /></td><td style="text-align:left"><input id="scaune" name="scaune" type="text" value=""/></td></tr>
+        <tr><td><span id="dietaspan"/></td><td style="text-align:left"><input id="dieta" name="dieta" type="text" value=""/></td></tr>
         <tr>
             <td colspan="2" >
                 <input type="button" value="Adaugă" onclick="add()" />
@@ -115,7 +117,7 @@
         </tr>
         <tr>
             <td colspan="2" >
-                <input type="button" style="width:150px;height:30px" value="Salvare în bază" onclick="salvareInBaza()" />
+                <input type="submit" style="width:150px;height:30px" value="Salvare în bază" onclick="salvareInBaza()" />
             </td>
         </tr>
         <tr>
@@ -133,8 +135,20 @@
             </td>
         </tr>
     </table>
-    </div>
 
+    </div>
+        <input id="respVar" name="respVar" type="hidden" value=""/>
+        <input id="taVar" name="taVar" type="hidden" value=""/>
+        <input id="pulsVar" name="pulsVar" type="hidden" value=""/>
+        <input id="tempVar" name="tempVar" type="hidden" value=""/>
+        <input id="labelsVarArr" name="labelsVarArr" type="hidden" value=""/>
+        <input id="labels2VarArr" name="labels2VarArr" type="hidden" value=""/>
+        <input id="lichideL" name="lichideL" type="hidden" value=""/>
+        <input id="uniqDaysV" name="uniqDaysV" type="hidden" value=""/>
+        <input id="diurezaL" name="diurezaL" type="hidden" value=""/>
+        <input id="scauneL" name="scauneL" type="hidden" value=""/>
+        <input id="dietaL" name="dietaL" type="hidden" value=""/>
+    </form>
     <script src="/js/jquery-3.6.0.min.js"></script>
 
     <script src="/js/handlebars.min.js"></script>
@@ -161,7 +175,18 @@ var templateText;
 var tableTemplate;
 
 function salvareInBaza(){
-    alert("Graficul a fost salvat în baza de date.");
+    document.getElementById("respVar").value=respVar;
+    document.getElementById("taVar").value=taVar;
+    document.getElementById("pulsVar").value=pulsVar;
+    document.getElementById("tempVar").value=tempVar;
+    document.getElementById("labelsVarArr").value=labelsVarArr;
+    document.getElementById("labels2VarArr").value=labels2VarArr;
+    document.getElementById("lichideL").value=lichideL;
+    document.getElementById("uniqDaysV").value=uniqDaysV;
+    document.getElementById("diurezaL").value=diurezaL;
+    document.getElementById("scauneL").value=scauneL;
+    document.getElementById("dietaL").value=dietaL;
+    alert("Graficul va fi salvat acum în baza de date.");
 }
 
 document.getElementById("respspan").innerHTML = respLongLabel;
@@ -279,6 +304,10 @@ function resizeChart(){
     myChart.resize(1000, 600);
  else if (numberOfExistingElements>=20)
     myChart.resize(1200, 1200);
+
+document.getElementById("container").classList.remove("container");
+document.getElementById("container").style.boxSizing = "inherit";
+document.getElementById("updatedtable").style.overflowX="scroll";
 }
 function chartClickEvent(event){
    var numberOfExistingElements = labelsVarFinal.length-1;

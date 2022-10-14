@@ -1,12 +1,15 @@
 <section id="users" class="container">
-    <input type="button" onClick=" window.open('/users/adduser','_self');" value="Adaugă utilizator" class="btn btn-reverse" style="background: var(--primary-color);border: 1px solid var(--primary-color);"/>
+    <input type="button" onClick=" window.open('/users/adduser','_self');" value="Adaugă utilizator" class="btn btn-reverse"/>
     <h1>Toți utilizatorii</h1>
     {{#each this}}
     {{#ifNotNull email}}
     <div class="users">
-        <a href="/users/adduser?id={{idutilizator}}" style="color:red"><h3>Nume: {{nume}}</h3></a>
-        <p>E-mail: {{email}}</p>
-        <p>Roluri: {{rol}}</p>
+        <div>
+            <a href="/users/adduser?id={{idutilizator}}" style="color:red"><h3>Nume: {{nume}}</h3></a>
+            <p>E-mail: {{email}}</p>
+            <p>Roluri: {{rol}}</p>
+        </div>
+        <button class="deleteFoaie-btn btn btn-reverse" id="{{idutilizator}}">Șterge utilizator</button>
     </div>
     {{/ifNotNull}}
     {{else}}

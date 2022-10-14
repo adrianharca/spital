@@ -2,230 +2,339 @@
 <section id="chart1" class="container" style="width:100% !important">
     <script src="/js/jquery-3.6.0.min.js"></script>
     <script src="/js/general.js"></script>
+    <style>
+        input[type="text"]{
+            width:100%;
+        }
+    </style>
 
 
     <form method="post" name="formfisaterap">
-    <table style="width:100%">
-        <tr>
-            <td colspan="3" style="text-align:left">
-                ARSURI
-                <table>
-                    {{#each arsuri}}
-                    <tr><td>{{this.position}}, {{this.grad}} ({{this.localizare}})</td></tr>
-                    {{/each}}
-                </table>
-            </td>
-        </tr>
+        <table style="width:100%">
+            <tr>
+                <td colspan="3" style="text-align:left">
+                    ARSURI
+                    <table>
+                        {{#each arsuri}}
+                        <tr>
+                            <td>{{this.position}}, {{this.grad}} ({{this.localizare}})</td>
+                        </tr>
+                        {{/each}}
+                    </table>
+                </td>
+            </tr>
 
-        <tr>
-            <td style="width:26%"></td>
-            <td style="width:53%"></td><td style="width:20%">DATA <span class="dottedSpan">
-            <input style="height:16px" name="dataForm" id="dataForm" type="text" value="{{fisa.data}}"/></span></td>
-        </tr>
-        <tr>
-            <td></td><td></td><td>SALON <span class="dottedSpan">{{{fisa.salon}}}</span></td>
-        </tr>
-        <tr>
-            <td></td><td></td><td>NR. FO <span class="dottedSpan">{{{fisa.nrFo}}}</span></td>
-        </tr>
-    </table>
+            <tr>
+
+                <td style="width:26%"></td>
+                <td style="width:53%"></td>
+                <td style="width:20%">DATA <span class="dottedSpan">
+                        <input style="height:16px" name="dataForm" id="dataForm" type="text"
+                               value="{{fisa.data}}" /></span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>SALON <span class="dottedSpan">{{{fisa.salon}}}</span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>NR. FO <span class="dottedSpan">{{{fisa.nrFo}}}</span></td>
+            </tr>
+        </table>
         {{#each errors}}
         <div class="error" style="color:red">
             <p>{{text}}</p>
         </div>
         {{/each}}
-    <h1 style="font-style:italic; text-align:center">FIȘĂ TERAPIE INTENSIVĂ</h1>
-    <table style="width:100%">
-        <tr>
-            <td>NUME <span class="dottedSpan">{{{pacient.nume}}}</span></td>
-            <td>PRENUME <span class="dottedSpan">{{{pacient.prenume}}}</span></td>
-            <td>VÂRSTA <span class="dottedSpan">{{{pacient.varsta}}}</span></td>
-        </tr>
-        <tr>
-            <td>GRUP SANGUIN RH <span class="dottedSpan">{{{pacient.rh}}}</span></td>
-            <td colspan="2">DIAGNOSTIC <span class="dottedSpan">{{{pacient.diagnostic}}}</span></td>
-        </tr>
+        <h1 style="font-style:italic; text-align:center">FIȘĂ TERAPIE INTENSIVĂ</h1>
+        <table style="width:100%;">
+            <tr>
+                <td>NUME <span class="dottedSpan">{{{pacient.nume}}}</span></td>
+                <td>PRENUME <span class="dottedSpan">{{{pacient.prenume}}}</span></td>
+                <td>VÂRSTA <span class="dottedSpan">{{{pacient.varsta}}}</span></td>
+            </tr>
+            <tr>
+                <td>GRUP SANGUIN RH <span class="dottedSpan">{{{pacient.rh}}}</span></td>
+                <td colspan="2">DIAGNOSTIC <span class="dottedSpan">{{{pacient.diagnostic}}}</span></td>
+            </tr>
 
-    </table>
-    <br/><br/>
-    <table style="width:100%;border: 1px solid black;" cellspacing="0">
-        <tr >
-            <td style="border: 1px solid black;">
-    <table width="100%"><tr><td style="width:40%"> ????? 5%</td><td> <input type="text" name="row1col1" id="row1col1"  value="{{detaliiFisa.row1col1}}"/></td></tr></table>
-            </td>
-            <td style="border: 1px solid black;">
-    <table width="100%"><tr><td style="width:40%"> PPC</td><td> <input type="text" name="row1col2" id="row1col2" value="{{detaliiFisa.row1col2}}"/></td></tr></table>
-            </td>
-            <td width="15%" style="border: 1px solid black;">
-                TEMPERATURĂ
-            </td>
-            <td width="15%" style="border: 1px solid black;">
-                <input type="text" name="row1col3" id="row1col3" value="{{detaliiFisa.row1col3}}"/>
-            </td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">
-    <table width="100%"><tr><td style="width:40%">????? LACTAT</td><td> <input type="text" name="row2col1" id="row2col1" value="{{detaliiFisa.row2col1}}"/></td></tr></table>
-            </td>
-            <td style="border: 1px solid black;">
-    <table width="100%"><tr><td style="width:40%">  M E</td><td> <input type="text"  name="row2col2" id="row2col2" value="{{detaliiFisa.row2col2}}"/></td></tr></table>
-            </td>
-            <td style="border: 1px solid black;">
-                FR
-            </td>
-            <td style="border: 1px solid black;">
-                <input type="text"  name="row2col3" id="row2col3" value="{{detaliiFisa.row2col3}}"/>
-            </td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">
-                <table width="100%"><tr><td style="width:40%">SER FIZIOLOGIC</td><td> <input type="text" name="row3col1" id="row3col1" value="{{detaliiFisa.row3col1}}"/></td></tr></table>
-            </td>
-            <td style="border: 1px solid black;">
-                <table width="100%"><tr><td style="width:40%">GLUC 33%</td><td>  <input type="text" name="row3col2" id="row3col2" value="{{detaliiFisa.row3col2}}"/></td></tr></table>
-            </td>
-            <td style="border: 1px solid black;">
-                SpCl2
-            </td>
-            <td style="border: 1px solid black;">
-                <input type="text" name="row3col3" id="row3col3" value="{{detaliiFisa.row3col3}}"/>
-            </td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">
-    <table width="100%"><tr><td style="width:40%">????????</td><td> <input type="text" name="row4col1" id="row4col1" value="{{detaliiFisa.row4col1}}"/></td></tr></table>
-            </td>
-            <td style="border: 1px solid black;">
-    <table width="100%"><tr><td style="width:40%">NaCl58,5%</td><td> <input type="text"  name="row4col2" id="row4col2"  value="{{detaliiFisa.row4col2}}"/></td></tr></table>
-            </td>
-            <td style="border: 1px solid black;">
-                AV
-            </td>
-            <td style="border: 1px solid black;">
-                <input type="text"  name="row4col3" id="row4col3"  value="{{detaliiFisa.row4col3}}"/>
-            </td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">
-    <table width="100%"><tr><td style="width:40%">???????? </td><td><input type="text"  name="row5col1" id="row5col1"  value="{{detaliiFisa.row5col1}}"/></td></tr></table>
-            </td>
-            <td style="border: 1px solid black;">
-    <table width="100%"><tr><td style="width:40%">KCl 7,4% </td><td><input type="text" name="row5col2" id="row5col2" value="{{detaliiFisa.row5col2}}"/></td></tr></table>
-            </td>
-            <td style="border: 1px solid black;">
-                T.A
-            </td>
-            <td style="border: 1px solid black;">
-                <input type="text" name="row5col3" id="row5col3" value="{{detaliiFisa.row5col3}}"/>
-            </td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">
-    <table width="100%"><tr><td style="width:40%">????????</td><td> <input type="text" name="row6col1" id="row6col1" value="{{detaliiFisa.row6col1}}"/></td></tr></table>
-            </td>
-            <td style="border: 1px solid black;">
-    <table width="100%"><tr><td style="width:40%">CA GLUCONIC</td><td> <input type="text" name="row6col2" id="row6col2" value="{{detaliiFisa.row6col2}}"/></td></tr></table>
-            </td>
-            <td style="border: 1px solid black;">
-                VIT. B6 B1
-            </td>
-            <td style="border: 1px solid black;">
-                <input type="text" name="row6col3" id="row6col3" value="{{detaliiFisa.row6col3}}"/>
-            </td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">
-    <table width="100%"><tr><td style="width:40%">????????</td><td> <input type="text"  name="row7col1" id="row7col1"  value="{{detaliiFisa.row7col1}}"/></td></tr></table>
-            </td>
-            <td style="border: 1px solid black;">
-    <table width="100%"><tr><td style="width:40%">OCTAGAM</td><td> <input type="text"  name="row7col2" id="row7col2"  value="{{detaliiFisa.row7col2}}"/></td></tr></table>
-            </td>
-            <td style="border: 1px solid black;">
-                VIT C
-            </td>
-            <td style="border: 1px solid black;">
-              <input type="text" name="row7col3" id="row7col3" value="{{detaliiFisa.row7col3}}"/>
-            </td>
-        </tr>
-    </table>
+        </table>
+        <br /><br />
+        <table style=" table-layout: fixed; width:100%;border: 1px solid black;" cellspacing="0">
+            <tr>
+                <td style="border: 1px solid black;">
+                    <table width="100%">
+                        <tr>
+                            <td style="width:40%"> ????? 5%</td>
+                            <td> <input type="text" name="row1col1" id="row1col1" value="{{detaliiFisa.row1col1}}" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;">
+                    <table width="100%">
+                        <tr>
+                            <td style="width:40%"> PPC</td>
+                            <td> <input type="text" name="row1col2" id="row1col2" value="{{detaliiFisa.row1col2}}" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="15%" style="border: 1px solid black;">
+                    TEMPERATURĂ
+                </td>
+                <td width="15%" style="border: 1px solid black;">
+                    <input type="text" name="row1col3" id="row1col3" value="{{detaliiFisa.row1col3}}" />
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black;">
+                    <table width="100%">
+                        <tr>
+                            <td style="width:40%">????? LACTAT</td>
+                            <td> <input type="text" name="row2col1" id="row2col1" value="{{detaliiFisa.row2col1}}" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;">
+                    <table width="100%">
+                        <tr>
+                            <td style="width:40%"> M E</td>
+                            <td> <input type="text" name="row2col2" id="row2col2" value="{{detaliiFisa.row2col2}}" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;">
+                    FR
+                </td>
+                <td style="border: 1px solid black;">
+                    <input type="text" name="row2col3" id="row2col3" value="{{detaliiFisa.row2col3}}" />
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black;">
+                    <table width="100%">
+                        <tr>
+                            <td style="width:40%">SER FIZIOLOGIC</td>
+                            <td> <input type="text" name="row3col1" id="row3col1" value="{{detaliiFisa.row3col1}}" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;">
+                    <table width="100%">
+                        <tr>
+                            <td style="width:40%">GLUC 33%</td>
+                            <td> <input type="text" name="row3col2" id="row3col2" value="{{detaliiFisa.row3col2}}" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;">
+                    SpCl2
+                </td>
+                <td style="border: 1px solid black;">
+                    <input type="text" name="row3col3" id="row3col3" value="{{detaliiFisa.row3col3}}" />
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black;">
+                    <table width="100%">
+                        <tr>
+                            <td style="width:40%">????????</td>
+                            <td> <input type="text" name="row4col1" id="row4col1" value="{{detaliiFisa.row4col1}}" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;">
+                    <table width="100%">
+                        <tr>
+                            <td style="width:40%">NaCl58,5%</td>
+                            <td> <input type="text" name="row4col2" id="row4col2" value="{{detaliiFisa.row4col2}}" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;">
+                    AV
+                </td>
+                <td style="border: 1px solid black;">
+                    <input type="text" name="row4col3" id="row4col3" value="{{detaliiFisa.row4col3}}" />
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black;">
+                    <table width="100%">
+                        <tr>
+                            <td style="width:40%">???????? </td>
+                            <td><input type="text" name="row5col1" id="row5col1" value="{{detaliiFisa.row5col1}}" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;">
+                    <table width="100%">
+                        <tr>
+                            <td style="width:40%">KCl 7,4% </td>
+                            <td><input type="text" name="row5col2" id="row5col2" value="{{detaliiFisa.row5col2}}" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;">
+                    T.A
+                </td>
+                <td style="border: 1px solid black;">
+                    <input type="text" name="row5col3" id="row5col3" value="{{detaliiFisa.row5col3}}" />
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black;">
+                    <table width="100%">
+                        <tr>
+                            <td style="width:40%">????????</td>
+                            <td> <input type="text" name="row6col1" id="row6col1" value="{{detaliiFisa.row6col1}}" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;">
+                    <table width="100%">
+                        <tr>
+                            <td style="width:40%">CA GLUCONIC</td>
+                            <td> <input type="text" name="row6col2" id="row6col2" value="{{detaliiFisa.row6col2}}" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;">
+                    VIT. B6 B1
+                </td>
+                <td style="border: 1px solid black;">
+                    <input type="text" name="row6col3" id="row6col3" value="{{detaliiFisa.row6col3}}" />
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black;">
+                    <table width="100%">
+                        <tr>
+                            <td style="width:40%">????????</td>
+                            <td> <input type="text" name="row7col1" id="row7col1" value="{{detaliiFisa.row7col1}}" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;">
+                    <table width="100%">
+                        <tr>
+                            <td style="width:40%">OCTAGAM</td>
+                            <td> <input type="text" name="row7col2" id="row7col2" value="{{detaliiFisa.row7col2}}" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;">
+                    VIT C
+                </td>
+                <td style="border: 1px solid black;">
+                    <input type="text" name="row7col3" id="row7col3" value="{{detaliiFisa.row7col3}}" />
+                </td>
+            </tr>
+        </table>
 
-    <br/><br/>
+        <br /><br />
 
-    <table style="width:100%;border: 1px solid black;resize:both;" cellspacing="0">
-        <colgroup>
-            <col style="width:40px !important"/>
-            <col style="width:40px"/>
-            <col style="width:40px"/>
-            <col style="width:40px"/>
-            <col style="width:40px"/>
-            <col style="width:40px"/>
-            <col style="width:40px"/>
-        </colgroup>
-        <tr>
-            <td style="border: 1px solid black;">
-                ORA
-            </td>
-            <td style="border: 1px solid black;">
-                SOL PERFUZABILĂ
-            </td>
-            <td style="border: 1px solid black;">
-                TRATAMENT
-            </td>
-            <td style="border: 1px solid black;">
-                DIUREZĂ
-            </td>
-            <td style="border: 1px solid black;">
-                SCAUN
-            </td>
-            <td style="border: 1px solid black;">
-                VĂRSAT
-            </td>
-            <td style="border: 1px solid black;">
-                LICHIDE INGERATE
-            </td>
-        </tr>
-        {{#each comments}}
-        <tr>
-            <td style="border: 1px solid black;"><span id="commora{{this.ora}}" name="commora{{this.ora}}">{{this.ora}}</span></td>
-            <td style="border: 1px solid black;"><input type="text" value="{{this.solPerfuzabil}}" id="commsol{{this.ora}}" name="commsol{{this.ora}}"/></td>
-            <td style="border: 1px solid black;"><input type="text" value="{{this.tratament}}" id="commtrat{{this.ora}}" name="commtrat{{this.ora}}"/></td>
-            <td style="border: 1px solid black;"><input type="text" value="{{this.diureza}}" id="commdiureza{{this.ora}}" name="commdiureza{{this.ora}}" /></td>
-            <td style="border: 1px solid black;"><input type="text"  value="{{this.scaun}}" id="commscaun{{this.ora}}" name="commscaun{{this.ora}}" /></td>
-            <td style="border: 1px solid black;"><input type="text"  value="{{this.varsat}}" id="commvarsat{{this.ora}}" name="commvarsat{{this.ora}}" /></td>
-            <td style="border: 1px solid black;"><input type="text"  value="{{this.lichideIngerate}}" id="commlichide{{this.ora}}" name="commlichide{{this.ora}}"/></td>
-        </tr>
-        {{/each}}
-        <tr><td colspan="7"></td></tr>
-        <tr><td colspan="7"> <input type="submit" style="font-size:16px" class="btn btn-reverse" value="Salvează în baza de date" /></td>
-        </tr>
-        <tr>
-            <td>&nbsp;&nbsp;</td>
-        </tr>
-        <tr>
-            <td>&nbsp;&nbsp;</td>
-        </tr>
-        <tr>
-            <td>&nbsp;&nbsp;</td>
-        </tr>
-        <tr>
-            <td colspan="2" style="font-weight:bold;font-size:20px" >
-                Audit
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="font-weight:bold;font-size:10px" >
-                <div id="audit" >&nbsp;</div>
-            </td>
-        </tr>
-    </table>
+        <table style=" table-layout: fixed; width:100%; border: 1px solid black; resize:both;" cellspacing="0">
+            <colgroup>
+                <col style="width:40px !important" />
+                <col style="width:40px" />
+                <col style="width:40px" />
+                <col style="width:40px" />
+                <col style="width:40px" />
+                <col style="width:40px" />
+                <col style="width:40px" />
+            </colgroup>
+            <tr>
+                <td style="border: 1px solid black;">
+                    ORA
+                </td>
+                <td style="border: 1px solid black;">
+                    SOL PERFUZABILĂ
+                </td>
+                <td style="border: 1px solid black;">
+                    TRATAMENT
+                </td>
+                <td style="border: 1px solid black;">
+                    DIUREZĂ
+                </td>
+                <td style="border: 1px solid black;">
+                    SCAUN
+                </td>
+                <td style="border: 1px solid black;">
+                    VĂRSAT
+                </td>
+                <td style="border: 1px solid black;">
+                    LICHIDE INGERATE
+                </td>
+            </tr>
+            {{#each comments}}
+            <tr>
+                <td style="border: 1px solid black;"><span id="commora{{this.ora}}"
+                                                           name="commora{{this.ora}}">{{this.ora}}</span></td>
+                <td style="border: 1px solid black;"><input type="text" value="{{this.solPerfuzabil}}"
+                                                            id="commsol{{this.ora}}" name="commsol{{this.ora}}" /></td>
+                <td style="border: 1px solid black;"><input type="text" value="{{this.tratament}}"
+                                                            id="commtrat{{this.ora}}" name="commtrat{{this.ora}}" /></td>
+                <td style="border: 1px solid black;"><input type="text" value="{{this.diureza}}"
+                                                            id="commdiureza{{this.ora}}" name="commdiureza{{this.ora}}" /></td>
+                <td style="border: 1px solid black;"><input type="text" value="{{this.scaun}}"
+                                                            id="commscaun{{this.ora}}" name="commscaun{{this.ora}}" /></td>
+                <td style="border: 1px solid black;"><input type="text" value="{{this.varsat}}"
+                                                            id="commvarsat{{this.ora}}" name="commvarsat{{this.ora}}" /></td>
+                <td style="border: 1px solid black;"><input type="text" value="{{this.lichideIngerate}}"
+                                                            id="commlichide{{this.ora}}" name="commlichide{{this.ora}}" /></td>
+            </tr>
+            {{/each}}
+            <tr>
+                <td colspan="7"></td>
+            </tr>
+            <tr>
+                <td colspan="7"> <input type="submit" style="font-size:16px" class="btn btn-reverse"
+                                        value="Salvează în baza de date" /></td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="font-weight:bold;font-size:20px">
+                    Audit
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="font-weight:bold;font-size:10px">
+                    <div id="audit">&nbsp;</div>
+                </td>
+            </tr>
+        </table>
     </form>
 
-<script>
-window.document.title= "Fișă terapie - " + "{{fisa.data}}, {{pacient.prenume}} {{pacient.nume}}";
-function add(){
-    addToAudit("a");
+    <script>
+        window.document.title = "Fișă terapie - " + "{{fisa.data}}, {{pacient.prenume}} {{pacient.nume}}";
+        function add() {
+            addToAudit("a");
 
-};
-</script>
+        };
+    </script>
 
 </section>

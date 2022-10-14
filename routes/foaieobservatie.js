@@ -414,7 +414,7 @@ function constructFoaie(errors, req, res) {
                       if (err) throw err;
 
                       });
-                      var select = "SELECT prenume, numefamilie, zi, luna, an, sex, cnp, cod FROM spital.pacient where idpacient=" + pacientId;
+                      var select = "SELECT idpacient,prenume, numefamilie, zi, luna, an, sex, cnp, cod FROM spital.pacient where idpacient=" + pacientId;
                       con.query(select, (error, results, fields) => {
                                 if (error) {
                                             return console.error(error.message);
@@ -426,7 +426,7 @@ function constructFoaie(errors, req, res) {
                                 foaie.detaliipacient.sex = results[0].sex;
                                 foaie.detaliipacient.cnp = results[0].cnp;
                                 foaie.detaliipacient.cod = results[0].cod;
-
+                                foaie.detaliipacient.id = results[0].idpacient;
                                 oldFiles = {};
                                 markedDel = {};
                                 if (idfoaie!=null) {
@@ -611,7 +611,7 @@ function constructFoaie(errors, req, res) {
                                 else {
                                     con.end();
                                     foaie.zi = new Date().getDate();
-                                    foaie.luna = new Date().getMonth();
+                                    foaie.luna = (new Date().getMonth()) + 1;
                                     foaie.an = new Date().getFullYear();
                                     //foaie.fiseterapie.push(Global.FisaTerapie("28/29 iunie 2022"));
                                     foaie.buletinebio.push(Global.Bio("14 Iunie"));

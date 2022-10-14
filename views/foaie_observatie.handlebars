@@ -1,7 +1,8 @@
 <!--suppress ALL -->
 <section id="foaie" class="container" style="width:100% !important">
     <a href="/foaie_observatie/allFiles" style="color:red;text-align:left !important">&lt;&lt;&lt; Înapoi</a>
-    <h1>Foaie de observație clinică generală <span id="idfoaie" name="idfoaie">{{foaie.detaliipacient.idfoaie}}</span></h1>
+    <h1>Foaie de observație clinică generală <span id="idfoaie" name="idfoaie">{{foaie.detaliipacient.idfoaie}}</span>
+    </h1>
     {{#each errors}}
     <div class="error" style="color:red">
         <p>{{text}}</p>
@@ -13,38 +14,56 @@
             <h3>Datele pacientului</h3>
             <table class="table table-user-information">
                 <tr>
-                    <td style="font-weight:bold">Nume: </td><td id="numepacient">{{foaie.detaliipacient.nume}}</td>
+                    <td style="font-weight:bold">Nume: </td>
+                    <td id="numepacient">{{foaie.detaliipacient.nume}}</td>
                 </tr>
                 <tr>
-                    <td style="font-weight:bold">Vârsta: </td><td id="varstapacient"> {{foaie.detaliipacient.varsta}}</td>
+                    <td style="font-weight:bold">Vârsta: </td>
+                    <td id="varstapacient"> {{foaie.detaliipacient.varsta}}</td>
                 </tr>
                 <tr>
-                    <td style="font-weight:bold">Sex: </td><td>{{foaie.detaliipacient.sex}}</td>
+                    <td style="font-weight:bold">Sex: </td>
+                    <td>{{foaie.detaliipacient.sex}}</td>
                 </tr>
                 <tr>
-                    <td style="font-weight:bold">CNP: </td><td>{{foaie.detaliipacient.cnp}}</td>
+                    <td style="font-weight:bold">CNP: </td>
+                    <td>{{foaie.detaliipacient.cnp}}</td>
                 </tr>
                 <tr>
-                    <td style="font-weight:bold">Cod: </td><td>{{foaie.detaliipacient.cod}}</td>
+                    <td style="font-weight:bold">Cod: </td>
+                    <td>{{foaie.detaliipacient.cod}}</td>
                 </tr>
                 <tr>
-                    <td style="font-weight:bold">Medic: </td><td><input type="text" id="medic" name="medic" style="width:400px; background: white; color: red" value="{{foaie.medic}}"/></td>
+                    <td style="font-weight:bold">Medic: </td>
+                    <td><input type="text" id="medic" name="medic" style="width:400px; background: white; color: red"
+                               value="{{foaie.medic}}" /></td>
                 </tr>
                 <tr>
-                    <td style="font-weight:bold">Secția: </td><td><input type="text" id="sectia" name="sectia" style="width:400px; background: white; color: red;" value="{{foaie.sectia}}"/></td>
+                    <td style="font-weight:bold">Secția: </td>
+                    <td><input type="text" id="sectia" name="sectia" style="width:400px; background: white; color: red;"
+                               value="{{foaie.sectia}}" /></td>
                 </tr>
                 <tr>
-                    <td style="font-weight:bold">Salon: </td><td><input type="text" id="salon" name="salon" style="width:400px; background: white; color: red;" value="{{foaie.salon}}"/></td>
+                    <td style="font-weight:bold">Salon: </td>
+                    <td><input type="text" id="salon" name="salon" style="width:400px; background: white; color: red;"
+                               value="{{foaie.salon}}" /></td>
                 </tr>
                 <tr>
-                    <td style="font-weight:bold">Pat: </td><td><input type="text" id="pat" name="pat" style="width:400px; background: white; color: red;" value="{{foaie.pat}}"/></td>
+                    <td style="font-weight:bold">Pat: </td>
+                    <td><input type="text" id="pat" name="pat" style="width:400px; background: white; color: red;"
+                               value="{{foaie.pat}}" /></td>
                 </tr>
                 <tr>
-                    <td style="font-weight:bold">Data internării: </td><td>Zi:&nbsp;<input type="text" id="zi" name="zi" style="width:60px; background: white; color: red;" value="{{foaie.zi}}"/>&nbsp;Lună:&nbsp;<input type="text" id="luna" name="luna" style="width:100px; background: white; color: red;" value="{{foaie.luna}}"/>&nbsp;An:&nbsp;<input type="text" id="an" name="an" style="width:100px; background: white; color: red;" value="{{foaie.an}}"/></td>
+                    <td style="font-weight:bold">Data internării: </td>
+                    <td>Zi:&nbsp;<input type="text" id="zi" name="zi" style="width:60px; background: white; color: red;"
+                                        value="{{foaie.zi}}" />&nbsp;Lună:&nbsp;<input type="text" id="luna" name="luna"
+                                                                                       style="width:100px; background: white; color: red;"
+                                                                                       value="{{foaie.luna}}" />&nbsp;An:&nbsp;<input type="text" id="an" name="an"
+                                                                                                                                      style="width:100px; background: white; color: red;" value="{{foaie.an}}" /></td>
                 </tr>
             </table>
         </div>
-        <br/>
+        <br />
 
         <!-- Tab links -->
         <div class="tab">
@@ -64,7 +83,8 @@
                         Principal
                     </td>
                     <td>
-                        <input type="text" id="diagprincipal" name="diagprincipal" style="width:100%" value="{{foaie.diagnosticprincipal}}"/>
+                        <input type="text" id="diagprincipal" name="diagprincipal" style="width:100%"
+                               value="{{foaie.diagnosticprincipal}}" />
                     </td>
                 </tr>
                 <tr>
@@ -72,7 +92,8 @@
                         La internare
                     </td>
                     <td>
-                        <input type="text" id="diaginternare" name="diaginternare" style="width:100%" value="{{foaie.diagnosticlainternare}}"/>
+                        <input type="text" id="diaginternare" name="diaginternare" style="width:100%"
+                               value="{{foaie.diagnosticlainternare}}" />
                     </td>
                 </tr>
                 <tr>
@@ -80,7 +101,7 @@
                         La 24 h
                     </td>
                     <td>
-                        <input type="text" id="diag24h" name="diag24h" style="width:100%" value="{{foaie.diag24h}}"/>
+                        <input type="text" id="diag24h" name="diag24h" style="width:100%" value="{{foaie.diag24h}}" />
                     </td>
                 </tr>
                 <tr>
@@ -88,7 +109,7 @@
                         La 72 h
                     </td>
                     <td>
-                        <input type="text" id="diag72h" name="diag72h" style="width:100%" value="{{foaie.diag72h}}"/>
+                        <input type="text" id="diag72h" name="diag72h" style="width:100%" value="{{foaie.diag72h}}" />
                     </td>
                 </tr>
                 <tr>
@@ -96,7 +117,8 @@
                         Intoxicații asociate
                     </td>
                     <td>
-                        <input type="text" id="intoxicatii" name="intoxicatii" style="width:100%" value="{{foaie.intoxicatii}}"/>
+                        <input type="text" id="intoxicatii" name="intoxicatii" style="width:100%"
+                               value="{{foaie.intoxicatii}}" />
                     </td>
                 </tr>
                 <tr>
@@ -104,7 +126,7 @@
                         Alergii
                     </td>
                     <td>
-                        <input type="text" id="alergii" name="alergii" style="width:100%" value="{{foaie.alergii}}"/>
+                        <input type="text" id="alergii" name="alergii" style="width:100%" value="{{foaie.alergii}}" />
                     </td>
                 </tr>
                 <tr>
@@ -112,7 +134,8 @@
                         Indice ponderal
                     </td>
                     <td>
-                        <input type="text" id="indiceponderal" name="indiceponderal" style="width:100%" value="{{foaie.indiceponderal}}"/>
+                        <input type="text" id="indiceponderal" name="indiceponderal" style="width:100%"
+                               value="{{foaie.indiceponderal}}" />
                     </td>
                 </tr>
                 <tr>
@@ -120,7 +143,8 @@
                         Greutate actuală (kg)
                     </td>
                     <td>
-                        <input type="text" id="greutateactuala" name="greutateactuala" style="width:100%" value="{{foaie.greutateactuala}}"/>
+                        <input type="text" id="greutateactuala" name="greutateactuala" style="width:100%"
+                               value="{{foaie.greutateactuala}}" />
                     </td>
                 </tr>
                 <tr>
@@ -151,26 +175,35 @@
                         Este însoțit de:
                     </td>
                     <td>
-                        <input type="text" id="insotit" name="insotit" style="width:100%" value="{{foaie.insotit}}"/>
+                        <input type="text" id="insotit" name="insotit" style="width:100%" value="{{foaie.insotit}}" />
                     </td>
                 </tr>
             </table>
 
             <h3>Arsuri - etiologia</h3>
             <div>
-                <table width="70%"><tr><td style="width:30%">Vechimea arsurilor: </td><td> <input type="text" id="vechimearsuri" name="vechimearsuri" style="width:10%" value="{{foaie.vechimearsuri}}"/> (ore)</td></tr></table>
+                <table width="70%">
+                    <tr>
+                        <td style="width:30%">Vechimea arsurilor: </td>
+                        <td> <input type="text" id="vechimearsuri" name="vechimearsuri" style="width:10%"
+                                    value="{{foaie.vechimearsuri}}" /> (ore)</td>
+                    </tr>
+                </table>
                 <div id="updatedtable"></div>
-                <input type="button" id="adauga" onclick="adaugaArsura()" value="Adaugă arsură"/>&nbsp;&nbsp;<input type="button" id="sterge" onclick="stergeArsura()" value="Șterge ultima arsură"/>
-                <br/><br/>
-                <input  type="checkbox" {{transformvaluetochecked foaie.caiResp}} id="caiResp" name="caiResp" value="{{foaie.caiResp}}" >Arsuri de căi respiratorii superioare</input>
-        </div><br/>
+                <input type="button" id="adauga" onclick="adaugaArsura()" value="Adaugă arsură" />&nbsp;&nbsp;<input
+                    type="button" id="sterge" onclick="stergeArsura()" value="Șterge ultima arsură" />
+                <br /><br />
+                <input type="checkbox" {{transformvaluetochecked foaie.caiResp}} id="caiResp" name="caiResp"
+                value="{{foaie.caiResp}}">Arsuri de căi respiratorii superioare</input>
+        </div><br />
         <table width="100%">
             <tr>
                 <td style="width:20%">
                     Diagnostic la externare
                 </td>
                 <td colspan="3">
-                    <input type="text" id="diagexternare" name="diagexternare" style="width:100%" value="{{foaie.diagnosticexternare}}"/>
+                    <input type="text" id="diagexternare" name="diagexternare" style="width:100%"
+                           value="{{foaie.diagnosticexternare}}" />
                 </td>
             </tr>
             <tr>
@@ -178,7 +211,8 @@
                     Data și ora decesului
                 </td>
                 <td>
-                    <input type="text" id="datadeces" name="datadeces" style="width:100%" value="{{foaie.datadeces}}"/>
+                    <input type="text" id="datadeces" name="datadeces" style="width:100%"
+                           value="{{foaie.datadeces}}" />
                 </td>
             </tr>
             <tr>
@@ -189,24 +223,32 @@
 
             </tr>
             <tr>
-                <td>a) Cauza directă (imediată)</td><td>
-                <input type="text" name="cauzadirectadeces" id="cauzadirectadeces" style="width:100%" value="{{foaie.cauzadirectadeces}}"/>
-            </td>
+                <td>a) Cauza directă (imediată)</td>
+                <td>
+                    <input type="text" name="cauzadirectadeces" id="cauzadirectadeces" style="width:100%"
+                           value="{{foaie.cauzadirectadeces}}" />
+                </td>
             </tr>
             <tr>
-                <td>b) Cauza antecedentă</td><td>
-                <input type="text" name="cauzaantecedentadeces" id="cauzaantecedentadeces" style="width:100%" value="{{foaie.cauzaantecedentadeces}}"/>
-            </td>
+                <td>b) Cauza antecedentă</td>
+                <td>
+                    <input type="text" name="cauzaantecedentadeces" id="cauzaantecedentadeces" style="width:100%"
+                           value="{{foaie.cauzaantecedentadeces}}" />
+                </td>
             </tr>
             <tr>
-                <td>Stări morbide inițiale:</td><td>
-                <input type="text" id="starimorbideinitiale" name="starimorbideinitiale" style="width:100%" value="{{foaie.starimorbideinitiale}}"/>
-            </td>
+                <td>Stări morbide inițiale:</td>
+                <td>
+                    <input type="text" id="starimorbideinitiale" name="starimorbideinitiale" style="width:100%"
+                           value="{{foaie.starimorbideinitiale}}" />
+                </td>
             </tr>
             <tr>
-                <td>Alte stări morbide importante</td><td>
-                <input type="text" id="starimorbideimportante" name="starimorbideimportante" style="width:100%" value="{{foaie.starimorbideimportante}}"/>
-            </td>
+                <td>Alte stări morbide importante</td>
+                <td>
+                    <input type="text" id="starimorbideimportante" name="starimorbideimportante" style="width:100%"
+                           value="{{foaie.starimorbideimportante}}" />
+                </td>
             </tr>
         </table>
     </div>
@@ -214,25 +256,37 @@
     <div id="anamneza" class="tabcontent">
         <h3>Anamneza</h3>
 
-        Locul producerii accidentului: <input type="text" style="width:50%" id="locaccident" name="locaccident" value="{{foaie.anamneza.loc}}"/><br/><br/>
-        <input type="checkbox" id="prezentaparinti" name="prezentaparinti" value="{{foaie.anamneza.prezentaparinti}}" {{transformvaluetochecked foaie.anamneza.prezentaparinti}}>A fost în prezența părinților</input><br/><br/>
-    Descrierea accidentului: <input style="width:100%" type="text" id="descriere" name="descriere" value="{{foaie.anamneza.descriere}}"/><br/><br/>
+        Locul producerii accidentului: <input type="text" style="width:50%" id="locaccident" name="locaccident"
+                                              value="{{foaie.anamneza.loc}}" /><br /><br />
+        <input type="checkbox" id="prezentaparinti" name="prezentaparinti"
+               value="{{foaie.anamneza.prezentaparinti}}" {{transformvaluetochecked foaie.anamneza.prezentaparinti}}>A
+        fost în prezența părinților</input><br /><br />
+    Descrierea accidentului: <input style="width:100%" type="text" id="descriere" name="descriere"
+                                    value="{{foaie.anamneza.descriere}}" /><br /><br />
 
     <h3>Primul ajutor</h3>
 
-    Locul <input type="text" style="width:100%"  id="locajutor" name="locajutor" value="{{foaie.anamneza.locprimajutor}}"/><br/><br/>
-    Tratamentul <input type="text"  style="width:100%" id="tratamentajutor" name="tratamentajutor" value="{{foaie.anamneza.tratamentprimajutor}}"/><br/>
-    <br/>
-    Alte unități intermediare<br/>
-    <input type="text"  style="width:100%" id="unitatiintermediare" name="unitatiintermediare" value="{{foaie.anamneza.unitatiintermediare}}"/>
-    <br/><br/>
-    Tratament primit anterior<br/>
-    <input type="text"  style="width:100%" id="tratamentanterior" name="tratamentanterior" value="{{foaie.anamneza.tratamentanterior}}"/>
-    <br/><br/>
-    Mijloc de transport la spital <input type="text" id="transport" style="width:100%"  name="transport" value="{{foaie.anamneza.transport}}"/><br/><br/>
-    Tratamentul primit în timpul transportului: <input type="text" id="tratasport" style="width:100%"  name="tratasport" value="{{foaie.anamneza.tratasport}}"/><br/><br/>
-    Starea pacientului în momentul sosirii la spital/UPU: <input type="text" style="width:100%"  id="starepacient" name="starepacient" value="{{foaie.anamneza.stare}}"/><br/><br/>
-    Timpul trecut de la producerea accidentului: <input type="text" style="width:100%"  id="timp" name="timp" value="{{foaie.anamneza.timp}}"/><br/><br/>
+    Locul <input type="text" style="width:100%" id="locajutor" name="locajutor"
+                 value="{{foaie.anamneza.locprimajutor}}" /><br /><br />
+    Tratamentul <input type="text" style="width:100%" id="tratamentajutor" name="tratamentajutor"
+                       value="{{foaie.anamneza.tratamentprimajutor}}" /><br />
+    <br />
+    Alte unități intermediare<br />
+    <input type="text" style="width:100%" id="unitatiintermediare" name="unitatiintermediare"
+           value="{{foaie.anamneza.unitatiintermediare}}" />
+    <br /><br />
+    Tratament primit anterior<br />
+    <input type="text" style="width:100%" id="tratamentanterior" name="tratamentanterior"
+           value="{{foaie.anamneza.tratamentanterior}}" />
+    <br /><br />
+    Mijloc de transport la spital <input type="text" id="transport" style="width:100%" name="transport"
+                                         value="{{foaie.anamneza.transport}}" /><br /><br />
+    Tratamentul primit în timpul transportului: <input type="text" id="tratasport" style="width:100%"
+                                                       name="tratasport" value="{{foaie.anamneza.tratasport}}" /><br /><br />
+    Starea pacientului în momentul sosirii la spital/UPU: <input type="text" style="width:100%"
+                                                                 id="starepacient" name="starepacient" value="{{foaie.anamneza.stare}}" /><br /><br />
+    Timpul trecut de la producerea accidentului: <input type="text" style="width:100%" id="timp" name="timp"
+                                                        value="{{foaie.anamneza.timp}}" /><br /><br />
 </div>
 
 <div id="tratament" class="tabcontent">
@@ -240,38 +294,76 @@
 <h4>a) Sistemic</h4>
 <h5>Fișe de terapie</h5>
 {{#each foaie.fiseterapie}}
-<a href="/fisa_terapie?idfoaie={{this.idFoaie}}&amp;idfisa={{this.idFisa}}" style="color:red; text-align:left " target="_blank">{{this.data}}</a><br/>&nbsp;&nbsp;
-{{/each}}<br/>
-<input style="font-size:10px;height:17px" type="button" id="adaugafisaterapie" onclick="adaugaFisaTerapie()" value="Adaugă fișă terapie"/><br/><br/>
-<table><tr><td>Cantitatea de lichide pe 24 de ore </td><td><input type="text" id="cantitatelichide" style="width:100%"  name="cantitatelichide" value="{{foaie.anamneza.cantitatelichide}}"/></td></tr>
-    <tr><td></td><td>Formule pentru 0-6 ani: Galveston</td></tr>
-    <tr><td></td><td>Formule pentru 7-18 ani: Parkland</td></tr>
-    <tr><td>Cantitate pentru primele</td><td></td></tr>
-    <tr><td style="text-align:right">8 h</td><td><input type="text" id="cantlichide8h" style="width:100%"  name="cantlichide8h" value="{{foaie.anamneza.cantlichide8h}}"/></td></tr>
-    <tr><td style="text-align:right">16 h</td><td><input type="text" id="cantlichide16h" style="width:100%"  name="cantlichide16h" value="{{foaie.anamneza.cantlichide16h}}"/></td></tr>
-    <tr><td style="text-align:right">24 h</td><td><input type="text" id="cantlichide24h" style="width:100%"  name="cantlichide24h" value="{{foaie.anamneza.cantlichide24h}}"/></td></tr>
+<a href="/fisa_terapie?idfoaie={{this.idFoaie}}&amp;idfisa={{this.idFisa}}"
+   style="color:red; text-align:left " target="_blank">{{this.data}}</a><br />&nbsp;&nbsp;
+{{/each}}<br />
+<input style="font-size:10px;height:17px" type="button" id="adaugafisaterapie" onclick="adaugaFisaTerapie()"
+       value="Adaugă fișă terapie" /><br /><br />
+<table>
+    <tr>
+        <td>Cantitatea de lichide pe 24 de ore </td>
+        <td><input type="text" id="cantitatelichide" style="width:100%" name="cantitatelichide"
+                   value="{{foaie.anamneza.cantitatelichide}}" /></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Formule pentru 0-6 ani: Galveston</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Formule pentru 7-18 ani: Parkland</td>
+    </tr>
+    <tr>
+        <td>Cantitate pentru primele</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td style="text-align:right">8 h</td>
+        <td><input type="text" id="cantlichide8h" style="width:100%" name="cantlichide8h"
+                   value="{{foaie.anamneza.cantlichide8h}}" /></td>
+    </tr>
+    <tr>
+        <td style="text-align:right">16 h</td>
+        <td><input type="text" id="cantlichide16h" style="width:100%" name="cantlichide16h"
+                   value="{{foaie.anamneza.cantlichide16h}}" /></td>
+    </tr>
+    <tr>
+        <td style="text-align:right">24 h</td>
+        <td><input type="text" id="cantlichide24h" style="width:100%" name="cantlichide24h"
+                   value="{{foaie.anamneza.cantlichide24h}}" /></td>
+    </tr>
 </table>
-<br/>
+<br />
 <h4>b) Local</h4>
 <h4>Dinamica plăgilor</h4>
-<input type="text" id="dinamicaplagi" style="width:100%"  name="dinamicaplagi" value="{{foaie.anamneza.dinamicaplagi}}"/><br/><br/>
-<div><input title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto0" name="adaugafoto0" onchange="pressed(0)" />
+<input type="text" id="dinamicaplagi" style="width:100%" name="dinamicaplagi"
+       value="{{foaie.anamneza.dinamicaplagi}}" /><br /><br />
+<div><input title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto0" name="adaugafoto0"
+            onchange="pressed(0)" />
 
 
     <span>
-        <a name="photo0" id="photo0" target="_blank" href="/uploads/{{transformvaluetophotolink foaie.adaugafoto0}}" style="font-size:10px; font-weight:bold;">{{transformvaluetophoto foaie.adaugafoto0}}</a>
-        <a href="javascript:void(0)" style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto0}}" onclick="document.getElementById('photo0').innerHTML=''; document.getElementById('markedDel0').value=1; document.getElementById('sterge0').style.visibility='hidden'">
+                    <a name="photo0" id="photo0" target="_blank"
+                       href="/uploads/{{transformvaluetophotolink foaie.adaugafoto0}}"
+                       style="font-size:10px; font-weight:bold;">{{transformvaluetophoto foaie.adaugafoto0}}</a>
+                    <a href="javascript:void(0)"
+                       style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto0}}"
+                       onclick="document.getElementById('photo0').innerHTML=''; document.getElementById('markedDel0').value=1; document.getElementById('sterge0').style.visibility='hidden'">
 
-            <img name="sterge0"  id="sterge0" src="/img/delete.png" width="15" style="cursor:pointer"/></a></span>
+                        <img name="sterge0" id="sterge0" src="/img/delete.png" width="15"
+                             style="cursor:pointer" /></a></span>
     <input type="hidden" id="markedDel0" name="markedDel0" value="0" />
     <label for="adaugafoto0" style="font-size:10px" id="fileLabel0">
-        <img name="photo0" id="photo0" src="/img/upload.png" width="20" height="15" style="cursor:pointer"/>
+        <img name="photo0" id="photo0" src="/img/upload.png" width="20" height="15"
+             style="cursor:pointer" />
         Adaugă fotografie/fișier&nbsp;</label>
 </div>
 
 <h4>Evoluție și tratament</h4>
 <div id="updatedtableEvolutie"></div>
-<input type="button" id="adaugareevolutie" onclick="adaugareEvolutie()" value="Adaugă evoluție"/>&nbsp;&nbsp;<input type="button" id="stergeEvolutie" onclick="stergereevolutie()" value="Șterge ultima evoluție"/>
+<input type="button" id="adaugareevolutie" onclick="adaugareEvolutie()"
+       value="Adaugă evoluție" />&nbsp;&nbsp;<input type="button" id="stergeEvolutie"
+                                                    onclick="stergereevolutie()" value="Șterge ultima evoluție" />
 <!--
 <h4>Analize</h4>
 
@@ -286,15 +378,17 @@
 {{/each}}
 -->
 <h4></h4>
-<h4><a style="color:black" target="_blank" href="/foaie_temperatura?foaie={{foaie.detaliipacient.idfoaie}}">Foaie temperatura</a></h4>
+<h4><a style="color:black" target="_blank"
+       href="/foaie_temperatura?foaie={{foaie.detaliipacient.idfoaie}}">Foaie temperatura</a></h4>
 </div>
 <div id="epetapa" class="tabcontent">
 <h3>Epicriza de etapă</h3>
 {{#each foaie.epicrizedeetapa}}
-<a href="/epicriza_etapa?idepicriza={{this.idFisa}}&amp;idfoaie={{this.idFoaie}}" style="color:red" target="_blank">{{this.data}}</a>&nbsp;&nbsp;
-<br/>
-{{/each}}<br/>
-<input type="button" id="adaugaepicriza" onclick="adaugaEpicriza()" value="Adaugă epicriză"/>
+<a href="/epicriza_etapa?idepicriza={{this.idFisa}}&amp;idfoaie={{this.idFoaie}}" style="color:red"
+   target="_blank">{{this.data}}</a>&nbsp;&nbsp;
+<br />
+{{/each}}<br />
+<input type="button" id="adaugaepicriza" onclick="adaugaEpicriza()" value="Adaugă epicriză" />
 </div>
 <div id="epfinala" class="tabcontent">
 <h3>Epicriza finală</h3>
@@ -304,10 +398,11 @@
 </div>
 <div id="recom" class="tabcontent">
 <h3>Recomandări</h3>
-Medicație <input type="text" id="medicatie" style="width:100%"  name="medicatie" value="{{foaie.medicatie}}"/>
-Kinetoterapie <input type="text" id="kineto" style="width:100%"  name="kineto" value="{{foaie.kineto}}"/>
+Medicație <input type="text" id="medicatie" style="width:100%" name="medicatie"
+                 value="{{foaie.medicatie}}" />
+Kinetoterapie <input type="text" id="kineto" style="width:100%" name="kineto" value="{{foaie.kineto}}" />
 Alte comentarii
-<input type="text" id="recomments" style="width:100%"  name="recomments" value="{{foaie.comments}}"/>
+<input type="text" id="recomments" style="width:100%" name="recomments" value="{{foaie.comments}}" />
 </div>
 <div id="urm" class="tabcontent">
 <h3>Urmărire</h3>
@@ -315,94 +410,332 @@ Alte comentarii
 <textarea id="cura" name="cura" rows="4" cols="50">
       {{foaie.cura}}
     </textarea>
-<br/> <br/>
+<br /> <br />
 <table width="100%">
-    <tr><td style="font-weight:bold;width:5%">Luna</td><td style="font-weight:bold; width:28%">Descriere</td><td style="font-weight:bold; width:28%">Analize laborator</td><td style="font-weight:bold;">Rx</td><td style="font-weight:bold; width:4%">Spital</td><td style="font-weight:bold; width:4%">Online</td></tr>
-    <tr><td>1</td><td><input type="text" id="descriere1"  style="width:98%" name="descriere1" value="{{foaie.descriere1}}"/></td><td><input type="text" id="analize1"  style="width:98%" name="analize1" value="{{foaie.analize1}}"/></td><td>
-         <span>
+    <tr>
+        <td style="font-weight:bold;width:5%">Luna</td>
+        <td style="font-weight:bold; width:28%">Descriere</td>
+        <td style="font-weight:bold; width:28%">Analize laborator</td>
+        <td style="font-weight:bold;">Rx</td>
+        <td style="font-weight:bold; width:4%">Spital</td>
+        <td style="font-weight:bold; width:4%">Online</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td><input type="text" id="descriere1" style="width:98%" name="descriere1"
+                   value="{{foaie.descriere1}}" /></td>
+        <td><input type="text" id="analize1" style="width:98%" name="analize1" value="{{foaie.analize1}}" />
+        </td>
 
-        <a name="photo1" id="photo1" target="_blank" href="/uploads/{{transformvaluetophotolink foaie.adaugafoto1}}" style="font-size:10px; font-weight:bold;">{{transformvaluetophoto foaie.adaugafoto1}}</a>
-        <a href="javascript:void(0)" style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1}}"  onclick="document.getElementById('photo1').innerHTML=''; document.getElementById('markedDel1').value=1; document.getElementById('sterge1').style.visibility='hidden'">
-            <img name="sterge1" id="sterge1" src="/img/delete.png" width="15" style="cursor:pointer"/></a></span>
-        <input type="hidden" id="markedDel1" name="markedDel1" value="0" />
-        <div><input title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto1" name="adaugafoto1" onchange="pressed(1)" /><label for="adaugafoto1" style="font-size:10px" id="fileLabel1" ><img src="/img/upload.png" width="20" height="15" style="cursor:pointer"/>Adaugă foto/fișier&nbsp;</label></div></td><td><input type="checkbox" id="spital1" name="spital1" {{transformvaluetochecked foaie.spital1}}  value="{{foaie.spital1}}" onchange="checkboxPressed(1,1)"/></td><td><input type="checkbox" id="online1" name="online1" value="{{foaie.online1}}" {{transformvaluetochecked foaie.online1}} onchange="checkboxPressed(2,1)" /></td></tr>
-    <tr><td>2</td><td><input type="text" id="descriere2"  style="width:98%" name="descriere2" value="{{foaie.descriere2}}"/></td><td><input type="text" id="analize2"  style="width:98%" name="analize2" value="{{foaie.analize2}}"/></td>
-        <td>
-            <span>
-        <a name="photo2" id="photo2" target="_blank" href="/uploads/{{transformvaluetophotolink foaie.adaugafoto2}}" style="font-size:10px; font-weight:bold;">{{transformvaluetophoto foaie.adaugafoto2}}</a>
-        <a href="javascript:void(0)" style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto2}}" onclick="document.getElementById('photo2').innerHTML=''; document.getElementById('markedDel2').value=1; document.getElementById('sterge2').style.visibility='hidden'">
-            <img name="sterge2" id="sterge2" src="/img/delete.png" width="15" style="cursor:pointer"/></a></span>
+        <td class="fisier-list">
+                        <span>
+                            <a name="photo1" id="photo1" target="_blank"
+                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto1}}"
+                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
+                                foaie.adaugafoto1}}</a>
+                            <a href="javascript:void(0)"
+                               style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1}}"
+                               onclick="document.getElementById('photo1').innerHTML=''; document.getElementById('markedDel1').value=1; document.getElementById('sterge1').style.visibility='hidden'">
+                                <img name="sterge1" id="sterge1" src="/img/delete.png" width="15"
+                                     style="cursor:pointer" /></a></span>
+            <input type="hidden" id="markedDel1" name="markedDel1" value="0" />
+            <div class="alege"><input title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto1"
+                                      name="adaugafoto1" onchange="pressed(1)" /><label for="adaugafoto1"
+                                                                                        style="font-size:10px" id="fileLabel1"><img src="/img/upload.png" width="20" height="15"
+                                                                                                                                    style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label></div>
+        </td>
+
+        <td><input type="checkbox" id="spital1" name="spital1" {{transformvaluetochecked foaie.spital1}}
+            value="{{foaie.spital1}}" onchange="checkboxPressed(1,1)" /></td>
+        <td><input type="checkbox" id="online1" name="online1" value="{{foaie.online1}}"
+            {{transformvaluetochecked foaie.online1}} onchange="checkboxPressed(2,1)" /></td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td><input type="text" id="descriere2" style="width:98%" name="descriere2"
+                   value="{{foaie.descriere2}}" /></td>
+        <td><input type="text" id="analize2" style="width:98%" name="analize2" value="{{foaie.analize2}}" />
+        </td>
+        <td class="fisier-list">
+                        <span>
+                            <a name="photo2" id="photo2" target="_blank"
+                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto2}}"
+                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
+                                foaie.adaugafoto2}}</a>
+                            <a href="javascript:void(0)"
+                               style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto2}}"
+                               onclick="document.getElementById('photo2').innerHTML=''; document.getElementById('markedDel2').value=1; document.getElementById('sterge2').style.visibility='hidden'">
+                                <img name="sterge2" id="sterge2" src="/img/delete.png" width="15"
+                                     style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel2" name="markedDel2" value="0" />
-            <div><input title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto2" name="adaugafoto2" onchange="pressed(2)"/><label for="adaugafoto2" style="font-size:10px" id="fileLabel2"><img src="/img/upload.png" width="20" height="15" style="cursor:pointer"/>Adaugă foto/fișier&nbsp;</label></div></td><td><input type="checkbox" id="spital2" name="spital2" {{transformvaluetochecked foaie.spital2}} value="{{foaie.spital2}}" onchange="checkboxPressed(1,2)"/></td><td><input type="checkbox" id="online2" name="online2" value="{{foaie.online2}}" {{transformvaluetochecked foaie.online2}} onchange="checkboxPressed(2,2)"/></td></tr>
-    <tr><td>3</td><td><input type="text" id="descriere3"  style="width:98%" name="descriere3" value="{{foaie.descriere3}}"/></td><td><input type="text" id="analize3"  style="width:98%" name="analize3" value="{{foaie.analize3}}"/></td><td>
-        <span>
-        <a name="photo3" id="photo3" target="_blank" href="/uploads/{{transformvaluetophotolink foaie.adaugafoto3}}" style="font-size:10px; font-weight:bold;">{{transformvaluetophoto foaie.adaugafoto3}}</a>
-        <a href="javascript:void(0)" style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto3}}"  onclick="document.getElementById('photo3').innerHTML=''; document.getElementById('markedDel3').value=1; document.getElementById('sterge3').style.visibility='hidden'">
-            <img name="sterge3" id="sterge3" src="/img/delete.png" width="15" style="cursor:pointer"/></a></span>
-        <input type="hidden" id="markedDel3" name="markedDel3" value="0" />
-        <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto3" name="adaugafoto3" onchange="pressed(3)"/><label for="adaugafoto3" id="fileLabel3" style="font-size:10px"><img src="/img/upload.png" width="20" height="15" style="cursor:pointer"/>Adaugă foto/fișier&nbsp;</label></td><td><input type="checkbox" id="spital3" name="spital3" {{transformvaluetochecked foaie.spital3}} value="{{foaie.spital3}}" onchange="checkboxPressed(1,3)"/></td><td><input type="checkbox" id="online3" name="online3" value="{{foaie.online3}}" {{transformvaluetochecked foaie.online3}} onchange="checkboxPressed(2,3)"/></td></tr>
-    <tr><td>4</td><td><input type="text" id="descriere4"  style="width:98%" name="descriere4" value="{{foaie.descriere4}}"/></td><td><input type="text" id="analize4"  style="width:98%" name="analize4" value="{{foaie.analize4}}"/></td><td>
+            <div><input title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto2"
+                        name="adaugafoto2" onchange="pressed(2)" /><label for="adaugafoto2"
+                                                                          style="font-size:10px" id="fileLabel2"><img src="/img/upload.png" width="20" height="15"
+                                                                                                                      style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label></div>
+        </td>
+        <td><input type="checkbox" id="spital2" name="spital2" {{transformvaluetochecked foaie.spital2}}
+            value="{{foaie.spital2}}" onchange="checkboxPressed(1,2)" /></td>
+        <td><input type="checkbox" id="online2" name="online2" value="{{foaie.online2}}"
+            {{transformvaluetochecked foaie.online2}} onchange="checkboxPressed(2,2)" /></td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td><input type="text" id="descriere3" style="width:98%" name="descriere3"
+                   value="{{foaie.descriere3}}" /></td>
+        <td><input type="text" id="analize3" style="width:98%" name="analize3" value="{{foaie.analize3}}" />
+        </td>
+        <td class="fisier-list">
+                        <span>
+                            <a name="photo3" id="photo3" target="_blank"
+                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto3}}"
+                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
+                                foaie.adaugafoto3}}</a>
+                            <a href="javascript:void(0)"
+                               style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto3}}"
+                               onclick="document.getElementById('photo3').innerHTML=''; document.getElementById('markedDel3').value=1; document.getElementById('sterge3').style.visibility='hidden'">
+                                <img name="sterge3" id="sterge3" src="/img/delete.png" width="15"
+                                     style="cursor:pointer" /></a></span>
+            <input type="hidden" id="markedDel3" name="markedDel3" value="0" />
+            <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto3"
+                   name="adaugafoto3" onchange="pressed(3)" /><label for="adaugafoto3" id="fileLabel3"
+                                                                     style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
+                                                                                                 style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
+        </td>
+        <td><input type="checkbox" id="spital3" name="spital3" {{transformvaluetochecked foaie.spital3}}
+            value="{{foaie.spital3}}" onchange="checkboxPressed(1,3)" /></td>
+        <td><input type="checkbox" id="online3" name="online3" value="{{foaie.online3}}"
+            {{transformvaluetochecked foaie.online3}} onchange="checkboxPressed(2,3)" /></td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td><input type="text" id="descriere4" style="width:98%" name="descriere4"
+                   value="{{foaie.descriere4}}" /></td>
+        <td><input type="text" id="analize4" style="width:98%" name="analize4" value="{{foaie.analize4}}" />
+        </td>
+        <td class="fisier-list">
 
-        <span>
-        <a name="photo4" id="photo4" target="_blank" href="/uploads/{{transformvaluetophotolink foaie.adaugafoto4}}" style="font-size:10px; font-weight:bold;">{{transformvaluetophoto foaie.adaugafoto4}}</a>
-        <a href="javascript:void(0)" style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto4}}" onclick="document.getElementById('photo4').innerHTML=''; document.getElementById('markedDel4').value=1; document.getElementById('sterge4').style.visibility='hidden'">
-            <img name="sterge4" id="sterge4" src="/img/delete.png" width="15" style="cursor:pointer"/></a></span>
-        <input type="hidden" id="markedDel4" name="markedDel4" value="0" />
-        <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto4" name="adaugafoto4" onchange="pressed(4)"/><label for="adaugafoto4" id="fileLabel4" style="font-size:10px"><img src="/img/upload.png" width="20" height="15" style="cursor:pointer"/>Adaugă foto/fișier&nbsp;</label></td><td><input type="checkbox" id="spital4" name="spital4" {{transformvaluetochecked foaie.spital4}} value="{{foaie.spital4}}" onchange="checkboxPressed(1,4)"/></td><td><input type="checkbox" id="online4" name="online4" value="{{foaie.online4}}" {{transformvaluetochecked foaie.online4}} onchange="checkboxPressed(2,4)"/></td></tr>
-    <tr><td>5</td><td><input type="text" id="descriere5" style="width:98%"  name="descriere5" value="{{foaie.descriere5}}"/></td><td><input type="text" id="analize5"  style="width:98%" name="analize5" value="{{foaie.analize5}}"/></td><td>
-        <span>
-        <a name="photo5" id="photo5" target="_blank" href="/uploads/{{transformvaluetophotolink foaie.adaugafoto5}}" style="font-size:10px; font-weight:bold;">{{transformvaluetophoto foaie.adaugafoto5}}</a>
-        <a href="javascript:void(0)" style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto5}}"  onclick="document.getElementById('photo5').innerHTML=''; document.getElementById('markedDel5').value=1; document.getElementById('sterge5').style.visibility='hidden'">
-            <img name="sterge5" id="sterge5" src="/img/delete.png" width="15" style="cursor:pointer"/></a></span>
-        <input type="hidden" id="markedDel5" name="markedDel5" value="0" />
-        <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto5" name="adaugafoto5" onchange="pressed(5)"/><label for="adaugafoto5" id="fileLabel5" style="font-size:10px"><img src="/img/upload.png" width="20" height="15" style="cursor:pointer"/>Adaugă foto/fișier&nbsp;</label></td><td><input type="checkbox" id="spital5" name="spital5" {{transformvaluetochecked foaie.spital5}} value="{{foaie.spital5}}" onchange="checkboxPressed(1,5)"/></td><td><input type="checkbox" id="online5" name="online5" value="{{foaie.online5}}" {{transformvaluetochecked foaie.online5}} onchange="checkboxPressed(2,5)"/></td></tr>
-    <tr><td>6-9</td><td><input type="text" id="descriere69"  style="width:98%" name="descriere69" value="{{foaie.descriere69}}"/></td><td><input type="text" id="analize69"  style="width:98%" name="analize69" value="{{foaie.analize69}}"/></td><td>
-        <span>
-        <a name="photo69" id="photo69" target="_blank" href="/uploads/{{transformvaluetophotolink foaie.adaugafoto69}}" style="font-size:10px; font-weight:bold;">{{transformvaluetophoto foaie.adaugafoto69}}</a>
-        <a href="javascript:void(0)" style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto69}}"  onclick="document.getElementById('photo69').innerHTML='';document.getElementById('markedDel69').value=1; document.getElementById('sterge69').style.visibility='hidden'">
-            <img name="sterge69" id="sterge69" src="/img/delete.png" width="15" style="cursor:pointer"/></a></span>
-        <input type="hidden" id="markedDel69" name="markedDel69" value="0" />
-        <input type="file" class="inputfile" title="Alegeți un fisier"  id="adaugafoto69" name="adaugafoto69" onchange="pressed(69)"/><label for="adaugafoto69" id="fileLabel69" style="font-size:10px"><img src="/img/upload.png" width="20" height="15" style="cursor:pointer"/>Adaugă foto/fișier&nbsp;</label></td><td><input type="checkbox" id="spital69" {{transformvaluetochecked foaie.spital69}} name="spital69" value="{{foaie.spital69}}" onchange="checkboxPressed(1,69)"/></td><td><input type="checkbox" id="online69" name="online69" value="{{foaie.online69}}" {{transformvaluetochecked foaie.online69}} onchange="checkboxPressed(2,69)"/></td></tr>
-    <tr><td>9-12</td><td><input type="text" id="descriere912"  style="width:98%" name="descriere912" value="{{foaie.descriere912}}"/></td><td><input type="text" id="analize912"  style="width:98%" name="analize912" value="{{foaie.analize912}}"/></td><td>
-        <span>
-        <a name="photo912" id="photo912" target="_blank" href="/uploads/{{transformvaluetophotolink foaie.adaugafoto912}}" style="font-size:10px; font-weight:bold;">{{transformvaluetophoto foaie.adaugafoto912}}</a>
-        <a href="javascript:void(0)" style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto912}}"  onclick="document.getElementById('photo912').innerHTML='';document.getElementById('markedDel912').value=1; document.getElementById('sterge912').style.visibility='hidden'">
-            <img name="sterge912" id="sterge912" src="/img/delete.png" width="15" style="cursor:pointer"/></a></span>
-        <input type="hidden" id="markedDel912" name="markedDel912" value="0" />
-        <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto912" name="adaugafoto912" onchange="pressed(912)"/><label for="adaugafoto912" id="fileLabel912" style="font-size:10px"><img src="/img/upload.png" width="20" height="15" style="cursor:pointer"/>Adaugă foto/fișier&nbsp;</label></td><td><input type="checkbox" id="spital912" name="spital912" {{transformvaluetochecked foaie.spital912}} value="{{foaie.spital912}}" onchange="checkboxPressed(1,912)"/></td><td><input type="checkbox" id="online912" name="online912" value="{{foaie.online912}}" {{transformvaluetochecked foaie.online912}} onchange="checkboxPressed(2,912)"/></td></tr>
-    <tr><td>12-18</td><td><input type="text" id="descriere1218" style="width:98%"  name="descriere1218" value="{{foaie.descriere1218}}"/></td><td><input type="text" id="analize1218"  style="width:98%" name="analize1218" value="{{foaie.analize1218}}"/></td><td>
-        <span>
-        <a name="photo1218" id="photo1218" target="_blank" href="/uploads/{{transformvaluetophotolink foaie.adaugafoto1218}}" style="font-size:10px; font-weight:bold;">{{transformvaluetophoto foaie.adaugafoto1218}}</a>
-        <a href="javascript:void(0)" style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1218}}" onclick="document.getElementById('photo1218').innerHTML=''; document.getElementById('markedDel1218').value=1; document.getElementById('sterge1218').style.visibility='hidden'">
-            <img name="sterge1218" id="sterge1218" src="/img/delete.png" width="15" style="cursor:pointer"/></a></span>
-        <input type="hidden" id="markedDel1218" name="markedDel1218" value="0" />
-        <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto1218" name="adaugafoto1218" onchange="pressed(1218)"/><label for="adaugafoto1218" id="fileLabel1218" style="font-size:10px"><img src="/img/upload.png" width="20" height="15" style="cursor:pointer"/>Adaugă foto/fișier&nbsp;</label></td><td><input type="checkbox" id="spital1218" name="spital1218" {{transformvaluetochecked foaie.spital1218}} value="{{foaie.spital1218}}" onchange="checkboxPressed(1,1218)"/></td><td><input type="checkbox" id="online1218" name="online1218" value="{{foaie.online1218}}" {{transformvaluetochecked foaie.online1218}} onchange="checkboxPressed(2,1218)"/></td></tr>
-    <tr><td>18-24</td><td><input type="text" id="descriere1824"  style="width:98%" name="descriere1824" value="{{foaie.descriere1824}}"/></td><td><input type="text" id="analize1824"  style="width:98%" name="analize1824" value="{{foaie.analize1824}}"/></td><td>
-        <span>
-        <a name="photo1824" id="photo1824" target="_blank" href="/uploads/{{transformvaluetophotolink foaie.adaugafoto1824}}" style="font-size:10px; font-weight:bold;">{{transformvaluetophoto foaie.adaugafoto1824}}</a>
-        <a href="javascript:void(0)" style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1824}}" onclick="document.getElementById('photo1824').innerHTML='';document.getElementById('markedDel1824').value=1; document.getElementById('sterge1824').style.visibility='hidden'">
-            <img name="sterge1824" id="sterge1824" src="/img/delete.png" width="15" style="cursor:pointer"/></a></span>
-        <input type="hidden" id="markedDel1824" name="markedDel1824" value="0" />
-        <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto1824" name="adaugafoto1824" onchange="pressed(1824)"/><label for="adaugafoto1824" id="fileLabel1824" style="font-size:10px"><img src="/img/upload.png" width="20" height="15" style="cursor:pointer"/>Adaugă foto/fișier&nbsp;</label></td><td><input type="checkbox" id="spital1824" name="spital1824" {{transformvaluetochecked foaie.spital1824}} value="{{foaie.spital1824}}" onchange="checkboxPressed(1,1824)"/></td><td><input type="checkbox" id="online1824" name="online1824" value="{{foaie.online1824}}" {{transformvaluetochecked foaie.online1824}} onchange="checkboxPressed(2,1824)"/></td></tr>
-    <tr><td>24-30</td><td><input type="text" id="descriere2430"  style="width:98%" name="descriere2430" value="{{foaie.descriere2430}}"/></td><td><input type="text" id="analize2430"  style="width:98%" name="analize2430" value="{{foaie.analize2430}}"/></td><td>
-        <span>
-        <a name="photo2430" id="photo2430" target="_blank" href="/uploads/{{transformvaluetophotolink foaie.adaugafoto2430}}" style="font-size:10px; font-weight:bold;">{{transformvaluetophoto foaie.adaugafoto2430}}</a>
-        <a href="javascript:void(0)" style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto2430}}" onclick="document.getElementById('photo2430').innerHTML='';document.getElementById('markedDel2430').value=1; document.getElementById('sterge2430').style.visibility='hidden'">
-            <img name="sterge2430" id="sterge2430" src="/img/delete.png" width="15" style="cursor:pointer"/></a></span>
-        <input type="hidden" id="markedDel2430" name="markedDel2430" value="0" />
-        <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto2430" name="adaugafoto2430" onchange="pressed(2430)"/><label for="adaugafoto2430" id="fileLabel2430" style="font-size:10px"><img src="/img/upload.png" width="20" height="15" style="cursor:pointer"/>Adaugă foto/fișier&nbsp;</label></td><td><input type="checkbox" id="spital2430" name="spital2430" {{transformvaluetochecked foaie.spital2430}} value="{{foaie.spital2430}}" onchange="checkboxPressed(1,2430)"/></td><td><input type="checkbox" id="online2430" name="online2430" value="{{foaie.online2430}}" {{transformvaluetochecked foaie.online2430}} onchange="checkboxPressed(2,2430)"/></td></tr>
-    <tr><td>30-36</td><td><input type="text" id="descriere3036" style="width:98%"  name="descriere3036" value="{{foaie.descriere3036}}"/></td><td><input type="text" id="analize3036"  style="width:98%" name="analize3036" value="{{foaie.analize3036}}"/></td><td>
-        <span>
-        <a name="photo3036" id="photo3036" target="_blank" href="/uploads/{{transformvaluetophotolink foaie.adaugafoto3036}}" style="font-size:10px; font-weight:bold;">{{transformvaluetophoto foaie.adaugafoto3036}}</a>
-        <a href="javascript:void(0)" style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto3036}}"  onclick="document.getElementById('photo3036').innerHTML=''; document.getElementById('markedDel3036').value=1; document.getElementById('sterge3036').style.visibility='hidden'">
-            <img name="sterge3036" id="sterge3036" src="/img/delete.png" width="15" style="cursor:pointer"/></a></span>
-        <input type="hidden" id="markedDel3036" name="markedDel3036" value="0" />
-        <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto3036" name="adaugafoto3036" onchange="pressed(3036)"/><label for="adaugafoto3036" id="fileLabel3036" style="font-size:10px"><img src="/img/upload.png" width="20" height="15" style="cursor:pointer"/>Adaugă foto/fișier&nbsp;</label></td><td><input type="checkbox" id="spital3036" name="spital3036" {{transformvaluetochecked foaie.spital3036}} value="{{foaie.spital3036}}" onchange="checkboxPressed(1,3036)"/></td><td><input type="checkbox" id="online3036" name="online3036" value="{{foaie.online3036}}" {{transformvaluetochecked foaie.online3036}} onchange="checkboxPressed(2,3036)"/></td></tr>
+                        <span>
+                            <a name="photo4" id="photo4" target="_blank"
+                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto4}}"
+                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
+                                foaie.adaugafoto4}}</a>
+                            <a href="javascript:void(0)"
+                               style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto4}}"
+                               onclick="document.getElementById('photo4').innerHTML=''; document.getElementById('markedDel4').value=1; document.getElementById('sterge4').style.visibility='hidden'">
+                                <img name="sterge4" id="sterge4" src="/img/delete.png" width="15"
+                                     style="cursor:pointer" /></a></span>
+            <input type="hidden" id="markedDel4" name="markedDel4" value="0" />
+            <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto4"
+                   name="adaugafoto4" onchange="pressed(4)" /><label for="adaugafoto4" id="fileLabel4"
+                                                                     style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
+                                                                                                 style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
+        </td>
+        <td><input type="checkbox" id="spital4" name="spital4" {{transformvaluetochecked foaie.spital4}}
+            value="{{foaie.spital4}}" onchange="checkboxPressed(1,4)" /></td>
+        <td><input type="checkbox" id="online4" name="online4" value="{{foaie.online4}}"
+            {{transformvaluetochecked foaie.online4}} onchange="checkboxPressed(2,4)" /></td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td><input type="text" id="descriere5" style="width:98%" name="descriere5"
+                   value="{{foaie.descriere5}}" /></td>
+        <td><input type="text" id="analize5" style="width:98%" name="analize5" value="{{foaie.analize5}}" />
+        </td>
+        <td class="fisier-list">
+                        <span>
+                            <a name="photo5" id="photo5" target="_blank"
+                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto5}}"
+                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
+                                foaie.adaugafoto5}}</a>
+                            <a href="javascript:void(0)"
+                               style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto5}}"
+                               onclick="document.getElementById('photo5').innerHTML=''; document.getElementById('markedDel5').value=1; document.getElementById('sterge5').style.visibility='hidden'">
+                                <img name="sterge5" id="sterge5" src="/img/delete.png" width="15"
+                                     style="cursor:pointer" /></a></span>
+            <input type="hidden" id="markedDel5" name="markedDel5" value="0" />
+            <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto5"
+                   name="adaugafoto5" onchange="pressed(5)" /><label for="adaugafoto5" id="fileLabel5"
+                                                                     style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
+                                                                                                 style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
+        </td>
+        <td><input type="checkbox" id="spital5" name="spital5" {{transformvaluetochecked foaie.spital5}}
+            value="{{foaie.spital5}}" onchange="checkboxPressed(1,5)" /></td>
+        <td><input type="checkbox" id="online5" name="online5" value="{{foaie.online5}}"
+            {{transformvaluetochecked foaie.online5}} onchange="checkboxPressed(2,5)" /></td>
+    </tr>
+    <tr>
+        <td>6-9</td>
+        <td><input type="text" id="descriere69" style="width:98%" name="descriere69"
+                   value="{{foaie.descriere69}}" /></td>
+        <td><input type="text" id="analize69" style="width:98%" name="analize69"
+                   value="{{foaie.analize69}}" /></td>
+        <td class="fisier-list">
+                        <span>
+                            <a name="photo69" id="photo69" target="_blank"
+                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto69}}"
+                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
+                                foaie.adaugafoto69}}</a>
+                            <a href="javascript:void(0)"
+                               style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto69}}"
+                               onclick="document.getElementById('photo69').innerHTML='';document.getElementById('markedDel69').value=1; document.getElementById('sterge69').style.visibility='hidden'">
+                                <img name="sterge69" id="sterge69" src="/img/delete.png" width="15"
+                                     style="cursor:pointer" /></a></span>
+            <input type="hidden" id="markedDel69" name="markedDel69" value="0" />
+            <input type="file" class="inputfile" title="Alegeți un fisier" id="adaugafoto69"
+                   name="adaugafoto69" onchange="pressed(69)" /><label for="adaugafoto69" id="fileLabel69"
+                                                                       style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
+                                                                                                   style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
+        </td>
+        <td><input type="checkbox" id="spital69" {{transformvaluetochecked foaie.spital69}} name="spital69"
+            value="{{foaie.spital69}}" onchange="checkboxPressed(1,69)" /></td>
+        <td><input type="checkbox" id="online69" name="online69" value="{{foaie.online69}}"
+            {{transformvaluetochecked foaie.online69}} onchange="checkboxPressed(2,69)" /></td>
+    </tr>
+    <tr>
+        <td>9-12</td>
+        <td><input type="text" id="descriere912" style="width:98%" name="descriere912"
+                   value="{{foaie.descriere912}}" /></td>
+        <td><input type="text" id="analize912" style="width:98%" name="analize912"
+                   value="{{foaie.analize912}}" /></td>
+        <td class="fisier-list">
+                        <span>
+                            <a name="photo912" id="photo912" target="_blank"
+                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto912}}"
+                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
+                                foaie.adaugafoto912}}</a>
+                            <a href="javascript:void(0)"
+                               style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto912}}"
+                               onclick="document.getElementById('photo912').innerHTML='';document.getElementById('markedDel912').value=1; document.getElementById('sterge912').style.visibility='hidden'">
+                                <img name="sterge912" id="sterge912" src="/img/delete.png" width="15"
+                                     style="cursor:pointer" /></a></span>
+            <input type="hidden" id="markedDel912" name="markedDel912" value="0" />
+            <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto912"
+                   name="adaugafoto912" onchange="pressed(912)" /><label for="adaugafoto912" id="fileLabel912"
+                                                                         style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
+                                                                                                     style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
+        </td>
+        <td><input type="checkbox" id="spital912" name="spital912" {{transformvaluetochecked
+            foaie.spital912}} value="{{foaie.spital912}}" onchange="checkboxPressed(1,912)" /></td>
+        <td><input type="checkbox" id="online912" name="online912" value="{{foaie.online912}}"
+            {{transformvaluetochecked foaie.online912}} onchange="checkboxPressed(2,912)" /></td>
+    </tr>
+    <tr>
+        <td>12-18</td>
+        <td><input type="text" id="descriere1218" style="width:98%" name="descriere1218"
+                   value="{{foaie.descriere1218}}" /></td>
+        <td><input type="text" id="analize1218" style="width:98%" name="analize1218"
+                   value="{{foaie.analize1218}}" /></td>
+        <td class="fisier-list">
+                        <span>
+                            <a name="photo1218" id="photo1218" target="_blank"
+                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto1218}}"
+                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
+                                foaie.adaugafoto1218}}</a>
+                            <a href="javascript:void(0)"
+                               style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1218}}"
+                               onclick="document.getElementById('photo1218').innerHTML=''; document.getElementById('markedDel1218').value=1; document.getElementById('sterge1218').style.visibility='hidden'">
+                                <img name="sterge1218" id="sterge1218" src="/img/delete.png" width="15"
+                                     style="cursor:pointer" /></a></span>
+            <input type="hidden" id="markedDel1218" name="markedDel1218" value="0" />
+            <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto1218"
+                   name="adaugafoto1218" onchange="pressed(1218)" /><label for="adaugafoto1218"
+                                                                           id="fileLabel1218" style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
+                                                                                                                          style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
+        </td>
+        <td><input type="checkbox" id="spital1218" name="spital1218" {{transformvaluetochecked
+            foaie.spital1218}} value="{{foaie.spital1218}}" onchange="checkboxPressed(1,1218)" /></td>
+        <td><input type="checkbox" id="online1218" name="online1218" value="{{foaie.online1218}}"
+            {{transformvaluetochecked foaie.online1218}} onchange="checkboxPressed(2,1218)" /></td>
+    </tr>
+    <tr>
+        <td>18-24</td>
+        <td><input type="text" id="descriere1824" style="width:98%" name="descriere1824"
+                   value="{{foaie.descriere1824}}" /></td>
+        <td><input type="text" id="analize1824" style="width:98%" name="analize1824"
+                   value="{{foaie.analize1824}}" /></td>
+        <td class="fisier-list">
+                        <span>
+                            <a name="photo1824" id="photo1824" target="_blank"
+                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto1824}}"
+                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
+                                foaie.adaugafoto1824}}</a>
+                            <a href="javascript:void(0)"
+                               style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1824}}"
+                               onclick="document.getElementById('photo1824').innerHTML='';document.getElementById('markedDel1824').value=1; document.getElementById('sterge1824').style.visibility='hidden'">
+                                <img name="sterge1824" id="sterge1824" src="/img/delete.png" width="15"
+                                     style="cursor:pointer" /></a></span>
+            <input type="hidden" id="markedDel1824" name="markedDel1824" value="0" />
+            <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto1824"
+                   name="adaugafoto1824" onchange="pressed(1824)" /><label for="adaugafoto1824"
+                                                                           id="fileLabel1824" style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
+                                                                                                                          style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
+        </td>
+        <td><input type="checkbox" id="spital1824" name="spital1824" {{transformvaluetochecked
+            foaie.spital1824}} value="{{foaie.spital1824}}" onchange="checkboxPressed(1,1824)" /></td>
+        <td><input type="checkbox" id="online1824" name="online1824" value="{{foaie.online1824}}"
+            {{transformvaluetochecked foaie.online1824}} onchange="checkboxPressed(2,1824)" /></td>
+    </tr>
+    <tr>
+        <td>24-30</td>
+        <td><input type="text" id="descriere2430" style="width:98%" name="descriere2430"
+                   value="{{foaie.descriere2430}}" /></td>
+        <td><input type="text" id="analize2430" style="width:98%" name="analize2430"
+                   value="{{foaie.analize2430}}" /></td>
+        <td class="fisier-list">
+                        <span>
+                            <a name="photo2430" id="photo2430" target="_blank"
+                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto2430}}"
+                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
+                                foaie.adaugafoto2430}}</a>
+                            <a href="javascript:void(0)"
+                               style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto2430}}"
+                               onclick="document.getElementById('photo2430').innerHTML='';document.getElementById('markedDel2430').value=1; document.getElementById('sterge2430').style.visibility='hidden'">
+                                <img name="sterge2430" id="sterge2430" src="/img/delete.png" width="15"
+                                     style="cursor:pointer" /></a></span>
+            <input type="hidden" id="markedDel2430" name="markedDel2430" value="0" />
+            <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto2430"
+                   name="adaugafoto2430" onchange="pressed(2430)" /><label for="adaugafoto2430"
+                                                                           id="fileLabel2430" style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
+                                                                                                                          style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
+        </td>
+        <td><input type="checkbox" id="spital2430" name="spital2430" {{transformvaluetochecked
+            foaie.spital2430}} value="{{foaie.spital2430}}" onchange="checkboxPressed(1,2430)" /></td>
+        <td><input type="checkbox" id="online2430" name="online2430" value="{{foaie.online2430}}"
+            {{transformvaluetochecked foaie.online2430}} onchange="checkboxPressed(2,2430)" /></td>
+    </tr>
+    <tr>
+        <td>30-36</td>
+        <td><input type="text" id="descriere3036" style="width:98%" name="descriere3036"
+                   value="{{foaie.descriere3036}}" /></td>
+        <td><input type="text" id="analize3036" style="width:98%" name="analize3036"
+                   value="{{foaie.analize3036}}" /></td>
+        <td class="fisier-list">
+                        <span>
+                            <a name="photo3036" id="photo3036" target="_blank"
+                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto3036}}"
+                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
+                                foaie.adaugafoto3036}}</a>
+                            <a href="javascript:void(0)"
+                               style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto3036}}"
+                               onclick="document.getElementById('photo3036').innerHTML=''; document.getElementById('markedDel3036').value=1; document.getElementById('sterge3036').style.visibility='hidden'">
+                                <img name="sterge3036" id="sterge3036" src="/img/delete.png" width="15"
+                                     style="cursor:pointer" /></a></span>
+            <input type="hidden" id="markedDel3036" name="markedDel3036" value="0" />
+            <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto3036"
+                   name="adaugafoto3036" onchange="pressed(3036)" /><label for="adaugafoto3036"
+                                                                           id="fileLabel3036" style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
+                                                                                                                          style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
+        </td>
+        <td><input type="checkbox" id="spital3036" name="spital3036" {{transformvaluetochecked
+            foaie.spital3036}} value="{{foaie.spital3036}}" onchange="checkboxPressed(1,3036)" /></td>
+        <td><input type="checkbox" id="online3036" name="online3036" value="{{foaie.online3036}}"
+            {{transformvaluetochecked foaie.online3036}} onchange="checkboxPressed(2,3036)" /></td>
+    </tr>
 </table>
 </div>
-<br/>
+<br />
 
-<input type="submit" id="salveaza" style="font-size:16px" class="btn btn-reverse" value="Salvare foaie"/>
+<input type="submit" id="salveaza" style="font-size:16px" class="btn btn-reverse" value="Salvare foaie" />
         </form>
 <script type="text/x-handlebars-template" id="tableTemplate">
 __#each arsVV++
@@ -447,190 +780,189 @@ __/each++
 <script src="/js/general.js"></script>
 
 <script>
-function adaugaArsura(){
-    var templateText = $("#tableTemplate").html();
+        function adaugaArsura() {
+            var templateText = $("#tableTemplate").html();
 
-    templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");
+            templateText = $("#tableTemplate").html().replaceAll("_", "{").replaceAll("+", "}");
 
-    var tableTemplate = Handlebars.compile(templateText);
-    var lengthArsuri = arsuri.length;
-    arsuri = [];
+            var tableTemplate = Handlebars.compile(templateText);
+            var lengthArsuri = arsuri.length;
+            arsuri = [];
 
-    for (var index = 0; index < lengthArsuri; index++) {
-        var newArsura = {};
-        newArsura.position = index;
-        newArsura.grad =document.getElementById("gradSelect"+index).value;
-        newArsura.localizare =document.getElementById("localizare"+index).value;
-        newArsura.procent=document.getElementById("procent"+index).value;
-        arsuri.push(newArsura);
-    }
-     var newArsura = {};
-    newArsura.position = arsuri.length;
-    newArsura.grad =null;
-    newArsura.localizare =null;
-    newArsura.procent=null;
-    arsuri.push(newArsura);
+            for (var index = 0; index < lengthArsuri; index++) {
+                var newArsura = {};
+                newArsura.position = index;
+                newArsura.grad = document.getElementById("gradSelect" + index).value;
+                newArsura.localizare = document.getElementById("localizare" + index).value;
+                newArsura.procent = document.getElementById("procent" + index).value;
+                arsuri.push(newArsura);
+            }
+            var newArsura = {};
+            newArsura.position = arsuri.length;
+            newArsura.grad = null;
+            newArsura.localizare = null;
+            newArsura.procent = null;
+            arsuri.push(newArsura);
 
-    $("#updatedtable").html(tableTemplate({arsVV: arsuri }));
- }
- function stergeArsura(){
-   var templateText = $("#tableTemplate").html();
-
-    templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");
-
-    var tableTemplate = Handlebars.compile(templateText);
-    arsuri.pop();
-
-    $("#updatedtable").html(tableTemplate({arsVV: arsuri }));
- }
-function adaugareEvolutie() {
-    var templateText = $("#tableTemplateEvolutie").html();
-
-    templateText = $("#tableTemplateEvolutie").html().replaceAll("_","{").replaceAll("+","}");
-
-    var tableTemplate = Handlebars.compile(templateText);
-    var lengthEvolutii = evolutiiList.length;
-
-
-     var newEvolutiiList = [];
-    for (var index = 0; index < lengthEvolutii; index++) {
-       var newEvolutie = {};
-       newEvolutie.position = index;
-       newEvolutie.dataEvolutiei = document.getElementById("evoldata"+index).value;
-
-       newEvolutie.evolutie = document.getElementById("evol"+index).value;
-       newEvolutie.tratament = document.getElementById("trat"+index).value;
-       newEvolutiiList.push(newEvolutie);
-    }
-    evolutiiList = [];
-    for (var i = 0; i < newEvolutiiList.length;i++){
-        evolutiiList.push(newEvolutiiList[i]);
-    }
-
-    evolutiiList.push({position: evolutiiList.length,value:""});
-
-    $("#updatedtableEvolutie").html(tableTemplate({evolutii: evolutiiList }));
-}
-function stergereevolutie(){
-  var templateText = $("#tableTemplateEvolutie").html();
-
-    templateText = $("#tableTemplateEvolutie").html().replaceAll("_","{").replaceAll("+","}");
-
-    var tableTemplate = Handlebars.compile(templateText);
-    evolutiiList.pop();
-
-    $("#updatedtableEvolutie").html(tableTemplate({evolutii: evolutiiList }));
-}
-
-
-    function checkboxPressed(position, checkboxIndex) {
-        var spital=document.getElementById("spital"+checkboxIndex).checked;
-        var online=document.getElementById("online"+checkboxIndex).checked;
-        if (position==1 && spital==online && spital=='1'){
-            document.getElementById("online"+checkboxIndex).checked = 0 ;
+            $("#updatedtable").html(tableTemplate({ arsVV: arsuri }));
         }
-        else if (position==2 && spital==online && online=='1'){
-            document.getElementById("spital"+checkboxIndex).checked = 0 ;
+        function stergeArsura() {
+            var templateText = $("#tableTemplate").html();
+
+            templateText = $("#tableTemplate").html().replaceAll("_", "{").replaceAll("+", "}");
+
+            var tableTemplate = Handlebars.compile(templateText);
+            arsuri.pop();
+
+            $("#updatedtable").html(tableTemplate({ arsVV: arsuri }));
+        }
+        function adaugareEvolutie() {
+            var templateText = $("#tableTemplateEvolutie").html();
+
+            templateText = $("#tableTemplateEvolutie").html().replaceAll("_", "{").replaceAll("+", "}");
+
+            var tableTemplate = Handlebars.compile(templateText);
+            var lengthEvolutii = evolutiiList.length;
+
+
+            var newEvolutiiList = [];
+            for (var index = 0; index < lengthEvolutii; index++) {
+                var newEvolutie = {};
+                newEvolutie.position = index;
+                newEvolutie.dataEvolutiei = document.getElementById("evoldata" + index).value;
+
+                newEvolutie.evolutie = document.getElementById("evol" + index).value;
+                newEvolutie.tratament = document.getElementById("trat" + index).value;
+                newEvolutiiList.push(newEvolutie);
+            }
+            evolutiiList = [];
+            for (var i = 0; i < newEvolutiiList.length; i++) {
+                evolutiiList.push(newEvolutiiList[i]);
+            }
+
+            evolutiiList.push({ position: evolutiiList.length, value: "" });
+
+            $("#updatedtableEvolutie").html(tableTemplate({ evolutii: evolutiiList }));
+        }
+        function stergereevolutie() {
+            var templateText = $("#tableTemplateEvolutie").html();
+
+            templateText = $("#tableTemplateEvolutie").html().replaceAll("_", "{").replaceAll("+", "}");
+
+            var tableTemplate = Handlebars.compile(templateText);
+            evolutiiList.pop();
+
+            $("#updatedtableEvolutie").html(tableTemplate({ evolutii: evolutiiList }));
         }
 
-    }
-  function save() {
-    // Run the test and do something with the results...
-    fetch("/foaie_observatie",{
-  method: "POST"}).then (res => {
-    alert("Salvat!");
-    location.reload();
-});
-  }
-  window.pressed = function(imageIndex){
-    var a = document.getElementById('adaugafoto' + imageIndex);
-    if(a.value == "")
-    {
-        document.getElementById("fileLabel"+imageIndex).innerHTML = "Adaugă foto";
-    }
-    else
-    {
-        var theSplit = a.value.split('\\');
-        document.getElementById("fileLabel"+imageIndex).innerHTML ="<img src=\"/img/upload.png\" width=\"20\" height=\"15\" style=\"cursor:pointer\"/>" + theSplit[theSplit.length-1];
-    }
-};
+
+        function checkboxPressed(position, checkboxIndex) {
+            var spital = document.getElementById("spital" + checkboxIndex).checked;
+            var online = document.getElementById("online" + checkboxIndex).checked;
+            if (position == 1 && spital == online && spital == '1') {
+                document.getElementById("online" + checkboxIndex).checked = 0;
+            }
+            else if (position == 2 && spital == online && online == '1') {
+                document.getElementById("spital" + checkboxIndex).checked = 0;
+            }
+
+        }
+        function save() {
+            // Run the test and do something with the results...
+            fetch("/foaie_observatie", {
+                method: "POST"
+            }).then(res => {
+                alert("Salvat!");
+                location.reload();
+            });
+        }
+        window.pressed = function (imageIndex) {
+            var a = document.getElementById('adaugafoto' + imageIndex);
+            if (a.value == "") {
+                document.getElementById("fileLabel" + imageIndex).innerHTML = "Adaugă foto";
+            }
+            else {
+                var theSplit = a.value.split('\\');
+                document.getElementById("fileLabel" + imageIndex).innerHTML = "<img src=\"/img/upload.png\" width=\"20\" height=\"15\" style=\"cursor:pointer\"/>" + theSplit[theSplit.length - 1];
+            }
+        };
 
 
-  function adaugaEpicriza(){
-        if (document.getElementById("idfoaie").innerHTML=="")
-            alert("Salvati fisa prima data inainte de folosirea butonului");
-        else
-            window.open("/epicriza_etapa?idfoaie=" + document.getElementById("idfoaie").innerHTML, '_blank').focus();
-  }
-  function adaugaFisaTerapie(){
-        if (document.getElementById("idfoaie").innerHTML=="")
-            alert("Salvati fisa prima data inainte de folosirea butonului");
-        else
-            window.open("/fisa_terapie?idfoaie=" + document.getElementById("idfoaie").innerHTML, '_blank').focus();
-  }
-  function adaugaanBio() {
-        if (document.getElementById("idfoaie").innerHTML=="")
-            alert("Salvati fisa prima data inainte de folosirea butonului");
-        else
-            window.open("/buletin_analize_biochimie?idfoaie=" + document.getElementById("idfoaie").innerHTML, '_blank').focus();
-  }
-  function adaugaanCo(){
-      if (document.getElementById("idfoaie").innerHTML=="")
-            alert("Salvati fisa prima data inainte de folosirea butonului");
-        else
-      window.open("/buletin_analize_coagulare?idfoaie=" + document.getElementById("idfoaie").innerHTML, '_blank').focus();
-  }
-  function adaugaanHema(){
-    if (document.getElementById("idfoaie").innerHTML=="")
-            alert("Salvati fisa prima data inainte de folosirea butonului");
-        else
-       window.open("/buletin_analize_hemato?idfoaie=" + document.getElementById("idfoaie").innerHTML, '_blank').focus();
-  }
-  window.document.title= "Foaie de observație id " + "{{foaie.detaliipacient.idfoaie}}" + " " + "{{foaie.detaliipacient.nume}}";
-  var templateText = $("#tableTemplate").html();
+        function adaugaEpicriza() {
+            if (document.getElementById("idfoaie").innerHTML == "")
+                alert("Salvati fisa prima data inainte de folosirea butonului");
+            else
+                window.open("/epicriza_etapa?idfoaie=" + document.getElementById("idfoaie").innerHTML, '_blank').focus();
+        }
+        function adaugaFisaTerapie() {
+            if (document.getElementById("idfoaie").innerHTML == "")
+                alert("Salvati fisa prima data inainte de folosirea butonului");
+            else
+                window.open("/fisa_terapie?idfoaie=" + document.getElementById("idfoaie").innerHTML, '_blank').focus();
+        }
+        function adaugaanBio() {
+            if (document.getElementById("idfoaie").innerHTML == "")
+                alert("Salvati fisa prima data inainte de folosirea butonului");
+            else
+                window.open("/buletin_analize_biochimie?idfoaie=" + document.getElementById("idfoaie").innerHTML, '_blank').focus();
+        }
+        function adaugaanCo() {
+            if (document.getElementById("idfoaie").innerHTML == "")
+                alert("Salvati fisa prima data inainte de folosirea butonului");
+            else
+                window.open("/buletin_analize_coagulare?idfoaie=" + document.getElementById("idfoaie").innerHTML, '_blank').focus();
+        }
+        function adaugaanHema() {
+            if (document.getElementById("idfoaie").innerHTML == "")
+                alert("Salvati fisa prima data inainte de folosirea butonului");
+            else
+                window.open("/buletin_analize_hemato?idfoaie=" + document.getElementById("idfoaie").innerHTML, '_blank').focus();
+        }
+        window.document.title = "Foaie de observație id " + "{{foaie.detaliipacient.idfoaie}}" + " " + "{{foaie.detaliipacient.nume}}";
+        var templateText = $("#tableTemplate").html();
 
-  templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");
-  var tableTemplate = Handlebars.compile(templateText);
-  var arsuri = JSON.parse('{{{arsuriJsonVar}}}');
+        templateText = $("#tableTemplate").html().replaceAll("_", "{").replaceAll("+", "}");
+        var tableTemplate = Handlebars.compile(templateText);
+        var arsuri = JSON.parse('{{{arsuriJsonVar}}}');
 
-  var evolutiiList = JSON.parse('{{{evolutiiJsonList}}}');
-  $("#updatedtable").html(tableTemplate({arsVV: arsuri }));
+        var evolutiiList = JSON.parse('{{{evolutiiJsonList}}}');
+        $("#updatedtable").html(tableTemplate({ arsVV: arsuri }));
 
-  var templateTextRecomm = $("#tableTemplateRecomm").html();
+        var templateTextRecomm = $("#tableTemplateRecomm").html();
 
-  templateTextRecomm = $("#tableTemplateRecomm").html().replaceAll("_","{").replaceAll("+","}");
+        templateTextRecomm = $("#tableTemplateRecomm").html().replaceAll("_", "{").replaceAll("+", "}");
 
-  var tableTemplateRecomm = Handlebars.compile(templateTextRecomm);
+        var tableTemplateRecomm = Handlebars.compile(templateTextRecomm);
 
-    var templateTextEvolutie = $("#tableTemplateEvolutie").html();
+        var templateTextEvolutie = $("#tableTemplateEvolutie").html();
 
-    templateTextEvolutie = $("#tableTemplateEvolutie").html().replaceAll("_","{").replaceAll("+","}");
+        templateTextEvolutie = $("#tableTemplateEvolutie").html().replaceAll("_", "{").replaceAll("+", "}");
 
-    var tableTemplateEvolutie = Handlebars.compile(templateTextEvolutie);
+        var tableTemplateEvolutie = Handlebars.compile(templateTextEvolutie);
 
-    $("#updatedtableEvolutie").html(tableTemplateEvolutie({evolutii: evolutiiList }));
-    function openTab(evt, tabName) {
-  // Declare all variables
+        $("#updatedtableEvolutie").html(tableTemplateEvolutie({ evolutii: evolutiiList }));
+        function openTab(evt, tabName) {
+            // Declare all variables
 
-  evt.preventDefault();
-  var i, tabcontent, tablinks;
+            evt.preventDefault();
+            var i, tabcontent, tablinks;
 
-  // Get all elements with class="tabcontent" and hide them
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
 
-  // Get all elements with class="tablinks" and remove the class "active"
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
 
-  // Show the current tab, and add an "active" class to the button that opened the tab
-  document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active";
-}
-</script>
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
 
         </section>

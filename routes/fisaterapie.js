@@ -125,6 +125,7 @@ function createComments(){
     }
 return comms;
 }
+   var idpacient;
 router.get('/', (req, res) => {
     const query = url.parse(req.url, true).query;
     var data = query.data;
@@ -136,7 +137,7 @@ router.get('/', (req, res) => {
     if (idfoaie!=undefined) {
 
     arsuri = [];
-    var sql = "SELECT prenume, numefamilie, p.zi, p.luna, p.an, sex, cnp, cod, f.medic as medic, f.sectia as sectia, f.salon as salon, f.arsuri as arsuri, f.sange, f.rh, f.diagnosticprincipal  FROM spital.pacient p left join spital.foaie_observatie f on f.idpacient = p.idpacient where p.idpacient=(select idpacient from spital.foaie_observatie where idfoaie_observatie=" + idfoaie + ")";
+    var sql = "SELECT p.idpacient as idpacient, prenume, numefamilie, p.zi, p.luna, p.an, sex, cnp, cod, f.medic as medic, f.sectia as sectia, f.salon as salon, f.arsuri as arsuri, f.sange, f.rh, f.diagnosticprincipal  FROM spital.pacient p left join spital.foaie_observatie f on f.idpacient = p.idpacient where p.idpacient=(select idpacient from spital.foaie_observatie where idfoaie_observatie=" + idfoaie + ")";
     var row1col1=row1col2=row1col3=
         row2col1=row2col2=row2col3=
         row3col1=row3col2=row3col3=
@@ -160,7 +161,7 @@ router.get('/', (req, res) => {
                   nume = result[0].numefamilie;
                   prenume = result[0].prenume;
                   varsta  = Global.calculateAge(result[0].zi, result[0].luna, result[0].an);
-
+                  idpacient = result[0].idpacient;
                   rh = Global.checkNull(result[0].sange).toUpperCase() + " " + Global.checkNull(result[0].rh);
                   diagnostic = result[0].diagnosticprincipal;
                   var arsuriList = JSON.parse(result[0].arsuri);
@@ -172,7 +173,7 @@ router.get('/', (req, res) => {
                                     else {
 
                                     }
-                  pacient = {nume, prenume, varsta, rh, diagnostic};
+                  pacient = {idpacient, nume, prenume, varsta, rh, diagnostic};
                   if (idfisa!=undefined) {
                         var selectFisa = "select * from spital.fisa_terapie_intensiva where idfisa_terapie_intensiva=" + idfisa;
                         con.query(selectFisa, function (err, result, fields) {

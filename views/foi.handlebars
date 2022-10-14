@@ -1,12 +1,16 @@
 <section id="circles" class="container">
-    <b style="color:red">Foile de observație</b><br/><br/>
+    <h1 class="foile-titlu">Foile de observație</h1><br /><br />
     {{#each this}}
     {{#ifNotNull medic}}
-    <div ><b><a href="/foaie_observatie?pacient={{idpacient}}&foaie={{idfoaie_observatie}}" style="color:red">Medic: {{medic}}</a></b><br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;Pacient: {{prenume}} {{numefamilie}}<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;Secția: {{sectia}}<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;Data: {{convertdate timeCol}}
-        <br/>
+    <div class="foi-observatie">
+        <div><p class="nume-medic"><a href="/foaie_observatie?pacient={{idpacient}}&foaie={{idfoaie_observatie}}" style="color:red">Medic:
+            {{medic}}</a></p>
+            &nbsp;&nbsp;&nbsp;&nbsp;Pacient: {{prenume}} {{numefamilie}}<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;Secția: {{sectia}}<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;Data: {{convertdate timeCol}}
+            <br />
+        </div>
+        <button class="deleteFoaie-btn btn btn-reverse" id="{{idfoaie_observatie}}">Șterge foaie</button>
     </div>
     {{/ifNotNull}}
     {{else}}

@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
     epicriza_etapa.cantitatediureza = diureza;
     epicriza_etapa.extremitati = extremitati;
     epicriza_etapa.mucoase = mucoase;
-
+    epicriza_etapa.idfoaie = idfoaie;
      if (dataEpicriza=='') {
             errors.push ({"text": "Data epicrizei nu este completata"});
         };
@@ -94,6 +94,7 @@ router.get('/', (req, res) => {
                                     if (err) throw err;
 
                                   });
+        epicriza_etapa.idfoaie = idfoaie;
         //init
         if (idfoaie!=null) {
             if (idepicriza!=null) {

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 :root {
   --primary-color: #568c9b;
@@ -10,8 +10,10 @@
   --palette-red: #d90429;
   --palette-light-red: #ef233c;
   --palette-white: #edf2f4;
+  --palette-very-light-grey: #cfd4db;
   --palette-light-grey: #bac1ce;
   --palette-grey: #8d99ae;
+  --palette-dark-grey: #616875;
   --palette-black: #2b2d42;
 }
 
@@ -22,8 +24,8 @@
 body {
   font-family: 'Lato', sans-serif;
   margin: 0;
-  color: #333;
-  background: #f4f4f4;
+  color: var(--palette-black);
+  background: var(--palette-white)
 }
 
 ul {
@@ -32,12 +34,12 @@ ul {
 }
 
 a {
-  color: #fff;
+  color: var(--palette-white);
   text-decoration: none;
 }
 
 a:hover {
-  color: var(--primary-color);
+  color: var(--palette-red);
 }
 
 .container {
@@ -56,7 +58,7 @@ a:hover {
 
 .error {
   padding: 5px;
-  border: #777 dotted 1px;
+  border: var(--palette-dark-grey) dotted 1px;
   margin-bottom: 15px;
 }
 
@@ -87,50 +89,73 @@ header nav li {
 
 header.inner {
   background: var(--palette-black);
-  border-bottom: 4px solid #ef233c;
+  border-bottom: 4px solid var(--palette-light-red);
   position: relative;
   /* box-shadow: var(--box-shadow);*/
 }
 
 header.inner a {
-  color: #fff;
+  color: var(--palette-white);
 }
 
 /* Buttons */
-.btn {
-
+/* .btn {
   color: #fff;
   padding: 0.6rem;
-  border: 1px solid #ccc;
+  border: 3px solid #ccc;
   transition: all 0.7s;
 }
 
 .btn:hover {
   background: var(--primary-color);
-  border: 1px solid var(--primary-color);
+  border: 3px solid var(--primary-color);
   color: #fff;
+} */
+#salveaza,
+#pacients .btn,
+#users .btn,
+#addpacient .btn,
+#adduser .btn,
+#add .btn {
+  padding: 0.6rem;
+  color: var(--palette-white)
 }
 
-.btn-reverse {
+.btn-reverse,
+#pacients .btn,
+#users .btn,
+#addpacient .btn,
+#adduser .btn {
+  color: var(--palette-white);
   background-color: var(--palette-black);
   border: 3px solid var(--palette-red);
   border-radius: 10px;
   transition: background-color .15s, border-color .15s;
 }
 
-.btn-reverse:hover {
+.btn-reverse:hover,
+#pacients .btn:hover,
+#users .btn:hover,
+#addpacient .btn:hover,
+#adduser .btn:hover {
   background-color: var(--palette-dark-red);
   border: 3px solid var(--palette-black);
+  cursor: pointer;
 }
 
-.btn-reverse:active {
+.btn-reverse:active,
+#pacients .btn:active,
+#users .btn:active,
+#addpacient .btn:active,
+#adduser .btn:active {
   background-color: var(--palette-red);
   border: 3px solid var(--palette-dark-red);
 }
 
 /* Home Search */
 .search-wrap {
-  background: url('../img/showcase.jpg') no-repeat center center fixed / cover;
+  /*background: url('../img/showcase.jpg') no-repeat center center fixed / cover; */
+  background-color: var(--palette-white);
   height: 100vh;
   width: 100%;
   padding: 1.3rem 3rem;
@@ -140,26 +165,39 @@ header.inner a {
   align-items: center;
 }
 
+.landing-header {
+  background-color: var(--palette-black);
+  border-bottom: 4px solid var(--palette-red);
+}
+
 .search-wrap h1 {
   font-size: 3rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--palette-black);
   margin: 0 0 1.5rem;
   text-align: center;
+  text-decoration: underline;
+  text-decoration-color: var(--palette-red);
 }
 
 .search-form input[type='submit'] {
-  background: var(--primary-color);
-  border: 1px solid var(--primary-color);
-  color: #fff;
+  background: var(--palette-black);
+  border: 2px solid var(--palette-red);
+  color: var(--palette-white);
   padding: 0 2rem;
   cursor: pointer;
-  transition: all 0.8s;
+  transition: all .15s;
 }
 
 .search-form input[type='submit']:hover {
-  background: var(--primary-hover-color);
-  border: 1px solid var(--primary-hover-color);
+  background: var(--palette-dark-red);
+  border: 2px solid var(--palette-black);
+  cursor: pointer;
+}
+
+.serach-form input[type='submit']:active {
+  background-color: var(--palette-red);
+  border: 2px solid var(--palette-dark-red);
 }
 
 .search-form {
@@ -169,14 +207,14 @@ header.inner a {
 }
 
 .search-form i {
-  color: #333;
+  color: var(--palette-black);
 }
 
 /* Everything in the search form */
 .search-form>* {
   border: 0;
   padding: 0 0 0 10px;
-  background: #fff;
+  background: var(--palette-white);
   line-height: 50px;
   font-size: 1rem;
   border-radius: 0;
@@ -191,7 +229,7 @@ input[type='search'] {
 .gig {
   background: var(--bg-color);
   border-bottom: 4px solid var(--primary-color);
-  color: #fff;
+  color: var(--palette-white);
   padding: 1rem;
   margin-bottom: 1rem;
   box-shadow: var(--box-shadow);
@@ -212,9 +250,9 @@ input[type='search'] {
 }
 
 /* Form */
-#adduser .form-wrap{
+/* #adduser .form-wrap {
   background-color: var(--palette-black);
-}
+} */
 
 .form-wrap {
   margin: auto;
@@ -223,6 +261,7 @@ input[type='search'] {
   padding: 1rem 3rem 3rem;
   margin-top: 3rem;
   border-bottom: 4px solid var(--palette-red);
+  border-radius: 5px;
   box-shadow: var(--box-shadow);
 }
 
@@ -243,6 +282,10 @@ input[type='search'] {
   width: 100%;
   text-align: center;
   font-size: 18px;
+}
+
+.form-wrap label {
+  color: red;
 }
 
 label {
@@ -313,6 +356,7 @@ label {
     bottom: 5px;
     top: 64px;
 } */
+
 /* Smartphones */
 @media (max-width: 500px) {
   .container {
@@ -352,18 +396,18 @@ label {
 h1 {
   text-align: center;
   text-decoration: underline;
-  text-decoration-color: #333;
+  text-decoration-color: var(--palette-black);
 }
 
 h3 {
   text-decoration: underline;
   text-decoration-thickness: 2px;
-  text-decoration-color: #333;
+  text-decoration-color: var(--palette-black);
 }
 
 .table.table-user-information {
   text-decoration: underline;
-  text-decoration-color: #333;
+  text-decoration-color: var(--palette-black);
 }
 
 div .tab {
@@ -404,7 +448,7 @@ div .tab {
 }
 
 #adduser .form-wrap,
-#add .form-wrap{
+#add .form-wrap {
   background-color: var(--palette-black);
 }
 
@@ -444,12 +488,12 @@ div .tab {
   border-width: 1px;
 }
 
-#buletin div[style="text-align:center"] input[type="text"]{
+#buletin div[style="text-align:center"] input[type="text"] {
   background-color: var(--palette-white);
 }
 
-#buletin .analize-table{
-border: 1px solid var(--palette-black);
+#buletin .analize-table {
+  border: 1px solid var(--palette-black);
 }
 
 /*
@@ -476,168 +520,175 @@ border: 1px solid var(--palette-black);
   background-color: var(--palette-grey);
   color: var(--palette-white);
 }
-  /*buletin analize-finish*/
 
-  /*adauga pacient-start*/
+/*buletin analize-finish*/
 
-  #adduser .form-wrap {
-    border-radius: 10px;
-    border-width: 1px;
-    border-color: #333;
-    border-style: solid;
-  }
+/*adauga pacient-start*/
 
-  #adduser .form-wrap span,
-  #adduser .form-wrap h1 {
-    color: var(--palette-white);
-  }
+/* #adduser .form-wrap {
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: #333;
+  border-style: solid;
+}
 
-  #adduser .form-wrap input[type="button"] {
-    color: #333;
-  }
+#adduser .form-wrap span,
+#adduser .form-wrap h1 {
+  color: var(--palette-white);
+}
 
-  #adduser .form-wrap label {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-decoration-color: #333;
-    color: red;
-  }
+#adduser .form-wrap input[type="button"] {
+  color: #333;
+}
 
-  #adduser .form-wrap input[type="submit"] {
-    border-radius: 10px;
-  }
+#adduser .form-wrap label {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #333;
+  color: red;
+}
 
-  /*adauga pacient-finish*/
+#adduser .form-wrap input[type="submit"] {
+  border-radius: 10px;
+} */
 
-  /*add circle-start*/
+/*adauga pacient-finish*/
 
-  #add .form-wrap {
-    border-radius: 10px;
-    border-width: 1px;
-    border-color: #333;
-    border-style: solid;
-  }
+/*add circle-start*/
 
-  #add .form-wrap span,
-  #add .form-wrap h1 {
-    color: #333;
-  }
+/* #add .form-wrap {
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: #333;
+  border-style: solid;
+}
 
-  #add .form-wrap input[type="button"] {
-    color: #333;
-  }
+#add .form-wrap span,
+#add .form-wrap h1 {
+  color: #333;
+}
 
-  #add .form-wrap label {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-decoration-color: #333;
-    color: red;
-  }
+#add .form-wrap input[type="button"] {
+  color: #333;
+}
 
-  #add .form-wrap input[type="submit"] {
-    border-radius: 10px;
-  }
+#add .form-wrap label {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #333;
+  color: red;
+}
 
-  /*add circle-finish*/
+#add .form-wrap input[type="submit"] {
+  border-radius: 10px;
+} */
 
-  input[type='text'] {
-    border-radius: 5px;
-    border-width: 0px;
-  }
+/*add circle-finish*/
 
-  button {
-    border-radius: 10px;
-    border-width: 1px;
-  }
+input[type='text'] {
+  border-radius: 5px;
+  border-width: 0px;
+}
 
-  button:hover {
-    background-color: var(--palette-dark-red);
-  }
+button {
+  border-radius: 10px;
+  border-width: 1px;
+}
 
-  button:active {
-    background-color: var(--palette-red);
-    box-shadow: 0px 0px 10px var(--palette-red);
-  }
+button:hover {
+  background-color: var(--palette-dark-red);
+  cursor: pointer;
+}
 
-  input[type='button'] {
-    background-color: var(--palette-black) !important;
-    color: var(--palette-white);
-    border-radius: 8px;
-    border: 1px solid var(--palette-black);
-    transition: background-color .15s, border-color .15s, box-shadow .15s;
+button:active {
+  background-color: var(--palette-red);
+  box-shadow: 0px 0px 10px var(--palette-red);
+}
 
-  }
+input[type='button'] {
+  background-color: var(--palette-black) !important;
+  color: var(--palette-white);
+  border-radius: 8px;
+  border: 1px solid var(--palette-black);
+  transition: background-color .15s, border-color .15s, box-shadow .15s;
 
-  input[type='button']:hover {
-    background-color: var(--palette-dark-red) !important;
-    border: 1px solid var(--palette-black);
-  }
+}
 
-  input[type='button']:active {
-    background-color: var(--palette-red) !important;
-    border: 1px solid var(--palette-black);
-    box-shadow: 0px 0px 10px var(--palette-red);
-  }
+input[type='button']:hover {
+  background-color: var(--palette-dark-red) !important;
+  border: 1px solid var(--palette-black);
+  cursor: pointer;
+}
 
-  .tabcontent select,
-  #addDayDiv select {
-    border-radius: 5px;
-    border-width: 1px;
-  }
+input[type='button']:active {
+  background-color: var(--palette-red) !important;
+  border: 1px solid var(--palette-black);
+  box-shadow: 0px 0px 10px var(--palette-red);
+}
 
-  #anamneza,
-  #recom,
-  #urm p,
-  #updatedtable,
-  #addDayDiv {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-decoration-color: #333;
-  }
+input[type="radio"]:checked {
+  accent-color: var(--palette-light-red);
+}
 
-  body,
-  select,
-  input,
-  textarea {
-    background-color: var(--palette-white);
-  }
+.tabcontent select,
+#addDayDiv select {
+  border-radius: 5px;
+  border-width: 1px;
+}
 
-  button {
-    background-color: #FFFF54;
-  }
+#anamneza,
+#recom,
+#urm p,
+#updatedtable,
+#addDayDiv {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #333;
+}
+
+body,
+select,
+input,
+textarea {
+  background-color: var(--palette-white);
+}
+
+button {
+  background-color: #FFFF54;
+}
 
 
-  input[type="button"] {
-    background-color: #8d99ae;
-  }
+input[type="button"] {
+  background-color: var(--palette-grey);
+}
 
-  h4 {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-decoration-color: #333;
-  }
+h4 {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #333;
+}
 
-  #dataEpicriza {
-    border-radius: 10px;
-    border-width: 2px;
-  }
+#dataEpicriza {
+  border-radius: 10px;
+  border-width: 2px;
+}
 
-  .inputfile {
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-  }
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
 
-  .inputfile+label {
-    font-size: 1.25em;
-    font-weight: 700;
-    display: inline-block;
-  }
+.inputfile+label {
+  font-size: 1.25em;
+  font-weight: 700;
+  display: inline-block;
+}
 
-  /* input[type="checkbox"] {
+/* input[type="checkbox"] {
   -webkit-appearance: none;
   height: 15px;
   width: 15px;
@@ -658,17 +709,92 @@ input[type="checkbox"]:checked {
   background-color: #34495E;
 } */
 
-  input[type="checkbox"] {
-    height: 15px;
-    width: 15px;
-    cursor: pointer;
-  }
+input[type="checkbox"] {
+  height: 15px;
+  width: 15px;
+  cursor: pointer;
+}
 
-  input[type="checkbox"]:checked {
-    accent-color: var(--palette-red);
-  }
+input[type="checkbox"]:checked {
+  accent-color: var(--palette-red);
+}
 
-  .inputfile:focus+label,
-  .inputfile+label:hover {
-    cursor: pointer;
-  }
+.inputfile:focus+label,
+.inputfile+label:hover {
+  cursor: pointer;
+}
+
+/*pacients, users, foi-start*/
+.foile-titlu {
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-color: var(--palette-black);
+  margin-bottom: 0px;
+}
+
+.pacients,
+.users,
+.foi-observatie {
+  background-color: var(--palette-very-light-grey);
+  border: 2px solid var(--palette-black);
+  padding: 5px;
+  border-radius: 5px;
+  margin: 10px;
+  font-weight: 700;
+}
+
+.pacients,
+.users,
+.foi-observatie {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  align-items: center;
+}
+
+.pacients p,
+.users p {
+  margin: 0px;
+}
+
+.nume-medic,
+.pacients h3,
+.users h3 {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--palette-black);
+  font-size: 18px;
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+.deleteFoaie-btn {
+  font-weight: 700;
+  height: 65px;
+}
+
+/*pacients, users, foi-finish*/
+
+/* Adauga fisier - start */
+
+.fisier-list {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  justify-content: left;
+}
+
+.fisier-list label {
+  margin: 0px;
+}
+
+.filelabels-text {
+  position: absolute;
+  margin-top: 2px;
+  margin-left: 2px;
+}
+
+.fisier-list img[src="/img/delete.png"] {
+  position: relative;
+  top: 4px;
+}
+
+/* Adauga fisier - finish */
