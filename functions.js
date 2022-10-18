@@ -24,6 +24,7 @@ const months = [
 
 
 var Handlebars = require('handlebars');
+
 Handlebars.registerHelper('convertdate', function (v1) {
     var dateS = new Date(v1);
     return dateS.getDate() + " " + months.at(dateS.getMonth()) + " " + dateS.getFullYear() + " " + dateS.getHours() + ":" + dateS.getMinutes();
@@ -38,6 +39,23 @@ Handlebars.registerHelper('ifNotNull', function (v1,options) {
      if (v1==" ")
             return options.inverse(this);
      else return options.fn(this);
+});
+Handlebars.registerHelper("pageincrement", function(page){
+  // if(isNaN(page))
+  // return 1;
+  // else
+  // if(!page)
+  // return 0;
+  // if(page+1<count/limit)
+  return ++page;
+  // return page;
+});
+
+  Handlebars.registerHelper("pagedecrement", function(page){
+    // if(isNaN(page))
+    // return 1;
+    // else
+    return --page;
 });
 Handlebars.registerHelper('transformvaluetophotolink', function (value) {
     var returnedValue = value;

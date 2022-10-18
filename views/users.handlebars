@@ -15,4 +15,13 @@
     {{else}}
     <p>Niciun utilizator în baza de date</p>
     {{/each}}
+    <div style="width: 265px; margin: auto;">
+        {{#if showPrev}}
+        <a href="/users/?page={{pagedecrement page}}"><button class="btn" style="width:130px; float: left;" id="prevpage"  >Pagina anterioară</button></a>
+        {{/if}}
+
+        {{#if showNext}}
+        <a href="/users/?page={{pageincrement page }}"><button class="btn" style="width:130px; float: right;" id="nextpage"  >Pagina următoare</button></a>
+        {{/if}}
+    </div>
 </section>

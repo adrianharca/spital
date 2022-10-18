@@ -17,91 +17,108 @@ console.log("routes/pacients.js");
 // router.route('/demoadd').get(taskController.demoadd);
 
 
-// Get user list
+// Get pacients list
 router.get('/', (req, res) => {
   const query = url.parse(req.url, true).query;
+  var page = !query.page ? 0 : parseInt(query.page);
   const data = query.data;
-  const page = query.page;
+  var limit = 3;
   const sorting = query.sortBy;
-  var alreadyFiltered =false;
-  var sql = "SELECT idpacient, numefamilie, prenume, sex, cetatenie FROM spital.pacient ";
+  var alreadyFiltered = false;
+  var sql = "SELECT idpacient, numefamilie, prenume, sex, cetatenie, counttable.nr FROM spital.pacient join (select count(*) as nr from spital.pacient) as counttable ";
 
-  if (query.numefamilie!=null) {
-          sql = sql + " where numefamilie='" + query.numefamilie + "'";
-          alreadyFiltered = true;
+  var filtersql = "SELECT idpacient, numefamilie, prenume, sex, cetatenie, counttable.nr FROM spital.pacient full join (select count(*) as nr from spital.pacient ";
+
+  if (query.numefamilie != null) {
+    filtersql = filtersql + " where numefamilie like'" + query.numefamilie + "%'" + ") as counttable " + "where numefamilie like'" + query.numefamilie + "%'";
+    sql = filtersql;
+    alreadyFiltered = true;
+
+  }
+
+  // if (query.numefamilie!=null) {
+  //         sql = sql + " where numefamilie='" + query.numefamilie + "'";
+  //         alreadyFiltered = true;
+  //   }
+
+  if (query.prenume != null) {
+    sql = Global.appendToSQL(sql, alreadyFiltered, "prenume", query.prenume);
+    alreadyFiltered = true;
+  }
+  if (query.sex != null) {
+    sql = Global.appendToSQL(sql, alreadyFiltered, "sex", query.sex);
+    alreadyFiltered = true;
+  }
+  if (query.cetatenie != null) {
+    sql = Global.appendToSQL(sql, alreadyFiltered, "cetatenie", query.cetatenie);
+    alreadyFiltered = true;
+  }
+  if (query.cnp != null) {
+    sql = Global.appendToSQL(sql, alreadyFiltered, "cnp", query.cnp);
+    alreadyFiltered = true;
+  }
+  if (query.cod != null) {
+    sql = Global.appendToSQL(sql, alreadyFiltered, "cod", query.cod);
+    alreadyFiltered = true;
+  }
+  if (query.cnpParinte != null) {
+    sql = Global.appendToSQL(sql, alreadyFiltered, "cnpParinte", query.cnpParinte);
+    alreadyFiltered = true;
+  }
+  if (query.localitatea != null) {
+    sql = Global.appendToSQL(sql, alreadyFiltered, "localitatea", query.localitatea);
+    alreadyFiltered = true;
+  }
+  if (query.localitateaRes != null) {
+    sql = Global.appendToSQL(sql, alreadyFiltered, "localitateaRes", query.localitateaRes);
+    alreadyFiltered = true;
+  }
+  if (query.judet != null) {
+    sql = Global.appendToSQL(sql, alreadyFiltered, "judet", query.judet);
+    alreadyFiltered = true;
+  }
+  if (query.judetRes != null) {
+    sql = Global.appendToSQL(sql, alreadyFiltered, "judetRes", query.judetRes);
+    alreadyFiltered = true;
+  }
+  if (query.mediu != null) {
+    sql = Global.appendToSQL(sql, alreadyFiltered, "mediu", query.mediu);
+    alreadyFiltered = true;
+  }
+  if (query.mediuRes != null) {
+    sql = Global.appendToSQL(sql, alreadyFiltered, "mediuRes", query.mediuRes);
+    alreadyFiltered = true;
+  }
+  if (sorting != null) {
+    sql = sql + " order by " + sorting;
+    if (query.sortingOrder != null) {
+      sql = sql + " " + query.sortingOrder;
     }
-    if (query.prenume!=null) {
-          sql = Global.appendToSQL(sql, alreadyFiltered, "prenume",query.prenume);
-          alreadyFiltered = true;
-    }
-    if (query.sex!=null) {
-            sql = Global.appendToSQL(sql, alreadyFiltered, "sex",query.sex);
-            alreadyFiltered = true;
-     }
-     if (query.cetatenie!=null) {
-            sql = Global.appendToSQL(sql, alreadyFiltered, "cetatenie",query.cetatenie);
-            alreadyFiltered = true;
-     }
-     if (query.cnp!=null) {
-            sql = Global.appendToSQL(sql, alreadyFiltered, "cnp",query.cnp);
-            alreadyFiltered = true;
-     }
-      if (query.cod!=null) {
-            sql = Global.appendToSQL(sql, alreadyFiltered, "cod",query.cod);
-            alreadyFiltered = true;
-      }
-      if (query.cnpParinte!=null) {
-            sql = Global.appendToSQL(sql, alreadyFiltered, "cnpParinte",query.cnpParinte);
-            alreadyFiltered = true;
-      }
-      if (query.localitatea!=null) {
-            sql = Global.appendToSQL(sql, alreadyFiltered, "localitatea",query.localitatea);
-            alreadyFiltered = true;
-      }
-      if (query.localitateaRes!=null) {
-            sql = Global.appendToSQL(sql, alreadyFiltered, "localitateaRes",query.localitateaRes);
-            alreadyFiltered = true;
-      }
-      if (query.judet!=null) {
-            sql = Global.appendToSQL(sql, alreadyFiltered, "judet",query.judet);
-            alreadyFiltered = true;
-      }
-      if (query.judetRes!=null) {
-            sql = Global.appendToSQL(sql, alreadyFiltered, "judetRes",query.judetRes);
-            alreadyFiltered = true;
-      }
-      if (query.mediu!=null) {
-            sql = Global.appendToSQL(sql, alreadyFiltered, "mediu",query.mediu);
-            alreadyFiltered = true;
-      }
-      if (query.mediuRes!=null) {
-            sql = Global.appendToSQL(sql, alreadyFiltered, "mediuRes",query.mediuRes);
-            alreadyFiltered = true;
-      }
-    if (sorting!=null) {
-        sql = sql + " order by " + sorting;
-        if (query.sortingOrder!=null) {
-                    sql = sql + " " + query.sortingOrder;
-                }
-    }
-    sql = sql + "order by idpacient limit 100";
-     if (page!=null) {
-         sql = sql + " offset " + page*100;
-        }
- var con = mysql.createConnection({
-        host: Global.getHost(),
-        user: Global.getUser(),
-        password: Global.getParola()
-      });
-  con.connect(function(err) {
+  }
+  sql = sql + "order by idpacient limit " + limit;
+  if (page != null) {
+    sql = sql + " offset " + page * limit;
+  }
+
+  var con = mysql.createConnection({
+    host: Global.getHost(),
+    user: Global.getUser(),
+    password: Global.getParola()
+  });
+  con.connect(function (err) {
     if (err) throw err;
     con.query(sql, function (err, result, fields) {
       if (err) throw err;
-      res.render('pacients', result  );
+      result.page = page;
+      result.showNext = result[0].nr - limit > 0 & page + 1 < result[0].nr / limit;
+      result.showPrev = page != 0;
+      console.log(result.showNext);
+      res.render('pacients', result);
       con.end();
     });
-    });
+  });
 });
+
 
 
 router.get('/json', (req, res) => {

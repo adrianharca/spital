@@ -30,6 +30,7 @@ router.get('/', (req, res) => {
       if (result[0]!=undefined) {
 
         setup.roles = result[0].roles;
+        setup.levels = result[0].levels;
         if (result[0].sectii!=undefined)
             setup.sectiiJsonVar = result[0].sectii;
         else
@@ -46,12 +47,27 @@ router.post('/', (req, res) => {
   const query = url.parse(req.url, true).query;
 
   errors = [];
+  setup = {};
+  setup.roles = req.body.roles;
+  setup.levels = req.body.levels;
+  var indexSectie = 0;
+  var sectii = [];
+  while (req.body["nume"+indexSectie]!=undefined || req.body["saloane"+indexSectie]!=undefined ){
+          sectii.push(new Global.Sectie(indexSectie, req.body["nume"+indexSectie], req.body["saloane"+indexSectie]));
+          indexSectie++;
+  }
+  setup.sectiiJsonVar = JSON.stringify(sectii);
+  
   if (req.body.roles=='') {
                 errors.push ({"text": "Rolurile nu sunt completate."});
-                setup = {};
                 res.render('setup',{errors, setup});
                 return;
                   };
+  if (req.body.levels=='') {
+                  errors.push ({"text": "Nivelurile de studii nu sunt completate."});
+                  res.render('setup',{errors, setup});
+                  return;
+                    };
   var rolesList = req.body.roles.toLowerCase().split(",");
   var foundAdmin = false;
   var foundMedic = false;
@@ -64,21 +80,12 @@ router.post('/', (req, res) => {
   }
   if (!foundAdmin || !foundMedic) {
         errors.push ({"text": "Rolurile medic și admin trebuie să existe în cadrul listei de roluri."});
-        setup = {};
-        setup.roles = req.body.roles;
         res.render('setup',{errors, setup});
         return;
   }
-  var indexSectie = 0;
-  var sectii = [];
-  while (req.body["nume"+indexSectie]!=undefined || req.body["saloane"+indexSectie]!=undefined ){
-        sectii.push(new Global.Sectie(indexSectie, req.body["nume"+indexSectie], req.body["saloane"+indexSectie]));
-        indexSectie++;
-  }
+
   if (indexSectie==0){
         errors.push ({"text": "Completați configurația cu cel puțin o secție."});
-        setup = {};
-        setup.roles = req.body.roles;
         res.render('setup',{errors, setup});
         return;
   }
@@ -100,18 +107,17 @@ router.post('/', (req, res) => {
              var sizeOfSelect = results.length;
 
              if (sizeOfSelect==0)  {
-                    updateInsertSql = "insert into spital.setup(roles,modifieddate,creationdate,sectii) values ('"+ req.body.roles + "','" +modifieddate + "','" + creationdate+"','" + JSON.stringify(sectii)+"')";
+                    updateInsertSql = "insert into spital.setup(roles, modifieddate, creationdate, sectii, levels) values ('"+ req.body.roles + "','" +modifieddate + "','" + creationdate+"','" + JSON.stringify(sectii)+"','" + req.body.levels + "')";
              }
              else {
-                    updateInsertSql =  "update spital.setup set roles='" + req.body.roles + "', modifieddate='" + modifieddate+ "', sectii='"+ JSON.stringify(sectii) + "'";
+                    updateInsertSql =  "update spital.setup set roles='" + req.body.roles + "', modifieddate='" + modifieddate+ "', sectii='"+ JSON.stringify(sectii) + "', levels='" + req.body.levels + "'";
              }
              var setup = {};
              con.query(updateInsertSql, (error2, results2, fields2) => {
                                    if (error2) {
                                                return console.error(error2.message);
                                    }
-                                    setup.roles = req.body.roles;
-                                    setup.sectiiJsonVar = JSON.stringify(sectii);
+
                                     res.render('setup',{errors, setup});
                                    });
 

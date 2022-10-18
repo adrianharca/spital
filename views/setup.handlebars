@@ -10,10 +10,17 @@
       <div class="input-group">
         <label for="roles">Roluri (separate prin virgulă: ex. medic, asistentă, etc.)</label>
         <input type="text" name="roles" id="roles" class="input-box" placeholder="Roluri"
-               maxlength="100" value="{{setup.roles}}"/>
+               maxlength="200" value="{{setup.roles}}"/>
       </div>
+      <div class="input-group">
+        <label for="roles">Niveluri de studii (separate prin virgulă: ex. liceu, gimnaziu, etc.)</label>
+        <input type="text" name="levels" id="levels" class="input-box" placeholder="Niveluri"
+               maxlength="1000" value="{{setup.levels}}"/>
+      </div>
+
       <h3 style="text-align:left">Secții</h3>
       <div id="updatedtable" class="input-group"></div>
+      <br/><br/>
       <input type="button" id="adauga" onclick="adaugaSectie()" value="Adaugă secție" />&nbsp;&nbsp;<input
             type="button" id="sterge" onclick="stergeSectie()" value="Șterge ultima secție" />
       <br/><br/>
@@ -25,7 +32,7 @@
 __#each sectiiVV++
 
 Nume secție
-<input type="text" style="width:300px" name="nume__this.position++" id="nume__this.position++" value="__this.nume++"/><br/>
+<input type="text" style="width:300px" name="nume__this.position++" id="nume__this.position++" value="__this.nume++"/><br/><br/>
 Saloane (separate prin virgulă) <input type="text" style="width:500px" name="saloane__this.position++"  id="saloane__this.position++" value="__this.saloane++"/>&nbsp;<br/><br/>
 
 __/each++

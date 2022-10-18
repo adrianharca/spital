@@ -47,39 +47,54 @@ router.get('/delete', (req,res) => {
     }
 
 });
+
 // Get user list
 router.get('/', (req, res) => {
   const query = url.parse(req.url, true).query;
+  var page = !query.page ? 0 : parseInt(query.page);
   const data = query.data;
   var nume = query.nume;
   var email = query.email;
   var rol = query.rol;
-  var alreadyFiltered =false;
-  var sql = "SELECT idutilizator, nume, email, rol FROM spital.utilizator";
+  var alreadyFiltered = false;
+  var sql = "SELECT idutilizator, nume, email, rol, counttable.nr  FROM spital.utilizator join (select count(*) as nr from spital.utilizator) as counttable";
+
+  var limit = 3;
+
   if (query.nume!=null) {
       sql = Global.appendToSQL(sql, alreadyFiltered, "nume",query.nume);
       alreadyFiltered = true;
   }
-  if (query.rol!=null) {
-        sql = Global.appendToSQL(sql, alreadyFiltered, "rol",query.rol);
-        alreadyFiltered = true;
+  if (query.rol != null) {
+    sql = Global.appendToSQL(sql, alreadyFiltered, "rol", query.rol);
+    alreadyFiltered = true;
   }
-  if (query.email!=null) {
-        sql = Global.appendToSQL(sql, alreadyFiltered, "email",query.email);
-        alreadyFiltered = true;
+  if (query.email != null) {
+    sql = Global.appendToSQL(sql, alreadyFiltered, "email", query.email);
+    alreadyFiltered = true;
+  }
+
+  sql = sql + " order by idutilizator limit " + limit;
+  if (page != null) {
+    sql = sql + " offset " + page * limit;
   }
 
   var con = mysql.createConnection({
-      host: Global.getHost(),
-      user: Global.getUser(),
-      password: Global.getParola()
-      });
-  con.connect(function(err) {
+    host: Global.getHost(),
+    user: Global.getUser(),
+    password: Global.getParola()
+  });
+  con.connect(function (err) {
     if (err) throw err;
     con.query(sql, function (err, result, fields) {
       if (err) throw err;
+      console.log(result);
+      result.page = page;
+      result.showNext = result[0].nr - limit > 0 & page + 1 < result[0].nr / limit;
+      result.showPrev = page != 0;
+      res.render('users', result);
       con.end();
-      res.render('users', result  );
+
     });
   });
 
@@ -294,7 +309,7 @@ router.post('/adduser', (req, res) => {
                              console.log("Number of records inserted: " + result.affectedRows);
                              errors.push ({"text": "Utilizatorul " + nume + " a fost creat în bază."});
                              parolaConfirm = parola;
-                             res.render('adduser', {errors,nume, rol, email, parola, parolaConfirm});
+                             res.redirect('/users');
                              });
                   }
                   else {
