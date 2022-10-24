@@ -112,7 +112,6 @@ router.post('/', (req, res) => {
              else {
                     updateInsertSql =  "update spital.setup set roles='" + req.body.roles + "', modifieddate='" + modifieddate+ "', sectii='"+ JSON.stringify(sectii) + "', levels='" + req.body.levels + "'";
              }
-             var setup = {};
              con.query(updateInsertSql, (error2, results2, fields2) => {
                                    if (error2) {
                                                return console.error(error2.message);

@@ -92,7 +92,7 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                               descriere1218,analize1218,adaugafoto1218,spital1218,online1218,
                               descriere1824,analize1824,adaugafoto1824,spital1824,online1824,
                               descriere2430,analize2430,adaugafoto2430,spital2430,online2430,
-                              descriere3036,analize3036,adaugafoto3036,spital3036,online3036, greutateactuala, zi, luna, an, indiceponderal, salon, pat} = fields;
+                              descriere3036,analize3036,adaugafoto3036,spital3036,online3036, greutateactuala, zi, luna, an, indiceponderal, salon, pat, status, lunaext, anext, ziext} = fields;
 
 
             var indexArsura = 0;
@@ -110,12 +110,7 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
             if (errors.length==0) {
 
 
-            var con = mysql.createConnection({
-                        host: Global.getHost(),
-                        user: Global.getUser(),
-                        password: Global.getParola(),
-                        port: 3306
-                        });
+            var con = Global.createConnection(mysql);
                   con.connect(function(err) {
                   if (err) throw err;
 
@@ -145,7 +140,7 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                                "descriere1218,analize1218,spital1218,online1218,"+
                                "descriere1824,analize1824,spital1824,online1824,"+
                                "descriere2430,analize2430,spital2430,online2430,"+
-                               "descriere3036,analize3036,spital3036,online3036, arsuri, evolutii, greutateactuala, zi, luna, an, indiceponderal, salon, pat) VALUES ?";
+                               "descriere3036,analize3036,spital3036,online3036, arsuri, evolutii, greutateactuala, zi, luna, an, indiceponderal, salon, pat, status, lunaext, anext, ziext ) VALUES ?";
                                                                    var values = [
                                                                    [pacientId, medic, sectia, diagprincipal,diaginternare,diag24h,diag72h,intoxicatii,alergii,sange,rh,
                                                                                                   insotit,vechimearsuri,diagexternare,datadeces,cauzadirectadeces,
@@ -165,7 +160,7 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                                                                                                   descriere1218,analize1218,Global.transformCheckboxField(spital1218),Global.transformCheckboxField(online1218),
                                                                                                   descriere1824,analize1824,Global.transformCheckboxField(spital1824),Global.transformCheckboxField(online1824),
                                                                                                   descriere2430,analize2430,Global.transformCheckboxField(spital2430),Global.transformCheckboxField(online2430),
-                                                                                                  descriere3036,analize3036,Global.transformCheckboxField(spital3036),Global.transformCheckboxField(online3036),JSON.stringify(arsuri),JSON.stringify(evolutii), greutateactuala, zi, luna, an, indiceponderal, salon, pat]
+                                                                                                  descriere3036,analize3036,Global.transformCheckboxField(spital3036),Global.transformCheckboxField(online3036),JSON.stringify(arsuri),JSON.stringify(evolutii), greutateactuala, zi, luna, an, indiceponderal, salon, pat, status, lunaext, anext, ziext]
                                                                    ];
                                                                    con.query(sql, [values], function (err, result) {
                                                                    if (err) throw err;
@@ -224,7 +219,8 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                                             "descriere1824='"+ descriere1824+ "',analize1824='"+ analize1824 + "',adaugafoto1824='"+ fileNameForField(files.adaugafoto1824, idfoaie,"adaugafoto1824",oldFiles.adaugafoto1824) + "',spital1824='"+ Global.transformCheckboxField(spital1824) + "',online1824='"+ Global.transformCheckboxField(online1824) + "',"+
                                             "descriere2430='"+ descriere2430+ "',analize2430='"+ analize2430 + "',adaugafoto2430='"+ fileNameForField(files.adaugafoto2430, idfoaie,"adaugafoto2430",oldFiles.adaugafoto2430) + "',spital2430='"+ Global.transformCheckboxField(spital2430) + "',online2430='"+ Global.transformCheckboxField(online2430) + "',"+
                                             "descriere3036='"+ descriere3036+ "',analize3036='"+ analize3036 + "',adaugafoto3036='"+ fileNameForField(files.adaugafoto3036, idfoaie,"adaugafoto3036",oldFiles.adaugafoto3036) + "',spital3036='"+ Global.transformCheckboxField(spital3036) + "',online3036='"+ Global.transformCheckboxField(online3036) + "', " +
-                                            "arsuri='"+ JSON.stringify(arsuri) +"', evolutii='" + JSON.stringify(evolutii) + "', adaugafoto0='"+ fileNameForField(files.adaugafoto0, idfoaie,"adaugafoto0",oldFiles.adaugafoto0) + "', greutateactuala='"+ greutateactuala + "', zi='"+ zi+"', luna='" + luna + "', an='" + an + "', indiceponderal='" + indiceponderal +"', salon='" + salon +"',pat='" +pat + "' where idfoaie_observatie="+idfoaie;
+                                            "arsuri='"+ JSON.stringify(arsuri) +"', evolutii='" + JSON.stringify(evolutii) + "', adaugafoto0='"+ fileNameForField(files.adaugafoto0, idfoaie,"adaugafoto0",oldFiles.adaugafoto0) + "', greutateactuala='"+ greutateactuala + "', zi='"+ zi+"', luna='" + luna + "', an='" + an + "', indiceponderal='" + indiceponderal +"', salon='" + salon +"',pat='" +pat +
+                                            "', status= '" + status + "', lunaext='" + lunaext +"', ziext = '" + ziext + "', anext='" + anext + "' where idfoaie_observatie="+idfoaie;
 
                                             con.query(sql, function (err, result) {
                                                         if (err) throw err;
@@ -301,7 +297,7 @@ router.post('/', (req, res) => {
         medic = fields.medic;
 
         sectia = fields.sectia;
-        constructFoaie(errors, req, res);
+        constructFoaie(errors, req, res, fields);
     }
     else {
         markedDel.adaugafoto0 = fields.markedDel0;
@@ -328,8 +324,22 @@ router.post('/', (req, res) => {
         });
         }
      else {
-       // res.redirect('back');
-        res.redirect(301,'/foaie_observatie/allFiles');
+       var selectAllFiles = "select idfoaie_observatie,pacient.idpacient, numefamilie, prenume, foaie_observatie.medic, foaie_observatie.sectia, foaie_observatie.CURRENT_TIMESTAMP as timeCol from spital.foaie_observatie inner join spital.pacient on pacient.idpacient=foaie_observatie.idpacient order by idfoaie_observatie limit 100";
+           const query = url.parse(req.url, true).query;
+           var page = query.page;
+           if (page!=null) {
+               selectAllFiles = selectAllFiles + " offset " + page*100;
+           }
+
+       var con = Global.createConnection(mysql);
+         con.connect(function(err) {
+           if (err) throw err;
+           con.query(selectAllFiles, function (err, result, fields) {
+             if (err) throw err;
+             res.redirect('/foaie_observatie/allFiles'  );
+             con.end();
+           });
+           });
     }
     }
 
@@ -344,11 +354,7 @@ router.get('/allFiles', (req, res) => {
         selectAllFiles = selectAllFiles + " offset " + page*100;
     }
 
-var con = mysql.createConnection({
-        host: Global.getHost(),
-        user: Global.getUser(),
-        password: Global.getParola()
-      });
+var con = Global.createConnection(mysql);
   con.connect(function(err) {
     if (err) throw err;
     con.query(selectAllFiles, function (err, result, fields) {
@@ -388,7 +394,7 @@ function deleteOldFiles(files, oldFiles, idfoaie,markedDel){
     deleteOldFile("adaugafoto2430",files, oldFiles, idfoaie,markedDel);
     deleteOldFile("adaugafoto3036",files, oldFiles, idfoaie,markedDel);
 }
-function constructFoaie(errors, req, res) {
+function constructFoaie(errors, req, res, fieldsOld) {
 
     etichete = {};
     foaie = {};
@@ -404,12 +410,7 @@ function constructFoaie(errors, req, res) {
 
         if (pacientId!=null)
             {
-                 var con = mysql.createConnection({
-                            host: Global.getHost(),
-                            user: Global.getUser(),
-                            password: Global.getParola(),
-                            port: 3306
-                            });
+                 var con = Global.createConnection(mysql);
                       con.connect(function(err) {
                       if (err) throw err;
 
@@ -456,12 +457,16 @@ function constructFoaie(errors, req, res) {
                                     foaie.zi = results[0].zi;
                                     foaie.luna = results[0].luna;
                                     foaie.an = results[0].an;
+                                    foaie.ziext = results[0].ziext;
+                                    foaie.lunaext = results[0].lunaext;
+                                    foaie.anext = results[0].anext;
                                     foaie.greutateactuala = results[0].greutateactuala;
                                     foaie.sange = results[0].sange;
                                     foaie.alergii = results[0].alergii;
                                     foaie.intoxicatii = results[0].intoxicatii;
                                     foaie.diag72h = results[0].diag72h;
                                     foaie.diag24h = results[0].diag24h;
+                                    foaie.status = results[0].status;
                                     foaie.indiceponderal = results[0].indiceponderal;
                                     foaie.salon = results[0].salon;
                                     foaie.pat = results[0].pat;
@@ -591,9 +596,9 @@ function constructFoaie(errors, req, res) {
                                                                             }
                                                                         }
                                                                         //foaie.fiseterapie.push(Global.FisaTerapie("28/29 iunie 2022"));
-                                                                        foaie.buletinebio.push(Global.Bio("14 Iunie"));
-                                                                        foaie.buletinehemo.push(Global.Hemo("14 Iunie"));
-                                                                        foaie.buletinecoagulare.push(Global.Coagulare("14 Iunie"));
+                                                                        //foaie.buletinebio.push(Global.Bio("14 Iunie"));
+                                                                        //foaie.buletinehemo.push(Global.Hemo("14 Iunie"));
+                                                                        //foaie.buletinecoagulare.push(Global.Coagulare("14 Iunie"));
 
 
                                                                         con.end();
@@ -613,10 +618,97 @@ function constructFoaie(errors, req, res) {
                                     foaie.zi = new Date().getDate();
                                     foaie.luna = (new Date().getMonth()) + 1;
                                     foaie.an = new Date().getFullYear();
+                                    if (fieldsOld!=null) {
+                                        foaie.medic = fieldsOld.medic;
+                                        foaie.sectie = fieldsOld.sectie;
+                                        foaie.salon = fieldsOld.salon;
+                                        foaie.pat = fieldsOld.pat;
+                                        foaie.zi= fieldsOld.zi;
+                                        foaie.luna = fieldsOld.luna;
+                                        foaie.an = fieldsOld.an;
+                                        foaie.ziext= fieldsOld.ziext;
+                                        foaie.lunaext = fieldsOld.lunaext;
+                                        foaie.anext = fieldsOld.anext;
+                                        foaie.diagprincipal = fieldsOld.diagprincipal;
+                                        foaie.diaginternare = fieldsOld.diaginternare;
+                                        foaie.diag24h = fieldsOld.diag24h;
+                                        foaie.diag72h = fieldsOld.diag72h;
+                                        foaie.diag72h = fieldsOld.diag72h;
+                                        foaie.intoxicatii = fieldsOld.intoxicatii;
+                                        foaie.alergii = fieldsOld.alergii;
+                                        foaie.indiceponderal = fieldsOld.indiceponderal;
+                                        foaie.greutateactuala = fieldsOld.greutateactuala;
+                                        foaie.sange = fieldsOld.sange;
+                                        foaie.caiResp = fieldsOld.caiResp;
+                                        foaie.rh = fieldsOld.rh;
+                                        foaie.insotit = fieldsOld.insotit;
+                                        foaie.vechimearsuri = fieldsOld.vechimearsuri;
+                                        foaie.diagexternare = fieldsOld.diagexternare;
+                                        foaie.datadeces = fieldsOld.datadeces;
+                                        foaie.cauzadirectadeces = fieldsOld.cauzadirectadeces;
+                                        foaie.cauzaantecedentadeces = fieldsOld.cauzaantecedentadeces;
+                                        foaie.starimorbideinitiale = fieldsOld.starimorbideinitiale;
+                                        foaie.starimorbideimportante = fieldsOld.starimorbideimportante;
+                                        foaie.locaccident = fieldsOld.locaccident;
+                                        foaie.descriere = fieldsOld.descriere;
+                                        foaie.locajutor = fieldsOld.locajutor;
+                                        foaie.tratamentajutor = fieldsOld.tratamentajutor;
+                                        foaie.unitatiintermediare = fieldsOld.unitatiintermediare;
+                                        foaie.tratamentanterior = fieldsOld.tratamentanterior;
+                                        foaie.transport = fieldsOld.transport;
+                                        foaie.tratasport = fieldsOld.tratasport;
+                                        foaie.starepacient = fieldsOld.starepacient;
+                                        foaie.timp = fieldsOld.timp;
+                                        foaie.cantitatelichide = fieldsOld.cantitatelichide;
+                                        foaie.cantlichide8h = fieldsOld.cantlichide8h;
+                                        foaie.cantlichide16h = fieldsOld.cantlichide16h;
+                                        foaie.cantlichide24h = fieldsOld.cantlichide24h;
+                                        foaie.dinamicaplagi = fieldsOld.dinamicaplagi;
+                                        foaie.epicrizafinala = fieldsOld.epicrizafinala;
+                                        foaie.medicatie = fieldsOld.medicatie;
+                                        foaie.kineto = fieldsOld.kineto;
+                                        foaie.recomments = fieldsOld.recomments;
+                                        foaie.cura = fieldsOld.cura;
+                                        foaie.status = fieldsOld.status;
+                                        foaie.markedDel0 = fieldsOld.markedDel0;
+                                        foaie.descriere1 = fieldsOld.descriere1;
+                                        foaie.analize1 = fieldsOld.analize1;
+                                        foaie.markedDel1 = fieldsOld.markedDel1;
+                                        foaie.descriere2 = fieldsOld.descriere2;
+                                        foaie.analize2 = fieldsOld.analize2;
+                                        foaie.markedDel2 = fieldsOld.markedDel2;
+                                        foaie.descriere3 = fieldsOld.descriere3;
+                                        foaie.analize3 = fieldsOld.analize3;
+                                        foaie.markedDel3 = fieldsOld.markedDel3;
+                                        foaie.descriere4 = fieldsOld.descriere4;
+                                        foaie.analize4 = fieldsOld.analize4;
+                                        foaie.markedDel4 = fieldsOld.markedDel4;
+                                        foaie.descriere5 = fieldsOld.descriere5;
+                                        foaie.analize5 = fieldsOld.analize5;
+                                        foaie.markedDel5 = fieldsOld.markedDel5;
+                                        foaie.descriere69 = fieldsOld.descriere69;
+                                        foaie.analize69 = fieldsOld.analize69;
+                                        foaie.markedDel69 = fieldsOld.markedDel69;
+                                        foaie.descriere912 = fieldsOld.descriere912;
+                                        foaie.analize912 = fieldsOld.analize912;
+                                        foaie.markedDel912 = fieldsOld.markedDel912;
+                                        foaie.descriere1218 = fieldsOld.descriere1218;
+                                        foaie.analize1218 = fieldsOld.analize1218;
+                                        foaie.markedDel1218 = fieldsOld.markedDel1218;
+                                        foaie.descriere1824 = fieldsOld.descriere1824;
+                                        foaie.analize1824 = fieldsOld.analize1824;
+                                        foaie.markedDel1824 = fieldsOld.markedDel1824;
+                                        foaie.descriere2430 = fieldsOld.descriere2420;
+                                        foaie.analize2430 = fieldsOld.analize2430;
+                                        foaie.markedDel2430 = fieldsOld.markedDel2430;
+                                        foaie.descriere3036 = fieldsOld.descriere3036;
+                                        foaie.analize3036 = fieldsOld.analize3036;
+                                        foaie.markedDel3036 = fieldsOld.markedDel3036;
+                                    }
                                     //foaie.fiseterapie.push(Global.FisaTerapie("28/29 iunie 2022"));
-                                    foaie.buletinebio.push(Global.Bio("14 Iunie"));
-                                    foaie.buletinehemo.push(Global.Hemo("14 Iunie"));
-                                    foaie.buletinecoagulare.push(Global.Coagulare("14 Iunie"));
+                                   // foaie.buletinebio.push(Global.Bio("14 Iunie"));
+                                    //foaie.buletinehemo.push(Global.Hemo("14 Iunie"));
+                                    //foaie.buletinecoagulare.push(Global.Coagulare("14 Iunie"));
 
                                     var arsuriJsonVar = [];
                                     var evolutiiJsonList=[];
@@ -637,7 +729,7 @@ router.get('/', (req, res) => {
         const data = query.data;
         pacientId = query.pacient;
         idfoaie = query.foaie;
-        constructFoaie([], req, res);
+        constructFoaie([], req, res, null);
 
 
             }

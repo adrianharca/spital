@@ -100,11 +100,7 @@ router.get('/', (req, res) => {
     sql = sql + " offset " + page * limit;
   }
 
-  var con = mysql.createConnection({
-    host: Global.getHost(),
-    user: Global.getUser(),
-    password: Global.getParola()
-  });
+  var con = Global.createConnection(mysql);
   con.connect(function (err) {
     if (err) throw err;
     con.query(sql, function (err, result, fields) {
@@ -184,24 +180,54 @@ else {
     });
   }    
   });
-// // Display add user form
 
+router.get('/getfoaiepacient', (req, res) => {
+    const query = url.parse(req.url, true).query;
+    var id = query.id;
+    idInUI = id;
+    if (id!=null) {
+          var con = mysql.createConnection({
+                host: Global.getHost(),
+                user: Global.getUser(),
+                password: Global.getParola(),
+                port: 3306
+                });
+          con.connect(function(err) {
+          if (err) throw err;
+
+          });
+          //TODO de adaugat si statusul aici pentru foile de observatie, astfel incat sa fie sigur ca intoarcem din DB foaia curenta
+          var select = "SELECT idfoaie_observatie, idpacient, medic, sectia, CURRENT_TIMESTAMP as timeCol FROM spital.foaie_observatie where idpacient="+id + " order by idfoaie_observatie desc";
+           con.query(select, (error, results, fields) => {
+                    if (error) {
+                                return console.error(error.message);
+                    }
+                    if (results[0]!=null) {
+                        res.redirect("/foaie_observatie?pacient="+ id + "&foaie=" + results[0].idfoaie_observatie);
+                    }
+                    else{
+                        res.redirect("/foaie_observatie?pacient="+ id );
+                    }
+                    });
+          }
+     else {
+        res.send("Nu ați introdus niciun id de pacient în URL. Vă rog verificați linkul.");
+     }
+
+});
+// // Display add user form
 router.get('/addpacient', (req, res) => {
  const query = url.parse(req.url, true).query;
  var id = query.id;
  idInUI = id;
- if (id!=null) {
-      var con = mysql.createConnection({
-            host: Global.getHost(),
-            user: Global.getUser(),
-            password: Global.getParola(),
-            port: 3306
-            });
-      con.connect(function(err) {
-      if (err) throw err;
+ var con = Global.createConnection(mysql);
+ con.connect(function(err) {
+       if (err) throw err;
 
-      });
-      var select = "SELECT * FROM spital.pacient where idpacient=" + id;
+ });
+ if (id!=null) {
+
+      var select = "SELECT * FROM (select * from spital.pacient where idpacient=" + id + ") t join spital.setup";
       con.query(select, (error, results, fields) => {
           if (error) {
                       return console.error(error.message);
@@ -234,6 +260,7 @@ router.get('/addpacient', (req, res) => {
           var ocupatieParinte = results[0].ocupatieParinte;
           var serviciuParinte = results[0].serviciuParinte;
           var studii = results[0].studii;
+          var levels = results[0].levels.split(",");
           var cod = results[0].cod;
           var idInUI = id;
           var select = "SELECT idfoaie_observatie, idpacient, medic, sectia, CURRENT_TIMESTAMP as timeCol FROM spital.foaie_observatie where idpacient=" + id;
@@ -247,7 +274,7 @@ router.get('/addpacient', (req, res) => {
                     }
                     res.render('addpacient',{numefamilie, prenume, telefon, email, sex, cnp, cetatenie, zi, luna, an, greutatenastere,
                         judet, localitatea, mediu, strada, numar, judetRes, localitateaRes, mediuRes, stradaRes, numarRes, parinte, cnpParinte,
-                        foParinte, ocupatieParinte, serviciuParinte, studii, cod,idInUI,foaie });
+                        foParinte, ocupatieParinte, serviciuParinte, studii, cod,idInUI,foaie,levels });
                     });
           con.end();
 
@@ -255,8 +282,18 @@ router.get('/addpacient', (req, res) => {
 
     }
     else {
-        cetatenie = "Română";
-        res.render('addpacient',{cetatenie});
+         var select = "select * from spital.setup";
+              con.query(select, (error, results, fields) => {
+                  if (error) {
+
+                      return console.error(error.message);
+                  }
+                  levels = results[0].levels.split(",");
+                  con.end();
+                  cetatenie = "Română";
+                  res.render('addpacient',{levels});
+              });
+
   }
 });
 
@@ -295,12 +332,7 @@ let { numefamilie, prenume, telefon, email, sex, cnp, cetatenie, zi, luna, an, g
     });
   } else {
 
- var con = mysql.createConnection({
-             host: Global.getHost(),
-             user: Global.getUser(),
-             password: Global.getParola(),
-             port: 3306
-             });
+ var con = Global.createConnection(mysql);
  if (idInUI!=null) {
 
       con.connect(function(err) {
@@ -313,11 +345,7 @@ let { numefamilie, prenume, telefon, email, sex, cnp, cetatenie, zi, luna, an, g
            return console.error(error.message);
         }
         sizeOfSelect = results.length;
-        var con = mysql.createConnection({
-                      host: Global.getHost(),
-                      user: Global.getUser(),
-                      password: Global.getParola()
-        });
+        var con = Global.createConnection(mysql);
         con.connect(function(err) {
                     if (err) throw err;
                     console.log("Connected to add patient!");

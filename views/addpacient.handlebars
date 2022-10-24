@@ -1,7 +1,7 @@
    
 <section id="addpacient" class="container">
     <div class="form-wrap">
-      <a href="../pacients/" style="color:red;text-align:left !important">&lt;&lt;&lt; Înapoi</a>
+      <table width="100%"><tr><td><a href="../pacients/" style="color:red;text-align:left !important">&lt;&lt;&lt; Înapoi</a></td><td style="text-align:right !important;font-weight:bold"> <span > <a id="editButton" href="javascript:void(0)" onclick="edit()" style="color:red;">EDITARE</a><a id="cancelButton" href="javascript:void(0)" onclick="cancel()" style="color:red;">Anulare editare</a></span></td></tr></table>
       <h1>Profil pacient</h1>
       {{#each errors}}
         <div class="error" style="color:red">
@@ -13,9 +13,9 @@
           <label for="prenume" style="font-weight:bold;color:red">Nume</label>
           <div style="display: flex;">
           <span style="width:15% !important">Prenume&nbsp;&nbsp;</span>
-          <input type="text" style="width:45% !important" name="prenume" id="prenume" class="input-box" placeholder="Prenume"
-            maxlength="100" value="{{prenume}}"/><span style="width:30% !important" >&nbsp;&nbsp;Numele de familie&nbsp;&nbsp;</span>
-          <input type="text" style="flex-grow: 1;" name="numefamilie" id="numefamilie" class="input-box" placeholder="Nume de familie"
+          <input disabled type="text" style="width:45% !important" name="prenume" id="prenume" class="input-box" placeholder="Prenume"
+            maxlength="100" value="{{prenume}}"/><span style="width:30% !important"  >&nbsp;&nbsp;Numele de familie&nbsp;&nbsp;</span>
+          <input disabled type="text" style="flex-grow: 1;" name="numefamilie" id="numefamilie" class="input-box" placeholder="Nume de familie"
                  maxlength="100" value="{{numefamilie}}"/>
           </div>
         </div>
@@ -23,10 +23,10 @@
         <div class="input-group">
           <label for="email" style="font-weight:bold;color:red">Date (de contact)</label><div style="display: flex;">
           <span style="width:10% !important">Telefon&nbsp;&nbsp;</span>
-          <input style="width:28% !important" type="text" name="telefon" id="telefon" class="input-box" placeholder="Număr de telefon"
+          <input disabled style="width:28% !important" type="text" name="telefon" id="telefon" class="input-box" placeholder="Număr de telefon"
                  maxlength="15" value="{{telefon}}"/>
           <span style="width:25% !important">&nbsp;&nbsp;Adresă de mail&nbsp;&nbsp;</span>
-          <input type="text"  style="flex-grow: 1;" name="email" id="email" class="input-box" placeholder="E-mail"
+          <input disabled type="text"  style="flex-grow: 1;" name="email" id="email" class="input-box" placeholder="E-mail"
                  maxlength="100" value="{{email}}"/></div>
         </div>
         <div class="input-group">
@@ -34,27 +34,27 @@
         </div>
         <div class="input-group" style="display: flex;">
           <span>Sex&nbsp;&nbsp;</span>
-          <select class="input-box" style="width:10% !important" name="sex" id="sex" >
+          <select disabled class="input-box" style="width:10% !important" name="sex" id="sex" >
             <option value="{{sex}}" hidden="hidden" selected="selected">{{sex}}</option>
             <option value="M">M</option>
             <option value="F">F</option>
           </select>
           <span>&nbsp;&nbsp;CNP&nbsp;&nbsp;</span>
-          <input type="text" name="cnp" style="width:58% !important" id="cnp" class="input-box" placeholder="Cod numeric personal"
+          <input disabled type="text" name="cnp" style="width:58% !important" id="cnp" class="input-box" placeholder="Cod numeric personal"
                  maxlength="100" value="{{cnp}}"/>
           <span>&nbsp;&nbsp;Cetățenie&nbsp;&nbsp;</span>
-          <input type="text"  name="cetatenie"  style="flex-grow: 1;"  id="cetatenie" class="input-box" placeholder="Cetățenie"
+          <input disabled type="text"  name="cetatenie"  style="flex-grow: 1;"  id="cetatenie" class="input-box" placeholder="Cetățenie"
                  maxlength="100" value="{{cetatenie}}"/>
 
         </div>
         <div class="input-group">
           <label for="zi" style="font-weight:bold; color:red">Data nașterii</label>
           <span>Zi&nbsp;
-            <select class="input-box" style="width:20% !important"  name="zi" id="zi" >
+            <select disabled class="input-box" style="width:20% !important"  name="zi" id="zi" >
                     <option value="{{zi}}" hidden="hidden" selected="selected">{{zi}}</option>
             </select></span>
           <span>&nbsp;&nbsp;Lună&nbsp;&nbsp;</span>
-          <select class="input-box" style="width:20% !important" onchange="changeDay()" name="luna" id="luna" >
+          <select disabled class="input-box" style="width:20% !important" onchange="changeDay()" name="luna" id="luna" >
             <option value="{{luna}}" hidden="hidden" selected="selected">{{luna}}</option>
             <option value="Ianuarie">Ianuarie</option>
             <option value="Februarie">Februarie</option>
@@ -69,21 +69,21 @@
             <option value="Noiembrie">Noiembrie</option>
             <option value="Decembrie">Decembrie</option>
           </select>
-          <span>&nbsp;&nbsp;An&nbsp;&nbsp;</span><input type="text" onchange="changeDay()" style="width:20% !important" name="an" id="an" class="input-box" placeholder="An" maxlength="100" value="{{an}}"/>
+          <span>&nbsp;&nbsp;An&nbsp;&nbsp;</span><input disabled type="text" onchange="changeDay()" style="width:20% !important" name="an" id="an" class="input-box" placeholder="An" maxlength="100" value="{{an}}"/>
         </div>
         <div class="input-group">
           <span>Greutatea la naștere&nbsp;&nbsp;</span>
-          <input type="text" name="greutatenastere" id="greutatenastere" class="input-box" placeholder="Greutate" maxlength="100" value="{{greutatenastere}}"/>
+          <input disabled type="text" name="greutatenastere" id="greutatenastere" class="input-box" placeholder="Greutate" maxlength="100" value="{{greutatenastere}}"/>
         </div>
         <div class="input-group">
         <label for="judet" style="font-weight:bold;color:red">Domiciliul legal</label>
         <span>Județul&nbsp;&nbsp;</span>
-        <select class="input-box" style="width:20% !important" name="judet" id="judet">
+        <select disabled class="input-box" style="width:20% !important" name="judet" id="judet">
           <option value="{{judet}}" hidden="hidden" selected="selected">{{judet}}</option>
         </select>
-        <span>&nbsp;&nbsp;Localitatea&nbsp;&nbsp;</span><input type="text" style="width:30% !important" name="localitatea" id="localitatea" class="input-box" placeholder="Localitatea" maxlength="100" value="{{localitatea}}"/>
+        <span>&nbsp;&nbsp;Localitatea&nbsp;&nbsp;</span><input disabled type="text" style="width:30% !important" name="localitatea" id="localitatea" class="input-box" placeholder="Localitatea" maxlength="100" value="{{localitatea}}"/>
         <span>&nbsp;&nbsp;Mediul&nbsp;&nbsp;</span>
-        <select class="input-box" style="width:20% !important" name="mediu" id="mediu">
+        <select disabled class="input-box" style="width:20% !important" name="mediu" id="mediu">
           <option value="{{mediu}}" hidden="hidden" selected="selected">{{mediu}}</option>
           <option value="R">Rural</option>
           <option value="U">Urban</option>
@@ -92,18 +92,18 @@
 
         <div class="input-group">
           <span>Strada&nbsp;&nbsp;</span>
-          <input type="text" style="width:30% !important" name="strada" id="strada" class="input-box" placeholder="strada" maxlength="100" value="{{strada}}"/>
-          <span>Numărul&nbsp;&nbsp;</span><input type="text" style="width:10% !important" name="numar" id="numar" class="input-box" placeholder="Număr" maxlength="100" value="{{numar}}"/>
+          <input disabled type="text" style="width:30% !important" name="strada" id="strada" class="input-box" placeholder="strada" maxlength="100" value="{{strada}}"/>
+          <span>Numărul&nbsp;&nbsp;</span><input disabled type="text" style="width:10% !important" name="numar" id="numar" class="input-box" placeholder="Număr" maxlength="100" value="{{numar}}"/>
         </div>
         <div class="input-group">
           <label for="judet" style="font-weight:bold;color:red">Reședința</label>
           <span>Județul&nbsp;&nbsp;</span>
-          <select class="input-box" style="width:20% !important" name="judetRes" id="judetRes">
+          <select disabled class="input-box" style="width:20% !important" name="judetRes" id="judetRes">
             <option value="{{judetRes}}" hidden="hidden" selected="selected">{{judetRes}}</option>
           </select>
           <span>&nbsp;&nbsp;Localitatea&nbsp;&nbsp;</span><input type="text" style="width:30% !important" name="localitateaRes" id="localitateaRes" class="input-box" placeholder="Localitatea" maxlength="100" value="{{localitateaRes}}"/>
           <span>&nbsp;&nbsp;Mediul&nbsp;&nbsp;</span>
-          <select class="input-box" style="width:20% !important" name="mediuRes" id="mediuRes">
+          <select disabled class="input-box" style="width:20% !important" name="mediuRes" id="mediuRes">
             <option value="{{mediuRes}}" hidden="hidden" selected="selected">{{mediuRes}}</option>
             <option value="R">Rural</option>
             <option value="U">Urban</option>
@@ -111,30 +111,35 @@
         </div>
         <div class="input-group">
           <span>Strada&nbsp;&nbsp;</span>
-          <input type="text" style="width:30% !important" name="stradaRes" id="stradaRes" class="input-box" placeholder="strada" maxlength="100" value="{{stradaRes}}"/>
-          <span>Numărul&nbsp;&nbsp;</span><input type="text" style="width:10% !important" name="numarRes" id="numarRes" class="input-box" placeholder="Număr" maxlength="100" value="{{numarRes}}"/>
+          <input disabled type="text" style="width:30% !important" name="stradaRes" id="stradaRes" class="input-box" placeholder="strada" maxlength="100" value="{{stradaRes}}"/>
+          <span>Numărul&nbsp;&nbsp;</span><input disabled type="text" style="width:10% !important" name="numarRes" id="numarRes" class="input-box" placeholder="Număr" maxlength="100" value="{{numarRes}}"/>
         </div>
         <div class="input-group">
           <label for="parinte" style="font-weight:bold; color:red">Părinți</label><span>Nume&nbsp;&nbsp;</span>
-          <input type="text" style="width:30% !important" name="parinte" id="parinte" class="input-box" placeholder="Nume" maxlength="100" value="{{parinte}}"/>
+          <input disabled type="text" style="width:30% !important" name="parinte" id="parinte" class="input-box" placeholder="Nume" maxlength="100" value="{{parinte}}"/>
           <span>&nbsp;&nbsp;CNP&nbsp;&nbsp;</span>
-          <input type="text" style="width:30% !important" name="cnpParinte" id="cnpParinte" class="input-box" placeholder="CNP" maxlength="100" value="{{cnpParinte}}"/>
+          <input disabled type="text" style="width:30% !important" name="cnpParinte" id="cnpParinte" class="input-box" placeholder="CNP" maxlength="100" value="{{cnpParinte}}"/>
           <span>&nbsp;&nbsp;FO&nbsp;&nbsp;</span>
-          <input type="text" style="width:30% !important" name="foParinte" id="foParinte" class="input-box" placeholder="FO" maxlength="100" value="{{foParinte}}"/>
+          <input disabled type="text" style="width:30% !important" name="foParinte" id="foParinte" class="input-box" placeholder="FO" maxlength="100" value="{{foParinte}}"/>
           <span>&nbsp;&nbsp;Ocupație&nbsp;&nbsp;</span>
-          <input type="text" style="width:30% !important" name="ocupatieParinte" id="ocupatieParinte" class="input-box" placeholder="Ocupație" maxlength="100" value="{{ocupatieParinte}}"/>
+          <input disabled type="text" style="width:30% !important" name="ocupatieParinte" id="ocupatieParinte" class="input-box" placeholder="Ocupație" maxlength="100" value="{{ocupatieParinte}}"/>
           <span>&nbsp;&nbsp;Loc de muncă&nbsp;&nbsp;</span>
-          <input type="text" style="width:30% !important" name="serviciuParinte" id="serviciuParinte" class="input-box" placeholder="Serviciu" maxlength="100" value="{{serviciuParinte}}"/>
+          <input disabled type="text" style="width:30% !important" name="serviciuParinte" id="serviciuParinte" class="input-box" placeholder="Serviciu" maxlength="100" value="{{serviciuParinte}}"/>
           <span>&nbsp;&nbsp;Nivel studii&nbsp;&nbsp;</span>
-          <input type="text" style="width:30% !important" name="studii" id="studii" class="input-box" placeholder="Studii" maxlength="100" value="{{studii}}"/>
+          <select disabled class="input-box" style="width:20% !important" name="studii" id="studii">
+            <option value="{{studii}}" hidden="hidden" selected="selected">{{studii}}</option>
+            {{#each levels}}
+            <option value="{{this}}">{{this}}</option>
+            {{/each}}
+          </select>
         </div>
         <div class="input-group">
           <label for="cod">Cod</label>
-          <input type="text" name="cod" id="cod" class="input-box" placeholder="Cod"
+          <input disabled type="text" name="cod" id="cod" class="input-box" placeholder="Cod"
                  maxlength="100" value="{{cod}}"/>
         </div>
-        <input type="submit" value="Salvează pacient" class="btn btn-reverse"/>
-        <input type="button" onClick="window.open('http://127.0.0.1:3000/foaie_observatie?pacient={{idInUI}}');" value="Internează pacient" class="btn btn-reverse" style="visibility:{{transformvaluetostylevisibility idInUI}}; background: var(--primary-color);border: 1px solid var(--primary-color);"/>
+        <input id="save" type="submit" value="Salvează pacient" class="btn btn-reverse"/>
+        <input id="intern" type="button" onClick="window.open('http://127.0.0.1:3000/foaie_observatie?pacient={{idInUI}}');" value="Internează pacient" class="btn btn-reverse" style="visibility:{{transformvaluetostylevisibility idInUI}}; background: var(--primary-color);border: 1px solid var(--primary-color);"/>
       </form>
       <br/><br/><br/>
       <div style="visibility:{{transformvaluetostylevisibility idInUI}}">
@@ -152,9 +157,49 @@
       {{/each}}
       </div>
     </div>
+
+  <script src="/js/jquery-3.6.0.min.js"></script>
   <script src="/js/general.js"></script>
   <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    var idParam = urlParams.get('id');
+    if (idParam!=null){
+      document.getElementById("editButton").style.visibility="visible";
+      document.getElementById("cancelButton").style.visibility="hidden";
+      document.getElementById("cancelButton").style.display="none";
+      document.getElementById("save").style.visibility="hidden";
+      document.getElementById("intern").style.visibility="hidden";
+    }
+    else {
+    $('input, select').each(function () {
+       $(this).prop('disabled', false);
+    });
+      document.getElementById("cancelButton").style.visibility="visible";
+      document.getElementById("cancelButton").style.display="inline";
+      document.getElementById("editButton").style.visibility="hidden";
+      document.getElementById("save").style.visibility="visible";
+    }
+function cancel(){
+  $('input, select').each(function () {
+       $(this).prop('disabled', true);
+    });
+    document.getElementById("editButton").style.visibility="visible";
+    document.getElementById("cancelButton").style.display="none";
+    document.getElementById("cancelButton").style.visibility="hidden";
+    document.getElementById("save").style.visibility="hidden";
+    document.getElementById("intern").style.visibility="hidden";
+}
+function edit(){
+    $('input:disabled, select:disabled').each(function () {
+       $(this).prop('disabled', false);
+    });
+    document.getElementById("editButton").style.visibility="hidden";
 
+    document.getElementById("cancelButton").style.display="inline";
+    document.getElementById("cancelButton").style.visibility="visible";
+    document.getElementById("save").style.visibility="visible";
+    document.getElementById("intern").style.visibility="visible";
+}
 //Adaugă foaie de observație
 
     function changeDay(){

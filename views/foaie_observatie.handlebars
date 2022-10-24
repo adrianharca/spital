@@ -1,6 +1,6 @@
 <!--suppress ALL -->
 <section id="foaie" class="container" style="width:100% !important">
-    <a href="/foaie_observatie/allFiles" style="color:red;text-align:left !important">&lt;&lt;&lt; Înapoi</a>
+    <table width="100%"><tr><td><a href="/foaie_observatie/allFiles" style="color:red;text-align:left !important">&lt;&lt;&lt; Înapoi</a></td><td style="text-align:right !important;font-weight:bold"> <span > <a id="editButton" href="javascript:void(0)" onclick="edit()" style="color:red;">EDITARE</a></span></td></tr></table>
     <h1>Foaie de observație clinică generală <span id="idfoaie" name="idfoaie">{{foaie.detaliipacient.idfoaie}}</span>
     </h1>
     {{#each errors}}
@@ -15,7 +15,7 @@
             <table class="table table-user-information">
                 <tr>
                     <td style="font-weight:bold">Nume: </td>
-                    <td id="numepacient">{{foaie.detaliipacient.nume}}</td>
+                    <td id="numepacient"><a style="color:red" href="/pacients/addpacient?id={{foaie.detaliipacient.id}}">{{foaie.detaliipacient.nume}}</a></td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Vârsta: </td>
@@ -35,31 +35,52 @@
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Medic: </td>
-                    <td><input type="text" id="medic" name="medic" style="width:400px; background: white; color: red"
+                    <td><input disabled type="text" id="medic" name="medic" style="width:400px; background: white; color: red"
                                value="{{foaie.medic}}" /></td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Secția: </td>
-                    <td><input type="text" id="sectia" name="sectia" style="width:400px; background: white; color: red;"
+                    <td><input disabled type="text" id="sectia" name="sectia" style="width:400px; background: white; color: red;"
                                value="{{foaie.sectia}}" /></td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Salon: </td>
-                    <td><input type="text" id="salon" name="salon" style="width:400px; background: white; color: red;"
+                    <td><input disabled type="text" id="salon" name="salon" style="width:400px; background: white; color: red;"
                                value="{{foaie.salon}}" /></td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Pat: </td>
-                    <td><input type="text" id="pat" name="pat" style="width:400px; background: white; color: red;"
+                    <td><input disabled type="text" id="pat" name="pat" style="width:400px; background: white; color: red;"
                                value="{{foaie.pat}}" /></td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Data internării: </td>
-                    <td>Zi:&nbsp;<input type="text" id="zi" name="zi" style="width:60px; background: white; color: red;"
-                                        value="{{foaie.zi}}" />&nbsp;Lună:&nbsp;<input type="text" id="luna" name="luna"
+                    <td>Zi:&nbsp;<input disabled type="text" id="zi" name="zi" style="width:60px; background: white; color: red;"
+                                        value="{{foaie.zi}}" />&nbsp;Lună:&nbsp;<input disabled type="text" id="luna" name="luna"
                                                                                        style="width:100px; background: white; color: red;"
-                                                                                       value="{{foaie.luna}}" />&nbsp;An:&nbsp;<input type="text" id="an" name="an"
+                                                                                       value="{{foaie.luna}}" />&nbsp;An:&nbsp;<input type="text" disabled id="an" name="an"
                                                                                                                                       style="width:100px; background: white; color: red;" value="{{foaie.an}}" /></td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Status: </td>
+                    <td>
+                        <select disabled style="width:20% !important; width:450px" name="status" id="status" >
+                            <option value="{{foaie.status}}" hidden="hidden" selected="selected">{{foaie.status}}</option>
+                            <option value="Internat">Internat</option>
+                            <option value="In urmarire">In urmarire</option>
+                            <option value="In urmarire">Externat</option>
+                            <option value="Decedat">Decedat</option>
+                        </select>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">Data externării: </td>
+                    <td>Zi:&nbsp;<input disabled type="text" id="ziext" name="ziext" style="width:60px; background: white; color: red;"
+                                        value="{{foaie.ziext}}" />&nbsp;Lună:&nbsp;<input disabled type="text" id="lunaext" name="lunaext"
+                                                                                       style="width:100px; background: white; color: red;"
+                                                                                       value="{{foaie.lunaext}}" />&nbsp;An:&nbsp;<input type="text" disabled id="anext" name="anext"
+                                                                                                                                      style="width:100px; background: white; color: red;" value="{{foaie.anext}}" /></td>
                 </tr>
             </table>
         </div>
@@ -83,7 +104,7 @@
                         Principal
                     </td>
                     <td>
-                        <input type="text" id="diagprincipal" name="diagprincipal" style="width:100%"
+                        <input type="text" disabled id="diagprincipal" name="diagprincipal" style="width:100%"
                                value="{{foaie.diagnosticprincipal}}" />
                     </td>
                 </tr>
@@ -92,7 +113,7 @@
                         La internare
                     </td>
                     <td>
-                        <input type="text" id="diaginternare" name="diaginternare" style="width:100%"
+                        <input type="text" disabled id="diaginternare" name="diaginternare" style="width:100%"
                                value="{{foaie.diagnosticlainternare}}" />
                     </td>
                 </tr>
@@ -101,7 +122,7 @@
                         La 24 h
                     </td>
                     <td>
-                        <input type="text" id="diag24h" name="diag24h" style="width:100%" value="{{foaie.diag24h}}" />
+                        <input disabled type="text" id="diag24h" name="diag24h" style="width:100%" value="{{foaie.diag24h}}" />
                     </td>
                 </tr>
                 <tr>
@@ -109,7 +130,7 @@
                         La 72 h
                     </td>
                     <td>
-                        <input type="text" id="diag72h" name="diag72h" style="width:100%" value="{{foaie.diag72h}}" />
+                        <input disabled type="text" id="diag72h" name="diag72h" style="width:100%" value="{{foaie.diag72h}}" />
                     </td>
                 </tr>
                 <tr>
@@ -117,7 +138,7 @@
                         Intoxicații asociate
                     </td>
                     <td>
-                        <input type="text" id="intoxicatii" name="intoxicatii" style="width:100%"
+                        <input disabled type="text" id="intoxicatii" name="intoxicatii" style="width:100%"
                                value="{{foaie.intoxicatii}}" />
                     </td>
                 </tr>
@@ -126,7 +147,7 @@
                         Alergii
                     </td>
                     <td>
-                        <input type="text" id="alergii" name="alergii" style="width:100%" value="{{foaie.alergii}}" />
+                        <input disabled type="text" id="alergii" name="alergii" style="width:100%" value="{{foaie.alergii}}" />
                     </td>
                 </tr>
                 <tr>
@@ -134,7 +155,7 @@
                         Indice ponderal
                     </td>
                     <td>
-                        <input type="text" id="indiceponderal" name="indiceponderal" style="width:100%"
+                        <input disabled type="text" id="indiceponderal" name="indiceponderal" style="width:100%"
                                value="{{foaie.indiceponderal}}" />
                     </td>
                 </tr>
@@ -143,7 +164,7 @@
                         Greutate actuală (kg)
                     </td>
                     <td>
-                        <input type="text" id="greutateactuala" name="greutateactuala" style="width:100%"
+                        <input disabled type="text" id="greutateactuala" name="greutateactuala" style="width:100%"
                                value="{{foaie.greutateactuala}}" />
                     </td>
                 </tr>
@@ -152,7 +173,7 @@
                         Grupa de sânge
                     </td>
                     <td>
-                        <select id="sange" name="sange">
+                        <select disabled id="sange" name="sange">
                             <option value="{{foaie.sange}}" hidden="hidden" selected="selected">{{foaie.sange}}</option>
                             <option value="o">0</option>
                             <option value="a">A</option>
@@ -162,7 +183,7 @@
                         </select>
                         &nbsp;&nbsp;
                         Rh
-                        <select id="rh" name="rh">
+                        <select disabled id="rh" name="rh">
                             <option value="{{foaie.rh}}" hidden="hidden" selected="selected">{{foaie.rh}}</option>
                             <option value="pozitiv">Pozitiv</option>
                             <option value="negativ">Negativ</option>
@@ -175,7 +196,7 @@
                         Este însoțit de:
                     </td>
                     <td>
-                        <input type="text" id="insotit" name="insotit" style="width:100%" value="{{foaie.insotit}}" />
+                        <input disabled type="text" id="insotit" name="insotit" style="width:100%" value="{{foaie.insotit}}" />
                     </td>
                 </tr>
             </table>
@@ -185,15 +206,15 @@
                 <table width="70%">
                     <tr>
                         <td style="width:30%">Vechimea arsurilor: </td>
-                        <td> <input type="text" id="vechimearsuri" name="vechimearsuri" style="width:10%"
+                        <td> <input disabled type="text" id="vechimearsuri" name="vechimearsuri" style="width:10%"
                                     value="{{foaie.vechimearsuri}}" /> (ore)</td>
                     </tr>
                 </table>
                 <div id="updatedtable"></div>
-                <input type="button" id="adauga" onclick="adaugaArsura()" value="Adaugă arsură" />&nbsp;&nbsp;<input
+                <input disabled type="button" id="adauga" onclick="adaugaArsura()" value="Adaugă arsură" />&nbsp;&nbsp;<input
                     type="button" id="sterge" onclick="stergeArsura()" value="Șterge ultima arsură" />
                 <br /><br />
-                <input type="checkbox" {{transformvaluetochecked foaie.caiResp}} id="caiResp" name="caiResp"
+                <input disabled type="checkbox" {{transformvaluetochecked foaie.caiResp}} id="caiResp" name="caiResp"
                 value="{{foaie.caiResp}}">Arsuri de căi respiratorii superioare</input>
         </div><br />
         <table width="100%">
@@ -202,7 +223,7 @@
                     Diagnostic la externare
                 </td>
                 <td colspan="3">
-                    <input type="text" id="diagexternare" name="diagexternare" style="width:100%"
+                    <input disabled type="text" id="diagexternare" name="diagexternare" style="width:100%"
                            value="{{foaie.diagnosticexternare}}" />
                 </td>
             </tr>
@@ -211,7 +232,7 @@
                     Data și ora decesului
                 </td>
                 <td>
-                    <input type="text" id="datadeces" name="datadeces" style="width:100%"
+                    <input disabled type="text" id="datadeces" name="datadeces" style="width:100%"
                            value="{{foaie.datadeces}}" />
                 </td>
             </tr>
@@ -225,28 +246,28 @@
             <tr>
                 <td>a) Cauza directă (imediată)</td>
                 <td>
-                    <input type="text" name="cauzadirectadeces" id="cauzadirectadeces" style="width:100%"
+                    <input disabled type="text" name="cauzadirectadeces" id="cauzadirectadeces" style="width:100%"
                            value="{{foaie.cauzadirectadeces}}" />
                 </td>
             </tr>
             <tr>
                 <td>b) Cauza antecedentă</td>
                 <td>
-                    <input type="text" name="cauzaantecedentadeces" id="cauzaantecedentadeces" style="width:100%"
+                    <input disabled type="text" name="cauzaantecedentadeces" id="cauzaantecedentadeces" style="width:100%"
                            value="{{foaie.cauzaantecedentadeces}}" />
                 </td>
             </tr>
             <tr>
                 <td>Stări morbide inițiale:</td>
                 <td>
-                    <input type="text" id="starimorbideinitiale" name="starimorbideinitiale" style="width:100%"
+                    <input disabled type="text" id="starimorbideinitiale" name="starimorbideinitiale" style="width:100%"
                            value="{{foaie.starimorbideinitiale}}" />
                 </td>
             </tr>
             <tr>
                 <td>Alte stări morbide importante</td>
                 <td>
-                    <input type="text" id="starimorbideimportante" name="starimorbideimportante" style="width:100%"
+                    <input disabled type="text" id="starimorbideimportante" name="starimorbideimportante" style="width:100%"
                            value="{{foaie.starimorbideimportante}}" />
                 </td>
             </tr>
@@ -256,36 +277,36 @@
     <div id="anamneza" class="tabcontent">
         <h3>Anamneza</h3>
 
-        Locul producerii accidentului: <input type="text" style="width:50%" id="locaccident" name="locaccident"
+        Locul producerii accidentului: <input disabled type="text" style="width:50%" id="locaccident" name="locaccident"
                                               value="{{foaie.anamneza.loc}}" /><br /><br />
-        <input type="checkbox" id="prezentaparinti" name="prezentaparinti"
+        <input  type="checkbox" disabled id="prezentaparinti" name="prezentaparinti"
                value="{{foaie.anamneza.prezentaparinti}}" {{transformvaluetochecked foaie.anamneza.prezentaparinti}}>A
         fost în prezența părinților</input><br /><br />
-    Descrierea accidentului: <input style="width:100%" type="text" id="descriere" name="descriere"
+    Descrierea accidentului: <input disabled style="width:100%" type="text" id="descriere" name="descriere"
                                     value="{{foaie.anamneza.descriere}}" /><br /><br />
 
     <h3>Primul ajutor</h3>
 
-    Locul <input type="text" style="width:100%" id="locajutor" name="locajutor"
+    Locul <input disabled type="text" style="width:100%" id="locajutor" name="locajutor"
                  value="{{foaie.anamneza.locprimajutor}}" /><br /><br />
-    Tratamentul <input type="text" style="width:100%" id="tratamentajutor" name="tratamentajutor"
+    Tratamentul <input disabled type="text" style="width:100%" id="tratamentajutor" name="tratamentajutor"
                        value="{{foaie.anamneza.tratamentprimajutor}}" /><br />
     <br />
     Alte unități intermediare<br />
-    <input type="text" style="width:100%" id="unitatiintermediare" name="unitatiintermediare"
+    <input disabled type="text" style="width:100%" id="unitatiintermediare" name="unitatiintermediare"
            value="{{foaie.anamneza.unitatiintermediare}}" />
     <br /><br />
     Tratament primit anterior<br />
-    <input type="text" style="width:100%" id="tratamentanterior" name="tratamentanterior"
+    <input disabled type="text" style="width:100%" id="tratamentanterior" name="tratamentanterior"
            value="{{foaie.anamneza.tratamentanterior}}" />
     <br /><br />
-    Mijloc de transport la spital <input type="text" id="transport" style="width:100%" name="transport"
+    Mijloc de transport la spital <input disabled type="text" id="transport" style="width:100%" name="transport"
                                          value="{{foaie.anamneza.transport}}" /><br /><br />
-    Tratamentul primit în timpul transportului: <input type="text" id="tratasport" style="width:100%"
+    Tratamentul primit în timpul transportului: <input disabled type="text" id="tratasport" style="width:100%"
                                                        name="tratasport" value="{{foaie.anamneza.tratasport}}" /><br /><br />
-    Starea pacientului în momentul sosirii la spital/UPU: <input type="text" style="width:100%"
+    Starea pacientului în momentul sosirii la spital/UPU: <input disabled type="text" style="width:100%"
                                                                  id="starepacient" name="starepacient" value="{{foaie.anamneza.stare}}" /><br /><br />
-    Timpul trecut de la producerea accidentului: <input type="text" style="width:100%" id="timp" name="timp"
+    Timpul trecut de la producerea accidentului: <input disabled type="text" style="width:100%" id="timp" name="timp"
                                                         value="{{foaie.anamneza.timp}}" /><br /><br />
 </div>
 
@@ -294,15 +315,15 @@
 <h4>a) Sistemic</h4>
 <h5>Fișe de terapie</h5>
 {{#each foaie.fiseterapie}}
-<a href="/fisa_terapie?idfoaie={{this.idFoaie}}&amp;idfisa={{this.idFisa}}"
+<a  href="/fisa_terapie?idfoaie={{this.idFoaie}}&amp;idfisa={{this.idFisa}}"
    style="color:red; text-align:left " target="_blank">{{this.data}}</a><br />&nbsp;&nbsp;
 {{/each}}<br />
-<input style="font-size:10px;height:17px" type="button" id="adaugafisaterapie" onclick="adaugaFisaTerapie()"
+<input disabled style="font-size:10px;height:17px" type="button" id="adaugafisaterapie" onclick="adaugaFisaTerapie()"
        value="Adaugă fișă terapie" /><br /><br />
 <table>
     <tr>
         <td>Cantitatea de lichide pe 24 de ore </td>
-        <td><input type="text" id="cantitatelichide" style="width:100%" name="cantitatelichide"
+        <td><input disabled type="text" id="cantitatelichide" style="width:100%" name="cantitatelichide"
                    value="{{foaie.anamneza.cantitatelichide}}" /></td>
     </tr>
     <tr>
@@ -319,26 +340,26 @@
     </tr>
     <tr>
         <td style="text-align:right">8 h</td>
-        <td><input type="text" id="cantlichide8h" style="width:100%" name="cantlichide8h"
+        <td><input disabled type="text" id="cantlichide8h" style="width:100%" name="cantlichide8h"
                    value="{{foaie.anamneza.cantlichide8h}}" /></td>
     </tr>
     <tr>
         <td style="text-align:right">16 h</td>
-        <td><input type="text" id="cantlichide16h" style="width:100%" name="cantlichide16h"
+        <td><input disabled type="text" id="cantlichide16h" style="width:100%" name="cantlichide16h"
                    value="{{foaie.anamneza.cantlichide16h}}" /></td>
     </tr>
     <tr>
         <td style="text-align:right">24 h</td>
-        <td><input type="text" id="cantlichide24h" style="width:100%" name="cantlichide24h"
+        <td><input disabled type="text" id="cantlichide24h" style="width:100%" name="cantlichide24h"
                    value="{{foaie.anamneza.cantlichide24h}}" /></td>
     </tr>
 </table>
 <br />
 <h4>b) Local</h4>
 <h4>Dinamica plăgilor</h4>
-<input type="text" id="dinamicaplagi" style="width:100%" name="dinamicaplagi"
+<input disabled type="text" id="dinamicaplagi" style="width:100%" name="dinamicaplagi"
        value="{{foaie.anamneza.dinamicaplagi}}" /><br /><br />
-<div><input title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto0" name="adaugafoto0"
+<div><input disabled title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto0" name="adaugafoto0"
             onchange="pressed(0)" />
 
 
@@ -346,11 +367,11 @@
                     <a name="photo0" id="photo0" target="_blank"
                        href="/uploads/{{transformvaluetophotolink foaie.adaugafoto0}}"
                        style="font-size:10px; font-weight:bold;">{{transformvaluetophoto foaie.adaugafoto0}}</a>
-                    <a href="javascript:void(0)"
+                    <a disabled href="javascript:void(0)"
                        style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto0}}"
                        onclick="document.getElementById('photo0').innerHTML=''; document.getElementById('markedDel0').value=1; document.getElementById('sterge0').style.visibility='hidden'">
 
-                        <img name="sterge0" id="sterge0" src="/img/delete.png" width="15"
+                        <img  name="sterge0" id="sterge0" src="/img/delete.png" width="15"
                              style="cursor:pointer" /></a></span>
     <input type="hidden" id="markedDel0" name="markedDel0" value="0" />
     <label for="adaugafoto0" style="font-size:10px" id="fileLabel0">
@@ -361,8 +382,8 @@
 
 <h4>Evoluție și tratament</h4>
 <div id="updatedtableEvolutie"></div>
-<input type="button" id="adaugareevolutie" onclick="adaugareEvolutie()"
-       value="Adaugă evoluție" />&nbsp;&nbsp;<input type="button" id="stergeEvolutie"
+<input disabled type="button" id="adaugareevolutie" onclick="adaugareEvolutie()"
+       value="Adaugă evoluție" />&nbsp;&nbsp;<input disabled type="button" id="stergeEvolutie"
                                                     onclick="stergereevolutie()" value="Șterge ultima evoluție" />
 <!--
 <h4>Analize</h4>
@@ -388,26 +409,26 @@
    target="_blank">{{this.data}}</a>&nbsp;&nbsp;
 <br />
 {{/each}}<br />
-<input type="button" id="adaugaepicriza" onclick="adaugaEpicriza()" value="Adaugă epicriză" />
+<input disabled type="button" id="adaugaepicriza" onclick="adaugaEpicriza()" value="Adaugă epicriză" />
 </div>
 <div id="epfinala" class="tabcontent">
 <h3>Epicriza finală</h3>
-<textarea id="epicrizafinala" name="epicrizafinala" rows="4" cols="50">
+<textarea disabled id="epicrizafinala" name="epicrizafinala" rows="4" cols="50">
       {{foaie.epicrizafinala}}
     </textarea>
 </div>
 <div id="recom" class="tabcontent">
 <h3>Recomandări</h3>
-Medicație <input type="text" id="medicatie" style="width:100%" name="medicatie"
+Medicație <input disabled type="text" id="medicatie" style="width:100%" name="medicatie"
                  value="{{foaie.medicatie}}" />
-Kinetoterapie <input type="text" id="kineto" style="width:100%" name="kineto" value="{{foaie.kineto}}" />
+Kinetoterapie <input disabled type="text" id="kineto" style="width:100%" name="kineto" value="{{foaie.kineto}}" />
 Alte comentarii
-<input type="text" id="recomments" style="width:100%" name="recomments" value="{{foaie.comments}}" />
+<input disabled type="text" id="recomments" style="width:100%" name="recomments" value="{{foaie.comments}}" />
 </div>
 <div id="urm" class="tabcontent">
 <h3>Urmărire</h3>
 <p>Cura cicatricilor</p>
-<textarea id="cura" name="cura" rows="4" cols="50">
+<textarea disabled id="cura" name="cura" rows="4" cols="50">
       {{foaie.cura}}
     </textarea>
 <br /> <br />
@@ -422,39 +443,39 @@ Alte comentarii
     </tr>
     <tr>
         <td>1</td>
-        <td><input type="text" id="descriere1" style="width:98%" name="descriere1"
+        <td><input disabled type="text" id="descriere1" style="width:98%" name="descriere1"
                    value="{{foaie.descriere1}}" /></td>
-        <td><input type="text" id="analize1" style="width:98%" name="analize1" value="{{foaie.analize1}}" />
+        <td><input disabled type="text" id="analize1" style="width:98%" name="analize1" value="{{foaie.analize1}}" />
         </td>
 
         <td class="fisier-list">
                         <span>
-                            <a name="photo1" id="photo1" target="_blank"
+                            <a disabled name="photo1" id="photo1" target="_blank"
                                href="/uploads/{{transformvaluetophotolink foaie.adaugafoto1}}"
                                style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
                                 foaie.adaugafoto1}}</a>
-                            <a href="javascript:void(0)"
+                            <a disabled href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1}}"
                                onclick="document.getElementById('photo1').innerHTML=''; document.getElementById('markedDel1').value=1; document.getElementById('sterge1').style.visibility='hidden'">
                                 <img name="sterge1" id="sterge1" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel1" name="markedDel1" value="0" />
-            <div class="alege"><input title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto1"
+            <div class="alege"><input disabled title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto1"
                                       name="adaugafoto1" onchange="pressed(1)" /><label for="adaugafoto1"
                                                                                         style="font-size:10px" id="fileLabel1"><img src="/img/upload.png" width="20" height="15"
                                                                                                                                     style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label></div>
         </td>
 
-        <td><input type="checkbox" id="spital1" name="spital1" {{transformvaluetochecked foaie.spital1}}
+        <td><input disabled type="checkbox" id="spital1" name="spital1" {{transformvaluetochecked foaie.spital1}}
             value="{{foaie.spital1}}" onchange="checkboxPressed(1,1)" /></td>
-        <td><input type="checkbox" id="online1" name="online1" value="{{foaie.online1}}"
+        <td><input disabled type="checkbox" id="online1" name="online1" value="{{foaie.online1}}"
             {{transformvaluetochecked foaie.online1}} onchange="checkboxPressed(2,1)" /></td>
     </tr>
     <tr>
         <td>2</td>
-        <td><input type="text" id="descriere2" style="width:98%" name="descriere2"
+        <td><input type="text" disabled id="descriere2" style="width:98%" name="descriere2"
                    value="{{foaie.descriere2}}" /></td>
-        <td><input type="text" id="analize2" style="width:98%" name="analize2" value="{{foaie.analize2}}" />
+        <td><input disabled type="text" id="analize2" style="width:98%" name="analize2" value="{{foaie.analize2}}" />
         </td>
         <td class="fisier-list">
                         <span>
@@ -468,21 +489,21 @@ Alte comentarii
                                 <img name="sterge2" id="sterge2" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel2" name="markedDel2" value="0" />
-            <div><input title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto2"
+            <div><input disabled title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto2"
                         name="adaugafoto2" onchange="pressed(2)" /><label for="adaugafoto2"
                                                                           style="font-size:10px" id="fileLabel2"><img src="/img/upload.png" width="20" height="15"
                                                                                                                       style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label></div>
         </td>
-        <td><input type="checkbox" id="spital2" name="spital2" {{transformvaluetochecked foaie.spital2}}
+        <td><input disabled type="checkbox" id="spital2" name="spital2" {{transformvaluetochecked foaie.spital2}}
             value="{{foaie.spital2}}" onchange="checkboxPressed(1,2)" /></td>
-        <td><input type="checkbox" id="online2" name="online2" value="{{foaie.online2}}"
+        <td><input disabled type="checkbox" id="online2" name="online2" value="{{foaie.online2}}"
             {{transformvaluetochecked foaie.online2}} onchange="checkboxPressed(2,2)" /></td>
     </tr>
     <tr>
         <td>3</td>
-        <td><input type="text" id="descriere3" style="width:98%" name="descriere3"
+        <td><input disabled type="text" id="descriere3" style="width:98%" name="descriere3"
                    value="{{foaie.descriere3}}" /></td>
-        <td><input type="text" id="analize3" style="width:98%" name="analize3" value="{{foaie.analize3}}" />
+        <td><input disabled type="text" id="analize3" style="width:98%" name="analize3" value="{{foaie.analize3}}" />
         </td>
         <td class="fisier-list">
                         <span>
@@ -490,27 +511,27 @@ Alte comentarii
                                href="/uploads/{{transformvaluetophotolink foaie.adaugafoto3}}"
                                style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
                                 foaie.adaugafoto3}}</a>
-                            <a href="javascript:void(0)"
+                            <a disabled href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto3}}"
                                onclick="document.getElementById('photo3').innerHTML=''; document.getElementById('markedDel3').value=1; document.getElementById('sterge3').style.visibility='hidden'">
                                 <img name="sterge3" id="sterge3" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel3" name="markedDel3" value="0" />
-            <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto3"
+            <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto3"
                    name="adaugafoto3" onchange="pressed(3)" /><label for="adaugafoto3" id="fileLabel3"
                                                                      style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                  style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
         </td>
-        <td><input type="checkbox" id="spital3" name="spital3" {{transformvaluetochecked foaie.spital3}}
+        <td><input disabled type="checkbox" id="spital3" name="spital3" {{transformvaluetochecked foaie.spital3}}
             value="{{foaie.spital3}}" onchange="checkboxPressed(1,3)" /></td>
-        <td><input type="checkbox" id="online3" name="online3" value="{{foaie.online3}}"
+        <td><input disabled type="checkbox" id="online3" name="online3" value="{{foaie.online3}}"
             {{transformvaluetochecked foaie.online3}} onchange="checkboxPressed(2,3)" /></td>
     </tr>
     <tr>
         <td>4</td>
-        <td><input type="text" id="descriere4" style="width:98%" name="descriere4"
+        <td><input disabled type="text" id="descriere4" style="width:98%" name="descriere4"
                    value="{{foaie.descriere4}}" /></td>
-        <td><input type="text" id="analize4" style="width:98%" name="analize4" value="{{foaie.analize4}}" />
+        <td><input disabled type="text" id="analize4" style="width:98%" name="analize4" value="{{foaie.analize4}}" />
         </td>
         <td class="fisier-list">
 
@@ -525,21 +546,21 @@ Alte comentarii
                                 <img name="sterge4" id="sterge4" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel4" name="markedDel4" value="0" />
-            <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto4"
+            <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto4"
                    name="adaugafoto4" onchange="pressed(4)" /><label for="adaugafoto4" id="fileLabel4"
                                                                      style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                  style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
         </td>
-        <td><input type="checkbox" id="spital4" name="spital4" {{transformvaluetochecked foaie.spital4}}
+        <td><input disabled type="checkbox" id="spital4" name="spital4" {{transformvaluetochecked foaie.spital4}}
             value="{{foaie.spital4}}" onchange="checkboxPressed(1,4)" /></td>
-        <td><input type="checkbox" id="online4" name="online4" value="{{foaie.online4}}"
+        <td><input disabled type="checkbox" id="online4" name="online4" value="{{foaie.online4}}"
             {{transformvaluetochecked foaie.online4}} onchange="checkboxPressed(2,4)" /></td>
     </tr>
     <tr>
         <td>5</td>
-        <td><input type="text" id="descriere5" style="width:98%" name="descriere5"
+        <td><input disabled type="text" id="descriere5" style="width:98%" name="descriere5"
                    value="{{foaie.descriere5}}" /></td>
-        <td><input type="text" id="analize5" style="width:98%" name="analize5" value="{{foaie.analize5}}" />
+        <td><input disabled type="text" id="analize5" style="width:98%" name="analize5" value="{{foaie.analize5}}" />
         </td>
         <td class="fisier-list">
                         <span>
@@ -553,21 +574,21 @@ Alte comentarii
                                 <img name="sterge5" id="sterge5" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel5" name="markedDel5" value="0" />
-            <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto5"
+            <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto5"
                    name="adaugafoto5" onchange="pressed(5)" /><label for="adaugafoto5" id="fileLabel5"
                                                                      style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                  style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
         </td>
-        <td><input type="checkbox" id="spital5" name="spital5" {{transformvaluetochecked foaie.spital5}}
+        <td><input disabled type="checkbox" id="spital5" name="spital5" {{transformvaluetochecked foaie.spital5}}
             value="{{foaie.spital5}}" onchange="checkboxPressed(1,5)" /></td>
-        <td><input type="checkbox" id="online5" name="online5" value="{{foaie.online5}}"
+        <td><input disabled type="checkbox" id="online5" name="online5" value="{{foaie.online5}}"
             {{transformvaluetochecked foaie.online5}} onchange="checkboxPressed(2,5)" /></td>
     </tr>
     <tr>
         <td>6-9</td>
-        <td><input type="text" id="descriere69" style="width:98%" name="descriere69"
+        <td><input disabled type="text" id="descriere69" style="width:98%" name="descriere69"
                    value="{{foaie.descriere69}}" /></td>
-        <td><input type="text" id="analize69" style="width:98%" name="analize69"
+        <td><input disabled type="text" id="analize69" style="width:98%" name="analize69"
                    value="{{foaie.analize69}}" /></td>
         <td class="fisier-list">
                         <span>
@@ -581,21 +602,21 @@ Alte comentarii
                                 <img name="sterge69" id="sterge69" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel69" name="markedDel69" value="0" />
-            <input type="file" class="inputfile" title="Alegeți un fisier" id="adaugafoto69"
+            <input disabled type="file" class="inputfile" title="Alegeți un fisier" id="adaugafoto69"
                    name="adaugafoto69" onchange="pressed(69)" /><label for="adaugafoto69" id="fileLabel69"
                                                                        style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                    style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
         </td>
-        <td><input type="checkbox" id="spital69" {{transformvaluetochecked foaie.spital69}} name="spital69"
+        <td><input disabled type="checkbox" id="spital69" {{transformvaluetochecked foaie.spital69}} name="spital69"
             value="{{foaie.spital69}}" onchange="checkboxPressed(1,69)" /></td>
-        <td><input type="checkbox" id="online69" name="online69" value="{{foaie.online69}}"
+        <td><input disabled type="checkbox" id="online69" name="online69" value="{{foaie.online69}}"
             {{transformvaluetochecked foaie.online69}} onchange="checkboxPressed(2,69)" /></td>
     </tr>
     <tr>
         <td>9-12</td>
-        <td><input type="text" id="descriere912" style="width:98%" name="descriere912"
+        <td><input disabled type="text" id="descriere912" style="width:98%" name="descriere912"
                    value="{{foaie.descriere912}}" /></td>
-        <td><input type="text" id="analize912" style="width:98%" name="analize912"
+        <td><input disabled type="text" id="analize912" style="width:98%" name="analize912"
                    value="{{foaie.analize912}}" /></td>
         <td class="fisier-list">
                         <span>
@@ -609,21 +630,21 @@ Alte comentarii
                                 <img name="sterge912" id="sterge912" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel912" name="markedDel912" value="0" />
-            <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto912"
+            <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto912"
                    name="adaugafoto912" onchange="pressed(912)" /><label for="adaugafoto912" id="fileLabel912"
                                                                          style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                      style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
         </td>
-        <td><input type="checkbox" id="spital912" name="spital912" {{transformvaluetochecked
+        <td><input disabled type="checkbox" id="spital912" name="spital912" {{transformvaluetochecked
             foaie.spital912}} value="{{foaie.spital912}}" onchange="checkboxPressed(1,912)" /></td>
-        <td><input type="checkbox" id="online912" name="online912" value="{{foaie.online912}}"
+        <td><input disabled type="checkbox" id="online912" name="online912" value="{{foaie.online912}}"
             {{transformvaluetochecked foaie.online912}} onchange="checkboxPressed(2,912)" /></td>
     </tr>
     <tr>
         <td>12-18</td>
-        <td><input type="text" id="descriere1218" style="width:98%" name="descriere1218"
+        <td><input disabled type="text" id="descriere1218" style="width:98%" name="descriere1218"
                    value="{{foaie.descriere1218}}" /></td>
-        <td><input type="text" id="analize1218" style="width:98%" name="analize1218"
+        <td><input disabled type="text" id="analize1218" style="width:98%" name="analize1218"
                    value="{{foaie.analize1218}}" /></td>
         <td class="fisier-list">
                         <span>
@@ -637,21 +658,21 @@ Alte comentarii
                                 <img name="sterge1218" id="sterge1218" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel1218" name="markedDel1218" value="0" />
-            <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto1218"
+            <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto1218"
                    name="adaugafoto1218" onchange="pressed(1218)" /><label for="adaugafoto1218"
                                                                            id="fileLabel1218" style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                                           style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
         </td>
-        <td><input type="checkbox" id="spital1218" name="spital1218" {{transformvaluetochecked
+        <td><input disabled type="checkbox" id="spital1218" name="spital1218" {{transformvaluetochecked
             foaie.spital1218}} value="{{foaie.spital1218}}" onchange="checkboxPressed(1,1218)" /></td>
-        <td><input type="checkbox" id="online1218" name="online1218" value="{{foaie.online1218}}"
+        <td><input disabled type="checkbox" id="online1218" name="online1218" value="{{foaie.online1218}}"
             {{transformvaluetochecked foaie.online1218}} onchange="checkboxPressed(2,1218)" /></td>
     </tr>
     <tr>
         <td>18-24</td>
-        <td><input type="text" id="descriere1824" style="width:98%" name="descriere1824"
+        <td><input disabled type="text" id="descriere1824" style="width:98%" name="descriere1824"
                    value="{{foaie.descriere1824}}" /></td>
-        <td><input type="text" id="analize1824" style="width:98%" name="analize1824"
+        <td><input disabled type="text" id="analize1824" style="width:98%" name="analize1824"
                    value="{{foaie.analize1824}}" /></td>
         <td class="fisier-list">
                         <span>
@@ -665,21 +686,21 @@ Alte comentarii
                                 <img name="sterge1824" id="sterge1824" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel1824" name="markedDel1824" value="0" />
-            <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto1824"
+            <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto1824"
                    name="adaugafoto1824" onchange="pressed(1824)" /><label for="adaugafoto1824"
                                                                            id="fileLabel1824" style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                                           style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
         </td>
-        <td><input type="checkbox" id="spital1824" name="spital1824" {{transformvaluetochecked
+        <td><input disabled type="checkbox" id="spital1824" name="spital1824" {{transformvaluetochecked
             foaie.spital1824}} value="{{foaie.spital1824}}" onchange="checkboxPressed(1,1824)" /></td>
-        <td><input type="checkbox" id="online1824" name="online1824" value="{{foaie.online1824}}"
+        <td><input disabled type="checkbox" id="online1824" name="online1824" value="{{foaie.online1824}}"
             {{transformvaluetochecked foaie.online1824}} onchange="checkboxPressed(2,1824)" /></td>
     </tr>
     <tr>
         <td>24-30</td>
-        <td><input type="text" id="descriere2430" style="width:98%" name="descriere2430"
+        <td><input disabled type="text" id="descriere2430" style="width:98%" name="descriere2430"
                    value="{{foaie.descriere2430}}" /></td>
-        <td><input type="text" id="analize2430" style="width:98%" name="analize2430"
+        <td><input disabled type="text" id="analize2430" style="width:98%" name="analize2430"
                    value="{{foaie.analize2430}}" /></td>
         <td class="fisier-list">
                         <span>
@@ -693,21 +714,21 @@ Alte comentarii
                                 <img name="sterge2430" id="sterge2430" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel2430" name="markedDel2430" value="0" />
-            <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto2430"
+            <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto2430"
                    name="adaugafoto2430" onchange="pressed(2430)" /><label for="adaugafoto2430"
                                                                            id="fileLabel2430" style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                                           style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
         </td>
-        <td><input type="checkbox" id="spital2430" name="spital2430" {{transformvaluetochecked
+        <td><input disabled type="checkbox" id="spital2430" name="spital2430" {{transformvaluetochecked
             foaie.spital2430}} value="{{foaie.spital2430}}" onchange="checkboxPressed(1,2430)" /></td>
-        <td><input type="checkbox" id="online2430" name="online2430" value="{{foaie.online2430}}"
+        <td><input disabled type="checkbox" id="online2430" name="online2430" value="{{foaie.online2430}}"
             {{transformvaluetochecked foaie.online2430}} onchange="checkboxPressed(2,2430)" /></td>
     </tr>
     <tr>
         <td>30-36</td>
-        <td><input type="text" id="descriere3036" style="width:98%" name="descriere3036"
+        <td><input disabled type="text" id="descriere3036" style="width:98%" name="descriere3036"
                    value="{{foaie.descriere3036}}" /></td>
-        <td><input type="text" id="analize3036" style="width:98%" name="analize3036"
+        <td><input disabled type="text" id="analize3036" style="width:98%" name="analize3036"
                    value="{{foaie.analize3036}}" /></td>
         <td class="fisier-list">
                         <span>
@@ -721,14 +742,14 @@ Alte comentarii
                                 <img name="sterge3036" id="sterge3036" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel3036" name="markedDel3036" value="0" />
-            <input type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto3036"
+            <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto3036"
                    name="adaugafoto3036" onchange="pressed(3036)" /><label for="adaugafoto3036"
                                                                            id="fileLabel3036" style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                                           style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
         </td>
-        <td><input type="checkbox" id="spital3036" name="spital3036" {{transformvaluetochecked
+        <td><input disabled type="checkbox" id="spital3036" name="spital3036" {{transformvaluetochecked
             foaie.spital3036}} value="{{foaie.spital3036}}" onchange="checkboxPressed(1,3036)" /></td>
-        <td><input type="checkbox" id="online3036" name="online3036" value="{{foaie.online3036}}"
+        <td><input disabled type="checkbox" id="online3036" name="online3036" value="{{foaie.online3036}}"
             {{transformvaluetochecked foaie.online3036}} onchange="checkboxPressed(2,3036)" /></td>
     </tr>
 </table>
@@ -780,6 +801,27 @@ __/each++
 <script src="/js/general.js"></script>
 
 <script>
+const urlParams = new URLSearchParams(window.location.search);
+    var idParam = urlParams.get('foaie');
+    if (idParam!=null){
+      document.getElementById("editButton").style.visibility="visible";
+      document.getElementById("salveaza").style.visibility="hidden";
+
+    }
+    else {
+    $('input:disabled, select:disabled').each(function () {
+       $(this).removeAttr('disabled');
+    });
+      document.getElementById("editButton").style.visibility="hidden";
+      document.getElementById("salveaza").style.visibility="visible";
+    }
+function edit(){
+    $('input:disabled, select:disabled').each(function () {
+       $(this).removeAttr('disabled');
+    });
+    document.getElementById("editButton").style.visibility="hidden";
+    document.getElementById("salveaza").style.visibility="visible";
+}
         function adaugaArsura() {
             var templateText = $("#tableTemplate").html();
 

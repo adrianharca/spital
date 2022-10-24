@@ -24,13 +24,9 @@ function test(results){
 router.get('/delete', (req,res) => {
     const query = url.parse(req.url, true).query;
     const data = query.data;
-    var id = query.id;
+    var id = query.iduser;
     if (id!=undefined){
-        var con = mysql.createConnection({
-              host: Global.getHost(),
-              user: Global.getUser(),
-              password: Global.getParola()
-              });
+        var con = Global.createConnection(mysql);
               deleteSql = "delete from spital.utilizator where idutilizator=" + id;
           con.connect(function(err) {
             if (err) throw err;
@@ -79,16 +75,11 @@ router.get('/', (req, res) => {
     sql = sql + " offset " + page * limit;
   }
 
-  var con = mysql.createConnection({
-    host: Global.getHost(),
-    user: Global.getUser(),
-    password: Global.getParola()
-  });
+  var con = Global.createConnection(mysql);
   con.connect(function (err) {
-    if (err) throw err;
-    con.query(sql, function (err, result, fields) {
       if (err) throw err;
-      console.log(result);
+      con.query(sql, function (err, result, fields) {
+      if (err) throw err;
       result.page = page;
       result.showNext = result[0].nr - limit > 0 & page + 1 < result[0].nr / limit;
       result.showPrev = page != 0;
@@ -207,58 +198,86 @@ else {
   }
   });
 // // Display add user form
+var roles;
 router.get('/adduser', (req, res) => {
   const query = url.parse(req.url, true).query;
-  const data = query.data;
-  const id = query.id;
+  id = query.iduser;
+  var con = Global.createConnection(mysql);
+  iduser = id;
   if (id!=null) {
-  var con = mysql.createConnection({
-              host: Global.getHost(),
-              user: Global.getUser(),
-              password: Global.getParola(),
-              port: 3306
-              });
-          var select = "SELECT * FROM spital.utilizator where idutilizator=" + id+"";
-          console.error(select);
+          var select = "select * from (SELECT * FROM spital.utilizator where idutilizator=" + id+") t join spital.setup";
+
 
           var nume;
           var email;
           var rol;
           var parola;
           var parolaConfirm;
+
           con.query(select, (error, results, fields) => {
             if (error) {
 
               return console.error(error.message);
             }
-             console.error(results);
-             console.error(results[0]);
-             console.error(results[0].nume);
              nume=results[0].nume;
              email=results[0].email;
-             rol=results[0].rol;
+             rol=results[0].rol.split(",").map(string => string.trim());
              parola=results[0].parola;
              parolaConfirm = parola;
+             roles = results[0].roles.split(",").map(string => string.trim());
+             roles = roles.filter( function( el ) {
+                            return !rol.includes( el );
+                          } );
+
              con.end();
-             res.render('adduser',{nume, email, rol, parola, parolaConfirm});
+             res.render('adduser',{nume, email, rol, parola, parolaConfirm, roles, iduser});
             });
     }
     else{
-      res.render('adduser');
+      var select = "select * from spital.setup";
+      con.query(select, (error, results, fields) => {
+          if (error) {
+
+              return console.error(error.message);
+          }
+          roles = results[0].roles.split(",");
+          con.end();
+          res.render('adduser',{roles});
+      });
+
     }
 });
-
+var id = null;
 // Add a gig
 router.post('/adduser', (req, res) => {
   let errors = [];
-  let { nume, email, rol, parola, parolaConfirm} = req.body;
+   const query = url.parse(req.url, true).query;
+  nume= req.body.nume;
+  email = req.body.email;
+  parola = req.body.parola;
+  parolaConfirm = req.body.parolaConfirm;
     if (nume.trim()=='') {
     errors.push ({"text": "Numele nu este completat"});
       };
     if (email.trim()=='') {
       errors.push ({"text": "E-mailul nu este completat"});
       };
-    if (rol.trim()=='') {
+    var body = JSON.parse(JSON.stringify(req.body));
+    var noRole = true;
+    var finalRoles = [];
+    var finalRolesString = "";
+    for(var key in body) {
+
+      if(body.hasOwnProperty(key)){
+            if (key.includes("role")) {
+                noRole = false;
+                finalRoles.push(req.body[key]);
+            }
+            item = req.body[key];
+      }
+    }
+    finalRolesString = finalRoles.join(",");
+    if (noRole==true) {
           errors.push ({"text": "Rolul nu este completat"});
       };
     if (parola.trim()=='') {
@@ -273,25 +292,24 @@ router.post('/adduser', (req, res) => {
     if (parola.length<8) {
         errors.push ({"text": "Câmpul 'Parola' trebuie să aibă minim 8 caractere!"});
     }
+    rol = finalRoles[0];
+    if (id==undefined)
+        id= -1;
     // Check for errors
     if (errors.length > 0) {
       res.render('adduser', {
         errors,
-        nume, rol, email
+        nume, email,roles, finalRolesString
       });
     } else {
 
-      var con = mysql.createConnection({
-            host: Global.getHost(),
-            user: Global.getUser(),
-            password: Global.getParola(),
-            port: 3306
-            });
+      var con = Global.createConnection(mysql);
       con.connect(function(err) {
       if (err) throw err;
       console.log("Connected to add user!");
       });
-        var select = "SELECT * FROM spital.utilizator where nume='" + nume+"'";
+
+        var select = "SELECT * FROM spital.utilizator where idutilizator=" + id;
 
         var sizeOfSelect = 0;
         con.query(select, (error, results, fields) => {
@@ -299,10 +317,11 @@ router.post('/adduser', (req, res) => {
             return console.error(error.message);
           }
           sizeOfSelect = results.length;
+
           if (sizeOfSelect==0) {
                              var sql = "INSERT INTO spital.utilizator (nume, email, rol, parola) VALUES ?";
                              var values = [
-                             [nume, email, rol, parola]
+                             [nume, email, finalRolesString, parola]
                              ];
                              con.query(sql, [values], function (err, result) {
                              if (err) throw err;
@@ -313,17 +332,13 @@ router.post('/adduser', (req, res) => {
                              });
                   }
                   else {
-                     var sql = "Update spital.utilizator set email = '" + email + "', rol='" +rol + "', parola='" + parola + "' where nume='" + nume + "'";
+                     var sql = "Update spital.utilizator set email = '" + email + "', rol='" + finalRolesString + "', parola='" + parola + "', nume='" + nume + "' where idutilizator='" + id + "'";
                       con.query(sql, function (err, result) {
                          if (err) throw err;
                          console.log(result.affectedRows + " record(s) updated");
                          errors.push ({"text": "Utilizatorul " + nume + " există în baza de date: a fost actualizat cu noile informații."});
                        });
-                       parolaConfirm = parola;
-                      res.render('adduser', {
-                              errors,
-                              nume, rol, email, parola, parolaConfirm
-                            });
+                      res.redirect('/users');
                   }
                   con.end();
         });

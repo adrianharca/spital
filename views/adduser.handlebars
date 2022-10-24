@@ -17,12 +17,18 @@
         <label for="email">E-mail</label>
         <input type="text" name="email" id="email" class="input-box" placeholder="email"
                maxlength="100" value="{{email}}"/>
+        <input type="hidden" name="iduser" id="iduser" class="input-box" placeholder="user"
+               maxlength="100" value="{{iduser}}"/>
       </div>
       <div class="input-group">
-        <label for="rol">Rol</label>
-        <input type="text" name="rol" id="rol" class="input-box" placeholder="rol"
-               maxlength="100" value="{{rol}}"/>
-      </div>
+        <label>Rol(uri)</label>
+        {{#each rol}}
+        <input type="checkbox" id="role{{this}}" name="role{{this}}" {{transformvaluetochecked this}} value="{{this}}" /> {{this}} &nbsp;&nbsp;&nbsp;&nbsp;
+        {{/each}}
+        {{#each roles}}
+        <input type="checkbox" id="role{{this}}" name="role{{this}}" value="{{this}}" /> {{this}} &nbsp;&nbsp;&nbsp;&nbsp;
+        {{/each}}
+      </div><br/>
       <div class="input-group">
         <label for="parola">Parola</label>
         <input type="password" name="parola" id="parola" class="input-box" placeholder="parola"

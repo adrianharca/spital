@@ -82,6 +82,15 @@ Handlebars.registerHelper('transformvaluetophoto', function (value) {
         returnedValue = "";
     return returnedValue.replace("adaugafoto0","").replace("adaugafoto1","").replace("adaugafoto2","").replace("adaugafoto3","").replace("adaugafoto4","").replace("adaugafoto5","").replace("adaugafoto69","").replace("adaugafoto912","").replace("adaugafoto1224","").replace("adaugafoto2430","").replace("adaugafoto3036","");
 });
+Handlebars.registerHelper('transformvaluestochecked', function (value, role) {
+    var returnedValue = "checked";
+    if (value==undefined)
+        returnedValue = "";
+     if (value==0)
+        returnedValue = "";
+    console.log(value + " " + role);
+    return returnedValue;
+});
 Handlebars.registerHelper('transformvaluetochecked', function (value) {
     var returnedValue = "checked";
     if (value==undefined)
@@ -134,7 +143,13 @@ if (analiz.rezultat<analiz.minLimit)
 exports.getUploadFolder=function() {
     return uploadFolder;
 }
-
+exports.createConnection = function(mysql){
+    return mysql.createConnection({
+        host: host,
+        user: user,
+        password: parolaUser
+    });
+}
 exports.checkNull = function (value) {
     var returnedValue = "";
     if (value==undefined)

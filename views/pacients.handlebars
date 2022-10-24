@@ -7,11 +7,15 @@
 
     <div class="pacients">
         <div>
-            <a href="/pacients/addpacient?id={{idpacient}}" style="color:red"><h3>Nume: {{prenume}} {{numefamilie}}</h3></a>
+
+            <a href="/pacients/getfoaiepacient?id={{idpacient}}" style="color:red"><h3>Nume: {{prenume}} {{numefamilie}}</h3></a>
             <p>Sex: {{sex}}</p>
             <p>Cetățenie: {{cetatenie}}</p>
+
         </div>
-        <button class="deleteFoaie-btn btn btn-reverse" id="{{idpacient}}">Șterge pacient</button>
+        <span>
+        <button class="deleteFoaie-btn btn btn-reverse" id="profil{{idpacient}}" onclick="window.open('/pacients/addpacient?id={{idpacient}}')">Vizualizare profil</button>
+        <button class="deleteFoaie-btn btn btn-reverse" id="{{idpacient}}">Șterge pacient</button></span>
     </div>
     {{/ifNotNull}}
     {{else}}
