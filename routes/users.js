@@ -25,6 +25,7 @@ router.get('/delete', (req,res) => {
     const query = url.parse(req.url, true).query;
     const data = query.data;
     var id = query.iduser;
+    console.log("id: " + id);
     if (id!=undefined){
         var con = Global.createConnection(mysql);
               deleteSql = "delete from spital.utilizator where idutilizator=" + id;

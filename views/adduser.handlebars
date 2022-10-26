@@ -1,7 +1,8 @@
 <section id="adduser" class="container">
   <div class="form-wrap">
-    <a href="../users/" style="color:red;text-align:left !important">&lt;&lt;&lt; Înapoi</a>
-    <h1>Salvează utilizator</h1>
+    <table width="100%"><tr><td><a href="../users/" style="color:red;text-align:left !important">&lt;&lt;&lt; View utilizatori</a>
+    </td><td style="text-align:right !important;font-weight:bold"> <span > <a id="editButton" href="javascript:void(0)" onclick="edit()" style="color:red;">EDITARE</a><a id="cancelButton" href="javascript:void(0)" onclick="cancel()" style="color:red;">Anulare editare</a></span></td></tr></table>
+    <h1>Profil utilizator</h1>
     {{#each errors}}
     <div class="error" style="color:red">
       <p>{{text}}</p>
@@ -9,37 +10,76 @@
     {{/each}}
     <form action="/users/adduser" method='post'>
       <div class="input-group">
-        <label for="nume">Nume</label>
-        <input type="text" name="nume" id="nume" class="input-box" placeholder="nume"
+        <label for="nume">Nume <span class="requiredclass" style="color:red">*</span></label>
+        <input disabled type="text" name="nume" id="nume" class="input-box" placeholder="nume"
                maxlength="100" value="{{nume}}"/>
       </div>
       <div class="input-group">
-        <label for="email">E-mail</label>
-        <input type="text" name="email" id="email" class="input-box" placeholder="email"
+        <label for="email">E-mail <span class="requiredclass" style="color:red">*</span></label>
+        <input disabled type="text" name="email" id="email" class="input-box" placeholder="email"
                maxlength="100" value="{{email}}"/>
-        <input type="hidden" name="iduser" id="iduser" class="input-box" placeholder="user"
+        <input disabled type="hidden" name="iduser" id="iduser" class="input-box" placeholder="user"
                maxlength="100" value="{{iduser}}"/>
       </div>
       <div class="input-group">
-        <label>Rol(uri)</label>
+        <label>Rol(uri) <span class="requiredclass" style="color:red">*</span></label>
         {{#each rol}}
-        <input type="checkbox" id="role{{this}}" name="role{{this}}" {{transformvaluetochecked this}} value="{{this}}" /> {{this}} &nbsp;&nbsp;&nbsp;&nbsp;
+        <input disabled type="checkbox" id="role{{this}}" name="role{{this}}" {{transformvaluetochecked this}} value="{{this}}" /> {{this}} &nbsp;&nbsp;&nbsp;&nbsp;
         {{/each}}
         {{#each roles}}
-        <input type="checkbox" id="role{{this}}" name="role{{this}}" value="{{this}}" /> {{this}} &nbsp;&nbsp;&nbsp;&nbsp;
+        <input disabled type="checkbox" id="role{{this}}" name="role{{this}}" value="{{this}}" /> {{this}} &nbsp;&nbsp;&nbsp;&nbsp;
         {{/each}}
       </div><br/>
       <div class="input-group">
-        <label for="parola">Parola</label>
-        <input type="password" name="parola" id="parola" class="input-box" placeholder="parola"
+        <label for="parola">Parola <span class="requiredclass" style="color:red">*</span></label>
+        <input disabled type="password" name="parola" id="parola" class="input-box" placeholder="parola"
                maxlength="100" value="{{parola}}"/>
       </div>
       <div class="input-group">
-        <label for="parolaConfirm">Confirmă Parola</label>
-        <input type="password" name="parolaConfirm" id="parolaConfirm" class="input-box" placeholder="parolaConfirm"
+        <label for="parolaConfirm">Confirmă Parola <span class="requiredclass" style="color:red">*</span></label>
+        <input disabled type="password" name="parolaConfirm" id="parolaConfirm" class="input-box" placeholder="parolaConfirm"
                maxlength="100" value="{{parolaConfirm}}"/>
       </div>
-      <input type="submit" value="Salvează utilizator" class="btn btn-reverse"/>
+      <input type="submit" id="save" value="Salvează utilizator" class="btn btn-reverse"/>
     </form>
   </div>
 </section>
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js/general.js"></script>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    var idParam = urlParams.get('iduser');
+    if (idParam!=null){
+      document.getElementById("editButton").style.visibility="visible";
+      document.getElementById("cancelButton").style.visibility="hidden";
+      document.getElementById("cancelButton").style.display="none";
+      document.getElementById("save").style.visibility="hidden";
+      $(".requiredclass").attr("style", "visibility: hidden; color:red");
+      $('input, select').each(function () {
+       $(this).prop('disabled', true);
+    });
+    }
+    else {
+    $('input, select').each(function () {
+       $(this).prop('disabled', false);
+    });
+      document.getElementById("cancelButton").style.visibility="visible";
+      $(".requiredclass").attr("style", "visibility: visible; color:red");
+      document.getElementById("cancelButton").style.display="inline";
+      document.getElementById("editButton").style.visibility="hidden";
+      document.getElementById("save").style.visibility="visible";
+    }
+function cancel(){
+  window.open(location.href,"_self");
+}
+function edit(){
+    $('input:disabled, select:disabled').each(function () {
+       $(this).prop('disabled', false);
+    });
+    document.getElementById("editButton").style.visibility="hidden";
+    $(".requiredclass").attr("style", "visibility: visible; color:red");
+    document.getElementById("cancelButton").style.display="inline";
+    document.getElementById("cancelButton").style.visibility="visible";
+    document.getElementById("save").style.visibility="visible";
+}
+</script>

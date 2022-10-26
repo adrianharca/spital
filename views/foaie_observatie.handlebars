@@ -1,6 +1,9 @@
 <!--suppress ALL -->
 <section id="foaie" class="container" style="width:100% !important">
-    <table width="100%"><tr><td><a href="/foaie_observatie/allFiles" style="color:red;text-align:left !important">&lt;&lt;&lt; Înapoi</a></td><td style="text-align:right !important;font-weight:bold"> <span > <a id="editButton" href="javascript:void(0)" onclick="edit()" style="color:red;">EDITARE</a></span></td></tr></table>
+    <table width="100%"><tr><td><a href="/foaie_observatie/allFiles" style="color:red;text-align:left !important">&lt;&lt;&lt; View foi de observație</a><br/>
+        <a href="/pacients" style="color:red;text-align:left !important">&lt;&lt;&lt; View pacienți</a>
+    </td><td style="text-align:right !important;font-weight:bold"> <span > <a id="editButton" href="javascript:void(0)" onclick="edit()" style="color:red;">EDITARE</a>
+    <a id="cancelButton" href="javascript:void(0)" onclick="cancel()" style="color:red;">Anulare editare</a></span></td></tr></table>
     <h1>Foaie de observație clinică generală <span id="idfoaie" name="idfoaie">{{foaie.detaliipacient.idfoaie}}</span>
     </h1>
     {{#each errors}}
@@ -16,44 +19,37 @@
                 <tr>
                     <td style="font-weight:bold">Nume: </td>
                     <td id="numepacient"><a style="color:red" href="/pacients/addpacient?id={{foaie.detaliipacient.id}}">{{foaie.detaliipacient.nume}}</a></td>
+                    <td style="font-weight:bold">Secția: <span class="requiredclass" style="color:red">*</span></td>
+                    <td>
+                        <select disabled style="width:400px !important" name="sectia" id="sectia" onchange="changeSalon()">
+                            <option value="{{foaie.sectia}}" hidden="hidden" selected="selected">{{foaie.sectia}}</option>
+                            {{#each foaie.sectii}}
+                            <option value="{{this.nume}}">{{this.nume}}</option>
+                            {{/each}}
+                        </select>
+                       </td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Vârsta: </td>
                     <td id="varstapacient"> {{foaie.detaliipacient.varsta}}</td>
+                    <td style="font-weight:bold">Salon: </td>
+                    <td>
+                        <select disabled style="width:20% !important"  name="salon" id="salon" >
+                            <option value="{{foaie.salon}}" hidden="hidden" selected="selected">{{foaie.salon}}</option>
+                        </select>
+                        <input disabled type="hidden" id="structura" name="structura" style="width:400px; background: white; color: red;"
+                               value="{{foaie.sectiiVar}}" /></td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Sex: </td>
                     <td>{{foaie.detaliipacient.sex}}</td>
-                </tr>
-                <tr>
-                    <td style="font-weight:bold">CNP: </td>
-                    <td>{{foaie.detaliipacient.cnp}}</td>
-                </tr>
-                <tr>
-                    <td style="font-weight:bold">Cod: </td>
-                    <td>{{foaie.detaliipacient.cod}}</td>
-                </tr>
-                <tr>
-                    <td style="font-weight:bold">Medic: </td>
-                    <td><input disabled type="text" id="medic" name="medic" style="width:400px; background: white; color: red"
-                               value="{{foaie.medic}}" /></td>
-                </tr>
-                <tr>
-                    <td style="font-weight:bold">Secția: </td>
-                    <td><input disabled type="text" id="sectia" name="sectia" style="width:400px; background: white; color: red;"
-                               value="{{foaie.sectia}}" /></td>
-                </tr>
-                <tr>
-                    <td style="font-weight:bold">Salon: </td>
-                    <td><input disabled type="text" id="salon" name="salon" style="width:400px; background: white; color: red;"
-                               value="{{foaie.salon}}" /></td>
-                </tr>
-                <tr>
                     <td style="font-weight:bold">Pat: </td>
                     <td><input disabled type="text" id="pat" name="pat" style="width:400px; background: white; color: red;"
                                value="{{foaie.pat}}" /></td>
                 </tr>
                 <tr>
+                    <td style="font-weight:bold">CNP: </td>
+                    <td>{{foaie.detaliipacient.cnp}}</td>
                     <td style="font-weight:bold">Data internării: </td>
                     <td>Zi:&nbsp;<input disabled type="text" id="zi" name="zi" style="width:60px; background: white; color: red;"
                                         value="{{foaie.zi}}" />&nbsp;Lună:&nbsp;<input disabled type="text" id="luna" name="luna"
@@ -62,25 +58,36 @@
                                                                                                                                       style="width:100px; background: white; color: red;" value="{{foaie.an}}" /></td>
                 </tr>
                 <tr>
+                    <td style="font-weight:bold">Cod: </td>
+                    <td>{{foaie.detaliipacient.cod}}</td>
                     <td style="font-weight:bold">Status: </td>
                     <td>
-                        <select disabled style="width:20% !important; width:450px" name="status" id="status" >
+                        <select disabled style="width:50% !important; width:450px" name="status" id="status" >
                             <option value="{{foaie.status}}" hidden="hidden" selected="selected">{{foaie.status}}</option>
                             <option value="Internat">Internat</option>
                             <option value="In urmarire">In urmarire</option>
-                            <option value="In urmarire">Externat</option>
+                            <option value="Externat">Externat</option>
                             <option value="Decedat">Decedat</option>
                         </select>
 
                     </td>
-                </tr>
+                                    </tr>
+
                 <tr>
-                    <td style="font-weight:bold">Data externării: </td>
+                    <td style="font-weight:bold;width:80px !important">Medic: <span class="requiredclass" style="color:red">*</span></td>
+                    <td> <select disabled  style="width:350px !important" name="medic" id="medic">
+                        <option value="{{foaie.medic}}" hidden="hidden" selected="selected">{{foaie.medic}}</option>
+                        {{#each foaie.medici}}
+                        <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                    </td>
+                    <td style="font-weight:bold;width:180px !important">Data externării: </td>
                     <td>Zi:&nbsp;<input disabled type="text" id="ziext" name="ziext" style="width:60px; background: white; color: red;"
                                         value="{{foaie.ziext}}" />&nbsp;Lună:&nbsp;<input disabled type="text" id="lunaext" name="lunaext"
-                                                                                       style="width:100px; background: white; color: red;"
-                                                                                       value="{{foaie.lunaext}}" />&nbsp;An:&nbsp;<input type="text" disabled id="anext" name="anext"
-                                                                                                                                      style="width:100px; background: white; color: red;" value="{{foaie.anext}}" /></td>
+                                                                                          style="width:100px; background: white; color: red;"
+                                                                                          value="{{foaie.lunaext}}" />&nbsp;An:&nbsp;<input type="text" disabled id="anext" name="anext"
+                                                                                                                                            style="width:100px; background: white; color: red;" value="{{foaie.anext}}" /></td>
                 </tr>
             </table>
         </div>
@@ -88,20 +95,28 @@
 
         <!-- Tab links -->
         <div class="tab">
-            <button class="tablinks" onclick="openTab(event, 'diagnostic')">1. Diagnostic</button>
-            <button class="tablinks" onclick="openTab(event, 'anamneza')">2. Anamneza</button>
-            <button class="tablinks" onclick="openTab(event, 'tratament')">3. Tratament</button>
-            <button class="tablinks" onclick="openTab(event, 'epetapa')">4. Epicriza de etapă</button>
-            <button class="tablinks" onclick="openTab(event, 'epfinala')">5. Epicriza finală</button>
-            <button class="tablinks" onclick="openTab(event, 'recom')">6. Recomandări</button>
-            <button class="tablinks" onclick="openTab(event, 'urm')">7. Urmărire</button>
+            <button class="tablinks" id="buttontab1" onclick="openTab(event, 'evolutie')">1. Evoluții</button>
+            <button class="tablinks" id="buttontab2" onclick="openTab(event, 'diagnostic')">2. Diagnostic</button>
+            <button class="tablinks" id="buttontab3" onclick="openTab(event, 'anamneza')">3. Anamneza</button>
+            <button class="tablinks" id="buttontab4" onclick="openTab(event, 'tratament')">4. Tratament</button>
+            <button class="tablinks" id="buttontab5" onclick="openTab(event, 'epetapa')">5. Epicriza de etapă</button>
+            <button class="tablinks" id="buttontab6" onclick="openTab(event, 'epfinala')">6. Epicriza finală</button>
+            <button class="tablinks" id="buttontab7" onclick="openTab(event, 'recom')">7. Recomandări</button>
+            <button class="tablinks" id="buttontab8" onclick="openTab(event, 'urm')">8. Urmărire</button>
+        </div>
+        <div id="evolutie" class="tabcontent">
+            <h3>Evoluții</h3>
+            <input disabled type="button" id="adaugareevolutie" onclick="adaugareEvolutie()"
+                   value="Adaugă evoluție" class="editread"/>&nbsp;&nbsp;<input disabled type="button" id="stergeEvolutie"
+                                                                onclick="stergereevolutie()" value="Șterge ultima evoluție" class="editread"/><br/><br/>
+            <div id="updatedtableEvolutie"></div>
         </div>
         <div id="diagnostic" class="tabcontent">
             <h3>Diagnostic</h3>
             <table width="100%">
                 <tr>
                     <td style="width:20%">
-                        Principal
+                        Principal <span class="requiredclass" style="color:red">*</span>
                     </td>
                     <td>
                         <input type="text" disabled id="diagprincipal" name="diagprincipal" style="width:100%"
@@ -211,8 +226,8 @@
                     </tr>
                 </table>
                 <div id="updatedtable"></div>
-                <input disabled type="button" id="adauga" onclick="adaugaArsura()" value="Adaugă arsură" />&nbsp;&nbsp;<input
-                    type="button" id="sterge" onclick="stergeArsura()" value="Șterge ultima arsură" />
+                <input disabled type="button" id="adauga" onclick="adaugaArsura()" value="Adaugă arsură" class="editread"/>&nbsp;&nbsp;<input
+                    type="button" id="sterge" onclick="stergeArsura()" value="Șterge ultima arsură" class="editread"/>
                 <br /><br />
                 <input disabled type="checkbox" {{transformvaluetochecked foaie.caiResp}} id="caiResp" name="caiResp"
                 value="{{foaie.caiResp}}">Arsuri de căi respiratorii superioare</input>
@@ -318,7 +333,7 @@
 <a  href="/fisa_terapie?idfoaie={{this.idFoaie}}&amp;idfisa={{this.idFisa}}"
    style="color:red; text-align:left " target="_blank">{{this.data}}</a><br />&nbsp;&nbsp;
 {{/each}}<br />
-<input disabled style="font-size:10px;height:17px" type="button" id="adaugafisaterapie" onclick="adaugaFisaTerapie()"
+<input disabled style="font-size:10px;height:17px" type="button" class="editread" id="adaugafisaterapie" onclick="adaugaFisaTerapie()"
        value="Adaugă fișă terapie" /><br /><br />
 <table>
     <tr>
@@ -367,7 +382,7 @@
                     <a name="photo0" id="photo0" target="_blank"
                        href="/uploads/{{transformvaluetophotolink foaie.adaugafoto0}}"
                        style="font-size:10px; font-weight:bold;">{{transformvaluetophoto foaie.adaugafoto0}}</a>
-                    <a disabled href="javascript:void(0)"
+                    <a disabled class="delimg" href="javascript:void(0)"
                        style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto0}}"
                        onclick="document.getElementById('photo0').innerHTML=''; document.getElementById('markedDel0').value=1; document.getElementById('sterge0').style.visibility='hidden'">
 
@@ -380,11 +395,7 @@
         Adaugă fotografie/fișier&nbsp;</label>
 </div>
 
-<h4>Evoluție și tratament</h4>
-<div id="updatedtableEvolutie"></div>
-<input disabled type="button" id="adaugareevolutie" onclick="adaugareEvolutie()"
-       value="Adaugă evoluție" />&nbsp;&nbsp;<input disabled type="button" id="stergeEvolutie"
-                                                    onclick="stergereevolutie()" value="Șterge ultima evoluție" />
+
 <!--
 <h4>Analize</h4>
 
@@ -409,7 +420,7 @@
    target="_blank">{{this.data}}</a>&nbsp;&nbsp;
 <br />
 {{/each}}<br />
-<input disabled type="button" id="adaugaepicriza" onclick="adaugaEpicriza()" value="Adaugă epicriză" />
+<input disabled type="button" class="editread" id="adaugaepicriza" onclick="adaugaEpicriza()" value="Adaugă epicriză" />
 </div>
 <div id="epfinala" class="tabcontent">
 <h3>Epicriza finală</h3>
@@ -457,7 +468,7 @@ Alte comentarii
                             <a disabled href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1}}"
                                onclick="document.getElementById('photo1').innerHTML=''; document.getElementById('markedDel1').value=1; document.getElementById('sterge1').style.visibility='hidden'">
-                                <img name="sterge1" id="sterge1" src="/img/delete.png" width="15"
+                                <img class="delimg" name="sterge1" id="sterge1" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel1" name="markedDel1" value="0" />
             <div class="alege"><input disabled title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto1"
@@ -486,7 +497,7 @@ Alte comentarii
                             <a href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto2}}"
                                onclick="document.getElementById('photo2').innerHTML=''; document.getElementById('markedDel2').value=1; document.getElementById('sterge2').style.visibility='hidden'">
-                                <img name="sterge2" id="sterge2" src="/img/delete.png" width="15"
+                                <img class="delimg" name="sterge2" id="sterge2" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel2" name="markedDel2" value="0" />
             <div><input disabled title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto2"
@@ -514,7 +525,7 @@ Alte comentarii
                             <a disabled href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto3}}"
                                onclick="document.getElementById('photo3').innerHTML=''; document.getElementById('markedDel3').value=1; document.getElementById('sterge3').style.visibility='hidden'">
-                                <img name="sterge3" id="sterge3" src="/img/delete.png" width="15"
+                                <img class="delimg" name="sterge3" id="sterge3" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel3" name="markedDel3" value="0" />
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto3"
@@ -543,7 +554,7 @@ Alte comentarii
                             <a href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto4}}"
                                onclick="document.getElementById('photo4').innerHTML=''; document.getElementById('markedDel4').value=1; document.getElementById('sterge4').style.visibility='hidden'">
-                                <img name="sterge4" id="sterge4" src="/img/delete.png" width="15"
+                                <img class="delimg" name="sterge4" id="sterge4" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel4" name="markedDel4" value="0" />
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto4"
@@ -571,7 +582,7 @@ Alte comentarii
                             <a href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto5}}"
                                onclick="document.getElementById('photo5').innerHTML=''; document.getElementById('markedDel5').value=1; document.getElementById('sterge5').style.visibility='hidden'">
-                                <img name="sterge5" id="sterge5" src="/img/delete.png" width="15"
+                                <img class="delimg" name="sterge5" id="sterge5" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel5" name="markedDel5" value="0" />
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto5"
@@ -599,7 +610,7 @@ Alte comentarii
                             <a href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto69}}"
                                onclick="document.getElementById('photo69').innerHTML='';document.getElementById('markedDel69').value=1; document.getElementById('sterge69').style.visibility='hidden'">
-                                <img name="sterge69" id="sterge69" src="/img/delete.png" width="15"
+                                <img class="delimg" name="sterge69" id="sterge69" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel69" name="markedDel69" value="0" />
             <input disabled type="file" class="inputfile" title="Alegeți un fisier" id="adaugafoto69"
@@ -627,10 +638,10 @@ Alte comentarii
                             <a href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto912}}"
                                onclick="document.getElementById('photo912').innerHTML='';document.getElementById('markedDel912').value=1; document.getElementById('sterge912').style.visibility='hidden'">
-                                <img name="sterge912" id="sterge912" src="/img/delete.png" width="15"
+                                <img class="delimg" name="sterge912" id="sterge912" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel912" name="markedDel912" value="0" />
-            <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto912"
+            <input disabled type="file"  class="inputfile" title="Alegeți un fișier" id="adaugafoto912"
                    name="adaugafoto912" onchange="pressed(912)" /><label for="adaugafoto912" id="fileLabel912"
                                                                          style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                      style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
@@ -655,7 +666,7 @@ Alte comentarii
                             <a href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1218}}"
                                onclick="document.getElementById('photo1218').innerHTML=''; document.getElementById('markedDel1218').value=1; document.getElementById('sterge1218').style.visibility='hidden'">
-                                <img name="sterge1218" id="sterge1218" src="/img/delete.png" width="15"
+                                <img class="delimg" name="sterge1218" id="sterge1218" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel1218" name="markedDel1218" value="0" />
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto1218"
@@ -683,7 +694,7 @@ Alte comentarii
                             <a href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1824}}"
                                onclick="document.getElementById('photo1824').innerHTML='';document.getElementById('markedDel1824').value=1; document.getElementById('sterge1824').style.visibility='hidden'">
-                                <img name="sterge1824" id="sterge1824" src="/img/delete.png" width="15"
+                                <img class="delimg" name="sterge1824" id="sterge1824" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel1824" name="markedDel1824" value="0" />
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto1824"
@@ -711,7 +722,7 @@ Alte comentarii
                             <a href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto2430}}"
                                onclick="document.getElementById('photo2430').innerHTML='';document.getElementById('markedDel2430').value=1; document.getElementById('sterge2430').style.visibility='hidden'">
-                                <img name="sterge2430" id="sterge2430" src="/img/delete.png" width="15"
+                                <img class="delimg" name="sterge2430" id="sterge2430" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel2430" name="markedDel2430" value="0" />
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto2430"
@@ -739,7 +750,7 @@ Alte comentarii
                             <a href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto3036}}"
                                onclick="document.getElementById('photo3036').innerHTML=''; document.getElementById('markedDel3036').value=1; document.getElementById('sterge3036').style.visibility='hidden'">
-                                <img name="sterge3036" id="sterge3036" src="/img/delete.png" width="15"
+                                <img class="delimg" name="sterge3036" id="sterge3036" src="/img/delete.png" width="15"
                                      style="cursor:pointer" /></a></span>
             <input type="hidden" id="markedDel3036" name="markedDel3036" value="0" />
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto3036"
@@ -761,7 +772,7 @@ Alte comentarii
 <script type="text/x-handlebars-template" id="tableTemplate">
 __#each arsVV++
 Gradul:
-<select id="gradSelect__this.position++" name="gradSelect__this.position++" style="width:100px" >
+<select disabled id="gradSelect__this.position++" name="gradSelect__this.position++" style="width:100px" >
     <option value="__this.grad++" hidden="hidden" selected="selected">__this.grad++</option>
     <option value="1">1</option>
     <option value="2A">2A</option>
@@ -771,8 +782,8 @@ Gradul:
 
 </select>&nbsp;&nbsp;
 Localizare
-<input type="text" name="localizare__this.position++" id="localizare__this.position++" value="__this.localizare++"/>&nbsp;&nbsp;
-Procent segment <input type="text" name="procent__this.position++"  id="procent__this.position++" value="__this.procent++"/>&nbsp;%<br/><br/>
+<input disabled type="text" name="localizare__this.position++" id="localizare__this.position++" value="__this.localizare++"/>&nbsp;&nbsp;
+Procent segment <input disabled type="text" name="procent__this.position++"  id="procent__this.position++" value="__this.procent++"/>&nbsp;%<br/><br/>
 
 __/each++
 
@@ -787,9 +798,9 @@ __/each++
 <table width="100%">
     __#each evolutii++
     <tr>
-        <td style="width:10%;font-weight:bold">Data</td><td> <input type="text" style="width:90%" name="evoldata__this.position++" id="evoldata__this.position++" value="__this.dataEvolutiei++"/></td></tr>
-    <tr><td>Evoluție</td><td><input type="text" style="width:90%" name="evol__this.position++" id="evol__this.position++" value="__this.evolutie++"/></td></tr>
-    <tr><td>Tratament</td><td><input type="text" style="width:90%" name="trat__this.position++" id="trat__this.position++" value="__this.tratament++"/></td></tr>
+        <td style="width:10%;font-weight:bold">Data</td><td> <input disabled type="date" style="width:90%" name="evoldata__this.position++" id="evoldata__this.position++" value="__this.dataEvolutiei++"/></td></tr>
+    <tr><td>Evoluție</td><td><input disabled type="text" style="width:90%" name="evol__this.position++" id="evol__this.position++" value="__this.evolutie++"/></td></tr>
+    <tr><td>Tratament</td><td><input disabled type="text" style="width:90%" name="trat__this.position++" id="trat__this.position++" value="__this.tratament++"/></td></tr>
     <tr><td>&nbsp;</td></tr>
     __/each++
 </table>
@@ -801,26 +812,45 @@ __/each++
 <script src="/js/general.js"></script>
 
 <script>
-const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(window.location.search);
     var idParam = urlParams.get('foaie');
     if (idParam!=null){
       document.getElementById("editButton").style.visibility="visible";
       document.getElementById("salveaza").style.visibility="hidden";
-
+      document.getElementById("cancelButton").style.visibility="hidden";
+      document.getElementById("cancelButton").style.display="none";
+      $(".editread").attr("style", "visibility: hidden");
+      $(".delimg").attr("style", "visibility: hidden");
+      $(".requiredclass").attr("style", "visibility: hidden");
+      openTabWithoutEvent('evolutie');
     }
     else {
-    $('input:disabled, select:disabled').each(function () {
-       $(this).removeAttr('disabled');
+    $('input, select, textarea').each(function () {
+       $(this).prop('disabled', false);
     });
       document.getElementById("editButton").style.visibility="hidden";
+      document.getElementById("cancelButton").style.visibility="visible";
+      document.getElementById("cancelButton").style.display="inline";
       document.getElementById("salveaza").style.visibility="visible";
+      $(".requiredclass").attr("style", "visibility: visible; color:red");
+      $(".editread").attr("style", "visibility: visible");
+      $(".delimg").attr("style", "visibility: visible");
+      openTabWithoutEvent('diagnostic');
     }
 function edit(){
-    $('input:disabled, select:disabled').each(function () {
-       $(this).removeAttr('disabled');
+    $('input, select, textarea').each(function () {
+       $(this).prop('disabled', false);
     });
+    $(".requiredclass").attr("style", "visibility: visible; color:red");
+    document.getElementById("cancelButton").style.visibility="visible";
+    document.getElementById("cancelButton").style.display="inline";
     document.getElementById("editButton").style.visibility="hidden";
     document.getElementById("salveaza").style.visibility="visible";
+    $(".editread").attr("style", "visibility: visible");
+    $(".delimg").attr("style", "visibility: visible");
+}
+function cancel(){
+    window.open(location.href,"_self");
 }
         function adaugaArsura() {
             var templateText = $("#tableTemplate").html();
@@ -847,6 +877,7 @@ function edit(){
             arsuri.push(newArsura);
 
             $("#updatedtable").html(tableTemplate({ arsVV: arsuri }));
+            edit();
         }
         function stergeArsura() {
             var templateText = $("#tableTemplate").html();
@@ -864,13 +895,17 @@ function edit(){
             templateText = $("#tableTemplateEvolutie").html().replaceAll("_", "{").replaceAll("+", "}");
 
             var tableTemplate = Handlebars.compile(templateText);
-            var lengthEvolutii = evolutiiList.length;
+            var lengthEvolutii;
+            if (evolutiiList!=undefined)
+             lengthEvolutii = evolutiiList.length;
+            else
+             lengthEvolutii = 0;
 
 
             var newEvolutiiList = [];
             for (var index = 0; index < lengthEvolutii; index++) {
                 var newEvolutie = {};
-                newEvolutie.position = index;
+                newEvolutie.position = index+1;
                 newEvolutie.dataEvolutiei = document.getElementById("evoldata" + index).value;
 
                 newEvolutie.evolutie = document.getElementById("evol" + index).value;
@@ -878,13 +913,13 @@ function edit(){
                 newEvolutiiList.push(newEvolutie);
             }
             evolutiiList = [];
-            for (var i = 0; i < newEvolutiiList.length; i++) {
+            evolutiiList.push({ position: 0, value: "" });
+            for (var i = 0; i <newEvolutiiList.length; i++) {
                 evolutiiList.push(newEvolutiiList[i]);
             }
 
-            evolutiiList.push({ position: evolutiiList.length, value: "" });
-
             $("#updatedtableEvolutie").html(tableTemplate({ evolutii: evolutiiList }));
+            edit();
         }
         function stergereevolutie() {
             var templateText = $("#tableTemplateEvolutie").html();
@@ -928,8 +963,21 @@ function edit(){
                 document.getElementById("fileLabel" + imageIndex).innerHTML = "<img src=\"/img/upload.png\" width=\"20\" height=\"15\" style=\"cursor:pointer\"/>" + theSplit[theSplit.length - 1];
             }
         };
-
-
+        structura = JSON.parse(document.getElementById("structura").value);
+        function changeSalon() {
+                for (var i=0;i<structura.length;i++) {
+                    if (structura[i].nume==document.getElementById("sectia").value) {
+                        while (document.getElementById("salon").options.length > 1) {
+                             document.getElementById("salon").remove(1);
+                        }
+                        var saloane = structura[i].saloane.split(',');
+                        for (var i1 = 0; saloane.length>i1; i1++) {
+                              document.getElementById("salon").appendChild(addOption(saloane[i1])); ///aaaa
+                           };
+                    }
+                }
+                document.getElementById("salon").remove(document.getElementById("salon").options[document.getElementById("salon").selectedIndex]);
+        }
         function adaugaEpicriza() {
             if (document.getElementById("idfoaie").innerHTML == "")
                 alert("Salvati fisa prima data inainte de folosirea butonului");
@@ -983,6 +1031,18 @@ function edit(){
         var tableTemplateEvolutie = Handlebars.compile(templateTextEvolutie);
 
         $("#updatedtableEvolutie").html(tableTemplateEvolutie({ evolutii: evolutiiList }));
+        function openTabWithoutEvent(tabName) {
+             var i, tabcontent, tablinks;
+             tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+        }
         function openTab(evt, tabName) {
             // Declare all variables
 
@@ -1005,6 +1065,7 @@ function edit(){
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
         }
+        changeSalon();
     </script>
 
         </section>

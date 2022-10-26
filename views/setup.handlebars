@@ -8,17 +8,19 @@
     {{/each}}
     <form action="/setup" method='post'>
       <div class="input-group">
-        <label for="roles">Roluri (separate prin virgulă: ex. medic, asistentă, etc.)</label>
+        <label for="roles">Roluri (separate prin virgulă: ex. medic, asistentă, etc.) <span class="requiredclass" style="color:red">*</span></label>
         <input type="text" name="roles" id="roles" class="input-box" placeholder="Roluri"
                maxlength="200" value="{{setup.roles}}"/>
       </div>
       <div class="input-group">
-        <label for="roles">Niveluri de studii (separate prin virgulă: ex. liceu, gimnaziu, etc.)</label>
+        <label for="roles">Niveluri de studii (separate prin virgulă: ex. liceu, gimnaziu, etc.) <span class="requiredclass" style="color:red">*</span></label>
         <input type="text" name="levels" id="levels" class="input-box" placeholder="Niveluri"
                maxlength="1000" value="{{setup.levels}}"/>
       </div>
-
-      <h3 style="text-align:left">Secții</h3>
+      <div class="input-group">
+        <label for="roles">Statusuri pacienți (nu pot fi modificate): <span style="color:red">Internat, In urmarire, Externat, Decedat</span></label>
+      </div>
+      <h3 style="text-align:left">Secții <span class="requiredclass" style="color:red">*</span></h3>
       <div id="updatedtable" class="input-group"></div>
       <br/><br/>
       <input type="button" id="adauga" onclick="adaugaSectie()" value="Adaugă secție" />&nbsp;&nbsp;<input

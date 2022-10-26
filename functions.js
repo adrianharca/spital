@@ -1,7 +1,7 @@
 const ImageEntity = require('./models/ImageEntity');
 const Image = require('./models/Image');
 var db = require("./config/db.js");
-
+const fs = require('fs');
 var host = "localhost";
 var user = "adrianharca";
 var parolaUser = "adr04har";
@@ -140,6 +140,17 @@ if (analiz.rezultat<analiz.minLimit)
     return analiz.rezultat + " ➘";
   return analiz.rezultat;
 });
+function test(filename) {
+    console.log(uploadFolder + "\\" + filename);
+    fs.unlinkSync(uploadFolder + "\\" + filename);
+}
+exports.deleteFile= function(name){
+     console.log(name);
+     let regex = new RegExp('^' + name);
+     fs.readdirSync(uploadFolder)
+        .filter(f => regex.test(f))
+        .map(f => test(f))
+}
 exports.getUploadFolder=function() {
     return uploadFolder;
 }

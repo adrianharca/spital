@@ -14,8 +14,8 @@
 
         </div>
         <span>
-        <button class="deleteFoaie-btn btn btn-reverse" id="profil{{idpacient}}" onclick="window.open('/pacients/addpacient?id={{idpacient}}')">Vizualizare profil</button>
-        <button class="deleteFoaie-btn btn btn-reverse" id="{{idpacient}}">Șterge pacient</button></span>
+        <button class="deleteFoaie-btn btn btn-reverse" id="profil{{idpacient}}" onclick="window.open('/pacients/addpacient?id={{idpacient}}','_self')">Vizualizare profil</button>
+        <button class="deleteFoaie-btn btn btn-reverse" onclick="deleteFunct({{idpacient}});" id="{{idpacient}}">Șterge pacient</button></span>
     </div>
     {{/ifNotNull}}
     {{else}}
@@ -31,3 +31,14 @@
         {{/if}}
     </div>
 </section>
+<script>
+const deleteFunct=function (someId){
+    var answer = window.confirm("Sunteți sigur(ă) că vreți să ștergeți pacientul cu id " + someId + "?");
+    if (answer) {
+        window.open('/pacients/delete?id='+someId,'_self');
+    }
+    else {
+        //nu se sterge
+    }
+}
+</script>

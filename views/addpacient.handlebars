@@ -1,7 +1,7 @@
    
 <section id="addpacient" class="container">
     <div class="form-wrap">
-      <table width="100%"><tr><td><a href="../pacients/" style="color:red;text-align:left !important">&lt;&lt;&lt; Înapoi</a></td><td style="text-align:right !important;font-weight:bold"> <span > <a id="editButton" href="javascript:void(0)" onclick="edit()" style="color:red;">EDITARE</a><a id="cancelButton" href="javascript:void(0)" onclick="cancel()" style="color:red;">Anulare editare</a></span></td></tr></table>
+      <table width="100%"><tr><td><a href="../pacients/" style="color:red;text-align:left !important">&lt;&lt;&lt; View pacienți</a></td><td style="text-align:right !important;font-weight:bold"> <span > <a id="editButton" href="javascript:void(0)" onclick="edit()" style="color:red;">EDITARE</a><a id="cancelButton" href="javascript:void(0)" onclick="cancel()" style="color:red;">Anulare editare</a></span></td></tr></table>
       <h1>Profil pacient</h1>
       {{#each errors}}
         <div class="error" style="color:red">
@@ -12,9 +12,9 @@
         <div class="input-group" >
           <label for="prenume" style="font-weight:bold;color:red">Nume</label>
           <div style="display: flex;">
-          <span style="width:15% !important">Prenume&nbsp;&nbsp;</span>
+          <span style="width:15% !important">Prenume&nbsp;&nbsp;<span class="requiredclass" style="color:red">*</span>&nbsp;</span>
           <input disabled type="text" style="width:45% !important" name="prenume" id="prenume" class="input-box" placeholder="Prenume"
-            maxlength="100" value="{{prenume}}"/><span style="width:30% !important"  >&nbsp;&nbsp;Numele de familie&nbsp;&nbsp;</span>
+            maxlength="100" value="{{prenume}}"/><span style="width:30% !important"  >&nbsp;&nbsp;Numele de familie&nbsp;&nbsp;<span class="requiredclass" style="color:red">*</span>&nbsp;</span>
           <input disabled type="text" style="flex-grow: 1;" name="numefamilie" id="numefamilie" class="input-box" placeholder="Nume de familie"
                  maxlength="100" value="{{numefamilie}}"/>
           </div>
@@ -33,7 +33,7 @@
 
         </div>
         <div class="input-group" style="display: flex;">
-          <span>Sex&nbsp;&nbsp;</span>
+          <span>Sex&nbsp;&nbsp;<span class="requiredclass" style="color:red">*</span>&nbsp;</span>
           <select disabled class="input-box" style="width:10% !important" name="sex" id="sex" >
             <option value="{{sex}}" hidden="hidden" selected="selected">{{sex}}</option>
             <option value="M">M</option>
@@ -42,7 +42,7 @@
           <span>&nbsp;&nbsp;CNP&nbsp;&nbsp;</span>
           <input disabled type="text" name="cnp" style="width:58% !important" id="cnp" class="input-box" placeholder="Cod numeric personal"
                  maxlength="100" value="{{cnp}}"/>
-          <span>&nbsp;&nbsp;Cetățenie&nbsp;&nbsp;</span>
+          <span>&nbsp;&nbsp;Cetățenie&nbsp;&nbsp;<span class="requiredclass" style="color:red">*</span>&nbsp;</span>
           <input disabled type="text"  name="cetatenie"  style="flex-grow: 1;"  id="cetatenie" class="input-box" placeholder="Cetățenie"
                  maxlength="100" value="{{cetatenie}}"/>
 
@@ -165,6 +165,7 @@
     var idParam = urlParams.get('id');
     if (idParam!=null){
       document.getElementById("editButton").style.visibility="visible";
+      $(".requiredclass").attr("style", "visibility: hidden; color:red;");
       document.getElementById("cancelButton").style.visibility="hidden";
       document.getElementById("cancelButton").style.display="none";
       document.getElementById("save").style.visibility="hidden";
@@ -176,29 +177,24 @@
     });
       document.getElementById("cancelButton").style.visibility="visible";
       document.getElementById("cancelButton").style.display="inline";
+      $(".requiredclass").attr("style", "visibility: visible; color:red;");
       document.getElementById("editButton").style.visibility="hidden";
       document.getElementById("save").style.visibility="visible";
+      document.getElementById("intern").style.visibility="hidden";
     }
 function cancel(){
-  $('input, select').each(function () {
-       $(this).prop('disabled', true);
-    });
-    document.getElementById("editButton").style.visibility="visible";
-    document.getElementById("cancelButton").style.display="none";
-    document.getElementById("cancelButton").style.visibility="hidden";
-    document.getElementById("save").style.visibility="hidden";
-    document.getElementById("intern").style.visibility="hidden";
+  window.open(location.href,"_self");
 }
 function edit(){
     $('input:disabled, select:disabled').each(function () {
        $(this).prop('disabled', false);
     });
     document.getElementById("editButton").style.visibility="hidden";
-
+     $(".requiredclass").attr("style", "visibility: visible; color:red;");
     document.getElementById("cancelButton").style.display="inline";
     document.getElementById("cancelButton").style.visibility="visible";
     document.getElementById("save").style.visibility="visible";
-    document.getElementById("intern").style.visibility="visible";
+    document.getElementById("intern").style.visibility="hidden";
 }
 //Adaugă foaie de observație
 

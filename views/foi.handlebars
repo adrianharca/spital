@@ -10,7 +10,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;Data: {{convertdate timeCol}}
             <br />
         </div>
-        <button class="deleteFoaie-btn btn btn-reverse" id="{{idfoaie_observatie}}">Șterge foaie</button>
+        <button class="deleteFoaie-btn btn btn-reverse" onclick="deleteFunct({{idfoaie_observatie}});" id="{{idfoaie_observatie}}">Șterge foaie</button>
     </div>
     {{/ifNotNull}}
     {{else}}
@@ -20,3 +20,14 @@
 
     </input>
 </section>
+<script>
+const deleteFunct=function (someId){
+    var answer = window.confirm("Sunteți sigur(ă) că vreți să foaia de observație cu id " + someId + "?");
+    if (answer) {
+        window.open('/foaie_observatie/delete?id='+someId,'_self');
+    }
+    else {
+        //nu se sterge
+    }
+}
+</script>

@@ -279,10 +279,13 @@ router.post('/', (req, res) => {
     errors = [];
     if (fields.medic=='') {
               errors.push ({"text": "Medicul nu este completat."});
-                };
+              };
     if (fields.sectia=='') {
-                  errors.push ({"text": "Secția nu este completată."});
-                    };
+              errors.push ({"text": "Secția nu este completată."});
+              };
+    if (fields.diagprincipal=='') {
+              errors.push ({"text": "Diagnosticul principal nu este completat."});
+              };
     if (fields.indiceponderal!=undefined) {
         if (isNaN(fields.indiceponderal)) {
             errors.push ({"text": "Indicele ponderal nu este numeric."});
@@ -336,7 +339,8 @@ router.post('/', (req, res) => {
            if (err) throw err;
            con.query(selectAllFiles, function (err, result, fields) {
              if (err) throw err;
-             res.redirect('/foaie_observatie/allFiles'  );
+            // res.redirect('/foaie_observatie/allFiles'  );
+             res.redirect('/pacients');
              con.end();
            });
            });
@@ -394,6 +398,35 @@ function deleteOldFiles(files, oldFiles, idfoaie,markedDel){
     deleteOldFile("adaugafoto2430",files, oldFiles, idfoaie,markedDel);
     deleteOldFile("adaugafoto3036",files, oldFiles, idfoaie,markedDel);
 }
+router.get('/delete', (req,res) => {
+    const query = url.parse(req.url, true).query;
+    const data = query.data;
+    var id = query.id;
+    if (id!=undefined){
+        var con = Global.createConnection(mysql);
+        selectSql = "select idfoaie_observatie from spital.foaie_observatie where idfoaie_observatie=" + id;
+        deleteSql = "delete from spital.foaie_observatie where idfoaie_observatie=" + id;
+        con.connect(function (err) {
+         con.query(selectSql, function (err, result, fields) {
+                              if (err) throw err;
+                              for(var i=0;i<result.length;i++) {
+                                Global.deleteFile(result[i].idfoaie_observatie + "adaugafoto");
+                              }
+                              con.query(deleteSql, function (errDel, resultDel, fieldsDel) {
+                                if (errDel) throw err;
+                                con.end();
+                                res.redirect('/pacients' );
+
+                              });
+
+                            });
+        });
+    }
+    else {
+       res.redirect('/pacients' );
+    }
+
+});
 function constructFoaie(errors, req, res, fieldsOld) {
 
     etichete = {};
@@ -415,12 +448,14 @@ function constructFoaie(errors, req, res, fieldsOld) {
                       if (err) throw err;
 
                       });
-                      var select = "SELECT idpacient,prenume, numefamilie, zi, luna, an, sex, cnp, cod FROM spital.pacient where idpacient=" + pacientId;
+                      var select = "SELECT idpacient,prenume, numefamilie, zi, luna, an, sex, cnp, cod,(select GROUP_CONCAT(nume) from spital.utilizator where rol like '%medic%') medici, (select sectii from spital.setup) sectii FROM spital.pacient where idpacient=" + pacientId;
                       con.query(select, (error, results, fields) => {
                                 if (error) {
                                             return console.error(error.message);
                                 }
-
+                                foaie.medici = results[0].medici.split(",");
+                                foaie.sectii = JSON.parse(results[0].sectii);
+                                foaie.sectiiVar = JSON.stringify(foaie.sectii);
                                 foaie.detaliipacient.nume  =results[0].numefamilie + " " + results[0].prenume;
 
                                 foaie.detaliipacient.varsta = Global.calculateAge(results[0].zi,results[0].luna, results[0].an);

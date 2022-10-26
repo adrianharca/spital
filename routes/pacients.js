@@ -106,9 +106,11 @@ router.get('/', (req, res) => {
     con.query(sql, function (err, result, fields) {
       if (err) throw err;
       result.page = page;
-      result.showNext = result[0].nr - limit > 0 & page + 1 < result[0].nr / limit;
+      var nextPage = 0;
+      if (result[0]!=undefined)
+        nextPage = result[0].nr;
+      result.showNext = nextPage - limit > 0 & page + 1 < nextPage / limit;
       result.showPrev = page != 0;
-      console.log(result.showNext);
       res.render('pacients', result);
       con.end();
     });
@@ -196,8 +198,8 @@ router.get('/getfoaiepacient', (req, res) => {
           if (err) throw err;
 
           });
-          //TODO de adaugat si statusul aici pentru foile de observatie, astfel incat sa fie sigur ca intoarcem din DB foaia curenta
-          var select = "SELECT idfoaie_observatie, idpacient, medic, sectia, CURRENT_TIMESTAMP as timeCol FROM spital.foaie_observatie where idpacient="+id + " order by idfoaie_observatie desc";
+
+          var select = "SELECT idfoaie_observatie, idpacient, medic, sectia, CURRENT_TIMESTAMP as timeCol FROM spital.foaie_observatie where idpacient="+id + " and status!='Externat' order by idfoaie_observatie desc";
            con.query(select, (error, results, fields) => {
                     if (error) {
                                 return console.error(error.message);
@@ -215,6 +217,38 @@ router.get('/getfoaiepacient', (req, res) => {
      }
 
 });
+
+router.get('/delete', (req,res) => {
+    const query = url.parse(req.url, true).query;
+    const data = query.data;
+    var id = query.id;
+    if (id!=undefined){
+        var con = Global.createConnection(mysql);
+        selectSql = "select idfoaie_observatie from spital.foaie_observatie where idpacient=" + id;
+        deleteSql = "delete from spital.pacient where idpacient=" + id;
+        con.connect(function (err) {
+         con.query(selectSql, function (err, result, fields) {
+                              if (err) throw err;
+                              for(var i=0;i<result.length;i++) {
+                                Global.deleteFile(result[i].idfoaie_observatie + "adaugafoto");
+                              }
+                              con.query(deleteSql, function (errDel, resultDel, fieldsDel) {
+                                if (errDel) throw err;
+                                con.end();
+                                res.redirect('/pacients' );
+
+                              });
+
+                            });
+        });
+    }
+    else {
+       res.redirect('/pacients' );
+    }
+
+});
+
+
 // // Display add user form
 router.get('/addpacient', (req, res) => {
  const query = url.parse(req.url, true).query;
@@ -291,7 +325,8 @@ router.get('/addpacient', (req, res) => {
                   levels = results[0].levels.split(",");
                   con.end();
                   cetatenie = "Română";
-                  res.render('addpacient',{levels});
+                  sex = "M";
+                  res.render('addpacient',{levels, cetatenie, sex});
               });
 
   }
