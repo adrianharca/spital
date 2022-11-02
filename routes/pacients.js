@@ -297,15 +297,45 @@ router.get('/addpacient', (req, res) => {
           var levels = results[0].levels.split(",");
           var cod = results[0].cod;
           var idInUI = id;
-          var select = "SELECT idfoaie_observatie, idpacient, medic, sectia, CURRENT_TIMESTAMP as timeCol FROM spital.foaie_observatie where idpacient=" + id;
+          var select = "select  idfoaie_observatie, idpacient, medic, sectia, CURRENT_TIMESTAMP as timeCol, e.idepicrize_etapa, e.dataVar as dataVar, e.staregenerala stgen from spital.foaie_observatie f left join spital.epicrize_etapa e on f.idfoaie_observatie=e.idfoaie where idpacient=" + id;
                 con.query(select, (error, results, fields) => {
                     if (error) {
                                 return console.error(error.message);
                     }
-                    var foaie;
+                    var foaie = [];
                     if (results.length!=0) {
-                        foaie = results;
+                        for (var i=0;i<results.length;i++){
+                          if (foaie[results[i].idfoaie_observatie]!=undefined){
+                                 var epicriza = {};
+                                 epicriza.idepicrize_etapa = results[i].idepicrize_etapa;
+                                 epicriza.dataVar = results[i].dataVar;
+                                 epicriza.stgen = results[i].stgen;
+                                 epicriza.idpacient = results[i].idpacient;
+                                 epicriza.idfoaie_observatie = results[i].idfoaie_observatie;
+                                 foaie[results[i].idfoaie_observatie].epicrize_etapa.push(epicriza);
+                          }
+                          else{
+                                foaie[results[i].idfoaie_observatie]=  {};
+                                foaie[results[i].idfoaie_observatie].idfoaie_observatie = results[i].idfoaie_observatie;
+                                foaie[results[i].idfoaie_observatie].idpacient = results[i].idpacient;
+                                foaie[results[i].idfoaie_observatie].medic = results[i].medic;
+                                foaie[results[i].idfoaie_observatie].sectia = results[i].sectia;
+                                foaie[results[i].idfoaie_observatie].timeCol = results[i].timeCol;
+                                foaie[results[i].idfoaie_observatie].epicrize_etapa = [];
+                                var epicriza = {};
+                                epicriza.idepicrize_etapa = results[i].idepicrize_etapa;
+                                epicriza.dataVar = results[i].dataVar;
+                                epicriza.stgen = results[i].stgen;
+                                epicriza.idpacient = results[i].idpacient;
+                                epicriza.idfoaie_observatie = results[i].idfoaie_observatie;
+                                foaie[results[i].idfoaie_observatie].epicrize_etapa = [];
+                                foaie[results[i].idfoaie_observatie].epicrize_etapa.push(epicriza);
+
+                          }
+                        }
+                        //foaie = results;
                     }
+
                     res.render('addpacient',{numefamilie, prenume, telefon, email, sex, cnp, cetatenie, zi, luna, an, greutatenastere,
                         judet, localitatea, mediu, strada, numar, judetRes, localitateaRes, mediuRes, stradaRes, numarRes, parinte, cnpParinte,
                         foParinte, ocupatieParinte, serviciuParinte, studii, cod,idInUI,foaie,levels });

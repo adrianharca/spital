@@ -72,14 +72,14 @@ router.post('/', (req, res) => {
   var foundAdmin = false;
   var foundMedic = false;
   for(var i=0;i<rolesList.length;i++){
-    if (rolesList[i].trim().localeCompare("medic")==0)
+    if (rolesList[i].trim().includes("medic")==true)
         foundMedic = true;
-    if (rolesList[i].trim().localeCompare("admin")==0)
+    if (rolesList[i].trim().includes("admin")==true)
         foundAdmin = true;
 
   }
   if (!foundAdmin || !foundMedic) {
-        errors.push ({"text": "Rolurile medic și admin trebuie să existe în cadrul listei de roluri."});
+        errors.push ({"text": "Rolurile 'medic' și 'admin' trebuie să existe în cadrul listei de roluri."});
         res.render('setup',{errors, setup});
         return;
   }

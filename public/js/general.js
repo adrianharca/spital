@@ -2,6 +2,34 @@ function formatNumber(numberVar){
     if (10>numberVar) return "0" + numberVar;
     return "" + numberVar;
 }
+
+function changeDays( ziField, lunaField, anField){
+    var day = document.getElementById(ziField);
+    var an = document.getElementById(anField);
+     while (day.options.length > 1) {
+
+        day.remove(1);
+    }
+      var luna = document.getElementById(lunaField).value;
+      if (luna.localeCompare("Ianuarie")==0 || luna.localeCompare("Martie")==0 || luna.localeCompare("Iulie")==0 || luna.localeCompare("August")==0
+       || luna.localeCompare("Octombrie")==0 || luna.localeCompare("Decembrie")==0)
+      {
+          addDaysOfMonth(31,day);
+      }
+      else if (luna.localeCompare("Februarie")==0){
+        if (an.value % 4 == 0) {
+          addDaysOfMonth(29,day);
+        }
+        else {
+          addDaysOfMonth(28,day);
+        }
+      }
+      else
+        addDaysOfMonth(30,day);
+
+}
+
+
 function formatDate(dateVar){
     return formatNumber(dateVar.getHours()) + ":" + formatNumber(dateVar.getMinutes()) + ":" + formatNumber(dateVar.getSeconds()) + ", " + formatNumber(dateVar.getDate()) +
      "." + formatNumber(dateVar.getMonth()+1) + "." +  dateVar.getFullYear();

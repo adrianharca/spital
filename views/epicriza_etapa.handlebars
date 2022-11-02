@@ -1,7 +1,9 @@
 <!--suppress ALL -->
 <section id="foaie" class="container" style="width:100% !important">
   <form method="post" >
-  <h1>Epicriza de etapă  <input type="text" id="dataEpicriza" style="width:10%"  name="dataEpicriza" value="{{epicriza_etapa.dataVar}}"/></h1>
+  <table width="100%"><tr><td><input type="button" onclick="openFoaie()" style="color:red;text-align:left !important; background-color:transparent !important; border:none;" value="&lt;&lt;&lt; Înapoi în foaia de observație"/><br/>
+    <input type="button" onclick="openProfil()" style="color:red;text-align:left !important; background-color:transparent !important; border:none;" value="&lt;&lt;&lt; Înapoi în profilul pacientului"/></td><td><div style="width:100%; text-align:right" > <a id="editButton" href="javascript:void(0)" onclick="edit()" style="color:red;">EDITARE</a><a id="cancelButton" href="javascript:void(0)" onclick="cancel()" style="color:red;">Anulare editare</a></div></td></tr></table>
+  <h1>Epicriza de etapă  <input disabled type="date" id="dataEpicriza" style="width:15%"  name="dataEpicriza" value="{{epicriza_etapa.dataVar}}"/></h1>
     <h2 style="text-align:center">(F.O. nr. {{epicriza_etapa.idfoaie}})</h2>
     {{#each errors}}
     <div class="error" style="color:red">
@@ -11,18 +13,18 @@
   <br/>
   <div id="#epiEtapa" class="tabcontent" style="display: block;">
     <table width="100%">
-      <tr><td style="width:20%">Stare generală</td><td><input type="text" id="stare" style="width:100%"  name="stare" value="{{epicriza_etapa.staregenerala}}"/></td></tr>
+      <tr><td style="width:20%">Stare generală</td><td><input disabled type="text" id="stare" style="width:100%"  name="stare" value="{{epicriza_etapa.staregenerala}}"/></td></tr>
 
       <tr>
-        <td style="width:20%">Intubat?</td><td><input  type="radio"  id="intubatDa" name="intubat" value="Da" {{{checked epicriza_etapa.intubat 'Da'}}} />Da<input  type="radio" value="Nu" id="intubatNu" name="intubat" {{{checked epicriza_etapa.intubat 'Nu'}}}/>Nu</td>
+        <td style="width:20%">Intubat?</td><td><input disabled  type="radio"  id="intubatDa" name="intubat" value="Da" {{{checked epicriza_etapa.intubat 'Da'}}} />Da<input disabled  type="radio" value="Nu" id="intubatNu" name="intubat" {{{checked epicriza_etapa.intubat 'Nu'}}}/>Nu</td>
       </tr>
-      <tr><td style="width:20%">Tranzit reluat?</td><td><input  type="radio"  id="tranzitreluatDa" name="tranzitreluat" value="Da" {{{checked epicriza_etapa.tranzitreluat 'Da'}}}/>Da<input  type="radio"  id="tranzitreluatNu" name="tranzitreluat" value="Nu" {{{checked epicriza_etapa.tranzitreluat 'Nu'}}}/>Nu</td></tr>
-      <tr><td style="width:20%">Cantitate diureză</td><td><input type="text" id="diureza" style="width:100%"  name="diureza" value="{{epicriza_etapa.cantitatediureza}}"/></td></tr>
-      <tr><td style="width:20%">Extremități calde?</td><td><input  type="radio"  id="extremitatiDa" name="extremitati" value="Da" {{{checked epicriza_etapa.extremitati 'Da'}}}/>Da<input  type="radio"  id="extremitatiNu" name="extremitati" value="Nu" {{{checked epicriza_etapa.extremitati 'Nu'}}}/>Nu</td></tr>
-      <tr><td style="width:20%">Mucoase umede?</td><td><input  type="radio"  id="mucoaseDa" name="mucoase" value="Da"  {{{checked epicriza_etapa.mucoase 'Da'}}}/>Da<input  type="radio"  id="mucoaseNu" name="mucoase" value="Nu"  {{{checked epicriza_etapa.mucoase 'Nu'}}}/>Nu</td></tr>
+      <tr><td style="width:20%">Tranzit reluat?</td><td><input disabled  type="radio"  id="tranzitreluatDa" name="tranzitreluat" value="Da" {{{checked epicriza_etapa.tranzitreluat 'Da'}}}/>Da<input disabled  type="radio"  id="tranzitreluatNu" name="tranzitreluat" value="Nu" {{{checked epicriza_etapa.tranzitreluat 'Nu'}}}/>Nu</td></tr>
+      <tr><td style="width:20%">Cantitate diureză</td><td><input disabled  type="text" id="diureza" style="width:100%"  name="diureza" value="{{epicriza_etapa.cantitatediureza}}"/></td></tr>
+      <tr><td style="width:20%">Extremități calde?</td><td><input disabled  type="radio"  id="extremitatiDa" name="extremitati" value="Da" {{{checked epicriza_etapa.extremitati 'Da'}}}/>Da<input  type="radio" disabled   id="extremitatiNu" name="extremitati" value="Nu" {{{checked epicriza_etapa.extremitati 'Nu'}}}/>Nu</td></tr>
+      <tr><td style="width:20%">Mucoase umede?</td><td><input disabled  type="radio"  id="mucoaseDa" name="mucoase" value="Da"  {{{checked epicriza_etapa.mucoase 'Da'}}}/>Da<input disabled  type="radio"  id="mucoaseNu" name="mucoase" value="Nu"  {{{checked epicriza_etapa.mucoase 'Nu'}}}/>Nu</td></tr>
     </table>
     <br/>
-    <input style="font-size:12px;height:20px" type="submit" id="salveaza" value="Salvare"/>
+    <input style="font-size:12px;height:30px; color:red" type="submit" id="save" value="Salvare"/>
   </div>
 </form>
   <script src="/js/jquery-3.6.0.min.js"></script>
@@ -31,7 +33,57 @@
   <script src="/js/utils.js"></script>
   <script src="/js/general.js"></script>
   <script>
-
+    const urlParams = new URLSearchParams(window.location.search);
+    var idParam = urlParams.get('idepicriza');
+    if (idParam!=null){
+      document.getElementById("editButton").style.visibility="visible";
+      $(".requiredclass").attr("style", "visibility: hidden; color:red;");
+      document.getElementById("cancelButton").style.visibility="hidden";
+      document.getElementById("cancelButton").style.display="none";
+      document.getElementById("save").style.visibility="hidden";
+      document.getElementById("intern").style.visibility="hidden";
+    }
+    else {
+    $('input, select').each(function () {
+       $(this).prop('disabled', false);
+    });
+      document.getElementById("cancelButton").style.visibility="visible";
+      document.getElementById("cancelButton").style.display="inline";
+      $(".requiredclass").attr("style", "visibility: visible; color:red;");
+      document.getElementById("editButton").style.visibility="hidden";
+      document.getElementById("save").style.visibility="visible";
+      document.getElementById("intern").style.visibility="hidden";
+    }
+function openFoaie(){
+  const urlParams = new URLSearchParams(window.location.search);
+  var idFoaie = urlParams.get('idfoaie');
+  var idPacient = urlParams.get('idpacient');
+  if (idFoaie!=undefined && idPacient!=undefined)
+    window.open("/foaie_observatie?pacient="+idPacient+"&foaie=" + idFoaie,"_self");
+  else
+    alert("Nu sunt toți parametrii necesari în URL!");
+}
+function openProfil(){
+  const urlParams = new URLSearchParams(window.location.search);
+  var idPacient = urlParams.get('idpacient');
+  if (idPacient!=undefined)
+    window.open("/pacients/addpacient?id="+idPacient,"_self");
+  else
+    alert("Nu sunt toți parametrii necesari în URL!");
+}
+function cancel(){
+  window.open(location.href,"_self");
+}
+function edit(){
+    $('input, select').each(function () {
+       $(this).prop('disabled', false);
+    });
+    document.getElementById("editButton").style.visibility="hidden";
+     $(".requiredclass").attr("style", "visibility: visible; color:red;");
+    document.getElementById("cancelButton").style.display="inline";
+    document.getElementById("cancelButton").style.visibility="visible";
+    document.getElementById("save").style.visibility="visible";
+}
   </script>
 
 </section>

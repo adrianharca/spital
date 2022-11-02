@@ -265,10 +265,11 @@ exports.Arsura = function (numeArsuraVar){
 }
 
 
-exports.FisaTerapie = function (dataVar, idVar, idFoaieVar){
+exports.FisaTerapie = function (dataVar, idVar, idFoaieVar, idPacientVar){
     this.data= dataVar;
     this.idFisa = idVar;
     this.idFoaie = idFoaieVar;
+    this.idPacient = idPacientVar;
     return this;
 }
 

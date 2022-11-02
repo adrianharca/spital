@@ -627,7 +627,7 @@ function constructFoaie(errors, req, res, fieldsOld) {
                                                                         }
                                                                         if (results!=null) {
                                                                             for (var i=0;i<results.length;i++){
-                                                                                foaie.epicrizedeetapa.push(new Global.FisaTerapie(results[i].dataVar, results[i].idepicrize_etapa, idfoaie));
+                                                                                foaie.epicrizedeetapa.push(new Global.FisaTerapie(results[i].dataVar, results[i].idepicrize_etapa, idfoaie,pacientId));
                                                                             }
                                                                         }
                                                                         //foaie.fiseterapie.push(Global.FisaTerapie("28/29 iunie 2022"));

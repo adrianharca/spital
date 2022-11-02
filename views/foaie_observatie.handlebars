@@ -51,11 +51,23 @@
                     <td style="font-weight:bold">CNP: </td>
                     <td>{{foaie.detaliipacient.cnp}}</td>
                     <td style="font-weight:bold">Data internării: </td>
-                    <td>Zi:&nbsp;<input disabled type="text" id="zi" name="zi" style="width:60px; background: white; color: red;"
-                                        value="{{foaie.zi}}" />&nbsp;Lună:&nbsp;<input disabled type="text" id="luna" name="luna"
-                                                                                       style="width:100px; background: white; color: red;"
-                                                                                       value="{{foaie.luna}}" />&nbsp;An:&nbsp;<input type="text" disabled id="an" name="an"
-                                                                                                                                      style="width:100px; background: white; color: red;" value="{{foaie.an}}" /></td>
+                    <td>Zi:&nbsp;<select disabled style="width:20% !important"  name="zi" id="zi" >
+                        <option value="{{foaie.zi}}" hidden="hidden" selected="selected">{{foaie.zi}}</option>
+                    </select> Lună:&nbsp; <select disabled style="width:20% !important" onchange="changeDays('zi','luna','an')" name="luna" id="luna" >
+                        <option value="{{foaie.luna}}" hidden="hidden" selected="selected">{{foaie.luna}}</option>
+                        <option value="Ianuarie">Ianuarie</option>
+                        <option value="Februarie">Februarie</option>
+                        <option value="Martie">Martie</option>
+                        <option value="Aprilie">Aprilie</option>
+                        <option value="Mai">Mai</option>
+                        <option value="Iunie">Iunie</option>
+                        <option value="Iulie">Iulie</option>
+                        <option value="August">August</option>
+                        <option value="Septembrie">Septembrie</option>
+                        <option value="Octombrie">Octombrie</option>
+                        <option value="Noiembrie">Noiembrie</option>
+                        <option value="Decembrie">Decembrie</option>
+                    </select>&nbsp;An:&nbsp;<input type="text" disabled id="an" name="an" style="width:100px; background: white; color: red;" value="{{foaie.an}}" /></td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Cod: </td>
@@ -83,11 +95,25 @@
                     </select>
                     </td>
                     <td style="font-weight:bold;width:180px !important">Data externării: </td>
-                    <td>Zi:&nbsp;<input disabled type="text" id="ziext" name="ziext" style="width:60px; background: white; color: red;"
-                                        value="{{foaie.ziext}}" />&nbsp;Lună:&nbsp;<input disabled type="text" id="lunaext" name="lunaext"
-                                                                                          style="width:100px; background: white; color: red;"
-                                                                                          value="{{foaie.lunaext}}" />&nbsp;An:&nbsp;<input type="text" disabled id="anext" name="anext"
-                                                                                                                                            style="width:100px; background: white; color: red;" value="{{foaie.anext}}" /></td>
+                    <td>Zi:&nbsp;<select disabled style="width:20% !important"  name="ziext" id="ziext" >
+                        <option value="{{foaie.ziext}}" hidden="hidden" selected="selected">{{foaie.ziext}}</option></select>
+                        &nbsp;Lună:&nbsp;<select disabled style="width:20% !important" onchange="changeDays('ziext','lunaext','anext')" name="lunaext" id="lunaext" >
+                            <option value="{{foaie.lunaext}}" hidden="hidden" selected="selected">{{foaie.lunaext}}</option>
+                            <option value="Ianuarie">Ianuarie</option>
+                            <option value="Februarie">Februarie</option>
+                            <option value="Martie">Martie</option>
+                            <option value="Aprilie">Aprilie</option>
+                            <option value="Mai">Mai</option>
+                            <option value="Iunie">Iunie</option>
+                            <option value="Iulie">Iulie</option>
+                            <option value="August">August</option>
+                            <option value="Septembrie">Septembrie</option>
+                            <option value="Octombrie">Octombrie</option>
+                            <option value="Noiembrie">Noiembrie</option>
+                            <option value="Decembrie">Decembrie</option>
+                        </select>
+
+                        An:&nbsp;<input type="text" disabled id="anext" name="anext" style="width:100px; background: white; color: red;" value="{{foaie.anext}}" /></td>
                 </tr>
             </table>
         </div>
@@ -416,8 +442,8 @@
 <div id="epetapa" class="tabcontent">
 <h3>Epicriza de etapă</h3>
 {{#each foaie.epicrizedeetapa}}
-<a href="/epicriza_etapa?idepicriza={{this.idFisa}}&amp;idfoaie={{this.idFoaie}}" style="color:red"
-   target="_blank">{{this.data}}</a>&nbsp;&nbsp;
+<a href="/epicriza_etapa?idepicriza={{this.idFisa}}&amp;idfoaie={{this.idFoaie}}&amp;idpacient={{this.idPacient}}" style="color:red"
+   target="_self">{{this.data}}</a>&nbsp;&nbsp;
 <br />
 {{/each}}<br />
 <input disabled type="button" class="editread" id="adaugaepicriza" onclick="adaugaEpicriza()" value="Adaugă epicriză" />
@@ -765,7 +791,7 @@ Alte comentarii
     </tr>
 </table>
 </div>
-<br />
+<br/>
 
 <input type="submit" id="salveaza" style="font-size:16px" class="btn btn-reverse" value="Salvare foaie" />
         </form>
@@ -812,6 +838,8 @@ __/each++
 <script src="/js/general.js"></script>
 
 <script>
+    changeDays("zi","luna","an");
+    changeDays("ziext","lunaext","anext");
     const urlParams = new URLSearchParams(window.location.search);
     var idParam = urlParams.get('foaie');
     if (idParam!=null){
@@ -888,6 +916,7 @@ function cancel(){
             arsuri.pop();
 
             $("#updatedtable").html(tableTemplate({ arsVV: arsuri }));
+            edit();
         }
         function adaugareEvolutie() {
             var templateText = $("#tableTemplateEvolutie").html();
@@ -903,17 +932,29 @@ function cancel(){
 
 
             var newEvolutiiList = [];
+            var now = new Date();
             for (var index = 0; index < lengthEvolutii; index++) {
                 var newEvolutie = {};
                 newEvolutie.position = index+1;
-                newEvolutie.dataEvolutiei = document.getElementById("evoldata" + index).value;
 
+                newEvolutie.dataEvolutiei = document.getElementById("evoldata" + index).value;
+                if (index==0) {
+                    var oldDate = new Date(document.getElementById("evoldata" + index).value);
+
+                    var followingDay = new Date(oldDate.getTime() + 86400000); // + 1 day in ms
+
+                    now.setDate(followingDay.getDate());
+                    now.setMonth(followingDay.getMonth());
+                }
                 newEvolutie.evolutie = document.getElementById("evol" + index).value;
                 newEvolutie.tratament = document.getElementById("trat" + index).value;
                 newEvolutiiList.push(newEvolutie);
             }
             evolutiiList = [];
-            evolutiiList.push({ position: 0, value: "" });
+            var dayVar = now.getDate()<10 ? "0" + now.getDate() : now.getDate();
+            let todayVar = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" +  dayVar ;
+
+            evolutiiList.push({ position: 0, dataEvolutiei: todayVar });
             for (var i = 0; i <newEvolutiiList.length; i++) {
                 evolutiiList.push(newEvolutiiList[i]);
             }
@@ -927,9 +968,12 @@ function cancel(){
             templateText = $("#tableTemplateEvolutie").html().replaceAll("_", "{").replaceAll("+", "}");
 
             var tableTemplate = Handlebars.compile(templateText);
-            evolutiiList.pop();
-
+            evolutiiList.shift();
+            for (var index = 0; index < evolutiiList.length; index++) {
+                evolutiiList[index].position = index;
+            }
             $("#updatedtableEvolutie").html(tableTemplate({ evolutii: evolutiiList }));
+            edit();
         }
 
 
@@ -1067,5 +1111,5 @@ function cancel(){
         }
         changeSalon();
     </script>
+</section>
 
-        </section>
