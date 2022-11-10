@@ -287,7 +287,6 @@ exports.Epicrisis = function (dataVar, idVar) {
 
 exports.EpicrizaDeEtapa = function (dataVar){
     this.staregenerala = null;
-    console.log("aaa: " + idVar);
     this.intubat = null;
     this.tranzitreluat = null;
     this.cantitatediureza = null;

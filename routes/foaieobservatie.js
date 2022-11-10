@@ -620,7 +620,7 @@ function constructFoaie(errors, req, res, fieldsOld) {
                                        }
                                     }
                                     );
-                                    var selectEpicrize = "SELECT idepicrize_etapa, dataVar FROM spital.epicrize_etapa where idfoaie=" + idfoaie;
+                                    var selectEpicrize = "SELECT idepicrize_etapa, dataVar FROM spital.epicrize_etapa where idfoaie=" + idfoaie + " order by idepicrize_etapa desc";
                                     con.query(selectEpicrize, (error, results, fields) => {
                                                                         if (error) {
                                                                                return console.error(error.message);

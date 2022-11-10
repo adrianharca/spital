@@ -9,129 +9,260 @@
         </div>
       {{/each}}
       <form action="/pacients/addpacient" method="post">
-        <div class="input-group" >
-          <label for="prenume" style="font-weight:bold;color:red">Nume</label>
-          <div style="display: flex;">
-          <span style="width:15% !important">Prenume&nbsp;&nbsp;<span class="requiredclass" style="color:red">*</span>&nbsp;</span>
-          <input disabled type="text" style="width:45% !important" name="prenume" id="prenume" class="input-box" placeholder="Prenume"
-            maxlength="100" value="{{prenume}}"/><span style="width:30% !important"  >&nbsp;&nbsp;Numele de familie&nbsp;&nbsp;<span class="requiredclass" style="color:red">*</span>&nbsp;</span>
-          <input disabled type="text" style="flex-grow: 1;" name="numefamilie" id="numefamilie" class="input-box" placeholder="Nume de familie"
-                 maxlength="100" value="{{numefamilie}}"/>
-          </div>
-        </div>
 
-        <div class="input-group">
-          <label for="email" style="font-weight:bold;color:red">Date (de contact)</label><div style="display: flex;">
-          <span style="width:10% !important">Telefon&nbsp;&nbsp;</span>
-          <input disabled style="width:28% !important" type="text" name="telefon" id="telefon" class="input-box" placeholder="Număr de telefon"
-                 maxlength="15" value="{{telefon}}"/>
-          <span style="width:25% !important">&nbsp;&nbsp;Adresă de mail&nbsp;&nbsp;</span>
-          <input disabled type="text"  style="flex-grow: 1;" name="email" id="email" class="input-box" placeholder="E-mail"
-                 maxlength="100" value="{{email}}"/></div>
-        </div>
-        <div class="input-group">
+          <table style="width:100%">
+            <tr>
+              <td colspan="2">
+                <span  style="font-weight:bold;color:red">Nume&nbsp;&nbsp; </span>
+              </td>
+            </tr>
+            <tr>
+              <td style="width:30%">
+                Prenume&nbsp;&nbsp;<span class="requiredclass" style="color:red">*</span>&nbsp;
+              </td>
+              <td style="width:70%">
+                <input disabled type="text" name="prenume" id="prenume" class="input-box" placeholder="Prenume"
+                       maxlength="100" value="{{prenume}}"/>
+              </td>
 
-        </div>
-        <div class="input-group" style="display: flex;">
-          <span>Sex&nbsp;&nbsp;<span class="requiredclass" style="color:red">*</span>&nbsp;</span>
-          <select disabled class="input-box" style="width:10% !important" name="sex" id="sex" >
-            <option value="{{sex}}" hidden="hidden" selected="selected">{{sex}}</option>
-            <option value="M">M</option>
-            <option value="F">F</option>
-          </select>
-          <span>&nbsp;&nbsp;CNP&nbsp;&nbsp;</span>
-          <input disabled type="text" name="cnp" style="width:58% !important" id="cnp" class="input-box" placeholder="Cod numeric personal"
-                 maxlength="100" value="{{cnp}}"/>
-          <span>&nbsp;&nbsp;Cetățenie&nbsp;&nbsp;<span class="requiredclass" style="color:red">*</span>&nbsp;</span>
-          <input disabled type="text"  name="cetatenie"  style="flex-grow: 1;"  id="cetatenie" class="input-box" placeholder="Cetățenie"
-                 maxlength="100" value="{{cetatenie}}"/>
+            </tr>
+            <tr>
 
-        </div>
-        <div class="input-group">
-          <label for="zi" style="font-weight:bold; color:red">Data nașterii</label>
-          <span>Zi&nbsp;
-            <select disabled class="input-box" style="width:20% !important"  name="zi" id="zi" >
+              <td>
+                Numele de familie&nbsp;&nbsp;<span class="requiredclass" style="color:red">*</span>
+              </td>
+              <td>
+                <input disabled type="text" style="flex-grow: 1;" name="numefamilie" id="numefamilie" class="input-box" placeholder="Nume de familie"
+                       maxlength="100" value="{{numefamilie}}"/>
+              </td>
+
+            </tr>
+            <tr>
+              <td colspan="2">
+                <span style="font-weight:bold;color:red">Date (de contact)&nbsp;&nbsp;</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Telefon&nbsp;&nbsp;<span class="requiredclass" style="color:red">*</span>
+              </td>
+              <td>
+                <input disabled  type="text" name="telefon" id="telefon" class="input-box" placeholder="Număr de telefon"
+                       maxlength="15" value="{{telefon}}"/>
+              </td>
+
+            </tr>
+            <tr>
+              <td>
+                Adresă de mail&nbsp;&nbsp;
+              </td>
+              <td>
+                <input disabled type="text"  style="flex-grow: 1;" name="email" id="email" class="input-box" placeholder="E-mail"
+                       maxlength="100" value="{{email}}"/>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <span  style="font-weight:bold;color:red">Alte Detalii&nbsp;&nbsp;</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Sex&nbsp;&nbsp;<span class="requiredclass" style="color:red">*</span>&nbsp;
+              </td>
+              <td>
+                <select disabled class="input-box" style="width:25%" name="sex" id="sex" >
+                  <option value="{{sex}}" hidden="hidden" selected="selected">{{sex}}</option>
+                  <option value="M">M</option>
+                  <option value="F">F</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                CNP&nbsp;&nbsp;
+              </td>
+              <td>
+                <input disabled type="text" name="cnp"  id="cnp" class="input-box" placeholder="Cod numeric personal"
+                       maxlength="100" value="{{cnp}}"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Cetățenie&nbsp;&nbsp;<span class="requiredclass" style="color:red">*</span>&nbsp;
+              </td>
+              <td>
+                <input disabled type="text"  name="cetatenie"  style="flex-grow: 1;"  id="cetatenie" class="input-box" placeholder="Cetățenie"
+                       maxlength="100" value="{{cetatenie}}"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Greutatea la naștere&nbsp;&nbsp;
+              </td>
+              <td>
+                <input disabled type="text" name="greutatenastere" id="greutatenastere" class="input-box" placeholder="Greutate" maxlength="100" value="{{greutatenastere}}"/>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" style="font-weight:bold;color:red">
+                Data nașterii&nbsp;&nbsp;
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <span>Zi&nbsp;
+            <select disabled class="input-box" style="width:20%"   name="zi" id="zi" >
                     <option value="{{zi}}" hidden="hidden" selected="selected">{{zi}}</option>
             </select></span>
-          <span>&nbsp;&nbsp;Lună&nbsp;&nbsp;</span>
-          <select disabled class="input-box" style="width:20% !important" onchange="changeDays('zi','luna','an')" name="luna" id="luna" >
-            <option value="{{luna}}" hidden="hidden" selected="selected">{{luna}}</option>
-            <option value="Ianuarie">Ianuarie</option>
-            <option value="Februarie">Februarie</option>
-            <option value="Martie">Martie</option>
-            <option value="Aprilie">Aprilie</option>
-            <option value="Mai">Mai</option>
-            <option value="Iunie">Iunie</option>
-            <option value="Iulie">Iulie</option>
-            <option value="August">August</option>
-            <option value="Septembrie">Septembrie</option>
-            <option value="Octombrie">Octombrie</option>
-            <option value="Noiembrie">Noiembrie</option>
-            <option value="Decembrie">Decembrie</option>
-          </select>
-          <span>&nbsp;&nbsp;An&nbsp;&nbsp;</span><input disabled type="text" onchange="changeDays('zi','luna','an')" style="width:20% !important" name="an" id="an" class="input-box" placeholder="An" maxlength="100" value="{{an}}"/>
-        </div>
-        <div class="input-group">
-          <span>Greutatea la naștere&nbsp;&nbsp;</span>
-          <input disabled type="text" name="greutatenastere" id="greutatenastere" class="input-box" placeholder="Greutate" maxlength="100" value="{{greutatenastere}}"/>
-        </div>
-        <div class="input-group">
-        <label for="judet" style="font-weight:bold;color:red">Domiciliul legal</label>
-        <span>Județul&nbsp;&nbsp;</span>
-        <select disabled class="input-box" style="width:20% !important" name="judet" id="judet">
-          <option value="{{judet}}" hidden="hidden" selected="selected">{{judet}}</option>
-        </select>
-        <span>&nbsp;&nbsp;Localitatea&nbsp;&nbsp;</span><input disabled type="text" style="width:30% !important" name="localitatea" id="localitatea" class="input-box" placeholder="Localitatea" maxlength="100" value="{{localitatea}}"/>
-        <span>&nbsp;&nbsp;Mediul&nbsp;&nbsp;</span>
-        <select disabled class="input-box" style="width:20% !important" name="mediu" id="mediu">
-          <option value="{{mediu}}" hidden="hidden" selected="selected">{{mediu}}</option>
-          <option value="R">Rural</option>
-          <option value="U">Urban</option>
-        </select>
-      </div>
+
+                <span>&nbsp;&nbsp;Lună&nbsp;&nbsp;</span>
+                <select disabled class="input-box"  style="width:45%" onchange="changeDays('zi','luna','an')" name="luna" id="luna" >
+                  <option value="{{luna}}" hidden="hidden" selected="selected">{{luna}}</option>
+                  <option value="Ianuarie">Ianuarie</option>
+                  <option value="Februarie">Februarie</option>
+                  <option value="Martie">Martie</option>
+                  <option value="Aprilie">Aprilie</option>
+                  <option value="Mai">Mai</option>
+                  <option value="Iunie">Iunie</option>
+                  <option value="Iulie">Iulie</option>
+                  <option value="August">August</option>
+                  <option value="Septembrie">Septembrie</option>
+                  <option value="Octombrie">Octombrie</option>
+                  <option value="Noiembrie">Noiembrie</option>
+                  <option value="Decembrie">Decembrie</option>
+                </select>
+                <span>An&nbsp;&nbsp;</span><input disabled type="text" onchange="changeDays('zi','luna','an')" style="width:20% !important" name="an" id="an" class="input-box" placeholder="An" maxlength="100" value="{{an}}"/>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" style="font-weight:bold;color:red">Domiciliul legal&nbsp;&nbsp;</td>
+            </tr>
+            <tr>
+              <td>
+                Județul&nbsp;&nbsp;
+              </td>
+              <td>
+                <select disabled class="input-box" style="width:75%" name="judet" id="judet">
+                  <option value="{{judet}}" hidden="hidden" selected="selected">{{judet}}</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                Localitatea&nbsp;&nbsp;
+                <input disabled type="text" style="width:54% !important" name="localitatea" id="localitatea" class="input-box" placeholder="Localitatea" maxlength="100" value="{{localitatea}}"/>
+                &nbsp;&nbsp;Mediul&nbsp;&nbsp;
+                <select disabled style="width:29%" class="input-box" name="mediu" id="mediu">
+                  <option value="{{mediu}}" hidden="hidden" selected="selected">{{mediu}}</option>
+                  <option value="R">Rural</option>
+                  <option value="U">Urban</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                Strada&nbsp;&nbsp;
+                <input disabled type="text" style="width:30% !important" name="strada" id="strada" class="input-box" placeholder="strada" maxlength="100" value="{{strada}}"/>
+                &nbsp;&nbsp;Nr.&nbsp;&nbsp;
+                <input disabled type="text" style="width:50% !important" name="numar" id="numar" class="input-box" placeholder="Număr" maxlength="100" value="{{numar}}"/>
+              </td>
+            </tr>
+            <tr >
+              <td colspan="2" style="font-weight:bold;color:red">
+                Reședința&nbsp;&nbsp;
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Județul&nbsp;&nbsp;
+              </td>
+              <td>
+                <select disabled class="input-box" name="judetRes" style="width:75%" id="judetRes">
+                  <option value="{{judetRes}}" hidden="hidden" selected="selected">{{judetRes}}</option>
+                </select>
+              </td>
+
+            </tr>
+            <tr>
+              <td colspan="2">
+                Localitatea&nbsp;&nbsp;
+                <input disabled type="text" style="width:54% !important" name="localitateaRes" id="localitateaRes" class="input-box" placeholder="Localitatea" maxlength="100" value="{{localitateaRes}}"/>
+                <span>&nbsp;&nbsp;Mediul&nbsp;&nbsp;</span><select disabled class="input-box" style="width:29% !important" name="mediuRes" id="mediuRes">
+                <option value="{{mediuRes}}" hidden="hidden" selected="selected">{{mediuRes}}</option>
+                <option value="R">Rural</option>
+                <option value="U">Urban</option>
+              </select>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                Strada&nbsp;&nbsp;
+                <input disabled type="text" style="width:30% !important" name="stradaRes" id="stradaRes" class="input-box" placeholder="strada" maxlength="100" value="{{stradaRes}}"/>
+                <span>&nbsp;&nbsp;Nr.&nbsp;&nbsp;</span><input disabled type="text" style="width:50% !important" name="numarRes" id="numarRes" class="input-box" placeholder="Număr" maxlength="100" value="{{numarRes}}"/>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" style="font-weight:bold;color:red">Părinți&nbsp;&nbsp;</td>
+            </tr>
+            <tr>
+            <td>
+              Nume&nbsp;&nbsp;
+            </td>
+              <td>
+                <input disabled type="text" name="parinte" id="parinte" class="input-box" placeholder="Nume" maxlength="100" value="{{parinte}}"/>
+              </td>
+          </tr>
+            <tr>
+              <td>
+                CNP&nbsp;&nbsp;
+              </td>
+              <td>
+                <input disabled type="text" name="cnpParinte" id="cnpParinte" class="input-box" placeholder="CNP" maxlength="100" value="{{cnpParinte}}"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                FO&nbsp;&nbsp;
+              </td>
+              <td>
+                <input disabled type="text" name="foParinte" id="foParinte" class="input-box" placeholder="FO" maxlength="100" value="{{foParinte}}"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Ocupație&nbsp;&nbsp;
+              </td>
+              <td>
+                <input disabled type="text"  name="ocupatieParinte" id="ocupatieParinte" class="input-box" placeholder="Ocupație" maxlength="100" value="{{ocupatieParinte}}"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Loc de muncă&nbsp;&nbsp;
+              </td>
+              <td>
+                <input disabled type="text"  name="serviciuParinte" id="serviciuParinte" class="input-box" placeholder="Serviciu" maxlength="100" value="{{serviciuParinte}}"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Nivel studii&nbsp;&nbsp;
+              </td>
+              <td>
+
+                <select disabled class="input-box" name="studii" id="studii">
+                  <option value="{{studii}}" hidden="hidden" selected="selected">{{studii}}</option>
+                  {{#each levels}}
+                  <option value="{{this}}">{{this}}</option>
+                  {{/each}}
+                </select>
+              </td>
+            </tr>
+          </table>
 
         <div class="input-group">
-          <span>Strada&nbsp;&nbsp;</span>
-          <input disabled type="text" style="width:30% !important" name="strada" id="strada" class="input-box" placeholder="strada" maxlength="100" value="{{strada}}"/>
-          <span>Numărul&nbsp;&nbsp;</span><input disabled type="text" style="width:10% !important" name="numar" id="numar" class="input-box" placeholder="Număr" maxlength="100" value="{{numar}}"/>
-        </div>
-        <div class="input-group">
-          <label for="judet" style="font-weight:bold;color:red">Reședința</label>
-          <span>Județul&nbsp;&nbsp;</span>
-          <select disabled class="input-box" style="width:20% !important" name="judetRes" id="judetRes">
-            <option value="{{judetRes}}" hidden="hidden" selected="selected">{{judetRes}}</option>
-          </select>
-          <span>&nbsp;&nbsp;Localitatea&nbsp;&nbsp;</span><input type="text" style="width:30% !important" name="localitateaRes" id="localitateaRes" class="input-box" placeholder="Localitatea" maxlength="100" value="{{localitateaRes}}"/>
-          <span>&nbsp;&nbsp;Mediul&nbsp;&nbsp;</span>
-          <select disabled class="input-box" style="width:20% !important" name="mediuRes" id="mediuRes">
-            <option value="{{mediuRes}}" hidden="hidden" selected="selected">{{mediuRes}}</option>
-            <option value="R">Rural</option>
-            <option value="U">Urban</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <span>Strada&nbsp;&nbsp;</span>
-          <input disabled type="text" style="width:30% !important" name="stradaRes" id="stradaRes" class="input-box" placeholder="strada" maxlength="100" value="{{stradaRes}}"/>
-          <span>Numărul&nbsp;&nbsp;</span><input disabled type="text" style="width:10% !important" name="numarRes" id="numarRes" class="input-box" placeholder="Număr" maxlength="100" value="{{numarRes}}"/>
-        </div>
-        <div class="input-group">
-          <label for="parinte" style="font-weight:bold; color:red">Părinți</label><span>Nume&nbsp;&nbsp;</span>
-          <input disabled type="text" style="width:30% !important" name="parinte" id="parinte" class="input-box" placeholder="Nume" maxlength="100" value="{{parinte}}"/>
-          <span>&nbsp;&nbsp;CNP&nbsp;&nbsp;</span>
-          <input disabled type="text" style="width:30% !important" name="cnpParinte" id="cnpParinte" class="input-box" placeholder="CNP" maxlength="100" value="{{cnpParinte}}"/>
-          <span>&nbsp;&nbsp;FO&nbsp;&nbsp;</span>
-          <input disabled type="text" style="width:30% !important" name="foParinte" id="foParinte" class="input-box" placeholder="FO" maxlength="100" value="{{foParinte}}"/>
-          <span>&nbsp;&nbsp;Ocupație&nbsp;&nbsp;</span>
-          <input disabled type="text" style="width:30% !important" name="ocupatieParinte" id="ocupatieParinte" class="input-box" placeholder="Ocupație" maxlength="100" value="{{ocupatieParinte}}"/>
-          <span>&nbsp;&nbsp;Loc de muncă&nbsp;&nbsp;</span>
-          <input disabled type="text" style="width:30% !important" name="serviciuParinte" id="serviciuParinte" class="input-box" placeholder="Serviciu" maxlength="100" value="{{serviciuParinte}}"/>
-          <span>&nbsp;&nbsp;Nivel studii&nbsp;&nbsp;</span>
-          <select disabled class="input-box" style="width:20% !important" name="studii" id="studii">
-            <option value="{{studii}}" hidden="hidden" selected="selected">{{studii}}</option>
-            {{#each levels}}
-            <option value="{{this}}">{{this}}</option>
-            {{/each}}
-          </select>
+
         </div>
         <div class="input-group">
           <label for="cod">Cod</label>

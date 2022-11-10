@@ -30,7 +30,7 @@
             <tr><td style="width:22%; text-align:left">Ziua</td>
                 __#each serialList++
                 <td>
-                    <div class="rowLichide" >__this++</div>
+                    <div class="rowLichide" id="column__@index++" >__this++</div>
                 </td>
                 __/each++
             </tr>
@@ -346,6 +346,19 @@ function chartClickEvent(event){
         newDay = oldDay;
         newSicknessDay = oldSicknessDay;
         uniqDaysV.push(newDay);
+        lichideL = [];
+        diurezaL = [];
+        scauneL = [];
+        dietaL = [];
+        var uniqDaysVL = uniqDaysV.length;
+       // uniqDaysV = [];
+        for (var i=0;i<=uniqDaysVL;i++){
+         //   uniqDaysV.push(document.getElementById("column"+i).innerHTML);
+            lichideL.push(document.getElementById("lichide"+i).value);
+            diurezaL.push(document.getElementById("diureza"+i).value);
+            scauneL.push(document.getElementById("scaune"+i).value);
+            dietaL.push(document.getElementById("dieta"+i).value);
+        }
         lichideL.push("");
         diurezaL.push("");
         scauneL.push("");

@@ -13,8 +13,9 @@
     {{/each}}
 
     <form method="post" name="formd" enctype='multipart/form-data'>
-        <div id="detPacient" class=" col-md-9 col-lg-9 ">
+        <div id="detPacient" >
             <h3>Datele pacientului</h3>
+            <div style="overflow-x:auto;width:100%">
             <table class="table table-user-information">
                 <tr>
                     <td style="font-weight:bold">Nume: </td>
@@ -116,6 +117,7 @@
                         An:&nbsp;<input type="text" disabled id="anext" name="anext" style="width:100px; background: white; color: red;" value="{{foaie.anext}}" /></td>
                 </tr>
             </table>
+            </div>
         </div>
         <br />
 
@@ -247,7 +249,7 @@
                 <table width="70%">
                     <tr>
                         <td style="width:30%">Vechimea arsurilor: </td>
-                        <td> <input disabled type="text" id="vechimearsuri" name="vechimearsuri" style="width:10%"
+                        <td> <input disabled type="text" id="vechimearsuri" name="vechimearsuri" style="width:15%"
                                     value="{{foaie.vechimearsuri}}" /> (ore)</td>
                     </tr>
                 </table>
