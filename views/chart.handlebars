@@ -359,10 +359,10 @@ function chartClickEvent(event){
             scauneL.push(document.getElementById("scaune"+i).value);
             dietaL.push(document.getElementById("dieta"+i).value);
         }
-        lichideL.push("");
-        diurezaL.push("");
-        scauneL.push("");
-        dietaL.push("");
+        lichideL.push("-");
+        diurezaL.push("-");
+        scauneL.push("-");
+        dietaL.push("-");
         templateText = $("#tableTemplate").html();
         templateText = $("#tableTemplate").html().replaceAll("_","{").replaceAll("+","}");
         $("#updatedtable").html(tableTemplate({ serialList: uniqDaysV, lichideV:lichideL, diurezaV:diurezaL, scauneV:scauneL, dietaV:dietaL}));

@@ -356,7 +356,7 @@
 <div id="tratament" class="tabcontent">
 <h3>Tratament</h3>
 <h4>a) Sistemic</h4>
-<h5>Fișe de terapie</h5>
+<h5>Fișe de terapie</h5>&nbsp;&nbsp;
 {{#each foaie.fiseterapie}}
 <a  href="/fisa_terapie?idfoaie={{this.idFoaie}}&amp;idfisa={{this.idFisa}}"
    style="color:red; text-align:left " target="_blank">{{this.data}}</a><br />&nbsp;&nbsp;
@@ -795,7 +795,7 @@ Alte comentarii
 </div>
 <br/>
 
-<input type="submit" id="salveaza" style="font-size:16px" class="btn btn-reverse" value="Salvare foaie" />
+<input type="submit" id="salveaza" style="font-size:16px;background-color:red" class="btn btn-reverse" value="Salvare foaie" />
         </form>
 <script type="text/x-handlebars-template" id="tableTemplate">
 __#each arsVV++

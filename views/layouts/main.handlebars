@@ -98,6 +98,11 @@
       <li>
         <a href="/setup">Configurare</a>
       </li>
+      {{#if session.userid}}
+      <li style="color:white">
+        <a href='/users/logout'>Logout (utilizator {{session.userid}})</a>
+      </li>
+      {{/if}}
     </ul>
   </nav>
 </header>

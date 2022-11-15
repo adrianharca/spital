@@ -4,13 +4,17 @@ var Global = require("../functions.js");
 var Handlebars = require('handlebars');
 const url = require('url');
 var mysql = require('mysql');
-
+const session = require('express-session');
 Handlebars.registerHelper('checked', function(value, test) {
     if (value == undefined) return '';
     return value==test ? 'checked' : '';
 });
 
 router.post('/', (req, res) => {
+    if (req.session==undefined  || req.session.userid==undefined) {
+        res.redirect('/users/login');
+        return;
+    };
     let errors = [];
     const query = url.parse(req.url, true).query;
     var idfoaie = query.idfoaie;
@@ -83,6 +87,10 @@ router.post('/', (req, res) => {
 });
 
 router.get('/', (req, res) => {
+    if (req.session==undefined || req.session.userid==undefined) {
+        res.redirect('/users/login');
+        return;
+    };
         var epicriza_etapa= {};
         const query = url.parse(req.url, true).query;
         var idfoaie = query.idfoaie;

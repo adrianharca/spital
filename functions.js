@@ -264,6 +264,9 @@ exports.Arsura = function (numeArsuraVar){
     return this;
 }
 
+exports.limitRecords = function () {
+        return 100;
+}
 
 exports.FisaTerapie = function (dataVar, idVar, idFoaieVar, idPacientVar){
     this.data= dataVar;

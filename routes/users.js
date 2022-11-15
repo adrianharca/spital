@@ -12,6 +12,7 @@ const Op = Sequelize.Op;
 var Global = require("../functions.js");
 //Use this class for interface functions & put ur json api in controllers/users_json_ctrl
 console.log("routes/users.js");
+const session = require('express-session');
 // router.route('/demoadd').get(taskController.demoadd);
 Object.prototype.parseSqlResult = function () {
     return JSON.parse(JSON.stringify(this))
@@ -47,6 +48,10 @@ router.get('/delete', (req,res) => {
 
 // Get user list
 router.get('/', (req, res) => {
+if (req.session==undefined  || req.session.userid==undefined) {
+    res.redirect('/users/login');
+    return;
+  };
   const query = url.parse(req.url, true).query;
   var page = !query.page ? 0 : parseInt(query.page);
   const data = query.data;
@@ -56,7 +61,7 @@ router.get('/', (req, res) => {
   var alreadyFiltered = false;
   var sql = "SELECT idutilizator, nume, email, rol, counttable.nr  FROM spital.utilizator join (select count(*) as nr from spital.utilizator) as counttable";
 
-  var limit = 3;
+  var limit = Global.limitRecords();
 
   if (query.nume!=null) {
       sql = Global.appendToSQL(sql, alreadyFiltered, "nume",query.nume);
@@ -82,7 +87,10 @@ router.get('/', (req, res) => {
       con.query(sql, function (err, result, fields) {
       if (err) throw err;
       result.page = page;
-      result.showNext = result[0].nr - limit > 0 & page + 1 < result[0].nr / limit;
+      if (result[0]!=undefined)
+        result.showNext = result[0].nr - limit > 0 & page + 1 < result[0].nr / limit;
+      else
+        result.showNext = false;
       result.showPrev = page != 0;
       res.render('users', result);
       con.end();
@@ -201,6 +209,8 @@ else {
 // // Display add user form
 var roles;
 router.get('/adduser', (req, res) => {
+
+
   const query = url.parse(req.url, true).query;
   id = query.iduser;
   var con = Global.createConnection(mysql);
@@ -249,7 +259,54 @@ router.get('/adduser', (req, res) => {
     }
 });
 var id = null;
-// Add a gig
+router.get('/logout',(req,res) => {
+    req.session.destroy();
+    res.redirect('/users/login');
+});
+router.get('/login', (req, res) => {
+           res.render('login' );
+   });
+router.post('/login', (req, res) => {
+        let errors = [];
+        let username = req.body.username;
+        let password = req.body.parola;
+        if (username==undefined || username.trim()=='') {
+             errors.push ({"text": "Numele nu este completat"});
+         };
+
+         if (password==undefined || password.trim()=='') {
+              errors.push ({"text": "Parola nu este completată"});
+         };
+         if (errors.length>0) {
+             res.render('login',{errors} );
+             return;
+             }
+         sql = "select * from spital.utilizator where nume='" + username + "' and parola=MD5('" + password + "')";
+         var con = Global.createConnection(mysql);
+               con.connect(function(err) {
+               if (err) throw err;
+               });
+
+
+
+               var sizeOfSelect = 0;
+
+               con.query(sql, (error, results, fields) => {
+                  if (results!=undefined)
+                      sizeOfSelect = results.length;
+                      if (sizeOfSelect==0){
+                            errors.push ({"text": "Combinația utilizator/parolă este greșită."});
+                            res.render('login',{errors} );
+                    }
+                    else {
+                        req.session.userid=req.body.username;
+                        req.session.loggedin = true;
+                        res.redirect('/pacients');
+                    }
+                 });
+
+    });
+// Add an user
 router.post('/adduser', (req, res) => {
   let errors = [];
    const query = url.parse(req.url, true).query;
@@ -267,6 +324,7 @@ router.post('/adduser', (req, res) => {
     var noRole = true;
     var finalRoles = [];
     var finalRolesString = "";
+    if (req.session.userid!=undefined) {
     for(var key in body) {
 
       if(body.hasOwnProperty(key)){
@@ -281,17 +339,21 @@ router.post('/adduser', (req, res) => {
     if (noRole==true) {
           errors.push ({"text": "Rolul nu este completat"});
       };
-    if (parola.trim()=='') {
+    }
+    var changingpassw = req.body.ispasswchanged;
+    if (changingpassw.localeCompare("true")==0) {
+        if (parola.trim()=='') {
             errors.push ({"text": "Parola nu este completată"});
-      };
-    if (parolaConfirm.trim()=='') {
-                errors.push ({"text": "Câmpul 'Confirmă Parola' nu este completat"});
-      };
-    if (parolaConfirm.trim()!=parola.trim()) {
-                    errors.push ({"text": "Câmpul 'Confirmă Parola' e diferit de câmpul 'Parola'"});
-          };
-    if (parola.length<8) {
-        errors.push ({"text": "Câmpul 'Parola' trebuie să aibă minim 8 caractere!"});
+        };
+        if (parolaConfirm.trim()=='') {
+            errors.push ({"text": "Câmpul 'Confirmă Parola' nu este completat"});
+        };
+        if (parolaConfirm.trim()!=parola.trim()) {
+            errors.push ({"text": "Câmpul 'Confirmă Parola' e diferit de câmpul 'Parola'"});
+        };
+        if (parola.length<8) {
+            errors.push ({"text": "Câmpul 'Parola' trebuie să aibă minim 8 caractere!"});
+        }
     }
     rol = finalRoles[0];
     if (id==undefined)
@@ -299,8 +361,9 @@ router.post('/adduser', (req, res) => {
     // Check for errors
     if (errors.length > 0) {
       res.render('adduser', {
+       iduser: id,
         errors,
-        nume, email,roles, finalRolesString
+        nume, email,rol, roles, finalRolesString
       });
     } else {
 
@@ -320,11 +383,10 @@ router.post('/adduser', (req, res) => {
           sizeOfSelect = results.length;
 
           if (sizeOfSelect==0) {
-                             var sql = "INSERT INTO spital.utilizator (nume, email, rol, parola) VALUES ?";
-                             var values = [
-                             [nume, email, finalRolesString, parola]
-                             ];
-                             con.query(sql, [values], function (err, result) {
+                             var sql = "INSERT INTO spital.utilizator (nume, email, rol, parola) VALUES ('" + nume+ "','"+ email +"','"+ finalRolesString+ "',MD5('"+ parola + "'))";
+
+
+                             con.query(sql, function (err, result) {
                              if (err) throw err;
                              console.log("Number of records inserted: " + result.affectedRows);
                              errors.push ({"text": "Utilizatorul " + nume + " a fost creat în bază."});
@@ -333,10 +395,22 @@ router.post('/adduser', (req, res) => {
                              });
                   }
                   else {
-                     var sql = "Update spital.utilizator set email = '" + email + "', rol='" + finalRolesString + "', parola='" + parola + "', nume='" + nume + "' where idutilizator='" + id + "'";
+                     var sql;
+                     if (changingpassw.localeCompare("true")==0) {
+                         sql = "Update spital.utilizator set email = '" + email + "', rol='" + finalRolesString + "', parola=MD5('" + parola + "'), nume='" + nume + "' where idutilizator='" + id + "'";
+                       }
+                    else {
+                         sql = "Update spital.utilizator set email = '" + email + "', rol='" + finalRolesString + "', nume='" + nume + "' where idutilizator='" + id + "'";
+                    }
                       con.query(sql, function (err, result) {
                          if (err) throw err;
-                         console.log(result.affectedRows + " record(s) updated");
+                         if (changingpassw.localeCompare("true")==0) {
+                            console.log(result.affectedRows + " record(s) updated with password");
+                         }
+                         else {
+                            console.log(result.affectedRows + " record(s) updated without password");
+                         }
+
                          errors.push ({"text": "Utilizatorul " + nume + " există în baza de date: a fost actualizat cu noile informații."});
                        });
                       res.redirect('/users');

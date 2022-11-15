@@ -6,6 +6,7 @@ var mysql = require('mysql');
 const config = require('config');
 const Sequelize = require('sequelize');
 const User = require('../models/User');
+const session = require('express-session');
 const url = require('url');
 var taskController = require("../controllers/circle_json_ctrl");
 var idInUI=null;
@@ -19,10 +20,14 @@ console.log("routes/pacients.js");
 
 // Get pacients list
 router.get('/', (req, res) => {
+  if (req.session==undefined  || req.session.userid==undefined) {
+    res.redirect('/users/login');
+    return;
+  };
   const query = url.parse(req.url, true).query;
   var page = !query.page ? 0 : parseInt(query.page);
   const data = query.data;
-  var limit = 3;
+  var limit = Global.limitRecords();
   const sorting = query.sortBy;
   var alreadyFiltered = false;
   var sql = "SELECT idpacient, numefamilie, prenume, sex, cetatenie, counttable.nr FROM spital.pacient join (select count(*) as nr from spital.pacient) as counttable ";

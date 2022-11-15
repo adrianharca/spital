@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const url = require('url');
-
+const session = require('express-session');
 var mysql = require('mysql');
 
 var Global = require("../functions.js");
@@ -110,7 +110,12 @@ router.post('/', (req, res) => {
                                                   row6col1,row6col2,row6col3,
                                                   row7col1,row7col2,row7col3 };
                                      con.end();
-                                     res.render('fisaterapie', {fisa, pacient,detaliiFisa, comments, arsuri} );
+                                     if (result.insertId)
+                                        id= result.insertId
+                                     else
+                                        id = idfisa;
+                                     res.redirect('/fisa_terapie?idfoaie='+ idfoaie + '&idfisa=' + id);
+                                     //res.render('fisaterapie', {fisa, pacient,detaliiFisa, comments, arsuri} );
                                      });
 
                       });
@@ -127,6 +132,10 @@ return comms;
 }
    var idpacient;
 router.get('/', (req, res) => {
+ if (req.session==undefined  || req.session.userid==undefined) {
+    res.redirect('/users/login');
+    return;
+  };
     const query = url.parse(req.url, true).query;
     var data = query.data;
     var pacientName = query.pacient;

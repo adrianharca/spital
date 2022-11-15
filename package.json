@@ -20,7 +20,7 @@
     "buffer": "^5.7.1",
     "char": "^1.0.2",
     "chart": "^0.1.2",
-    "chartjs-plugin-annotation": "^1.4.0",
+    "chartjs-plugin-annotation": "^0.5.2",
     "chartjs-plugin-dragdata": "^2.2.4",
     "chartjs-plugin-draggable": "^0.1.6",
     "config": "^3.3.1",
@@ -28,6 +28,7 @@
     "email-templates": "^10.0.1",
     "express": "^4.18.2",
     "express-handlebars": "^6.0.6",
+    "express-session": "^1.17.3",
     "formidable": "^2.0.1",
     "geolocation-utils": "^1.2.2",
     "handlebars-group-by": "^1.0.1",
@@ -36,6 +37,7 @@
     "jsonwebtoken": "^8.5.1",
     "leaflet": "^1.6.0",
     "mariadb": "^2.1.1",
+    "minimist": "^1.2.7",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
     "mongoose": "^6.5.2",
@@ -61,7 +63,9 @@
     "sync-request": "^6.1.0",
     "tui-calendar": "^1.12.11",
     "uuid": "^7.0.0",
-    "xoauth2": "^1.2.0"
+    "xoauth2": "^1.2.0",
+    "yargs": "^17.6.2",
+    "yargs-parser": "^21.1.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"

@@ -10,11 +10,21 @@ const morgan = require('morgan');
 console.log('server.js');
 const multer = require('multer'); 
 const chart = require('chart');
-
+const sessions = require('express-session');
 //do this once only
 var app = express();
+const oneDay = 1000 * 60 * 60 * 24;
 app.use(cors());
-
+app.use(sessions({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay },
+    resave: false
+}));
+app.use(function (req, res, next) {
+        res.locals.session = req.session;
+        next();
+});
 var folder = 'public/uploads2';
 
 if (!fs.existsSync(folder)){
@@ -60,6 +70,7 @@ app.use("/foaie_temperatura", require('./routes/foaietemperatura'));
 app.use("/fisa_terapie", require('./routes/fisaterapie'));
 app.use("/circles", require('./routes/circles'));
 app.use("/users", require('./routes/users'));
+
 app.use("/votes", require('./routes/votes'));
 app.use("/categories", require('./routes/categories'));
 app.use("/interests", require('./routes/interests'));

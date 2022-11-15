@@ -1,0 +1,35 @@
+<section id="adduser" class="cont2">
+  <div class="form-wrap">
+     <h1>Login</h1>
+    {{#each errors}}
+    <div class="error" style="color:red">
+      <p>{{text}}</p>
+    </div>
+    {{/each}}
+    <form action="/users/login" method='post'>
+      <div class="input-group">
+        <label for="nume">Nume <span class="requiredclass" style="color:red">*</span></label>
+        <input type="text" name="username" id="username" class="input-box" placeholder="username"
+               maxlength="100"/>
+      </div>
+
+      <div>
+        <label for="parola">Parola <span class="requiredclass" style="color:red">*</span></label>
+        <input type="password" name="parola" id="parola" class="input-box" placeholder="parola"
+               maxlength="100"/>
+      </div>
+
+      </div><div><br/>
+      <input type="submit" id="logare" value="Logare" class="btn btn-reverse"/>&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="button" id="register" value="Înregistrare" class="btn btn-reverse" onclick="openPage()"/></div>
+      </div>
+    </form>
+  </div>
+</section>
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js/general.js"></script>
+<script>
+function openPage(){
+  window.open("/users/adduser","_self");
+}
+</script>

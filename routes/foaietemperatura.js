@@ -3,7 +3,7 @@ const express = require('express');
 var Global = require("../functions.js");
 const router = express.Router();
 const url = require('url');
-
+const session = require('express-session');
 var mysql = require('mysql');
 global.chart = require('chart');
 var emptyStr = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -75,6 +75,10 @@ var   labels   = [],
             scaune = [],
             dieta = [];
 router.post('/', (req, res) => {
+        if (req.session==undefined  || req.session.userid==undefined) {
+            res.redirect('/users/login');
+            return;
+        };
      const query = url.parse(req.url, true).query;
      //foaieTemperatura, pacient, detaliiFoaie
      idfoaie = query.foaie;
@@ -233,6 +237,10 @@ var arr = [];
 }
 
 router.get('/', (req, res) => {
+    if (req.session==undefined  || req.session.userid==undefined) {
+        res.redirect('/users/login');
+        return;
+    };
    const query = url.parse(req.url, true).query;
 
     idfoaie = query.foaie;

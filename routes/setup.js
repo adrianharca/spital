@@ -7,12 +7,16 @@ var mysql = require('mysql');
 const url = require('url');
 const Sequelize = require('sequelize')
 var Global = require("../functions.js");
+const session = require('express-session');
 //Use this class for interface functions & put ur json api in controllers/users_json_ctrl
 console.log("routes/setup.js");
 // router.route('/demoadd').get(taskController.demoadd);
 
 router.get('/', (req, res) => {
-
+    if (req.session==undefined  || req.session.userid==undefined) {
+        res.redirect('/users/login');
+        return;
+    };
   var sql = "SELECT * FROM spital.setup";
 
 
@@ -44,6 +48,10 @@ router.get('/', (req, res) => {
 
 // // Display setup form
 router.post('/', (req, res) => {
+    if (req.session==undefined  || req.session.userid==undefined) {
+        res.redirect('/users/login');
+        return;
+    };
   const query = url.parse(req.url, true).query;
 
   errors = [];

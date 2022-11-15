@@ -4,6 +4,7 @@ var Global = require("../functions.js");
 var Handlebars = require('handlebars');
 const url = require('url');
 const fs = require('fs');
+const session = require('express-session');
 var formidable  = require('formidable');
 const path = require('path');
 var mysql = require('mysql');
@@ -265,6 +266,10 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
 }
 
 router.post('/', (req, res) => {
+    if (req.session==undefined  || req.session.userid==undefined) {
+        res.redirect('/users/login');
+        return;
+    };
     var formData = new formidable.IncomingForm();
     const query = url.parse(req.url, true).query;
     const data = query.data;
@@ -351,6 +356,10 @@ router.post('/', (req, res) => {
 
 });
 router.get('/allFiles', (req, res) => {
+    if (req.session==undefined  || req.session.userid==undefined) {
+        res.redirect('/users/login');
+        return;
+    };
     var selectAllFiles = "select idfoaie_observatie,pacient.idpacient, numefamilie, prenume, foaie_observatie.medic, foaie_observatie.sectia, foaie_observatie.CURRENT_TIMESTAMP as timeCol from spital.foaie_observatie inner join spital.pacient on pacient.idpacient=foaie_observatie.idpacient order by idfoaie_observatie limit 100";
     const query = url.parse(req.url, true).query;
     var page = query.page;
@@ -399,6 +408,10 @@ function deleteOldFiles(files, oldFiles, idfoaie,markedDel){
     deleteOldFile("adaugafoto3036",files, oldFiles, idfoaie,markedDel);
 }
 router.get('/delete', (req,res) => {
+     if (req.session==undefined  || req.session.userid==undefined) {
+        res.redirect('/users/login');
+        return;
+      };
     const query = url.parse(req.url, true).query;
     const data = query.data;
     var id = query.id;
@@ -441,7 +454,7 @@ function constructFoaie(errors, req, res, fieldsOld) {
     foaie.epicrizedeetapa = [];
     foaie.fiseterapie= [];
 
-        if (pacientId!=null)
+        if (pacientId!=undefined)
             {
                  var con = Global.createConnection(mysql);
                       con.connect(function(err) {
@@ -453,7 +466,10 @@ function constructFoaie(errors, req, res, fieldsOld) {
                                 if (error) {
                                             return console.error(error.message);
                                 }
-                                foaie.medici = results[0].medici.split(",");
+                                if (results[0].medici!=undefined)
+                                    foaie.medici = results[0].medici.split(",");
+                                else
+                                    foaie.medici = "";
                                 foaie.sectii = JSON.parse(results[0].sectii);
                                 foaie.sectiiVar = JSON.stringify(foaie.sectii);
                                 foaie.detaliipacient.nume  =results[0].numefamilie + " " + results[0].prenume;
