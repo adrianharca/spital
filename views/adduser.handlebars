@@ -36,8 +36,12 @@
       <input type="button" value="Schimbă parola" onclick="changepassw()" id="passwchange" style="background-color:red !important; visibility: hidden"/>
       <div id="passwchangediv" style="display:none">
       <div class="input-group">
-
-        <label for="parola">Parola <span class="requiredclass" style="color:red">*</span></label>
+        <label for="parolaOld">Parola veche<span class="requiredclass" style="color:red">*</span></label>
+        <input type="hidden" name="parolaVeche" id="parolaVeche" class="input-box" placeholder="parola"
+               maxlength="100" value="{{parolaVeche}}"/>
+        <input disabled type="password" name="parolaOld" id="parolaOld" class="input-box" placeholder="parola"
+               maxlength="100"/>
+        <label for="parola">Parola nouă<span class="requiredclass" style="color:red">*</span></label>
         <input disabled type="password" name="parola" id="parola" class="input-box" placeholder="parola"
                maxlength="100"/>
       </div>

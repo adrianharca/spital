@@ -7,7 +7,7 @@
     </div>
     {{/each}}
     <form action="/setup" method='post'>
-      <div class="input-group">
+      <div class="input-group" >
         <label for="roles">Roluri (separate prin virgulă: ex. medic, asistentă, etc.) <span class="requiredclass" style="color:red">*</span></label>
         <input type="text" name="roles" id="roles" class="input-box" placeholder="Roluri"
                maxlength="200" value="{{setup.roles}}"/>
@@ -20,7 +20,7 @@
       <div class="input-group">
         <label for="roles">Statusuri pacienți (nu pot fi modificate): <span style="color:red">Internat, In urmarire, Externat, Decedat</span></label>
       </div>
-      <h3 style="text-align:left">Secții <span class="requiredclass" style="color:red">*</span></h3>
+      <h3 style="text-align:left;text-decoration: none !important">Secții <span class="requiredclass" style="color:red">*</span></h3>
       <div id="updatedtable" class="input-group"></div>
       <br/><br/>
       <input type="button" id="adauga" onclick="adaugaSectie()" value="Adaugă secție" />&nbsp;&nbsp;<input
@@ -32,10 +32,13 @@
 </section>
 <script type="text/x-handlebars-template" id="tableTemplateSectii">
 __#each sectiiVV++
-
-Nume secție
-<input type="text" style="width:300px" name="nume__this.position++" id="nume__this.position++" value="__this.nume++"/><br/><br/>
-Saloane (separate prin virgulă) <input type="text" style="width:500px" name="saloane__this.position++"  id="saloane__this.position++" value="__this.saloane++"/>&nbsp;<br/><br/>
+<div >
+  <span style="text-decoration: none !important;border-bottom: none !important">Nume secție</span>
+<input type="text" style="width:300px" name="nume__this.position++" id="nume__this.position++"
+       value="__this.nume++"/>&nbsp;&nbsp;&nbsp;&nbsp;
+Saloane (separate prin virgulă)&nbsp;<input type="text" style="width:280px" name="saloane__this.position++"
+                                       id="saloane__this.position++" value="__this.saloane++"/>&nbsp;<br/></div>
+<div style="width:100%; text-decoration: none !important">&nbsp;</div>
 
 __/each++
 

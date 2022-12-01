@@ -17,6 +17,10 @@ router.get('/', (req, res) => {
         res.redirect('/users/login');
         return;
     };
+    if (req.session.isAdmin==undefined) {
+                res.redirect('/');
+                return;
+        };
   var sql = "SELECT * FROM spital.setup";
 
 
@@ -51,6 +55,10 @@ router.post('/', (req, res) => {
     if (req.session==undefined  || req.session.userid==undefined) {
         res.redirect('/users/login');
         return;
+    };
+    if (req.session.isAdmin==undefined) {
+            res.redirect('/');
+            return;
     };
   const query = url.parse(req.url, true).query;
 

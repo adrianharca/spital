@@ -7,7 +7,8 @@
             {{medic}}</a></p>
             &nbsp;&nbsp;&nbsp;&nbsp;Pacient: {{prenume}} {{numefamilie}}<br />
             &nbsp;&nbsp;&nbsp;&nbsp;Secția: {{sectia}}<br />
-            &nbsp;&nbsp;&nbsp;&nbsp;Data: {{convertdate timeCol}}
+            &nbsp;&nbsp;&nbsp;&nbsp;Data creării: {{convertdate timeCol}}<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;Data internării: {{zi}} {{luna}} {{an}}
             <br />
         </div>
         <button class="deleteFoaie-btn btn btn-reverse" onclick="deleteFunct({{idfoaie_observatie}});" id="{{idfoaie_observatie}}">Șterge foaie</button>

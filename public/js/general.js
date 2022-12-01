@@ -2,10 +2,24 @@ function formatNumber(numberVar){
     if (10>numberVar) return "0" + numberVar;
     return "" + numberVar;
 }
-
+const months = [
+  'Ianuarie',
+  'Februarie',
+  'Martie',
+  'Aprilie',
+  'Mai',
+  'Iunie',
+  'Iulie',
+  'August',
+  'Septembrie',
+  'Octombrie',
+  'Noiembrie',
+  'Decembrie'
+]
 function changeDays( ziField, lunaField, anField){
     var day = document.getElementById(ziField);
     var an = document.getElementById(anField);
+    var selectedDay = document.getElementById(ziField).value;
      while (day.options.length > 1) {
 
         day.remove(1);
@@ -26,7 +40,7 @@ function changeDays( ziField, lunaField, anField){
       }
       else
         addDaysOfMonth(30,day);
-
+      document.getElementById(ziField).value = selectedDay;
 }
 
 

@@ -5,6 +5,7 @@ const db = require('../config/db');
 const config = require('config');
 var mysql = require('mysql');
 const url = require('url');
+var crypto = require('crypto');
 const Sequelize = require('sequelize');
 const User = require('../models/User');
 var taskController = require("../controllers/circle_json_ctrl");
@@ -26,7 +27,7 @@ router.get('/delete', (req,res) => {
     const query = url.parse(req.url, true).query;
     const data = query.data;
     var id = query.iduser;
-    console.log("id: " + id);
+    console.log("id deleted: " + id);
     if (id!=undefined){
         var con = Global.createConnection(mysql);
               deleteSql = "delete from spital.utilizator where idutilizator=" + id;
@@ -51,6 +52,10 @@ router.get('/', (req, res) => {
 if (req.session==undefined  || req.session.userid==undefined) {
     res.redirect('/users/login');
     return;
+  };
+  if (req.session.isAdmin==undefined) {
+              res.redirect('/');
+              return;
   };
   const query = url.parse(req.url, true).query;
   var page = !query.page ? 0 : parseInt(query.page);
@@ -217,12 +222,11 @@ router.get('/adduser', (req, res) => {
   iduser = id;
   if (id!=null) {
           var select = "select * from (SELECT * FROM spital.utilizator where idutilizator=" + id+") t join spital.setup";
-
-
           var nume;
           var email;
           var rol;
           var parola;
+          var parolaVeche;
           var parolaConfirm;
 
           con.query(select, (error, results, fields) => {
@@ -233,7 +237,7 @@ router.get('/adduser', (req, res) => {
              nume=results[0].nume;
              email=results[0].email;
              rol=results[0].rol.split(",").map(string => string.trim());
-             parola=results[0].parola;
+             parolaVeche=results[0].parola;
              parolaConfirm = parola;
              roles = results[0].roles.split(",").map(string => string.trim());
              roles = roles.filter( function( el ) {
@@ -241,7 +245,7 @@ router.get('/adduser', (req, res) => {
                           } );
 
              con.end();
-             res.render('adduser',{nume, email, rol, parola, parolaConfirm, roles, iduser});
+             res.render('adduser',{nume, email, rol, parola, parolaVeche, parolaConfirm, roles, iduser});
             });
     }
     else{
@@ -281,6 +285,16 @@ router.post('/login', (req, res) => {
              res.render('login',{errors} );
              return;
              }
+         if (username== Global.getRootUser() && crypto.createHash('md5').update(password).digest('hex')==Global.getRootMD5Password()) {
+             req.session.loggedin = true;
+             req.session.userid=req.body.username;
+             req.session.roles = "admin,medic";
+             req.session.isMedic = true;
+             req.session.isAdmin = true;
+             res.redirect('/pacients');
+             return;
+         }
+         else {
          sql = "select * from spital.utilizator where nume='" + username + "' and parola=MD5('" + password + "')";
          var con = Global.createConnection(mysql);
                con.connect(function(err) {
@@ -300,11 +314,23 @@ router.post('/login', (req, res) => {
                     }
                     else {
                         req.session.userid=req.body.username;
+                        req.session.roles = results[0].rol;
+                        req.session.userid=results[0].idutilizator;
+                        req.session.profile = true;
+
+                        if (results[0].rol.includes("admin")) {
+                            req.session.isAdmin = true;
+                        }
+
+                        if (results[0].rol.includes("medic")) {
+                            req.session.isMedic = true;
+                        }
+
                         req.session.loggedin = true;
                         res.redirect('/pacients');
                     }
                  });
-
+        }
     });
 // Add an user
 router.post('/adduser', (req, res) => {
@@ -313,6 +339,8 @@ router.post('/adduser', (req, res) => {
   nume= req.body.nume;
   email = req.body.email;
   parola = req.body.parola;
+  parolaOld = req.body.parolaOld;
+  parolaVeche = req.body.parolaVeche;
   parolaConfirm = req.body.parolaConfirm;
     if (nume.trim()=='') {
     errors.push ({"text": "Numele nu este completat"});
@@ -342,6 +370,15 @@ router.post('/adduser', (req, res) => {
     }
     var changingpassw = req.body.ispasswchanged;
     if (changingpassw.localeCompare("true")==0) {
+        if (parolaOld.trim()=='') {
+                    errors.push ({"text": "Parola veche nu este completată. Trebuie să introduceți parola veche " +
+                    "din nou pentru schimbarea parolei"});
+                };
+        var hash = crypto.createHash('md5').update(parolaOld).digest('hex');
+        
+        if (hash.localeCompare(parolaVeche)!=0) {
+                 errors.push ({"text": "Parola veche nu este cea corectă. Vă rog să o introduceți din nou."});
+        }
         if (parola.trim()=='') {
             errors.push ({"text": "Parola nu este completată"});
         };

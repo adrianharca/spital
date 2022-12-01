@@ -14,6 +14,9 @@
 
     <form method="post" name="formd" enctype='multipart/form-data'>
         <div id="detPacient" >
+            <h3>Nr. înregistrare SC:<span class="requiredclass" style="color:red">*</span> <input disabled type="text" id="idExtern" name="idExtern"
+                                            style="width:100px; background: #F0F8F; color: red;"
+                                            value="{{foaie.idExtern}}" /></h3>
             <h3>Datele pacientului</h3>
             <div style="overflow-x:auto;width:100%">
             <table class="table table-user-information">
@@ -45,16 +48,18 @@
                     <td style="font-weight:bold">Sex: </td>
                     <td>{{foaie.detaliipacient.sex}}</td>
                     <td style="font-weight:bold">Pat: </td>
-                    <td><input disabled type="text" id="pat" name="pat" style="width:400px; background: white; color: red;"
+                    <td><input disabled type="text" id="pat" name="pat"
+                               style="width:400px; background: #F0F8F; color: red;"
                                value="{{foaie.pat}}" /></td>
                 </tr>
-                <tr>
+                <tr style="height:100px !important;">
                     <td style="font-weight:bold">CNP: </td>
                     <td>{{foaie.detaliipacient.cnp}}</td>
                     <td style="font-weight:bold">Data internării: </td>
                     <td>Zi:&nbsp;<select disabled style="width:20% !important"  name="zi" id="zi" >
                         <option value="{{foaie.zi}}" hidden="hidden" selected="selected">{{foaie.zi}}</option>
-                    </select> Lună:&nbsp; <select disabled style="width:20% !important" onchange="changeDays('zi','luna','an')" name="luna" id="luna" >
+                    </select> Lună:&nbsp; <select disabled style="width:25% !important"
+                                                  onchange="changeDays('zi','luna','an')" name="luna" id="luna" >
                         <option value="{{foaie.luna}}" hidden="hidden" selected="selected">{{foaie.luna}}</option>
                         <option value="Ianuarie">Ianuarie</option>
                         <option value="Februarie">Februarie</option>
@@ -68,7 +73,12 @@
                         <option value="Octombrie">Octombrie</option>
                         <option value="Noiembrie">Noiembrie</option>
                         <option value="Decembrie">Decembrie</option>
-                    </select>&nbsp;An:&nbsp;<input type="text" disabled id="an" name="an" style="width:100px; background: white; color: red;" value="{{foaie.an}}" /></td>
+                    </select>&nbsp;An:&nbsp;<input type="text" disabled id="an" name="an"
+                                                   style="width:100px; background: white; color: red;"
+                                                   value="{{foaie.an}}" /><br/><br/>
+                    Ora: <input disabled style="height:25px; vertical-align:bottom" type="time" value="{{foaie.ora}}"
+                                id="ora"
+                                name="ora"/></td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold">Cod: </td>
@@ -86,8 +96,9 @@
                     </td>
                                     </tr>
 
-                <tr>
-                    <td style="font-weight:bold;width:80px !important">Medic: <span class="requiredclass" style="color:red">*</span></td>
+                <tr style="height:100px !important;">
+                    <td style="font-weight:bold;width:90px !important">Medic: <span class="requiredclass"
+                                                                                    style="color:red">*</span></td>
                     <td> <select disabled  style="width:350px !important" name="medic" id="medic">
                         <option value="{{foaie.medic}}" hidden="hidden" selected="selected">{{foaie.medic}}</option>
                         {{#each foaie.medici}}
@@ -98,7 +109,8 @@
                     <td style="font-weight:bold;width:180px !important">Data externării: </td>
                     <td>Zi:&nbsp;<select disabled style="width:20% !important"  name="ziext" id="ziext" >
                         <option value="{{foaie.ziext}}" hidden="hidden" selected="selected">{{foaie.ziext}}</option></select>
-                        &nbsp;Lună:&nbsp;<select disabled style="width:20% !important" onchange="changeDays('ziext','lunaext','anext')" name="lunaext" id="lunaext" >
+                        &nbsp;Lună:&nbsp;<select disabled style="width:25% !important"
+                                                 onchange="changeDays('ziext','lunaext','anext')" name="lunaext" id="lunaext" >
                             <option value="{{foaie.lunaext}}" hidden="hidden" selected="selected">{{foaie.lunaext}}</option>
                             <option value="Ianuarie">Ianuarie</option>
                             <option value="Februarie">Februarie</option>
@@ -114,7 +126,14 @@
                             <option value="Decembrie">Decembrie</option>
                         </select>
 
-                        An:&nbsp;<input type="text" disabled id="anext" name="anext" style="width:100px; background: white; color: red;" value="{{foaie.anext}}" /></td>
+                        An:&nbsp;<input type="text" disabled id="anext" name="anext"
+                                        style="width:100px; background: white; color: red;" value="{{foaie.anext}}"
+                        /><br/><br/>
+                        <div style="heigth:40px;"><div style="vertical-align: bottom !important">Ora: <input disabled
+                                                                                                      type="time"
+                                                          style="height:25px; vertical-align:bottom"
+                                    value="{{foaie.oraExt}}" id="oraExt"
+                                                                                                             name="oraExt"/></div></div></td>
                 </tr>
             </table>
             </div>
@@ -257,8 +276,8 @@
                 <input disabled type="button" id="adauga" onclick="adaugaArsura()" value="Adaugă arsură" class="editread"/>&nbsp;&nbsp;<input
                     type="button" id="sterge" onclick="stergeArsura()" value="Șterge ultima arsură" class="editread"/>
                 <br /><br />
-                <input disabled type="checkbox" {{transformvaluetochecked foaie.caiResp}} id="caiResp" name="caiResp"
-                value="{{foaie.caiResp}}">Arsuri de căi respiratorii superioare</input>
+                <input  type="checkbox" {{transformvaluetochecked foaie.caiResp}} id="caiResp" name="caiResp"
+                value="{{foaie.caiResp}}" disabled>Arsuri de căi respiratorii superioare</input>
         </div><br />
         <table width="100%">
             <tr>
@@ -322,8 +341,9 @@
 
         Locul producerii accidentului: <input disabled type="text" style="width:50%" id="locaccident" name="locaccident"
                                               value="{{foaie.anamneza.loc}}" /><br /><br />
-        <input  type="checkbox" disabled id="prezentaparinti" name="prezentaparinti"
-               value="{{foaie.anamneza.prezentaparinti}}" {{transformvaluetochecked foaie.anamneza.prezentaparinti}}>A
+        <input  type="checkbox" id="prezentaparinti" name="prezentaparinti"
+               value="{{foaie.anamneza.prezentaparinti}}" {{transformvaluetochecked foaie.anamneza.prezentaparinti}}
+        disabled>A
         fost în prezența părinților</input><br /><br />
     Descrierea accidentului: <input disabled style="width:100%" type="text" id="descriere" name="descriere"
                                     value="{{foaie.anamneza.descriere}}" /><br /><br />
@@ -871,6 +891,10 @@ function edit(){
     $('input, select, textarea').each(function () {
        $(this).prop('disabled', false);
     });
+    if (document.getElementById('status').value.localeCompare('Decedat')==0 || document.getElementById('status')
+    .value.localeCompare('Externat')==0 ) {
+        $('#status').prop('disabled', true);
+    }
     $(".requiredclass").attr("style", "visibility: visible; color:red");
     document.getElementById("cancelButton").style.visibility="visible";
     document.getElementById("cancelButton").style.display="inline";

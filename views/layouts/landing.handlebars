@@ -73,18 +73,24 @@
         <li>
           <a href="/">Acasă</a>
         </li>
+        {{#if session.isMedic}}
         <li>
           <a href="/pacients">Pacienți</a>
         </li>
+        {{/if}}
+        {{#if session.isAdmin}}
         <li>
           <a href="/users">Utilizatori</a>
         </li>
         <li>
           <a href="/setup">Configurare</a>
         </li>
+        {{/if}}
         {{#if session.userid}}
         <li style="color:white">
-          <a href='/users/logout'>Logout (utilizator {{session.userid}})</a>
+          <a href='/users/logout'>Logout</a>&nbsp;{{#if session.profile}}<a
+                href='/users/adduser?iduser={{session.userid}}'>(utilizator
+          {{session.userid}})</a>{{/if}}
         </li>
         {{/if}}
       </ul>

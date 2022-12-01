@@ -5,6 +5,8 @@ const fs = require('fs');
 var host = "localhost";
 var user = "adrianharca";
 var parolaUser = "adr04har";
+var rootUser = "spital";
+var rootMD5Password = "f5f5f98cd4bb47e737c27b512c67c194"
 const uploadFolder = "public\\uploads";
 
 const months = [
@@ -144,6 +146,16 @@ function test(filename) {
     console.log(uploadFolder + "\\" + filename);
     fs.unlinkSync(uploadFolder + "\\" + filename);
 }
+
+exports.getMonths = function(){
+    return months;
+}
+exports.getRootUser = function(){
+    return rootUser;
+}
+exports.getRootMD5Password = function(){
+    return rootMD5Password;
+}
 exports.deleteFile= function(name){
      console.log(name);
      let regex = new RegExp('^' + name);
@@ -160,6 +172,15 @@ exports.createConnection = function(mysql){
         user: user,
         password: parolaUser
     });
+}
+exports.checkEmpty = function (value) {
+    if (value==undefined)
+        return true;
+    else if (value==null)
+        return true;
+    else if (value.trim()=="")
+        return true;
+    else return false;
 }
 exports.checkNull = function (value) {
     var returnedValue = "";

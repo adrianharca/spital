@@ -75,8 +75,9 @@ var markedDel = {};
 function insertOrUpdateInDB(req, fields, files, oldFiles){
  let errors = [];
     try {
-            let {medic, sectia,diagprincipal,diaginternare,diag24h,diag72h,intoxicatii,alergii,sange,rh,
-                              insotit,vechimearsuri,diagexternare,datadeces,cauzadirectadeces,
+            let {medic, sectia, ora, oraExt, idExtern,diagprincipal,locaccident, diaginternare,diag24h,diag72h,
+            intoxicatii,alergii,
+                              sange,rh,insotit,vechimearsuri,diagexternare,datadeces,cauzadirectadeces,
                               cauzaantecedentadeces,starimorbideinitiale,starimorbideimportante,
                               prezentaparinti,descriere,locajutor,tratamentajutor,unitatiintermediare,
                               tratamentanterior,transport,tratasport,starepacient,timp,
@@ -94,7 +95,6 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                               descriere1824,analize1824,adaugafoto1824,spital1824,online1824,
                               descriere2430,analize2430,adaugafoto2430,spital2430,online2430,
                               descriere3036,analize3036,adaugafoto3036,spital3036,online3036, greutateactuala, zi, luna, an, indiceponderal, salon, pat, status, lunaext, anext, ziext} = fields;
-
 
             var indexArsura = 0;
             var arsuri = [];
@@ -126,7 +126,8 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                       sizeOfSelect = results.length;
 
                       if (sizeOfSelect==0) {
-                                 var sql = "INSERT INTO spital.foaie_observatie ( idpacient,medic, sectia, diagnosticprincipal,"
+                                 var sql = "INSERT INTO spital.foaie_observatie ( idpacient,medic, idExtern, sectia, " +
+                                 "loc, diagnosticprincipal, ora, oraExt, "
                                +"diagnosticlainternare, diag24h, diag72h, intoxicatii, alergii, sange, rh, insotit, vechimearsuri," +
                                 "diagnosticexternare,datadeces, cauzadirectadeces, cauzaantecedentadeces, starimorbideinitiale, starimorbideimportante,prezentaparinti,descriere,locprimajutor,"+
                                "tratamentprimajutor,unitatiintermediare,tratamentanterior,transport,tratasport,stare,timp, epicrizafinala,medicatie,kineto, comments,"+
@@ -143,7 +144,9 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                                "descriere2430,analize2430,spital2430,online2430,"+
                                "descriere3036,analize3036,spital3036,online3036, arsuri, evolutii, greutateactuala, zi, luna, an, indiceponderal, salon, pat, status, lunaext, anext, ziext ) VALUES ?";
                                                                    var values = [
-                                                                   [pacientId, medic, sectia, diagprincipal,diaginternare,diag24h,diag72h,intoxicatii,alergii,sange,rh,
+                                                                   [pacientId, medic, idExtern, sectia, locaccident,
+                                                                   diagprincipal, ora, oraExt, diaginternare,diag24h,
+                                                                   diag72h,intoxicatii,alergii,sange,rh,
                                                                                                   insotit,vechimearsuri,diagexternare,datadeces,cauzadirectadeces,
                                                                                                   cauzaantecedentadeces,starimorbideinitiale,starimorbideimportante,
                                                                                                   Global.transformCheckboxField(prezentaparinti),descriere,locajutor,tratamentajutor,unitatiintermediare,
@@ -168,7 +171,9 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
 
                                                                      var tempId = result.insertId;
                                                                      idfoaie = tempId;
-                                                                     var sqlPhotos = "update spital.foaie_observatie set adaugafoto0='"+ fileNameForField(files.adaugafoto0, tempId,"adaugafoto0",oldFiles.adaugafoto0)+ "', " +
+                                                                     var sqlPhotos = "update spital.foaie_observatie " +
+                                                                      " set loc='" + locaccident + "', adaugafoto0='"+
+                                                                      fileNameForField (files.adaugafoto0, tempId,"adaugafoto0",oldFiles.adaugafoto0)+ "', " +
                                                                      "adaugafoto1 ='" + fileNameForField(files.adaugafoto1, tempId,"adaugafoto1",oldFiles.adaugafoto1) + "', " +
                                                                      "adaugafoto2 ='" + fileNameForField(files.adaugafoto2, tempId,"adaugafoto2",oldFiles.adaugafoto2) + "', " +
                                                                      "adaugafoto3 ='" + fileNameForField(files.adaugafoto3, tempId,"adaugafoto3",oldFiles.adaugafoto3) + "', " +
@@ -203,7 +208,10 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                                                                    });
                               }
                               else {
-                                            var sql = "Update spital.foaie_observatie set medic='" + medic +"', sectia='"+ sectia + "', diagnosticprincipal='"+diagprincipal+"',"+
+                                            var sql = "Update spital.foaie_observatie set medic='" + medic +"', " +
+                                            "idExtern= '" + idExtern + "', loc ='"+
+                                             locaccident + "', ora='" + ora + "', oraExt='"+ oraExt + "',"+
+                                            "sectia='"+ sectia + "', diagnosticprincipal='"+diagprincipal+"',"+
                                             "diagnosticlainternare='" +diaginternare + "', diag24h='"+diag24h + "', diag72h='"+diag72h+"', intoxicatii='"+ intoxicatii+ "'," +
                                             "alergii='"+ alergii + "', sange='"+ sange + "', rh='"+ rh + "', insotit='"+ insotit + "', vechimearsuri='"+vechimearsuri + "'," +
                                             "diagnosticexternare='"+ diagexternare + "',datadeces='"+ datadeces+ "', cauzadirectadeces='"+ cauzadirectadeces+ "', cauzaantecedentadeces='"+ cauzaantecedentadeces+ "', starimorbideinitiale='"+starimorbideinitiale + "', starimorbideimportante='"+ starimorbideimportante + "',prezentaparinti='"+ Global.transformCheckboxField(prezentaparinti)+ "',descriere='"+ descriere + "',locprimajutor='"+ locajutor+ "',"+
@@ -282,6 +290,9 @@ router.post('/', (req, res) => {
     //+ "." + file.originalFilename.split('.').pop()
     formData.parse(req, async (err, fields, files) => {
     errors = [];
+    if (fields.idExtern=='') {
+                  errors.push ({"text": "Numărul de înregistrare SC nu este completat."});
+                  };
     if (fields.medic=='') {
               errors.push ({"text": "Medicul nu este completat."});
               };
@@ -300,7 +311,17 @@ router.post('/', (req, res) => {
             if (isNaN(fields.greutateactuala)) {
                 errors.push ({"text": "Greutatea actuală nu este numerică."});
             }
+    }
+
+    if (!Global.checkEmpty(fields.an) && !Global.checkEmpty(fields.luna) && !Global.checkEmpty(fields.zi) &&
+    !Global.checkEmpty(fields.anext) &&
+    !Global.checkEmpty(fields.lunaext) && !Global.checkEmpty(fields.ziext))  {
+        var dataInternare = new Date(fields.an, Global.convertLuna(fields.luna), fields.zi);
+        var dataExternare = new Date(fields.anext, Global.convertLuna(fields.lunaext), fields.ziext);
+        if (dataExternare<dataInternare) {
+             errors.push ({"text": "Verificați vă rog data externării, care nu poate fi anterioară datei internării."});
         }
+    }
     if (errors.length>0){
         medic = fields.medic;
 
@@ -360,7 +381,11 @@ router.get('/allFiles', (req, res) => {
         res.redirect('/users/login');
         return;
     };
-    var selectAllFiles = "select idfoaie_observatie,pacient.idpacient, numefamilie, prenume, foaie_observatie.medic, foaie_observatie.sectia, foaie_observatie.CURRENT_TIMESTAMP as timeCol from spital.foaie_observatie inner join spital.pacient on pacient.idpacient=foaie_observatie.idpacient order by idfoaie_observatie limit 100";
+    var selectAllFiles = "select idfoaie_observatie,pacient.idpacient, numefamilie, prenume, foaie_observatie.medic,"
+    + " foaie_observatie.sectia, foaie_observatie.CURRENT_TIMESTAMP as timeCol," +
+    "foaie_observatie.zi, foaie_observatie.luna, foaie_observatie.an from spital.foaie_observatie "
+    + " inner join spital.pacient on pacient.idpacient=foaie_observatie.idpacient order by idfoaie_observatie limit "
+    + " 100";
     const query = url.parse(req.url, true).query;
     var page = query.page;
     if (page!=null) {
@@ -547,6 +572,9 @@ function constructFoaie(errors, req, res, fieldsOld) {
                                     foaie.spital1 = results[0].spital1;
                                     foaie.online1 = results[0].online1;
                                     foaie.adaugafoto0 = results[0].adaugafoto0;
+                                    foaie.idExtern = results[0].idExtern;
+                                    foaie.ora = results[0].ora;
+                                    foaie.oraExt = results[0].oraExt;
                                     markedDel.adaugafoto0 = "0";
                                     oldFiles.adaugafoto0 = results[0].adaugafoto0;
                                     foaie.adaugafoto1 = results[0].adaugafoto1;
@@ -592,6 +620,7 @@ function constructFoaie(errors, req, res, fieldsOld) {
                                     foaie.spital912 = results[0].spital912;
                                     foaie.online912 = results[0].online912;
                                     markedDel.adaugafoto912 = "0";
+                                    foaie.anamneza.loc = results[0].loc;
                                     oldFiles.adaugafoto912 = results[0].adaugafoto912;
                                     foaie.adaugafoto912 = results[0].adaugafoto912;
                                     foaie.descriere1218 = results[0].descriere1218;
@@ -667,21 +696,23 @@ function constructFoaie(errors, req, res, fieldsOld) {
                                 else {
                                     con.end();
                                     foaie.zi = new Date().getDate();
-                                    foaie.luna = (new Date().getMonth()) + 1;
+                                    foaie.luna = Global.convertNumberToMonth(new Date().getMonth());
                                     foaie.an = new Date().getFullYear();
                                     if (fieldsOld!=null) {
                                         foaie.medic = fieldsOld.medic;
-                                        foaie.sectie = fieldsOld.sectie;
+                                        foaie.sectia = fieldsOld.sectia;
                                         foaie.salon = fieldsOld.salon;
                                         foaie.pat = fieldsOld.pat;
                                         foaie.zi= fieldsOld.zi;
                                         foaie.luna = fieldsOld.luna;
                                         foaie.an = fieldsOld.an;
+                                        foaie.ora = fieldsOld.ora;
+                                        foaie.oraExt = fieldsOld.oraExt;
                                         foaie.ziext= fieldsOld.ziext;
                                         foaie.lunaext = fieldsOld.lunaext;
                                         foaie.anext = fieldsOld.anext;
-                                        foaie.diagprincipal = fieldsOld.diagprincipal;
-                                        foaie.diaginternare = fieldsOld.diaginternare;
+                                        foaie.diagnosticprincipal = fieldsOld.diagprincipal;
+                                        foaie.diagnosticlainternare = fieldsOld.diaginternare;
                                         foaie.diag24h = fieldsOld.diag24h;
                                         foaie.diag72h = fieldsOld.diag72h;
                                         foaie.diag72h = fieldsOld.diag72h;
@@ -690,71 +721,98 @@ function constructFoaie(errors, req, res, fieldsOld) {
                                         foaie.indiceponderal = fieldsOld.indiceponderal;
                                         foaie.greutateactuala = fieldsOld.greutateactuala;
                                         foaie.sange = fieldsOld.sange;
-                                        foaie.caiResp = fieldsOld.caiResp;
+                                        fieldsOld.caiResp!=undefined ? foaie.caiResp = "1" : foaie.caiResp = "0";
                                         foaie.rh = fieldsOld.rh;
                                         foaie.insotit = fieldsOld.insotit;
                                         foaie.vechimearsuri = fieldsOld.vechimearsuri;
-                                        foaie.diagexternare = fieldsOld.diagexternare;
+                                        foaie.diagnosticexternare = fieldsOld.diagexternare;
                                         foaie.datadeces = fieldsOld.datadeces;
                                         foaie.cauzadirectadeces = fieldsOld.cauzadirectadeces;
                                         foaie.cauzaantecedentadeces = fieldsOld.cauzaantecedentadeces;
                                         foaie.starimorbideinitiale = fieldsOld.starimorbideinitiale;
                                         foaie.starimorbideimportante = fieldsOld.starimorbideimportante;
-                                        foaie.locaccident = fieldsOld.locaccident;
-                                        foaie.descriere = fieldsOld.descriere;
-                                        foaie.locajutor = fieldsOld.locajutor;
-                                        foaie.tratamentajutor = fieldsOld.tratamentajutor;
-                                        foaie.unitatiintermediare = fieldsOld.unitatiintermediare;
-                                        foaie.tratamentanterior = fieldsOld.tratamentanterior;
-                                        foaie.transport = fieldsOld.transport;
-                                        foaie.tratasport = fieldsOld.tratasport;
-                                        foaie.starepacient = fieldsOld.starepacient;
-                                        foaie.timp = fieldsOld.timp;
-                                        foaie.cantitatelichide = fieldsOld.cantitatelichide;
-                                        foaie.cantlichide8h = fieldsOld.cantlichide8h;
-                                        foaie.cantlichide16h = fieldsOld.cantlichide16h;
-                                        foaie.cantlichide24h = fieldsOld.cantlichide24h;
-                                        foaie.dinamicaplagi = fieldsOld.dinamicaplagi;
+                                        foaie.anamneza = {};
+                                        (fieldsOld.prezentaparinti!=undefined) ? foaie.anamneza.prezentaparinti = "1"
+                                         :foaie.anamneza.prezentaparinti = "0";
+
+                                        foaie.anamneza.loc = fieldsOld.locaccident;
+                                        foaie.anamneza.descriere = fieldsOld.descriere;
+                                        foaie.anamneza.locprimajutor = fieldsOld.locajutor;
+                                        foaie.anamneza.tratamentprimajutor = fieldsOld.tratamentajutor;
+                                        foaie.anamneza.unitatiintermediare = fieldsOld.unitatiintermediare;
+                                        foaie.anamneza.tratamentanterior = fieldsOld.tratamentanterior;
+                                        foaie.anamneza.transport = fieldsOld.transport;
+                                        foaie.anamneza.tratasport = fieldsOld.tratasport;
+                                        foaie.anamneza.stare = fieldsOld.starepacient;
+                                        foaie.anamneza.timp = fieldsOld.timp;
+                                        foaie.anamneza.cantitatelichide = fieldsOld.cantitatelichide;
+                                        foaie.anamneza.cantlichide8h = fieldsOld.cantlichide8h;
+                                        foaie.anamneza.cantlichide16h = fieldsOld.cantlichide16h;
+                                        foaie.anamneza.cantlichide24h = fieldsOld.cantlichide24h;
+                                        foaie.anamneza.dinamicaplagi = fieldsOld.dinamicaplagi;
                                         foaie.epicrizafinala = fieldsOld.epicrizafinala;
                                         foaie.medicatie = fieldsOld.medicatie;
                                         foaie.kineto = fieldsOld.kineto;
-                                        foaie.recomments = fieldsOld.recomments;
+                                        foaie.comments = fieldsOld.recomments;
                                         foaie.cura = fieldsOld.cura;
                                         foaie.status = fieldsOld.status;
                                         foaie.markedDel0 = fieldsOld.markedDel0;
                                         foaie.descriere1 = fieldsOld.descriere1;
                                         foaie.analize1 = fieldsOld.analize1;
+                                        (fieldsOld.spital1!=undefined) ? foaie.spital1="1" : foaie.spital1="0";
+                                        (fieldsOld.online1!=undefined) ? foaie.online1="1" : foaie.online1="0";
                                         foaie.markedDel1 = fieldsOld.markedDel1;
                                         foaie.descriere2 = fieldsOld.descriere2;
                                         foaie.analize2 = fieldsOld.analize2;
+                                        (fieldsOld.spital2!=undefined) ? foaie.spital2="1" : foaie.spital2="0";
+                                        (fieldsOld.online2!=undefined) ? foaie.online2="1" : foaie.online2="0";
                                         foaie.markedDel2 = fieldsOld.markedDel2;
                                         foaie.descriere3 = fieldsOld.descriere3;
                                         foaie.analize3 = fieldsOld.analize3;
+                                        foaie.idExtern = fieldsOld.idExtern;
+                                        (fieldsOld.spital3!=undefined) ? foaie.spital3="1" : foaie.spital3="0";
+                                        (fieldsOld.online3!=undefined) ? foaie.online3="1" : foaie.online3="0";
                                         foaie.markedDel3 = fieldsOld.markedDel3;
                                         foaie.descriere4 = fieldsOld.descriere4;
                                         foaie.analize4 = fieldsOld.analize4;
+                                        (fieldsOld.spital4!=undefined) ? foaie.spital4="1" : foaie.spital4="0";
+                                        (fieldsOld.online4!=undefined) ? foaie.online4="1" : foaie.online4="0";
                                         foaie.markedDel4 = fieldsOld.markedDel4;
                                         foaie.descriere5 = fieldsOld.descriere5;
                                         foaie.analize5 = fieldsOld.analize5;
+                                        (fieldsOld.spital5!=undefined) ? foaie.spital5="1" : foaie.spital5="0";
+                                        (fieldsOld.online5!=undefined) ? foaie.online5="1" : foaie.online5="0";
                                         foaie.markedDel5 = fieldsOld.markedDel5;
                                         foaie.descriere69 = fieldsOld.descriere69;
                                         foaie.analize69 = fieldsOld.analize69;
+                                        (fieldsOld.spital69!=undefined) ? foaie.spital69="1" : foaie.spital69="0";
+                                        (fieldsOld.online69!=undefined) ? foaie.online69="1" : foaie.online69="0";
                                         foaie.markedDel69 = fieldsOld.markedDel69;
                                         foaie.descriere912 = fieldsOld.descriere912;
                                         foaie.analize912 = fieldsOld.analize912;
+                                        (fieldsOld.spital912!=undefined) ? foaie.spital912="1" : foaie.spital912="0";
+                                        (fieldsOld.online912!=undefined) ? foaie.online912="1" : foaie.online912="0";
                                         foaie.markedDel912 = fieldsOld.markedDel912;
                                         foaie.descriere1218 = fieldsOld.descriere1218;
+                                        (fieldsOld.spital1218!=undefined) ? foaie.spital1218="1" : foaie.spital1218="0";
+                                        (fieldsOld.online1218!=undefined) ? foaie.online1218="1" : foaie.online1218="0";
                                         foaie.analize1218 = fieldsOld.analize1218;
                                         foaie.markedDel1218 = fieldsOld.markedDel1218;
                                         foaie.descriere1824 = fieldsOld.descriere1824;
+                                        (fieldsOld.spital1824!=undefined) ? foaie.spital1824="1" : foaie.spital1824="0";
+                                        (fieldsOld.online1824!=undefined) ? foaie.online1824="1" : foaie.online1824="0";
                                         foaie.analize1824 = fieldsOld.analize1824;
                                         foaie.markedDel1824 = fieldsOld.markedDel1824;
-                                        foaie.descriere2430 = fieldsOld.descriere2420;
+                                        foaie.descriere2430 = fieldsOld.descriere2430;
                                         foaie.analize2430 = fieldsOld.analize2430;
                                         foaie.markedDel2430 = fieldsOld.markedDel2430;
+                                        (fieldsOld.spital2430!=undefined) ? foaie.spital2430="1" : foaie.spital2430="0";
+                                        (fieldsOld.online2430!=undefined) ? foaie.online2430="1" : foaie.online2430="0";
                                         foaie.descriere3036 = fieldsOld.descriere3036;
                                         foaie.analize3036 = fieldsOld.analize3036;
                                         foaie.markedDel3036 = fieldsOld.markedDel3036;
+                                        (fieldsOld.spital3036!=undefined) ? foaie.spital3036="1" : foaie.spital3036="0";
+                                        (fieldsOld.online3036!=undefined) ? foaie.online3036="1" : foaie.online3036="0";
                                     }
                                     //foaie.fiseterapie.push(Global.FisaTerapie("28/29 iunie 2022"));
                                    // foaie.buletinebio.push(Global.Bio("14 Iunie"));
@@ -776,6 +834,10 @@ function constructFoaie(errors, req, res, fieldsOld) {
          }
 }
 router.get('/', (req, res) => {
+        if (req.session==undefined  || req.session.userid==undefined) {
+            res.redirect('/users/login');
+            return;
+        };
         const query = url.parse(req.url, true).query;
         const data = query.data;
         pacientId = query.pacient;
