@@ -70,7 +70,7 @@ app.use("/foaie_temperatura", require('./routes/foaietemperatura'));
 app.use("/fisa_terapie", require('./routes/fisaterapie'));
 app.use("/circles", require('./routes/circles'));
 app.use("/users", require('./routes/users'));
-
+app.use("/audit", require('./routes/audit'));
 app.use("/votes", require('./routes/votes'));
 app.use("/categories", require('./routes/categories'));
 app.use("/interests", require('./routes/interests'));

@@ -3,7 +3,7 @@
   <form method="post" >
   <table width="100%"><tr><td><input type="button" onclick="openFoaie()" style="color:red;text-align:left !important; background-color:transparent !important; border:none;" value="&lt;&lt;&lt; Înapoi în foaia de observație"/><br/>
     <input type="button" onclick="openProfil()" style="color:red;text-align:left !important; background-color:transparent !important; border:none;" value="&lt;&lt;&lt; Înapoi în profilul pacientului"/></td><td><div style="width:100%; text-align:right" > <a id="editButton" href="javascript:void(0)" onclick="edit()" style="color:red;">EDITARE</a><a id="cancelButton" href="javascript:void(0)" onclick="cancel()" style="color:red;">Anulare editare</a></div></td></tr></table>
-  <h1>Epicriza de etapă  <input disabled type="date" id="dataEpicriza" style="width:15%"  name="dataEpicriza" value="{{epicriza_etapa.dataVar}}"/></h1>
+  <h1>Epicriza de etapă  <input disabled type="date" id="dataEpicriza" style="width:25%"  name="dataEpicriza" value="{{epicriza_etapa.dataVar}}"/></h1>
     <h2 style="text-align:center">(F.O. nr. {{epicriza_etapa.idfoaie}})</h2>
     {{#each errors}}
     <div class="error" style="color:red">

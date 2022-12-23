@@ -54,25 +54,146 @@ async function uploadFile(fileVar, newNameOfFile) {
   const fileName = encodeURIComponent(file.originalFilename.replace(/\s/g, "-"));
 
   if (!isValid) {
-    // throes error if file isn't valid
-    console.log("File is not valid");
+    // throes error if file isn't valid - for other types than pictures (jpg/gif etc.)
+    console.log("File is not valid: " + file.originalFilename);
   }
+
   try {
     fs.renameSync(file.filepath, path.join(__dirname, uploadFolder, newNameOfFile + fileName));
   } catch (error) {
     console.log(error);
   }
-
 }
 
 function checkFile (fileVar, newNameOfFile) {
- if (fileVar.size!=0) {
+    if (fileVar.size!=0) {
             uploadFile (fileVar, newNameOfFile);
-          }
+    }
 }
 var oldFiles= {};
 var markedDel = {};
-function insertOrUpdateInDB(req, fields, files, oldFiles){
+function appendFileNameToStringAudit(fileVar, markedDelVar, oldFilesVar, nameVar, positionVar){
+    var stringVar = "";
+    if (fileVar[nameVar].size!=0) {
+            stringVar = "Fisierul " + fileVar[nameVar].originalFilename + " uploadat ca " + positionVar + "<br>";
+    }
+    if (markedDelVar[nameVar]!=undefined)
+        if (markedDelVar[nameVar]==1 && oldFilesVar[nameVar]!=undefined) {
+            stringVar = "Fisierul " + oldFilesVar[nameVar].split(nameVar).pop() + " șters din " + positionVar + "<br>";
+        }
+    return stringVar;
+}
+function builtActionString(results,fields, arsuriVar, evolutiiVar, filesVar, markedDelVar, oldFilesVar){
+ actionString = "";
+
+ for(property in results){
+    if (fields[property]!=undefined && fields[property].toString().trim().localeCompare(results[property].toString().trim())!=0){
+        actionString = actionString + property + " (" + results[property].toString().trim() + " -> " + fields[property].toString().trim() + ")<br>";
+    }
+ }
+ actionString = actionString + appendFileNameToStringAudit(filesVar, markedDelVar, oldFilesVar,"adaugafoto0", " dinamica plagilor");
+ actionString = actionString + appendFileNameToStringAudit(filesVar, markedDelVar, oldFilesVar,"adaugafoto1", " Rx luna 1");
+ actionString = actionString + appendFileNameToStringAudit(filesVar, markedDelVar, oldFilesVar,"adaugafoto2", " Rx luna 2");
+ actionString = actionString + appendFileNameToStringAudit(filesVar, markedDelVar, oldFilesVar,"adaugafoto3", " Rx luna 3");
+ actionString = actionString + appendFileNameToStringAudit(filesVar, markedDelVar, oldFilesVar,"adaugafoto4", " Rx luna 4");
+ actionString = actionString + appendFileNameToStringAudit(filesVar, markedDelVar, oldFilesVar,"adaugafoto5", " Rx luna 5");
+ actionString = actionString + appendFileNameToStringAudit(filesVar, markedDelVar, oldFilesVar,"adaugafoto69", " Rx lunile 6-9");
+ actionString = actionString + appendFileNameToStringAudit(filesVar, markedDelVar, oldFilesVar,"adaugafoto912", " Rx lunile 9-12");
+ actionString = actionString + appendFileNameToStringAudit(filesVar, markedDelVar, oldFilesVar,"adaugafoto1218", " Rx lunile 12-18");
+ actionString = actionString + appendFileNameToStringAudit(filesVar, markedDelVar, oldFilesVar,"adaugafoto1824", " Rx lunile 18-24");
+ actionString = actionString + appendFileNameToStringAudit(filesVar, markedDelVar, oldFilesVar,"adaugafoto2430", " Rx lunile 24-30");
+ actionString = actionString + appendFileNameToStringAudit(filesVar, markedDelVar, oldFilesVar,"adaugafoto3036", " Rx lunile 30-36");
+ actionString = actionString + Global.appendToAuditTrailString(results, fields,"diagnosticprincipal","diagprincipal" );
+ actionString = actionString + Global.appendToAuditTrailString(results, fields,"diagnosticlainternare","diaginternare" );
+ actionString = actionString + Global.appendToAuditTrailString(results, fields,"diagnosticexternare","diagexternare" );
+ actionString = actionString + Global.appendToAuditTrailString(results, fields,"stare","starepacient" );
+ actionString = actionString + Global.appendToAuditTrailString(results, fields,"tratamentprimajutor","tratamentajutor" );
+ actionString = actionString + Global.appendToAuditTrailString(results, fields,"locprimajutor","locajutor" );
+ actionString = actionString + Global.appendToAuditTrailString(results, fields,"loc","locaccident" );
+ actionString = actionString + Global.appendToAuditTrailString(results, fields,"comments","recomments" );
+
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"prezentaparinti" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"caiResp" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital1" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online1" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital2" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online2" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital3" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online3" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital4" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online4" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital5" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online5" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital69" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online69" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital912" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online912" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital1218" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online1218" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital1824" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online1824" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital2430" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online2430" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital3036" );
+ actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online3036" );
+
+ var oldEv = JSON.parse(results.evolutii);
+ var oldArs = JSON.parse(results.arsuri);
+for (let i=0;i<arsuriVar.length;i++){
+       var found = false;
+       for (let j=0;j<oldArs.length;j++){
+            if (arsuriVar[i].position==oldArs[j].position){
+                        found = true;
+                        if (arsuriVar[i].grad!=oldArs[j].grad){
+                            actionString = actionString + " Arsura " + arsuriVar[i].position + ": " + oldArs[j].grad + " -> " + arsuriVar[i].grad + " (grad)<br>";
+                        }
+                        if (arsuriVar[i].localizare!=oldArs[j].localizare){
+                            actionString = actionString + " Arsura " + arsuriVar[i].position + ": " + oldArs[j].localizare + " -> " + arsuriVar[i].localizare + " (localizare)<br>";
+                        }
+                        if (arsuriVar[i].procent!=oldArs[j].procent){
+                            actionString = actionString + " Arsura " + arsuriVar[i].position + ": " + oldArs[j].procent + " -> " + arsuriVar[i].procent + " (procent)<br>";
+                        }
+                    }
+       }
+       if (!found) actionString = actionString + " Arsura " + arsuriVar[i].position + " a fost adăugată.<br>";
+ }
+ for (let j=0;j<oldArs.length;j++){
+      var found = false;
+      for (let i=0;i<arsuriVar.length;i++){
+          if (arsuriVar[i].position==oldArs[j].position){
+                  found = true;
+         }
+      }
+      if (!found) actionString = actionString + " Arsura " + oldArs[j].position + " (" + oldArs[j].grad + ", " + oldArs[j].localizare + ", " +  oldArs[j].procent + ") a fost ștearsă.<br>";
+  }
+ for (let i=0;i<evolutiiVar.length;i++){
+       var found = false;
+       for (let j=0;j<oldEv.length;j++){
+            if (evolutiiVar[i].dataEvolutiei==oldEv[j].dataEvolutiei){
+                        found = true;
+                        if (evolutiiVar[i].evolutie!=oldEv[j].evolutie){
+                            actionString = actionString + " Evol. " + evolutiiVar[i].dataEvolutiei + ": " + oldEv[j].evolutie + " -> " + evolutiiVar[i].evolutie + " (evol.)<br>";
+                        }
+                        if (evolutiiVar[i].tratament!=oldEv[j].tratament){
+                                        actionString = actionString + " Evol. " + evolutiiVar[i].dataEvolutiei + ": " + oldEv[j].tratament + " -> " + evolutiiVar[i].tratament + " (tratament)<br>";
+                        }
+                    }
+       }
+       if (!found) actionString = actionString + " Evol. " + evolutiiVar[i].dataEvolutiei + " a fost adăugată.<br>";
+ }
+
+ for (let j=0;j<oldEv.length;j++){
+     var found = false;
+     for (let i=0;i<evolutiiVar.length;i++){
+         if (evolutiiVar[i].dataEvolutiei==oldEv[j].dataEvolutiei){
+                 found = true;
+        }
+     }
+     if (!found) actionString = actionString + " Evol. " + oldEv[j].dataEvolutiei + "(" + oldEv[j].evolutie+ "," + oldEv[j].tratament + ") a fost ștearsă.<br>";
+ }
+ return actionString;
+}
+function insertOrUpdateInDB(req, fieldsVar, files, oldFiles){
  let errors = [];
     try {
             let {medic, sectia, ora, oraExt, idExtern,diagprincipal,locaccident, diaginternare,diag24h,diag72h,
@@ -94,18 +215,18 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                               descriere1218,analize1218,adaugafoto1218,spital1218,online1218,
                               descriere1824,analize1824,adaugafoto1824,spital1824,online1824,
                               descriere2430,analize2430,adaugafoto2430,spital2430,online2430,
-                              descriere3036,analize3036,adaugafoto3036,spital3036,online3036, greutateactuala, zi, luna, an, indiceponderal, salon, pat, status, lunaext, anext, ziext} = fields;
+                              descriere3036,analize3036,adaugafoto3036,spital3036,online3036, greutateactuala, zi, luna, an, indiceponderal, salon, pat, status, lunaext, anext, ziext} = fieldsVar;
 
             var indexArsura = 0;
             var arsuri = [];
-            while (fields["gradSelect"+indexArsura]!=undefined){
-                  arsuri.push(new Global.Arsura(indexArsura, fields["gradSelect"+indexArsura], fields["localizare"+indexArsura], fields["procent"+indexArsura]));
+            while (fieldsVar["gradSelect"+indexArsura]!=undefined){
+                  arsuri.push(new Global.Arsura(indexArsura, fieldsVar["gradSelect"+indexArsura], fieldsVar["localizare"+indexArsura], fieldsVar["procent"+indexArsura]));
                   indexArsura++;
             }
             var indexEvolutii = 0;
             var evolutii = [];
-            while (fields["evoldata"+indexEvolutii]!=undefined){
-                              evolutii.push(new Global.Evolutie(indexEvolutii,fields["evoldata"+indexEvolutii],fields["evol"+indexEvolutii],fields["trat"+indexEvolutii]));
+            while (fieldsVar["evoldata"+indexEvolutii]!=undefined){
+                              evolutii.push(new Global.Evolutie(indexEvolutii,fieldsVar["evoldata"+indexEvolutii],fieldsVar["evol"+indexEvolutii],fieldsVar["trat"+indexEvolutii]));
                               indexEvolutii++;
             }
             if (errors.length==0) {
@@ -151,9 +272,9 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                                                                                                   cauzaantecedentadeces,starimorbideinitiale,starimorbideimportante,
                                                                                                   Global.transformCheckboxField(prezentaparinti),descriere,locajutor,tratamentajutor,unitatiintermediare,
                                                                                                   tratamentanterior,transport,tratasport,starepacient,timp,
-                                                                                                  epicrizafinala,medicatie,kineto,recomments,
+                                                                                                  Global.trim(epicrizafinala),medicatie,kineto,recomments,
                                                                                                   cantitatelichide,cantlichide8h,cantlichide16h,cantlichide24h,dinamicaplagi,
-                                                                                                  cura,Global.transformCheckboxField(caiResp),
+                                                                                                  Global.trim(cura),Global.transformCheckboxField(caiResp),
                                                                                                   descriere1,analize1,Global.transformCheckboxField(spital1),Global.transformCheckboxField(online1),
                                                                                                   descriere2,analize2,Global.transformCheckboxField(spital2),Global.transformCheckboxField(online2),
                                                                                                   descriere3,analize3,Global.transformCheckboxField(spital3),Global.transformCheckboxField(online3),
@@ -204,10 +325,15 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                                                                                     checkFile (files.adaugafoto3036,idfoaie+  "adaugafoto3036");
                                                                                     deleteOldFiles(files, oldFiles, idfoaie, markedDel);
                                                                               });
+                                                                              Global.insertIntoAudit(con, idfoaie, 'creare', req.session.userid, new Date(),'foaie');
+
                                                                       //res.redirect("/foaie_observatie/allFiles");
                                                                    });
                               }
                               else {
+                                            var oldRecord = results[0];
+                                            var action = builtActionString(oldRecord,fieldsVar, arsuri, evolutii, files, markedDel, oldFiles);
+
                                             var sql = "Update spital.foaie_observatie set medic='" + medic +"', " +
                                             "idExtern= '" + idExtern + "', loc ='"+
                                              locaccident + "', ora='" + ora + "', oraExt='"+ oraExt + "',"+
@@ -215,8 +341,8 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                                             "diagnosticlainternare='" +diaginternare + "', diag24h='"+diag24h + "', diag72h='"+diag72h+"', intoxicatii='"+ intoxicatii+ "'," +
                                             "alergii='"+ alergii + "', sange='"+ sange + "', rh='"+ rh + "', insotit='"+ insotit + "', vechimearsuri='"+vechimearsuri + "'," +
                                             "diagnosticexternare='"+ diagexternare + "',datadeces='"+ datadeces+ "', cauzadirectadeces='"+ cauzadirectadeces+ "', cauzaantecedentadeces='"+ cauzaantecedentadeces+ "', starimorbideinitiale='"+starimorbideinitiale + "', starimorbideimportante='"+ starimorbideimportante + "',prezentaparinti='"+ Global.transformCheckboxField(prezentaparinti)+ "',descriere='"+ descriere + "',locprimajutor='"+ locajutor+ "',"+
-                                            "tratamentprimajutor='"+ tratamentajutor+ "',unitatiintermediare='"+ unitatiintermediare+ "',tratamentanterior='"+ tratamentanterior+ "',transport='"+ transport+ "',tratasport='"+ tratasport+ "',stare='"+ starepacient+ "',timp='"+ timp+ "', epicrizafinala='"+ epicrizafinala+ "',medicatie='"+ medicatie+ "',kineto='"+ kineto+ "', comments='"+ recomments+ "',"+
-                                            "cantitatelichide='"+ cantitatelichide+ "', cantlichide8h='"+ cantlichide8h+ "', cantlichide16h='"+ cantlichide16h+ "', cantlichide24h='"+ cantlichide24h+ "', dinamicaplagi='"+ dinamicaplagi+ "', cura='"+ cura+ "', caiResp='"+ Global.transformCheckboxField(caiResp)+ "',"+
+                                            "tratamentprimajutor='"+ tratamentajutor+ "',unitatiintermediare='"+ unitatiintermediare+ "',tratamentanterior='"+ tratamentanterior+ "',transport='"+ transport+ "',tratasport='"+ tratasport+ "',stare='"+ starepacient+ "',timp='"+ timp+ "', epicrizafinala='"+ Global.trim(epicrizafinala)+ "',medicatie='"+ medicatie+ "',kineto='"+ kineto+ "', comments='"+ recomments+ "',"+
+                                            "cantitatelichide='"+ cantitatelichide+ "', cantlichide8h='"+ cantlichide8h+ "', cantlichide16h='"+ cantlichide16h+ "', cantlichide24h='"+ cantlichide24h+ "', dinamicaplagi='"+ dinamicaplagi+ "', cura='"+ Global.trim(cura)+ "', caiResp='"+ Global.transformCheckboxField(caiResp)+ "',"+
                                             "descriere1='"+ descriere1 + "',analize1='"+ analize1+ "',adaugafoto1='"+ fileNameForField(files.adaugafoto1, idfoaie,"adaugafoto1",oldFiles.adaugafoto1) + "',spital1='"+ Global.transformCheckboxField(spital1) + "',online1='"+ Global.transformCheckboxField(online1) + "',"+
                                             "descriere2='"+ descriere2 + "',analize2='"+ analize2+ "',adaugafoto2='"+ fileNameForField(files.adaugafoto2, idfoaie,"adaugafoto2",oldFiles.adaugafoto2) + "',spital2='"+ Global.transformCheckboxField(spital2) + "',online2='"+ Global.transformCheckboxField(online2) + "',"+
                                             "descriere3='"+ descriere3 + "',analize3='"+ analize3 + "',adaugafoto3='"+ fileNameForField(files.adaugafoto3, idfoaie,"adaugafoto3",oldFiles.adaugafoto3) + "',spital3='"+ Global.transformCheckboxField(spital3) + "',online3='"+ Global.transformCheckboxField(online3) + "',"+
@@ -230,7 +356,8 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
                                             "descriere3036='"+ descriere3036+ "',analize3036='"+ analize3036 + "',adaugafoto3036='"+ fileNameForField(files.adaugafoto3036, idfoaie,"adaugafoto3036",oldFiles.adaugafoto3036) + "',spital3036='"+ Global.transformCheckboxField(spital3036) + "',online3036='"+ Global.transformCheckboxField(online3036) + "', " +
                                             "arsuri='"+ JSON.stringify(arsuri) +"', evolutii='" + JSON.stringify(evolutii) + "', adaugafoto0='"+ fileNameForField(files.adaugafoto0, idfoaie,"adaugafoto0",oldFiles.adaugafoto0) + "', greutateactuala='"+ greutateactuala + "', zi='"+ zi+"', luna='" + luna + "', an='" + an + "', indiceponderal='" + indiceponderal +"', salon='" + salon +"',pat='" +pat +
                                             "', status= '" + status + "', lunaext='" + lunaext +"', ziext = '" + ziext + "', anext='" + anext + "' where idfoaie_observatie="+idfoaie;
-
+                                            if (action!="")
+                                                Global.insertIntoAudit(con, idfoaie, action, req.session.userid, new Date(),'foaie');
                                             con.query(sql, function (err, result) {
                                                         if (err) throw err;
                                                         con.end();
@@ -263,7 +390,7 @@ function insertOrUpdateInDB(req, fields, files, oldFiles){
         }
      catch(e){
         errors.push ({"text": e});
-        console.log(e);
+        console.log("error: " + e);
         /*
         res.render('foaie_observatie', {
           errors,foaie
@@ -353,7 +480,7 @@ router.post('/', (req, res) => {
         });
         }
      else {
-       var selectAllFiles = "select idfoaie_observatie,pacient.idpacient, numefamilie, prenume, foaie_observatie.medic, foaie_observatie.sectia, foaie_observatie.CURRENT_TIMESTAMP as timeCol from spital.foaie_observatie inner join spital.pacient on pacient.idpacient=foaie_observatie.idpacient order by idfoaie_observatie limit 100";
+       var selectAllFiles = "select idfoaie_observatie, pacient.idpacient, numefamilie, prenume, foaie_observatie.medic, foaie_observatie.sectia, foaie_observatie.CURRENT_TIMESTAMP as timeCol from spital.foaie_observatie inner join spital.pacient on pacient.idpacient=foaie_observatie.idpacient order by idfoaie_observatie limit 100";
            const query = url.parse(req.url, true).query;
            var page = query.page;
            if (page!=null) {
@@ -408,12 +535,12 @@ function deleteOldFile(value,files, oldFiles, idfoaie, markedDel) {
 
         if ((markedDel[value])==1) {
                 fs.unlink(oldFileName,function(err){
-                                                    if(err) return console.log(err);
+                                                    if(err) return console.log("error during deleteOldFile: " + err);
                                                });
         }
         else if (files[value].originalFilename.localeCompare("")!=0 ) {
             fs.unlink(oldFileName,function(err){
-                                    if(err) return console.log(err);
+                                    if(err) return console.log("error during localeCompare of deleteOldFile: " + err + ", original filename: " + files[value].originalFilename + ", old file name: " + oldFileName);
                                });
         }
         }
@@ -437,6 +564,10 @@ router.get('/delete', (req,res) => {
         res.redirect('/users/login');
         return;
       };
+    if (req.session.isAdmin==undefined) {
+                        res.redirect('/');
+                        return;
+                };
     const query = url.parse(req.url, true).query;
     const data = query.data;
     var id = query.id;
@@ -564,8 +695,8 @@ function constructFoaie(errors, req, res, fieldsOld) {
                                     foaie.anamneza.cantlichide24h = results[0].cantlichide24h;
                                     foaie.anamneza.dinamicaplagi = results[0].dinamicaplagi;
                                     foaie.epicrizafinala = results[0].epicrizafinala;
-                                    foaie.medicatie = results[0].epicrizafinala;
-                                    foaie.kineto = results[0].epicrizafinala;
+                                    foaie.medicatie = results[0].medicatie;
+                                    foaie.kineto = results[0].kineto;
                                     foaie.comments = results[0].comments;
                                     foaie.descriere1 = results[0].descriere1;
                                     foaie.analize1 = results[0].analize1;

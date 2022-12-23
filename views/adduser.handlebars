@@ -52,12 +52,21 @@
       </div>
       </div>
       <input type="submit" id="save" value="Salvează utilizator" class="btn btn-reverse"/>
+      <br/>
+      <a id="auditButton" href="javascript:void(0)" onclick="deschideAudit()" style="color:red;background-color: #4CAF50;border: none;
+ padding: 15px 32px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;border-radius: 12px;">AUDIT</a>
+      <br/><br/>
     </form>
   </div>
 </section>
 <script src="/js/jquery-3.6.0.min.js"></script>
 <script src="/js/general.js"></script>
 <script>
+    function deschideAudit() {
+            const urlParams = new URLSearchParams(window.location.search);
+            var idParam = urlParams.get('iduser');
+            window.open("/audit?iduser=" + idParam, '_blank').focus();
+    }
     const urlParams = new URLSearchParams(window.location.search);
     var idParam = urlParams.get('iduser');
     if (idParam!=null){

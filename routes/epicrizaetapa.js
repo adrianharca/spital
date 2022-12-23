@@ -9,7 +9,18 @@ Handlebars.registerHelper('checked', function(value, test) {
     if (value == undefined) return '';
     return value==test ? 'checked' : '';
 });
+function checkChanges(req, con, body, oldrecord, idfoaie){
 
+    var actionString = "salvare epicriză: <br>";
+
+    actionString = actionString + Global.appendToAuditTrailString(oldrecord, body,"staregenerala","stare" );
+    actionString = actionString + Global.appendToAuditTrailCheckbox(oldrecord, body,"intubat","intubat" );
+    actionString = actionString + Global.appendToAuditTrailCheckbox(oldrecord, body,"tranzitreluat","tranzitreluat" );
+    actionString = actionString + Global.appendToAuditTrailString(oldrecord, body,"cantitatediureza","diureza" );
+    actionString = actionString + Global.appendToAuditTrailCheckbox(oldrecord, body,"extremitati","extremitati" );
+    actionString = actionString + Global.appendToAuditTrailCheckbox(oldrecord, body,"mucoase","mucoase" );
+    Global.insertIntoAudit(con, idfoaie, actionString, req.session.userid, new Date(),'foaie');
+}
 router.post('/', (req, res) => {
     if (req.session==undefined  || req.session.userid==undefined) {
         res.redirect('/users/login');
@@ -69,20 +80,21 @@ router.post('/', (req, res) => {
                                if (sizeOfSelect==0) {
                                         changeQuery = " insert into spital.epicrize_etapa(idfoaie, dataVar, staregenerala, intubat, tranzitreluat, cantitatediureza, extremitati, mucoase) values("
                                         + idfoaie + ",'"+ dataEpicriza+"','"+ stare +"','"+ Global.convertDa(intubat)+ "','"+ Global.convertDa(tranzitreluat) +"','"+ diureza +"','"+ Global.convertDa(extremitati) +"','"+ Global.convertDa(mucoase) +"')";
+                                        Global.insertIntoAudit(con, idfoaie, 'creare epicriza etapa ' + dataEpicriza, req.session.userid, new Date(),'foaie');
                                }
                                else {
+                                         var oldRecord = results[0];
                                          changeQuery = " update spital.epicrize_etapa set dataVar='"+ dataEpicriza +"', staregenerala='"+ stare+"', " +
                                          " intubat = '" + Global.convertDa(intubat) + "', tranzitreluat='" + Global.convertDa(tranzitreluat) + "', cantitatediureza='" + diureza + "', "
                                          + " extremitati='" + Global.convertDa(extremitati) + "', mucoase='" + Global.convertDa(mucoase) + "' where idepicrize_etapa = " + idepicriza;
+                                         checkChanges(req, con, req.body, oldRecord, idfoaie);
                                }
                                con.query(changeQuery, function (err, result) {
                                                  if (err) throw err;
                                                  con.end();
                                      });
                                });
-        res.render('epicriza_etapa', {
-                   epicriza_etapa
-                 });
+        res.redirect('/pacients');
      }
 });
 

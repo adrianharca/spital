@@ -79,10 +79,13 @@ Handlebars.registerHelper('transformvaluetostylevisibility', function (value) {
 Handlebars.registerHelper('transformvaluetophoto', function (value) {
     var returnedValue = value;
     if (value==undefined)
-        returnedValue = "";
+       return "";
      if (value=='')
         returnedValue = "";
-    return returnedValue.replace("adaugafoto0","").replace("adaugafoto1","").replace("adaugafoto2","").replace("adaugafoto3","").replace("adaugafoto4","").replace("adaugafoto5","").replace("adaugafoto69","").replace("adaugafoto912","").replace("adaugafoto1224","").replace("adaugafoto2430","").replace("adaugafoto3036","");
+
+    returnedValue = value.split("adauga").pop();
+
+    return returnedValue.replace("foto0","").replace("foto1","").replace("foto2","").replace("foto3","").replace("foto4","").replace("foto5","").replace("foto69","").replace("foto912","").replace("foto1224","").replace("foto2430","").replace("foto3036","");
 });
 Handlebars.registerHelper('transformvaluestochecked', function (value, role) {
     var returnedValue = "checked";
@@ -145,7 +148,17 @@ if (analiz.rezultat<analiz.minLimit)
 function test(filename) {
     console.log(uploadFolder + "\\" + filename);
     fs.unlinkSync(uploadFolder + "\\" + filename);
-}
+};
+exports.insertIntoAudit = function(con, idfoaie, actiune, userid, date, tip){
+
+    var auditSql = "insert into spital.audit_trail(idfoaie, actiune, user, data, tip) values (" + idfoaie + ", '" + actiune + "', '" + userid + "', '" + date.toLocaleString()  + "','"+ tip + "')";
+
+                                                                              con.query(auditSql,(error, results, fields) => {
+                                                                                    if (error) {
+                                                                                    console.error(error.message);
+                                                                                    return console.error(error.message);}
+});
+};
 
 exports.getMonths = function(){
     return months;
@@ -264,6 +277,59 @@ exports.getFooter = function(){
     footer += "Punctele de recoltare marcate cu diez # nu sunt acreditate RENAR.";
     return footer;
 };
+exports.appendToAuditTrailCheckbox = function (results, fields, oldRecordProperty, htmlIdProperty){
+
+    var appendedString = "";
+    var comparison = fields[htmlIdProperty].toString().trim().localeCompare("Nu")==0 ? "0" : "1";
+
+    if (results[oldRecordProperty].toString().trim().localeCompare(comparison)!=0)
+       appendedString = htmlIdProperty + " (" + results[oldRecordProperty].toString().trim() + " -> " + comparison + ")<br>";
+    return appendedString;
+};
+
+exports.checkOnlineSpitalFields=function(results, fields, htmlIdProperty){
+    var appendedString = "";
+    var comparison = fields["online"+htmlIdProperty];
+    if (comparison==undefined){
+        comparison = "0";
+    }
+    if (results["online"+htmlIdProperty]!=comparison){
+         appendedString = appendedString + "online"+ htmlIdProperty + " (" + results["online"+htmlIdProperty] + " -> " + comparison + ")<br>";
+         appendedString = appendedString + "spital"+ htmlIdProperty + " (" + comparison + " -> " +  results["online"+htmlIdProperty]  + ")<br>";
+    }
+    var comparison = fields["spital"+htmlIdProperty];
+        if (comparison==undefined){
+            comparison = "0";
+        }
+    if (results["spital"+htmlIdProperty]!=comparison){
+        appendedString = appendedString + "spital"+ htmlIdProperty + " (" + results["spital"+htmlIdProperty] + " -> " + comparison + ")<br>";
+        appendedString = appendedString + "online"+ htmlIdProperty + " (" + comparison + " -> " +  results["spital"+htmlIdProperty]  + ")<br>";
+    }
+    return appendedString;
+}
+
+exports.appendCheckboxValueToAuditTrail = function (results, fields, htmlIdProperty){
+
+    var appendedString = "";
+    var comparison="0";
+
+    if ((fields[htmlIdProperty]==undefined && results[htmlIdProperty]=="1")) {
+       appendedString = appendedString + htmlIdProperty + " ( 1 -> 0)<br>";
+    }
+    else if ((fields[htmlIdProperty]!=undefined && (fields[htmlIdProperty]=="0" && results[htmlIdProperty]=="0" ))) {
+       appendedString = htmlIdProperty + " ( 0 -> 1)<br>";
+    }
+
+    return appendedString;
+};
+exports.appendToAuditTrailString = function (results, fields, oldRecordProperty, htmlIdProperty){
+
+    var appendedString = "";
+
+    if (results[oldRecordProperty].toString().trim().localeCompare(fields[htmlIdProperty].toString().trim())!=0)
+       appendedString = htmlIdProperty + " (" + results[oldRecordProperty].toString().trim() + " -> " + fields[htmlIdProperty].toString().trim() + ")<br>";
+    return appendedString;
+};
 exports.createFilename = function (fileNameVar, folder){
   var mainPath = __dirname + "\\public\\img\\";
   var path = mainPath + folder;
@@ -320,6 +386,11 @@ exports.EpicrizaDeEtapa = function (dataVar){
     this.idVary =null;
     return this;
 };
+exports.trim = function(value) {
+    if (value==undefined) return "";
+    if (value==null) return "";
+    return value.trim();
+}
 exports.convertDa = function (value){
     var returned;
     if (value==undefined) return 0;

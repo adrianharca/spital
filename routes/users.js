@@ -27,6 +27,10 @@ router.get('/delete', (req,res) => {
     const query = url.parse(req.url, true).query;
     const data = query.data;
     var id = query.iduser;
+    if (req.session.isAdmin==undefined) {
+                    res.redirect('/');
+                    return;
+    };
     console.log("id deleted: " + id);
     if (id!=undefined){
         var con = Global.createConnection(mysql);
@@ -426,6 +430,7 @@ router.post('/adduser', (req, res) => {
                              con.query(sql, function (err, result) {
                              if (err) throw err;
                              console.log("Number of records inserted: " + result.affectedRows);
+                             Global.insertIntoAudit(con,  result.insertId, 'creare', req.session.userid, new Date(),'user');
                              errors.push ({"text": "Utilizatorul " + nume + " a fost creat în bază."});
                              parolaConfirm = parola;
                              res.redirect('/users');
@@ -439,6 +444,13 @@ router.post('/adduser', (req, res) => {
                     else {
                          sql = "Update spital.utilizator set email = '" + email + "', rol='" + finalRolesString + "', nume='" + nume + "' where idutilizator='" + id + "'";
                     }
+                      var action = Global.appendToAuditTrailString(results[0], body,"email","email" );
+                                             action = action + Global.appendToAuditTrailString(results[0], body,"nume","nume" );
+
+                                             if (finalRolesString.toString().localeCompare(results[0].rol)!=0){
+                                                action = action + "rol: " + results[0].rol + " -> " + finalRolesString + "<br>";
+                                             }
+                                             Global.insertIntoAudit(con, id, action, req.session.userid, new Date(),'user');
                       con.query(sql, function (err, result) {
                          if (err) throw err;
                          if (changingpassw.localeCompare("true")==0) {

@@ -214,7 +214,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Indice ponderal
+                        Indice ponderal (numeric)
                     </td>
                     <td>
                         <input disabled type="text" id="indiceponderal" name="indiceponderal" style="width:100%"
@@ -435,8 +435,10 @@
                        onclick="document.getElementById('photo0').innerHTML=''; document.getElementById('markedDel0').value=1; document.getElementById('sterge0').style.visibility='hidden'">
 
                         <img  name="sterge0" id="sterge0" src="/img/delete.png" width="15"
-                             style="cursor:pointer" /></a></span>
+                             style="cursor:pointer;visibility:{{transformvaluetostylevisibility foaie.adaugafoto0}}"
+                        /></a></span></div>
     <input type="hidden" id="markedDel0" name="markedDel0" value="0" />
+<div class="alege">
     <label for="adaugafoto0" style="font-size:10px" id="fileLabel0">
         <img name="photo0" id="photo0" src="/img/upload.png" width="20" height="15"
              style="cursor:pointer" />
@@ -472,8 +474,7 @@
 </div>
 <div id="epfinala" class="tabcontent">
 <h3>Epicriza finală</h3>
-<textarea disabled id="epicrizafinala" name="epicrizafinala" rows="4" cols="50">
-      {{foaie.epicrizafinala}}
+<textarea disabled id="epicrizafinala" name="epicrizafinala" rows="4" cols="50">{{foaie.epicrizafinala}}
     </textarea>
 </div>
 <div id="recom" class="tabcontent">
@@ -487,8 +488,7 @@ Alte comentarii
 <div id="urm" class="tabcontent">
 <h3>Urmărire</h3>
 <p>Cura cicatricilor</p>
-<textarea disabled id="cura" name="cura" rows="4" cols="50">
-      {{foaie.cura}}
+<textarea disabled id="cura" name="cura" rows="4" cols="50">{{foaie.cura}}
     </textarea>
 <br /> <br />
 <table width="100%">
@@ -508,6 +508,7 @@ Alte comentarii
         </td>
 
         <td class="fisier-list">
+
                         <span>
                             <a disabled name="photo1" id="photo1" target="_blank"
                                href="/uploads/{{transformvaluetophotolink foaie.adaugafoto1}}"
@@ -517,12 +518,14 @@ Alte comentarii
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1}}"
                                onclick="document.getElementById('photo1').innerHTML=''; document.getElementById('markedDel1').value=1; document.getElementById('sterge1').style.visibility='hidden'">
                                 <img class="delimg" name="sterge1" id="sterge1" src="/img/delete.png" width="15"
-                                     style="cursor:pointer" /></a></span>
+                                     style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1}}" /></a></span>
             <input type="hidden" id="markedDel1" name="markedDel1" value="0" />
-            <div class="alege"><input disabled title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto1"
-                                      name="adaugafoto1" onchange="pressed(1)" /><label for="adaugafoto1"
-                                                                                        style="font-size:10px" id="fileLabel1"><img src="/img/upload.png" width="20" height="15"
-                                                                                                                                    style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label></div>
+            <div class="alege">
+                <input disabled title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto1"
+                                      name="adaugafoto1" onchange="pressed(1)" />
+                <label for="adaugafoto1" style="font-size:10px" id="fileLabel1">
+                    <img src="/img/upload.png" width="20" height="15"  style="cursor:pointer" /><span
+                        class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label></div>
         </td>
 
         <td><input disabled type="checkbox" id="spital1" name="spital1" {{transformvaluetochecked foaie.spital1}}
@@ -546,9 +549,9 @@ Alte comentarii
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto2}}"
                                onclick="document.getElementById('photo2').innerHTML=''; document.getElementById('markedDel2').value=1; document.getElementById('sterge2').style.visibility='hidden'">
                                 <img class="delimg" name="sterge2" id="sterge2" src="/img/delete.png" width="15"
-                                     style="cursor:pointer" /></a></span>
+                                     style="cursor:pointer;visibility:'{{transformvaluetostylevisibility foaie.adaugafoto2}}'" /></a></span>
             <input type="hidden" id="markedDel2" name="markedDel2" value="0" />
-            <div><input disabled title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto2"
+            <div class="alege"><input disabled title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto2"
                         name="adaugafoto2" onchange="pressed(2)" /><label for="adaugafoto2"
                                                                           style="font-size:10px" id="fileLabel2"><img src="/img/upload.png" width="20" height="15"
                                                                                                                       style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label></div>
@@ -574,12 +577,14 @@ Alte comentarii
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto3}}"
                                onclick="document.getElementById('photo3').innerHTML=''; document.getElementById('markedDel3').value=1; document.getElementById('sterge3').style.visibility='hidden'">
                                 <img class="delimg" name="sterge3" id="sterge3" src="/img/delete.png" width="15"
-                                     style="cursor:pointer" /></a></span>
+                                     style="cursor:pointer;visibility:'{{transformvaluetostylevisibility foaie.adaugafoto3}}'" /></a></span>
             <input type="hidden" id="markedDel3" name="markedDel3" value="0" />
+            <div class="alege">
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto3"
                    name="adaugafoto3" onchange="pressed(3)" /><label for="adaugafoto3" id="fileLabel3"
                                                                      style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                  style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
+            </div>
         </td>
         <td><input disabled type="checkbox" id="spital3" name="spital3" {{transformvaluetochecked foaie.spital3}}
             value="{{foaie.spital3}}" onchange="checkboxPressed(1,3)" /></td>
@@ -603,12 +608,14 @@ Alte comentarii
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto4}}"
                                onclick="document.getElementById('photo4').innerHTML=''; document.getElementById('markedDel4').value=1; document.getElementById('sterge4').style.visibility='hidden'">
                                 <img class="delimg" name="sterge4" id="sterge4" src="/img/delete.png" width="15"
-                                     style="cursor:pointer" /></a></span>
+                                     style="cursor:pointer;visibility:'{{transformvaluetostylevisibility foaie.adaugafoto4}}'"/></a></span>
             <input type="hidden" id="markedDel4" name="markedDel4" value="0" />
+            <div class="alege">
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto4"
                    name="adaugafoto4" onchange="pressed(4)" /><label for="adaugafoto4" id="fileLabel4"
                                                                      style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                  style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
+            </div>
         </td>
         <td><input disabled type="checkbox" id="spital4" name="spital4" {{transformvaluetochecked foaie.spital4}}
             value="{{foaie.spital4}}" onchange="checkboxPressed(1,4)" /></td>
@@ -631,13 +638,14 @@ Alte comentarii
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto5}}"
                                onclick="document.getElementById('photo5').innerHTML=''; document.getElementById('markedDel5').value=1; document.getElementById('sterge5').style.visibility='hidden'">
                                 <img class="delimg" name="sterge5" id="sterge5" src="/img/delete.png" width="15"
-                                     style="cursor:pointer" /></a></span>
+                                     style="cursor:pointer;visibility:'{{transformvaluetostylevisibility foaie.adaugafoto5}}'" /></a></span>
             <input type="hidden" id="markedDel5" name="markedDel5" value="0" />
+            <div class="alege">
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto5"
                    name="adaugafoto5" onchange="pressed(5)" /><label for="adaugafoto5" id="fileLabel5"
                                                                      style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                  style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
-        </td>
+            </div></td>
         <td><input disabled type="checkbox" id="spital5" name="spital5" {{transformvaluetochecked foaie.spital5}}
             value="{{foaie.spital5}}" onchange="checkboxPressed(1,5)" /></td>
         <td><input disabled type="checkbox" id="online5" name="online5" value="{{foaie.online5}}"
@@ -659,12 +667,14 @@ Alte comentarii
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto69}}"
                                onclick="document.getElementById('photo69').innerHTML='';document.getElementById('markedDel69').value=1; document.getElementById('sterge69').style.visibility='hidden'">
                                 <img class="delimg" name="sterge69" id="sterge69" src="/img/delete.png" width="15"
-                                     style="cursor:pointer" /></a></span>
+                                     style="cursor:pointer;visibility:'{{transformvaluetostylevisibility foaie.adaugafoto69}}'" /></a></span>
             <input type="hidden" id="markedDel69" name="markedDel69" value="0" />
+            <div class="alege">
             <input disabled type="file" class="inputfile" title="Alegeți un fisier" id="adaugafoto69"
                    name="adaugafoto69" onchange="pressed(69)" /><label for="adaugafoto69" id="fileLabel69"
                                                                        style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                    style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
+            </div>
         </td>
         <td><input disabled type="checkbox" id="spital69" {{transformvaluetochecked foaie.spital69}} name="spital69"
             value="{{foaie.spital69}}" onchange="checkboxPressed(1,69)" /></td>
@@ -687,13 +697,13 @@ Alte comentarii
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto912}}"
                                onclick="document.getElementById('photo912').innerHTML='';document.getElementById('markedDel912').value=1; document.getElementById('sterge912').style.visibility='hidden'">
                                 <img class="delimg" name="sterge912" id="sterge912" src="/img/delete.png" width="15"
-                                     style="cursor:pointer" /></a></span>
-            <input type="hidden" id="markedDel912" name="markedDel912" value="0" />
+                                     style="cursor:pointer;visibility:'{{transformvaluetostylevisibility foaie.adaugafoto912}}'" /></a></span>
+            <input type="hidden" id="markedDel912" name="markedDel912" value="0" /><div class="alege">
             <input disabled type="file"  class="inputfile" title="Alegeți un fișier" id="adaugafoto912"
                    name="adaugafoto912" onchange="pressed(912)" /><label for="adaugafoto912" id="fileLabel912"
                                                                          style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                      style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
-        </td>
+        </div></td>
         <td><input disabled type="checkbox" id="spital912" name="spital912" {{transformvaluetochecked
             foaie.spital912}} value="{{foaie.spital912}}" onchange="checkboxPressed(1,912)" /></td>
         <td><input disabled type="checkbox" id="online912" name="online912" value="{{foaie.online912}}"
@@ -715,13 +725,14 @@ Alte comentarii
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1218}}"
                                onclick="document.getElementById('photo1218').innerHTML=''; document.getElementById('markedDel1218').value=1; document.getElementById('sterge1218').style.visibility='hidden'">
                                 <img class="delimg" name="sterge1218" id="sterge1218" src="/img/delete.png" width="15"
-                                     style="cursor:pointer" /></a></span>
+                                     style="cursor:pointer;visibility:'{{transformvaluetostylevisibility foaie.adaugafoto1218}}'"/></a></span>
             <input type="hidden" id="markedDel1218" name="markedDel1218" value="0" />
+            <div class="alege">
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto1218"
                    name="adaugafoto1218" onchange="pressed(1218)" /><label for="adaugafoto1218"
                                                                            id="fileLabel1218" style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                                           style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
-        </td>
+            </div></td>
         <td><input disabled type="checkbox" id="spital1218" name="spital1218" {{transformvaluetochecked
             foaie.spital1218}} value="{{foaie.spital1218}}" onchange="checkboxPressed(1,1218)" /></td>
         <td><input disabled type="checkbox" id="online1218" name="online1218" value="{{foaie.online1218}}"
@@ -743,13 +754,13 @@ Alte comentarii
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1824}}"
                                onclick="document.getElementById('photo1824').innerHTML='';document.getElementById('markedDel1824').value=1; document.getElementById('sterge1824').style.visibility='hidden'">
                                 <img class="delimg" name="sterge1824" id="sterge1824" src="/img/delete.png" width="15"
-                                     style="cursor:pointer" /></a></span>
-            <input type="hidden" id="markedDel1824" name="markedDel1824" value="0" />
+                                     style="cursor:pointer;visibility:'{{transformvaluetostylevisibility foaie.adaugafoto1824}}'" /></a></span>
+            <input type="hidden" id="markedDel1824" name="markedDel1824" value="0" /><div class="alege">
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto1824"
                    name="adaugafoto1824" onchange="pressed(1824)" /><label for="adaugafoto1824"
                                                                            id="fileLabel1824" style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                                           style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
-        </td>
+        </div></td>
         <td><input disabled type="checkbox" id="spital1824" name="spital1824" {{transformvaluetochecked
             foaie.spital1824}} value="{{foaie.spital1824}}" onchange="checkboxPressed(1,1824)" /></td>
         <td><input disabled type="checkbox" id="online1824" name="online1824" value="{{foaie.online1824}}"
@@ -768,16 +779,16 @@ Alte comentarii
                                style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
                                 foaie.adaugafoto2430}}</a>
                             <a href="javascript:void(0)"
-                               style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto2430}}"
+                               style="visibility:'{{transformvaluetostylevisibility foaie.adaugafoto2430}}'"
                                onclick="document.getElementById('photo2430').innerHTML='';document.getElementById('markedDel2430').value=1; document.getElementById('sterge2430').style.visibility='hidden'">
                                 <img class="delimg" name="sterge2430" id="sterge2430" src="/img/delete.png" width="15"
-                                     style="cursor:pointer" /></a></span>
-            <input type="hidden" id="markedDel2430" name="markedDel2430" value="0" />
+                                     style="cursor:pointer;visibility:'{{transformvaluetostylevisibility foaie.adaugafoto2430}}'" /></a></span>
+            <input type="hidden" id="markedDel2430" name="markedDel2430" value="0" /><div class="alege">
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto2430"
                    name="adaugafoto2430" onchange="pressed(2430)" /><label for="adaugafoto2430"
                                                                            id="fileLabel2430" style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                                           style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
-        </td>
+        </div></td>
         <td><input disabled type="checkbox" id="spital2430" name="spital2430" {{transformvaluetochecked
             foaie.spital2430}} value="{{foaie.spital2430}}" onchange="checkboxPressed(1,2430)" /></td>
         <td><input disabled type="checkbox" id="online2430" name="online2430" value="{{foaie.online2430}}"
@@ -796,16 +807,16 @@ Alte comentarii
                                style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
                                 foaie.adaugafoto3036}}</a>
                             <a href="javascript:void(0)"
-                               style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto3036}}"
+                               style="visibility:'{{transformvaluetostylevisibility foaie.adaugafoto3036}}'"
                                onclick="document.getElementById('photo3036').innerHTML=''; document.getElementById('markedDel3036').value=1; document.getElementById('sterge3036').style.visibility='hidden'">
                                 <img class="delimg" name="sterge3036" id="sterge3036" src="/img/delete.png" width="15"
-                                     style="cursor:pointer" /></a></span>
-            <input type="hidden" id="markedDel3036" name="markedDel3036" value="0" />
+                                     style="cursor:pointer;visibility:'{{transformvaluetostylevisibility foaie.adaugafoto3036}}'"/></a></span>
+            <input type="hidden" id="markedDel3036" name="markedDel3036" value="0" /><div class="alege">
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto3036"
                    name="adaugafoto3036" onchange="pressed(3036)" /><label for="adaugafoto3036"
                                                                            id="fileLabel3036" style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                                           style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
-        </td>
+        </div></td>
         <td><input disabled type="checkbox" id="spital3036" name="spital3036" {{transformvaluetochecked
             foaie.spital3036}} value="{{foaie.spital3036}}" onchange="checkboxPressed(1,3036)" /></td>
         <td><input disabled type="checkbox" id="online3036" name="online3036" value="{{foaie.online3036}}"
@@ -814,7 +825,9 @@ Alte comentarii
 </table>
 </div>
 <br/>
+<input type="button"  id="deschideaudit" onclick="deschideAudit()" value="Audit" />
 
+<br/><br/>
 <input type="submit" id="salveaza" style="font-size:16px;background-color:red" class="btn btn-reverse" value="Salvare foaie" />
         </form>
 <script type="text/x-handlebars-template" id="tableTemplate">
@@ -860,6 +873,19 @@ __/each++
 <script src="/js/general.js"></script>
 
 <script>
+function hideEmptyDeletions(){
+    if (document.getElementById("photo2430").text.trim().length<=1)  document.getElementById("sterge2430").style.visibility="hidden";
+    if (document.getElementById("photo3036").text.trim().length<=1)  document.getElementById("sterge3036").style.visibility="hidden";
+    if (document.getElementById("photo1").text.trim().length<=1) document.getElementById("sterge1").style.visibility="hidden";
+    if (document.getElementById("photo2").text.trim().length<=1) document.getElementById("sterge2").style.visibility="hidden";
+    if (document.getElementById("photo3").text.trim().length<=1) document.getElementById("sterge3").style.visibility="hidden";
+    if (document.getElementById("photo4").text.trim().length<=1) document.getElementById("sterge4").style.visibility="hidden";
+    if (document.getElementById("photo5").text.trim().length<=1) document.getElementById("sterge5").style.visibility="hidden";
+    if (document.getElementById("photo69").text.trim().length<=1) document.getElementById("sterge69").style.visibility="hidden";
+    if (document.getElementById("photo912").text.trim().length<=1) document.getElementById("sterge912").style.visibility="hidden";
+    if (document.getElementById("photo1218").text.trim().length<=1) document.getElementById("sterge1218").style.visibility="hidden";
+    if (document.getElementById("photo1824").text.trim().length<=1) document.getElementById("sterge1824").style.visibility="hidden";
+}
     changeDays("zi","luna","an");
     changeDays("ziext","lunaext","anext");
     const urlParams = new URLSearchParams(window.location.search);
@@ -872,6 +898,9 @@ __/each++
       $(".editread").attr("style", "visibility: hidden");
       $(".delimg").attr("style", "visibility: hidden");
       $(".requiredclass").attr("style", "visibility: hidden");
+
+      $(".alege").attr("style", "visibility: hidden");
+      $(".inputfile").attr("style", "visibility: hidden");
       openTabWithoutEvent('evolutie');
     }
     else {
@@ -885,7 +914,12 @@ __/each++
       $(".requiredclass").attr("style", "visibility: visible; color:red");
       $(".editread").attr("style", "visibility: visible");
       $(".delimg").attr("style", "visibility: visible");
+      $(".alege").attr("style", "visibility: visible");
+      $(".inputfile").attr("style", "visibility: visible");
+
       openTabWithoutEvent('diagnostic');
+
+      hideEmptyDeletions();
     }
 function edit(){
     $('input, select, textarea').each(function () {
@@ -902,6 +936,9 @@ function edit(){
     document.getElementById("salveaza").style.visibility="visible";
     $(".editread").attr("style", "visibility: visible");
     $(".delimg").attr("style", "visibility: visible");
+    $(".alege").attr("style", "visibility: visible");
+    $(".inputfile").attr("style", "visibility: visible");
+    hideEmptyDeletions();
 }
 function cancel(){
     window.open(location.href,"_self");
@@ -1034,6 +1071,20 @@ function cancel(){
             }
         };
         structura = JSON.parse(document.getElementById("structura").value);
+         function changeSalonOnLoad() {
+                for (var i=0;i<structura.length;i++) {
+                    if (structura[i].nume==document.getElementById("sectia").value) {
+                        while (document.getElementById("salon").options.length > 1) {
+                             document.getElementById("salon").remove(1);
+                        }
+                        var saloane = structura[i].saloane.split(',');
+                        for (var i1 = 0; saloane.length>i1; i1++) {
+                              document.getElementById("salon").appendChild(addOption(saloane[i1])); ///aaaa
+                           };
+                    }
+                }
+
+        }
         function changeSalon() {
                 for (var i=0;i<structura.length;i++) {
                     if (structura[i].nume==document.getElementById("sectia").value) {
@@ -1048,11 +1099,17 @@ function cancel(){
                 }
                 document.getElementById("salon").remove(document.getElementById("salon").options[document.getElementById("salon").selectedIndex]);
         }
+        function deschideAudit() {
+            if (document.getElementById("idfoaie").innerHTML == "")
+                alert("Salvati fisa prima data inainte de folosirea butonului");
+            else
+                window.open("/audit?idfoaie=" + document.getElementById("idfoaie").innerHTML, '_blank').focus();
+        }
         function adaugaEpicriza() {
             if (document.getElementById("idfoaie").innerHTML == "")
                 alert("Salvati fisa prima data inainte de folosirea butonului");
             else
-                window.open("/epicriza_etapa?idfoaie=" + document.getElementById("idfoaie").innerHTML, '_blank').focus();
+                window.open("/epicriza_etapa?idfoaie=" + document.getElementById("idfoaie").innerHTML, '_self').focus();
         }
         function adaugaFisaTerapie() {
             if (document.getElementById("idfoaie").innerHTML == "")
@@ -1135,7 +1192,7 @@ function cancel(){
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
         }
-        changeSalon();
+        changeSalonOnLoad();
     </script>
 </section>
 

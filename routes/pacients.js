@@ -227,6 +227,10 @@ router.get('/delete', (req,res) => {
     const query = url.parse(req.url, true).query;
     const data = query.data;
     var id = query.id;
+    if (req.session.isAdmin==undefined) {
+                        res.redirect('/');
+                        return;
+                };
     if (id!=undefined){
         var con = Global.createConnection(mysql);
         selectSql = "select idfoaie_observatie from spital.foaie_observatie where idpacient=" + id;
@@ -366,7 +370,19 @@ router.get('/addpacient', (req, res) => {
 
   }
 });
+function builtActionString(results,fields){
+ actionString = "";
+ for(property in results){
+     if (property.localeCompare("luna")!=0 && fields[property]!=undefined && fields[property].toString().trim().localeCompare(results[property].toString().trim())!=0){
+         actionString = actionString + property + " (" + results[property].toString().trim() + " -> " + fields[property].toString().trim() + ")<br>";
+     }
+  }
 
+  if (Global.convertNumberToMonth(results["luna"]).localeCompare(fields["luna"])!=0){
+         actionString = actionString + "luna" + " (" + Global.convertNumberToMonth(results["luna"]) + " -> " + fields["luna"] + ")<br>";
+  }
+ return actionString;
+ }
 // Add a gig
 router.post('/addpacient', (req, res) => {
   let errors = [];
@@ -427,13 +443,21 @@ let { numefamilie, prenume, telefon, email, sex, cnp, cetatenie, zi, luna, an, g
                  judet, localitatea, mediu, strada, numar, judetRes, localitateaRes, mediuRes, stradaRes, numarRes, parinte, cnpParinte,
                  foParinte, ocupatieParinte, serviciuParinte, studii, cod]
               ];
+
               con.query(sql, [values], function (err, result) {
               if (err) throw err;
-                con.end();
+              con.query("insert into spital.audit_trail(idfoaie, actiune, user, data, tip) values (" +  result.insertId + ", 'creare', '" +  req.session.userid + "', '" + new Date().toLocaleString()  + "','pacient')", function (errFinal, resultFinal){
+                                        if (errFinal) throw errFinal;
+                                        con.end();
+                                    });
+
                 res.redirect("../pacients");
               });
         }
         else {
+            var action = '';
+            action = action + builtActionString(results[0],req.body);
+            Global.insertIntoAudit(con,  idInUI, action, req.session.userid, new Date(),'pacient');
             var sql = "Update spital.pacient set numefamilie = '" + numefamilie +
              "', prenume='" +prenume + "', telefon='" + telefon + "' " +
              ", email='" +email + "', sex='" + sex + "' " +
@@ -447,13 +471,13 @@ let { numefamilie, prenume, telefon, email, sex, cnp, cetatenie, zi, luna, an, g
              ", serviciuParinte='" +serviciuParinte + "', studii='" + studii + "', cod='" +cod + "', ocupatieParinte='" + ocupatieParinte + "' "
              + " where idpacient=" + idInUI;
             con.query(sql, function (err, result) {
+
             if (err) throw err;
             errors.push ({"text": "Pacientul " + numefamilie + " există în baza de date: a fost actualizat cu noile informații."});
             });
+            res.redirect("../pacients");
+
             con.end();
-            res.render('addpacient', {errors,numefamilie, prenume, telefon, email, sex, cnp, cetatenie, zi, luna, an, greutatenastere,
-                                                           judet, localitatea, mediu, strada, numar, judetRes, localitateaRes, mediuRes, stradaRes, numarRes, parinte, cnpParinte,
-                                                           foParinte, ocupatieParinte, serviciuParinte, studii, cod});
         }
 
         });
@@ -466,8 +490,13 @@ let { numefamilie, prenume, telefon, email, sex, cnp, cetatenie, zi, luna, an, g
                        foParinte, ocupatieParinte, serviciuParinte, studii, cod]
                     ];
                     con.query(sql, [values], function (err, result) {
+
                     if (err) throw err;
-                      con.end();
+                    con.query("insert into spital.audit_trail(idfoaie, actiune, user, data, tip) values (" +  result.insertId + ", 'creare', '" +  req.session.userid + "', '" + new Date().toLocaleString()  + "','pacient')", function (errFinal, resultFinal)
+                    {
+                        if (errFinal) throw errFinal;
+                        con.end();
+                    });
                       res.redirect("../pacients");
                     });
 

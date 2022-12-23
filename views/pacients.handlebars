@@ -1,6 +1,6 @@
 <section id="pacients" class="container">
     <input type="button" onClick=" window.open('/pacients/addpacient','_self');" value="Adaugă pacient" class="btn btn-reverse"/>
-
+    <input type="hidden" value="{{session.isAdmin}}" name="sessionIsAdmin" id="sessionIsAdmin"/>
     <h1>Toți pacienții</h1>
     {{#each this}}
     {{#ifNotNull numefamilie}}
@@ -15,7 +15,10 @@
         </div>
         <span>
         <button class="deleteFoaie-btn btn btn-reverse" id="profil{{idpacient}}" onclick="window.open('/pacients/addpacient?id={{idpacient}}','_self')">Vizualizare profil</button>
-        <button class="deleteFoaie-btn btn btn-reverse" onclick="deleteFunct({{idpacient}});" id="{{idpacient}}">Șterge pacient</button></span>
+
+            <button class="deleteFoaie-btn btn btn-reverse" onclick="deleteFunct({{idpacient}});"
+                    id="delete{{idpacient}}">Șterge pacient</button>
+        </span>
     </div>
     {{/ifNotNull}}
     {{else}}
@@ -31,7 +34,12 @@
         {{/if}}
     </div>
 </section>
+<script src="/js/jquery-3.6.0.min.js"></script>
 <script>
+if (document.getElementById("sessionIsAdmin").value.trim().localeCompare("")==0)
+    {
+    $('[id^=delete]').hide();
+    }
 const deleteFunct=function (someId){
     var answer = window.confirm("Sunteți sigur(ă) că vreți să ștergeți pacientul cu id " + someId + "?");
     if (answer) {

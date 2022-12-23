@@ -1,0 +1,40 @@
+<section id="audittrail" class="container">
+    <input type="hidden" value="{{session.isAdmin}}" name="sessionIsAdmin" id="sessionIsAdmin"/>
+    <h1>Audit pentru {{tipulArticulat}} {{idfoaie}}</h1>
+    <table id="audit">
+        <tr><th>Utilizator</th><th>Acțiune</th><th>Data</th></tr>
+
+    {{#each this.result}}
+    <tr><td>{{user}}</td><td>{{{actiune}}}</td><td>{{data}}</td></tr>
+    {{else}}
+    <p>Nicio informație pentru acest id nu a putut fi obținută din bază.</p>
+    {{/each}}
+    </table>
+</section>
+<style>
+#audit {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#audit td, #audit th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#audit tr:nth-child(even){background-color: #f2f2f2;}
+
+#audit tr:hover {background-color: #ddd;}
+
+#audit th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D !important;
+  color: white;
+}
+</style>
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script>
+</script>

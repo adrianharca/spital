@@ -1,5 +1,5 @@
 <section id="circles" class="container">
-    <h1 class="foile-titlu">Foile de observație</h1><br /><br />
+    <h1 class="foile-titlu">Foile de observație</h1><input type="hidden" value="{{session.isAdmin}}" name="sessionIsAdmin" id="sessionIsAdmin"/><br /><br />
     {{#each this}}
     {{#ifNotNull medic}}
     <div class="foi-observatie">
@@ -11,7 +11,9 @@
             &nbsp;&nbsp;&nbsp;&nbsp;Data internării: {{zi}} {{luna}} {{an}}
             <br />
         </div>
-        <button class="deleteFoaie-btn btn btn-reverse" onclick="deleteFunct({{idfoaie_observatie}});" id="{{idfoaie_observatie}}">Șterge foaie</button>
+        <button class="deleteFoaie-btn btn btn-reverse" onclick="deleteFunct({{idfoaie_observatie}});"
+                id="deleteFunct{{idfoaie_observatie}}">Șterge foaie</button>
+
     </div>
     {{/ifNotNull}}
     {{else}}
@@ -21,7 +23,12 @@
 
     </input>
 </section>
+<script src="/js/jquery-3.6.0.min.js"></script>
 <script>
+if (document.getElementById("sessionIsAdmin").value.trim().localeCompare("")==0)
+    {
+    $('[id^=delete]').hide();
+    }
 const deleteFunct=function (someId){
     var answer = window.confirm("Sunteți sigur(ă) că vreți să foaia de observație cu id " + someId + "?");
     if (answer) {

@@ -17,6 +17,46 @@ var Comment = function (oraV, solPerfuzabilV, tratamentV, diurezaV, scaunV, vars
     this.varsat =  varsatV,
     this.lichideIngerate = lichideIngerateV
 }
+
+function builtActionString(results,fields, idfisa){
+ var found = false;
+ actionString = "";
+
+ for(property in results){
+     if (fields[property]!=undefined && fields[property].toString().trim().localeCompare(results[property].toString().trim())!=0){
+         found = true;
+         actionString = actionString + property + " (" + results[property].toString().trim() + " -> " + fields[property].toString().trim() + ")<br>";
+     }
+  }
+
+  comments = JSON.parse(results.comments);
+
+
+  for(let i=0;i<comments.length;i++){
+    if (comments[i].solPerfuzabil!=fields["commsol"+i]) { found = true;
+        actionString = actionString + "sol perfuzabila com. " + i + " (" + comments[i].solPerfuzabil + " -> " + fields["commsol"+i] + ")<br>";
+        }
+    if (comments[i].tratament!=fields["commtrat"+i]) { found = true;
+        actionString = actionString + "tratament com. " + i + " (" + comments[i].tratament + " -> " + fields["commtrat"+i] + ")<br>";
+        }
+    if (comments[i].diureza!=fields["commdiureza"+i]) { found = true;
+        actionString = actionString + "diureza com. " + i + " (" + comments[i].diureza + " -> " + fields["commdiureza"+i] + ")<br>";
+        }
+    if (comments[i].scaun!=fields["commscaun"+i]) { found = true;
+        actionString = actionString + "scaun com. " + i + " (" + comments[i].scaun + " -> " + fields["commscaun"+i] + ")<br>";
+        }
+    if (comments[i].varsat!=fields["commvarsat"+i]) { found = true;
+        actionString = actionString + "varsat com. " + i + " (" + comments[i].varsat + " -> " + fields["commvarsat"+i] + ")<br>";
+        }
+    if (comments[i].lichideIngerate!=fields["commlichide"+i]) { found = true;
+        actionString = actionString + "lichide ing. com. " + i + " (" + comments[i].lichideIngerate + " -> " + fields["commlichide"+i] + ")<br>";
+        }
+  }
+ if (found)
+    actionString = "salvare fisa terapie " + idfisa + " ("+ fields["dataForm"] + ")<br> " + actionString;
+
+ return actionString;
+ }
 router.post('/', (req, res) => {
     const query = url.parse(req.url, true).query;
     var pacientName = query.pacient;
@@ -109,13 +149,23 @@ router.post('/', (req, res) => {
                                                   row5col1,row5col2,row5col3,
                                                   row6col1,row6col2,row6col3,
                                                   row7col1,row7col2,row7col3 };
-                                     con.end();
-                                     if (result.insertId)
-                                        id= result.insertId
-                                     else
+
+
+                                     var action;
+                                     if (result.insertId) {
+                                            action = "creare fisa terapie " + result.insertId + " (" + req.body["dataForm"] +  ")";
+                                            id = result.insertId
+                                        }
+                                     else {
+                                        action = builtActionString(results[0], req.body, idfisa);
                                         id = idfisa;
+                                     }
+                                     if (action!="")
+                                     con.query("insert into spital.audit_trail(idfoaie, actiune, user, data, tip) values (" +  idfoaie + ", '"+ action + "', '" +  req.session.userid + "', '" + new Date().toLocaleString()  + "','foaie')", function (errFinal, resultFinal){
+                                             if (errFinal) throw errFinal;
+                                             con.end();
+                                     });
                                      res.redirect('/fisa_terapie?idfoaie='+ idfoaie + '&idfisa=' + id);
-                                     //res.render('fisaterapie', {fisa, pacient,detaliiFisa, comments, arsuri} );
                                      });
 
                       });
