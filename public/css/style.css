@@ -777,7 +777,7 @@ input[type="checkbox"]:checked {
 /* Adauga fisier - start */
 
 .fisier-list {
-  display: grid;
+  display: inline;
   grid-template-rows: 1fr 1fr;
   justify-content: left;
 }

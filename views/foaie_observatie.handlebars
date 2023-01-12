@@ -422,27 +422,24 @@
 <h4>Dinamica plăgilor</h4>
 <input disabled type="text" id="dinamicaplagi" style="width:100%" name="dinamicaplagi"
        value="{{foaie.anamneza.dinamicaplagi}}" /><br /><br />
-<div><input disabled title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto0" name="adaugafoto0"
-            onchange="pressed(0)" />
-
-
-    <span>
-                    <a name="photo0" id="photo0" target="_blank"
-                       href="/uploads/{{transformvaluetophotolink foaie.adaugafoto0}}"
-                       style="font-size:10px; font-weight:bold;">{{transformvaluetophoto foaie.adaugafoto0}}</a>
-                    <a disabled class="delimg" href="javascript:void(0)"
-                       style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto0}}"
-                       onclick="document.getElementById('photo0').innerHTML=''; document.getElementById('markedDel0').value=1; document.getElementById('sterge0').style.visibility='hidden'">
-
-                        <img  name="sterge0" id="sterge0" src="/img/delete.png" width="15"
-                             style="cursor:pointer;visibility:{{transformvaluetostylevisibility foaie.adaugafoto0}}"
-                        /></a></span></div>
+<div >
+<span class="fisier-list">
+                            {{{
+                            transformSQLvaluetophoto foaie.adaugafoto0 "0"
+                            }}}
+                            <a disabled href="javascript:void(0)"
+                               style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto0}}"
+                               onclick="document.getElementById('photo0').innerHTML=''; document.getElementById('markedDel0').value=1; document.getElementById('sterge0').style.visibility='hidden'">
+                                <img class="delimg" name="sterge0" id="sterge0" src="/img/delete.png" width="15"
+                                     style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto0}}" /></a></span>
     <input type="hidden" id="markedDel0" name="markedDel0" value="0" />
-<div class="alege">
-    <label for="adaugafoto0" style="font-size:10px" id="fileLabel0">
-        <img name="photo0" id="photo0" src="/img/upload.png" width="20" height="15"
-             style="cursor:pointer" />
-        Adaugă fotografie/fișier&nbsp;</label>
+    <span class="alege">
+
+                <input disabled title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto0"
+                       name="adaugafoto0" onchange="pressed(0)" multiple/>
+                <label for="adaugafoto0" style="font-size:10px" id="fileLabel0">
+                    <img src="/img/upload.png" width="20" height="15"  style="cursor:pointer" /><span
+                        class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label></span>
 </div>
 
 
@@ -491,7 +488,7 @@ Alte comentarii
 <textarea disabled id="cura" name="cura" rows="4" cols="50">{{foaie.cura}}
     </textarea>
 <br /> <br />
-<table width="100%">
+<table width="100%" style="heigth:1px">
     <tr>
         <td style="font-weight:bold;width:5%">Luna</td>
         <td style="font-weight:bold; width:28%">Descriere</td>
@@ -510,22 +507,22 @@ Alte comentarii
         <td class="fisier-list">
 
                         <span>
-                            <a disabled name="photo1" id="photo1" target="_blank"
-                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto1}}"
-                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
-                                foaie.adaugafoto1}}</a>
+                            {{{
+                            transformSQLvaluetophoto foaie.adaugafoto1 "1"
+                            }}}
                             <a disabled href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1}}"
                                onclick="document.getElementById('photo1').innerHTML=''; document.getElementById('markedDel1').value=1; document.getElementById('sterge1').style.visibility='hidden'">
                                 <img class="delimg" name="sterge1" id="sterge1" src="/img/delete.png" width="15"
                                      style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1}}" /></a></span>
             <input type="hidden" id="markedDel1" name="markedDel1" value="0" />
-            <div class="alege">
+            <span class="alege">
+
                 <input disabled title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto1"
-                                      name="adaugafoto1" onchange="pressed(1)" />
+                                      name="adaugafoto1" onchange="pressed(1)" multiple/>
                 <label for="adaugafoto1" style="font-size:10px" id="fileLabel1">
                     <img src="/img/upload.png" width="20" height="15"  style="cursor:pointer" /><span
-                        class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label></div>
+                        class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label></span>
         </td>
 
         <td><input disabled type="checkbox" id="spital1" name="spital1" {{transformvaluetochecked foaie.spital1}}
@@ -541,10 +538,9 @@ Alte comentarii
         </td>
         <td class="fisier-list">
                         <span>
-                            <a name="photo2" id="photo2" target="_blank"
-                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto2}}"
-                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
-                                foaie.adaugafoto2}}</a>
+                            {{{
+                            transformSQLvaluetophoto foaie.adaugafoto2 "2"
+                            }}}
                             <a href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto2}}"
                                onclick="document.getElementById('photo2').innerHTML=''; document.getElementById('markedDel2').value=1; document.getElementById('sterge2').style.visibility='hidden'">
@@ -552,7 +548,7 @@ Alte comentarii
                                      style="cursor:pointer;visibility:'{{transformvaluetostylevisibility foaie.adaugafoto2}}'" /></a></span>
             <input type="hidden" id="markedDel2" name="markedDel2" value="0" />
             <div class="alege"><input disabled title="Alegeți un fișier" type="file" class="inputfile" id="adaugafoto2"
-                        name="adaugafoto2" onchange="pressed(2)" /><label for="adaugafoto2"
+                        name="adaugafoto2" onchange="pressed(2)" multiple/><label for="adaugafoto2"
                                                                           style="font-size:10px" id="fileLabel2"><img src="/img/upload.png" width="20" height="15"
                                                                                                                       style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label></div>
         </td>
@@ -569,10 +565,9 @@ Alte comentarii
         </td>
         <td class="fisier-list">
                         <span>
-                            <a name="photo3" id="photo3" target="_blank"
-                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto3}}"
-                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
-                                foaie.adaugafoto3}}</a>
+                            {{{
+                            transformSQLvaluetophoto foaie.adaugafoto3 "3"
+                            }}}
                             <a disabled href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto3}}"
                                onclick="document.getElementById('photo3').innerHTML=''; document.getElementById('markedDel3').value=1; document.getElementById('sterge3').style.visibility='hidden'">
@@ -581,7 +576,7 @@ Alte comentarii
             <input type="hidden" id="markedDel3" name="markedDel3" value="0" />
             <div class="alege">
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto3"
-                   name="adaugafoto3" onchange="pressed(3)" /><label for="adaugafoto3" id="fileLabel3"
+                   name="adaugafoto3" onchange="pressed(3)" multiple/><label for="adaugafoto3" id="fileLabel3"
                                                                      style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                  style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
             </div>
@@ -600,10 +595,9 @@ Alte comentarii
         <td class="fisier-list">
 
                         <span>
-                            <a name="photo4" id="photo4" target="_blank"
-                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto4}}"
-                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
-                                foaie.adaugafoto4}}</a>
+                            {{{
+                            transformSQLvaluetophoto foaie.adaugafoto4 "4"
+                            }}}
                             <a href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto4}}"
                                onclick="document.getElementById('photo4').innerHTML=''; document.getElementById('markedDel4').value=1; document.getElementById('sterge4').style.visibility='hidden'">
@@ -612,7 +606,7 @@ Alte comentarii
             <input type="hidden" id="markedDel4" name="markedDel4" value="0" />
             <div class="alege">
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto4"
-                   name="adaugafoto4" onchange="pressed(4)" /><label for="adaugafoto4" id="fileLabel4"
+                   name="adaugafoto4" onchange="pressed(4)" multiple/><label for="adaugafoto4" id="fileLabel4"
                                                                      style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                  style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
             </div>
@@ -630,10 +624,9 @@ Alte comentarii
         </td>
         <td class="fisier-list">
                         <span>
-                            <a name="photo5" id="photo5" target="_blank"
-                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto5}}"
-                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
-                                foaie.adaugafoto5}}</a>
+                            {{{
+                            transformSQLvaluetophoto foaie.adaugafoto5 "5"
+                            }}}
                             <a href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto5}}"
                                onclick="document.getElementById('photo5').innerHTML=''; document.getElementById('markedDel5').value=1; document.getElementById('sterge5').style.visibility='hidden'">
@@ -642,7 +635,7 @@ Alte comentarii
             <input type="hidden" id="markedDel5" name="markedDel5" value="0" />
             <div class="alege">
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto5"
-                   name="adaugafoto5" onchange="pressed(5)" /><label for="adaugafoto5" id="fileLabel5"
+                   name="adaugafoto5" onchange="pressed(5)" multiple/><label for="adaugafoto5" id="fileLabel5"
                                                                      style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                  style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
             </div></td>
@@ -659,10 +652,9 @@ Alte comentarii
                    value="{{foaie.analize69}}" /></td>
         <td class="fisier-list">
                         <span>
-                            <a name="photo69" id="photo69" target="_blank"
-                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto69}}"
-                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
-                                foaie.adaugafoto69}}</a>
+                            {{{
+                            transformSQLvaluetophoto foaie.adaugafoto69 "69"
+                            }}}
                             <a href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto69}}"
                                onclick="document.getElementById('photo69').innerHTML='';document.getElementById('markedDel69').value=1; document.getElementById('sterge69').style.visibility='hidden'">
@@ -671,7 +663,7 @@ Alte comentarii
             <input type="hidden" id="markedDel69" name="markedDel69" value="0" />
             <div class="alege">
             <input disabled type="file" class="inputfile" title="Alegeți un fisier" id="adaugafoto69"
-                   name="adaugafoto69" onchange="pressed(69)" /><label for="adaugafoto69" id="fileLabel69"
+                   name="adaugafoto69" onchange="pressed(69)" multiple/><label for="adaugafoto69" id="fileLabel69"
                                                                        style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                    style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
             </div>
@@ -689,10 +681,9 @@ Alte comentarii
                    value="{{foaie.analize912}}" /></td>
         <td class="fisier-list">
                         <span>
-                            <a name="photo912" id="photo912" target="_blank"
-                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto912}}"
-                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
-                                foaie.adaugafoto912}}</a>
+                            {{{
+                            transformSQLvaluetophoto foaie.adaugafoto912 "912"
+                            }}}
                             <a href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto912}}"
                                onclick="document.getElementById('photo912').innerHTML='';document.getElementById('markedDel912').value=1; document.getElementById('sterge912').style.visibility='hidden'">
@@ -700,7 +691,7 @@ Alte comentarii
                                      style="cursor:pointer;visibility:'{{transformvaluetostylevisibility foaie.adaugafoto912}}'" /></a></span>
             <input type="hidden" id="markedDel912" name="markedDel912" value="0" /><div class="alege">
             <input disabled type="file"  class="inputfile" title="Alegeți un fișier" id="adaugafoto912"
-                   name="adaugafoto912" onchange="pressed(912)" /><label for="adaugafoto912" id="fileLabel912"
+                   name="adaugafoto912" onchange="pressed(912)" multiple/><label for="adaugafoto912" id="fileLabel912"
                                                                          style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                      style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
         </div></td>
@@ -717,10 +708,9 @@ Alte comentarii
                    value="{{foaie.analize1218}}" /></td>
         <td class="fisier-list">
                         <span>
-                            <a name="photo1218" id="photo1218" target="_blank"
-                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto1218}}"
-                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
-                                foaie.adaugafoto1218}}</a>
+                            {{{
+                            transformSQLvaluetophoto foaie.adaugafoto1218 "1218"
+                            }}}
                             <a href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1218}}"
                                onclick="document.getElementById('photo1218').innerHTML=''; document.getElementById('markedDel1218').value=1; document.getElementById('sterge1218').style.visibility='hidden'">
@@ -729,7 +719,7 @@ Alte comentarii
             <input type="hidden" id="markedDel1218" name="markedDel1218" value="0" />
             <div class="alege">
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto1218"
-                   name="adaugafoto1218" onchange="pressed(1218)" /><label for="adaugafoto1218"
+                   name="adaugafoto1218" onchange="pressed(1218)" multiple/><label for="adaugafoto1218"
                                                                            id="fileLabel1218" style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                                           style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
             </div></td>
@@ -746,10 +736,9 @@ Alte comentarii
                    value="{{foaie.analize1824}}" /></td>
         <td class="fisier-list">
                         <span>
-                            <a name="photo1824" id="photo1824" target="_blank"
-                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto1824}}"
-                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
-                                foaie.adaugafoto1824}}</a>
+                            {{{
+                            transformSQLvaluetophoto foaie.adaugafoto1824 "1824"
+                            }}}
                             <a href="javascript:void(0)"
                                style="visibility:{{transformvaluetostylevisibility foaie.adaugafoto1824}}"
                                onclick="document.getElementById('photo1824').innerHTML='';document.getElementById('markedDel1824').value=1; document.getElementById('sterge1824').style.visibility='hidden'">
@@ -757,7 +746,7 @@ Alte comentarii
                                      style="cursor:pointer;visibility:'{{transformvaluetostylevisibility foaie.adaugafoto1824}}'" /></a></span>
             <input type="hidden" id="markedDel1824" name="markedDel1824" value="0" /><div class="alege">
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto1824"
-                   name="adaugafoto1824" onchange="pressed(1824)" /><label for="adaugafoto1824"
+                   name="adaugafoto1824" onchange="pressed(1824)" multiple/><label for="adaugafoto1824"
                                                                            id="fileLabel1824" style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                                           style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
         </div></td>
@@ -774,10 +763,9 @@ Alte comentarii
                    value="{{foaie.analize2430}}" /></td>
         <td class="fisier-list">
                         <span>
-                            <a name="photo2430" id="photo2430" target="_blank"
-                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto2430}}"
-                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
-                                foaie.adaugafoto2430}}</a>
+                            {{{
+                            transformSQLvaluetophoto foaie.adaugafoto2430 "2430"
+                            }}}
                             <a href="javascript:void(0)"
                                style="visibility:'{{transformvaluetostylevisibility foaie.adaugafoto2430}}'"
                                onclick="document.getElementById('photo2430').innerHTML='';document.getElementById('markedDel2430').value=1; document.getElementById('sterge2430').style.visibility='hidden'">
@@ -785,7 +773,7 @@ Alte comentarii
                                      style="cursor:pointer;visibility:'{{transformvaluetostylevisibility foaie.adaugafoto2430}}'" /></a></span>
             <input type="hidden" id="markedDel2430" name="markedDel2430" value="0" /><div class="alege">
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto2430"
-                   name="adaugafoto2430" onchange="pressed(2430)" /><label for="adaugafoto2430"
+                   name="adaugafoto2430" onchange="pressed(2430)" multiple/><label for="adaugafoto2430"
                                                                            id="fileLabel2430" style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                                           style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
         </div></td>
@@ -802,10 +790,9 @@ Alte comentarii
                    value="{{foaie.analize3036}}" /></td>
         <td class="fisier-list">
                         <span>
-                            <a name="photo3036" id="photo3036" target="_blank"
-                               href="/uploads/{{transformvaluetophotolink foaie.adaugafoto3036}}"
-                               style="font-size:10px; font-weight:bold;">{{transformvaluetophoto
-                                foaie.adaugafoto3036}}</a>
+                            {{{
+                            transformSQLvaluetophoto foaie.adaugafoto3036 "3036"
+                            }}}
                             <a href="javascript:void(0)"
                                style="visibility:'{{transformvaluetostylevisibility foaie.adaugafoto3036}}'"
                                onclick="document.getElementById('photo3036').innerHTML=''; document.getElementById('markedDel3036').value=1; document.getElementById('sterge3036').style.visibility='hidden'">
@@ -813,7 +800,7 @@ Alte comentarii
                                      style="cursor:pointer;visibility:'{{transformvaluetostylevisibility foaie.adaugafoto3036}}'"/></a></span>
             <input type="hidden" id="markedDel3036" name="markedDel3036" value="0" /><div class="alege">
             <input disabled type="file" class="inputfile" title="Alegeți un fișier" id="adaugafoto3036"
-                   name="adaugafoto3036" onchange="pressed(3036)" /><label for="adaugafoto3036"
+                   name="adaugafoto3036" onchange="pressed(3036)" multiple/><label for="adaugafoto3036"
                                                                            id="fileLabel3036" style="font-size:10px"><img src="/img/upload.png" width="20" height="15"
                                                                                                                           style="cursor:pointer" /><span class="filelabels-text">Adaugă foto/fișier&nbsp;</span></label>
         </div></td>
@@ -873,18 +860,24 @@ __/each++
 <script src="/js/general.js"></script>
 
 <script>
+function hideEmptyDeletion(value){
+    if (document.getElementById("photo" + value+"1")==null)
+        document.getElementById("sterge" + value).style.visibility="hidden";
+     else
+        document.getElementById("sterge" + value).style.visibility="visible";
+}
 function hideEmptyDeletions(){
-    if (document.getElementById("photo2430").text.trim().length<=1)  document.getElementById("sterge2430").style.visibility="hidden";
-    if (document.getElementById("photo3036").text.trim().length<=1)  document.getElementById("sterge3036").style.visibility="hidden";
-    if (document.getElementById("photo1").text.trim().length<=1) document.getElementById("sterge1").style.visibility="hidden";
-    if (document.getElementById("photo2").text.trim().length<=1) document.getElementById("sterge2").style.visibility="hidden";
-    if (document.getElementById("photo3").text.trim().length<=1) document.getElementById("sterge3").style.visibility="hidden";
-    if (document.getElementById("photo4").text.trim().length<=1) document.getElementById("sterge4").style.visibility="hidden";
-    if (document.getElementById("photo5").text.trim().length<=1) document.getElementById("sterge5").style.visibility="hidden";
-    if (document.getElementById("photo69").text.trim().length<=1) document.getElementById("sterge69").style.visibility="hidden";
-    if (document.getElementById("photo912").text.trim().length<=1) document.getElementById("sterge912").style.visibility="hidden";
-    if (document.getElementById("photo1218").text.trim().length<=1) document.getElementById("sterge1218").style.visibility="hidden";
-    if (document.getElementById("photo1824").text.trim().length<=1) document.getElementById("sterge1824").style.visibility="hidden";
+    hideEmptyDeletion("2430");
+    hideEmptyDeletion("3036");
+    hideEmptyDeletion("1");
+    hideEmptyDeletion("2");
+    hideEmptyDeletion("3");
+    hideEmptyDeletion("4");
+    hideEmptyDeletion("5");
+    hideEmptyDeletion("69");
+    hideEmptyDeletion("912");
+    hideEmptyDeletion("1218");
+    hideEmptyDeletion("1824");
 }
     changeDays("zi","luna","an");
     changeDays("ziext","lunaext","anext");
@@ -1062,12 +1055,19 @@ function cancel(){
         }
         window.pressed = function (imageIndex) {
             var a = document.getElementById('adaugafoto' + imageIndex);
+
             if (a.value == "") {
                 document.getElementById("fileLabel" + imageIndex).innerHTML = "Adaugă foto";
             }
             else {
                 var theSplit = a.value.split('\\');
-                document.getElementById("fileLabel" + imageIndex).innerHTML = "<img src=\"/img/upload.png\" width=\"20\" height=\"15\" style=\"cursor:pointer\"/>" + theSplit[theSplit.length - 1];
+
+                var t = "<img src=\"/img/upload.png\" width=\"20\" height=\"15\" style=\"cursor:pointer\"/>";
+                for (var i=0;i<a.files.length;i++)
+                {
+                    t = t + a.files[i].name + "<br>";
+                }
+                document.getElementById("fileLabel" + imageIndex).innerHTML = t;
             }
         };
         structura = JSON.parse(document.getElementById("structura").value);

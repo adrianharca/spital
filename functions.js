@@ -59,6 +59,41 @@ Handlebars.registerHelper("pageincrement", function(page){
     // else
     return --page;
 });
+
+function transformvaluetophotolink(value) {
+     var returnedValue = value;
+        if (value==undefined)
+            returnedValue = "";
+
+        else if (value.trim().localeCompare('')==0)
+            returnedValue = "";
+        return returnedValue.replaceAll(" ","-");
+};
+function transformvaluetophoto(value) {
+      var returnedValue = value;
+         if (value==undefined)
+            return "";
+          if (value=='')
+             returnedValue = "";
+         returnedValue = value.split("adauga").pop();
+         returnedValue = returnedValue.replace("foto69","").replace("foto912","").replace("foto1218","").replace("foto1824","").replace("foto2430","").replace("foto3036","");
+         return returnedValue.replace("foto0","").replace("foto1","").replace("foto2","").replace("foto3","").replace("foto4","").replace("foto5","");
+};
+Handlebars.registerHelper('transformSQLvaluetophoto', function (value, value1) {
+    if (value==undefined || value.trim().localeCompare('')==0)
+            return "";
+
+    var returnedValueList = value.split(",");
+    returnedValue = "<div id='photo"+ value1 +"'>";
+    for (let index=0;index<returnedValueList.length;index++) {
+        var photo = returnedValueList[index];
+        if (photo.trim().localeCompare('')!=0)
+        returnedValue = returnedValue + " <div style='height:15px' ><a disabled name='photo"+value1 + index + "' id='photo"+ value1+ index
+         +"' target='_blank' href='/uploads/"+ transformvaluetophotolink(photo) + "' style='font-size:10px; font-weight:bold;'>" + transformvaluetophoto(photo) +"</a></div>"
+    }
+    returnedValue = returnedValue + "</div>";
+    return returnedValue;
+});
 Handlebars.registerHelper('transformvaluetophotolink', function (value) {
     var returnedValue = value;
     if (value==undefined)
@@ -69,11 +104,18 @@ Handlebars.registerHelper('transformvaluetophotolink', function (value) {
     return returnedValue.replaceAll(" ","-");
 });
 Handlebars.registerHelper('transformvaluetostylevisibility', function (value) {
-    var returnedValue = "visible";
-    if (value==undefined)
-        returnedValue = "hidden";
-    else if (value.trim().localeCompare('')==0)
-        returnedValue = "hidden";
+    var splittedList = value.split(",");
+    var returnedValue = "hidden";
+    for (let j1=0;j1<splittedList.length;j1++){
+
+        if (splittedList[j1]!=undefined && splittedList[j1].length>20) {
+            console.log("a-" + splittedList[j1]+ "-b")
+            returnedValue = "visible";
+            }
+        else {
+            returnedValue = "hidden";
+        }
+    }
     return returnedValue;
 });
 Handlebars.registerHelper('transformvaluetophoto', function (value) {
@@ -85,7 +127,7 @@ Handlebars.registerHelper('transformvaluetophoto', function (value) {
 
     returnedValue = value.split("adauga").pop();
 
-    return returnedValue.replace("foto0","").replace("foto1","").replace("foto2","").replace("foto3","").replace("foto4","").replace("foto5","").replace("foto69","").replace("foto912","").replace("foto1224","").replace("foto2430","").replace("foto3036","");
+    return returnedValue.replace("foto0","").replace("foto4","").replace("foto5","").replace("foto69","").replace("foto912","").replace("foto1224","").replace("foto2430","").replace("foto3036","").replace("foto2","").replace("foto3","").replace("foto1","");
 });
 Handlebars.registerHelper('transformvaluestochecked', function (value, role) {
     var returnedValue = "checked";

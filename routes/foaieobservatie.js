@@ -11,12 +11,41 @@ var mysql = require('mysql');
 
 var idfoaie=null;
 var pacientId=null;
+function fileNamesForList(field, fieldName, idfoaie) {
+    var filev = "";
+    for(let j1 = 0;j1<field.length;j1++){
+        if (field[j1].size!=0) {
+            filev = filev + idfoaie + fieldName + field[j1].originalFilename;
+            if (j1!=field.length-1) filev = filev + ",";
+        }
 
+    }
+    return filev;
+}
+function fileNameForFieldAppend(markedDelValue, oldSQLValue, field, idfoaie, fieldName, oldValue){
+    var newfiles = fileNamesForList(field, fieldName, idfoaie);
+    if (markedDelValue==1) {
+                if (fieldName!=undefined)
+
+                    return newfiles;
+                else
+                    return "";
+
+
+    }
+    else {
+                if (newfiles!="")
+                     return  oldSQLValue!="" ? (oldSQLValue + "," + newfiles) : newfiles;
+                else
+                     return oldSQLValue;
+    }
+
+}
 
 function fileNameForField(field, idfoaie, fieldName, oldValue){
     if (field.size!=0) {
         if (fieldName!=undefined)
-            return idfoaie + fieldName + field.originalFilename;
+            return fileNamesForList(field, fieldName, idfoaie);
         else
             return "";
         }
@@ -65,9 +94,12 @@ async function uploadFile(fileVar, newNameOfFile) {
   }
 }
 
-function checkFile (fileVar, newNameOfFile) {
-    if (fileVar.size!=0) {
-            uploadFile (fileVar, newNameOfFile);
+function checkFile (allFilesForField, newNameOfFile) {
+    for (let jj=0;jj< allFilesForField.length;jj++) {
+        console.log(JSON.stringify(allFilesForField[jj]));
+        if (allFilesForField[jj].size!=0) {
+            uploadFile (allFilesForField[jj], newNameOfFile);
+        }
     }
 }
 var oldFiles= {};
@@ -114,16 +146,10 @@ function builtActionString(results,fields, arsuriVar, evolutiiVar, filesVar, mar
 
  actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"prezentaparinti" );
  actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"caiResp" );
- actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital1" );
- actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online1" );
- actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital2" );
- actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online2" );
- actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital3" );
- actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online3" );
- actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital4" );
- actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online4" );
- actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital5" );
- actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online5" );
+ for (let i1=0;i1<=5;i1++){
+  actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital"+i1 );
+  actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online"+i1 );
+ }
  actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital69" );
  actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"online69" );
  actionString = actionString + Global.appendCheckboxValueToAuditTrail(results, fields,"spital912" );
@@ -194,6 +220,7 @@ for (let i=0;i<arsuriVar.length;i++){
  return actionString;
 }
 function insertOrUpdateInDB(req, fieldsVar, files, oldFiles){
+
  let errors = [];
     try {
             let {medic, sectia, ora, oraExt, idExtern,diagprincipal,locaccident, diaginternare,diag24h,diag72h,
@@ -343,18 +370,18 @@ function insertOrUpdateInDB(req, fieldsVar, files, oldFiles){
                                             "diagnosticexternare='"+ diagexternare + "',datadeces='"+ datadeces+ "', cauzadirectadeces='"+ cauzadirectadeces+ "', cauzaantecedentadeces='"+ cauzaantecedentadeces+ "', starimorbideinitiale='"+starimorbideinitiale + "', starimorbideimportante='"+ starimorbideimportante + "',prezentaparinti='"+ Global.transformCheckboxField(prezentaparinti)+ "',descriere='"+ descriere + "',locprimajutor='"+ locajutor+ "',"+
                                             "tratamentprimajutor='"+ tratamentajutor+ "',unitatiintermediare='"+ unitatiintermediare+ "',tratamentanterior='"+ tratamentanterior+ "',transport='"+ transport+ "',tratasport='"+ tratasport+ "',stare='"+ starepacient+ "',timp='"+ timp+ "', epicrizafinala='"+ Global.trim(epicrizafinala)+ "',medicatie='"+ medicatie+ "',kineto='"+ kineto+ "', comments='"+ recomments+ "',"+
                                             "cantitatelichide='"+ cantitatelichide+ "', cantlichide8h='"+ cantlichide8h+ "', cantlichide16h='"+ cantlichide16h+ "', cantlichide24h='"+ cantlichide24h+ "', dinamicaplagi='"+ dinamicaplagi+ "', cura='"+ Global.trim(cura)+ "', caiResp='"+ Global.transformCheckboxField(caiResp)+ "',"+
-                                            "descriere1='"+ descriere1 + "',analize1='"+ analize1+ "',adaugafoto1='"+ fileNameForField(files.adaugafoto1, idfoaie,"adaugafoto1",oldFiles.adaugafoto1) + "',spital1='"+ Global.transformCheckboxField(spital1) + "',online1='"+ Global.transformCheckboxField(online1) + "',"+
-                                            "descriere2='"+ descriere2 + "',analize2='"+ analize2+ "',adaugafoto2='"+ fileNameForField(files.adaugafoto2, idfoaie,"adaugafoto2",oldFiles.adaugafoto2) + "',spital2='"+ Global.transformCheckboxField(spital2) + "',online2='"+ Global.transformCheckboxField(online2) + "',"+
-                                            "descriere3='"+ descriere3 + "',analize3='"+ analize3 + "',adaugafoto3='"+ fileNameForField(files.adaugafoto3, idfoaie,"adaugafoto3",oldFiles.adaugafoto3) + "',spital3='"+ Global.transformCheckboxField(spital3) + "',online3='"+ Global.transformCheckboxField(online3) + "',"+
-                                            "descriere4='"+ descriere4 + "',analize4='"+ analize4 + "',adaugafoto4='"+ fileNameForField(files.adaugafoto4, idfoaie,"adaugafoto4",oldFiles.adaugafoto4) + "',spital4='"+ Global.transformCheckboxField(spital4) + "',online4='"+ Global.transformCheckboxField(online4) + "',"+
-                                            "descriere5='"+ descriere5 + "',analize5='"+ analize5 + "',adaugafoto5='"+ fileNameForField(files.adaugafoto5, idfoaie,"adaugafoto5",oldFiles.adaugafoto5) + "',spital5='"+ Global.transformCheckboxField(spital5) + "',online5='"+ Global.transformCheckboxField(online5) + "',"+
-                                            "descriere69='"+ descriere69 + "',analize69='"+ analize69 + "',adaugafoto69='"+ fileNameForField(files.adaugafoto69, idfoaie,"adaugafoto69",oldFiles.adaugafoto69) + "',spital69='"+ Global.transformCheckboxField(spital69) + "',online69='"+ Global.transformCheckboxField(online69) + "',"+
-                                            "descriere912='"+ descriere912 + "',analize912='"+ analize912 + "',adaugafoto912='"+ fileNameForField(files.adaugafoto912, idfoaie,"adaugafoto912",oldFiles.adaugafoto912) + "',spital912='"+ Global.transformCheckboxField(spital912) + "',online912='"+ Global.transformCheckboxField(online912) + "',"+
-                                            "descriere1218='"+ descriere1218 + "',analize1218='"+ analize1218 + "',adaugafoto1218='"+ fileNameForField(files.adaugafoto1218, idfoaie,"adaugafoto1218",oldFiles.adaugafoto1218) + "',spital1218='"+ Global.transformCheckboxField(spital1218) + "',online1218='"+ Global.transformCheckboxField(online1218) + "',"+
-                                            "descriere1824='"+ descriere1824+ "',analize1824='"+ analize1824 + "',adaugafoto1824='"+ fileNameForField(files.adaugafoto1824, idfoaie,"adaugafoto1824",oldFiles.adaugafoto1824) + "',spital1824='"+ Global.transformCheckboxField(spital1824) + "',online1824='"+ Global.transformCheckboxField(online1824) + "',"+
-                                            "descriere2430='"+ descriere2430+ "',analize2430='"+ analize2430 + "',adaugafoto2430='"+ fileNameForField(files.adaugafoto2430, idfoaie,"adaugafoto2430",oldFiles.adaugafoto2430) + "',spital2430='"+ Global.transformCheckboxField(spital2430) + "',online2430='"+ Global.transformCheckboxField(online2430) + "',"+
-                                            "descriere3036='"+ descriere3036+ "',analize3036='"+ analize3036 + "',adaugafoto3036='"+ fileNameForField(files.adaugafoto3036, idfoaie,"adaugafoto3036",oldFiles.adaugafoto3036) + "',spital3036='"+ Global.transformCheckboxField(spital3036) + "',online3036='"+ Global.transformCheckboxField(online3036) + "', " +
-                                            "arsuri='"+ JSON.stringify(arsuri) +"', evolutii='" + JSON.stringify(evolutii) + "', adaugafoto0='"+ fileNameForField(files.adaugafoto0, idfoaie,"adaugafoto0",oldFiles.adaugafoto0) + "', greutateactuala='"+ greutateactuala + "', zi='"+ zi+"', luna='" + luna + "', an='" + an + "', indiceponderal='" + indiceponderal +"', salon='" + salon +"',pat='" +pat +
+                                            "descriere1='"+ descriere1 + "',analize1='"+ analize1+ "',adaugafoto1='" + fileNameForFieldAppend(markedDel.adaugafoto1, oldRecord.adaugafoto1, files.adaugafoto1, idfoaie,"adaugafoto1",oldFiles.adaugafoto1) + "',spital1='"+ Global.transformCheckboxField(spital1) + "',online1='"+ Global.transformCheckboxField(online1) + "',"+
+                                            "descriere1='"+ descriere1 + "',analize1='"+ analize1+ "', adaugafoto2='" + fileNameForFieldAppend(markedDel.adaugafoto2, oldRecord.adaugafoto2, files.adaugafoto2, idfoaie,"adaugafoto2",oldFiles.adaugafoto2) + "',spital2='"+ Global.transformCheckboxField(spital2) + "',online2='"+ Global.transformCheckboxField(online2) + "',"+
+                                            "descriere3='"+ descriere3 + "',analize3='"+ analize3 + "',adaugafoto3='"+ fileNameForFieldAppend(markedDel.adaugafoto3, oldRecord.adaugafoto3, files.adaugafoto3, idfoaie,"adaugafoto3",oldFiles.adaugafoto3) + "',spital3='"+ Global.transformCheckboxField(spital3) + "',online3='"+ Global.transformCheckboxField(online3) + "',"+
+                                            "descriere4='"+ descriere4 + "',analize4='"+ analize4 + "',adaugafoto4='"+ fileNameForFieldAppend(markedDel.adaugafoto4, oldRecord.adaugafoto4, files.adaugafoto4, idfoaie,"adaugafoto4",oldFiles.adaugafoto4) + "',spital4='"+ Global.transformCheckboxField(spital4) + "',online4='"+ Global.transformCheckboxField(online4) + "',"+
+                                            "descriere5='"+ descriere5 + "',analize5='"+ analize5 + "',adaugafoto5='"+ fileNameForFieldAppend(markedDel.adaugafoto5, oldRecord.adaugafoto5, files.adaugafoto5, idfoaie,"adaugafoto5",oldFiles.adaugafoto5) + "',spital5='"+ Global.transformCheckboxField(spital5) + "',online5='"+ Global.transformCheckboxField(online5) + "',"+
+                                            "descriere69='"+ descriere69 + "',analize69='"+ analize69 + "',adaugafoto69='"+ fileNameForFieldAppend(markedDel.adaugafoto69, oldRecord.adaugafoto69, files.adaugafoto69, idfoaie,"adaugafoto69",oldFiles.adaugafoto69) + "',spital69='"+ Global.transformCheckboxField(spital69) + "',online69='"+ Global.transformCheckboxField(online69) + "',"+
+                                            "descriere912='"+ descriere912 + "',analize912='"+ analize912 + "',adaugafoto912='" + fileNameForFieldAppend(markedDel.adaugafoto912, oldRecord.adaugafoto912, files.adaugafoto912, idfoaie,"adaugafoto912",oldFiles.adaugafoto912) + "',spital912='"+ Global.transformCheckboxField(spital912) + "',online912='"+ Global.transformCheckboxField(online912) + "',"+
+                                            "descriere1218='"+ descriere1218 + "',analize1218='"+ analize1218 + "',adaugafoto1218='"+ fileNameForFieldAppend(markedDel.adaugafoto1218, oldRecord.adaugafoto1218, files.adaugafoto1218, idfoaie,"adaugafoto1218",oldFiles.adaugafoto1218) + "',spital1218='"+ Global.transformCheckboxField(spital1218) + "',online1218='"+ Global.transformCheckboxField(online1218) + "',"+
+                                            "descriere1824='"+ descriere1824+ "',analize1824='"+ analize1824 + "',adaugafoto1824='"+ fileNameForFieldAppend(markedDel.adaugafoto1824, oldRecord.adaugafoto1824, files.adaugafoto1824, idfoaie,"adaugafoto1824",oldFiles.adaugafoto1824) + "',spital1824='"+ Global.transformCheckboxField(spital1824) + "',online1824='"+ Global.transformCheckboxField(online1824) + "',"+
+                                            "descriere2430='"+ descriere2430+ "',analize2430='"+ analize2430 + "',adaugafoto2430='"+ fileNameForFieldAppend(markedDel.adaugafoto2430, oldRecord.adaugafoto2430, files.adaugafoto2430, idfoaie,"adaugafoto2430",oldFiles.adaugafoto2430) + "',spital2430='"+ Global.transformCheckboxField(spital2430) + "',online2430='"+ Global.transformCheckboxField(online2430) + "',"+
+                                            "descriere3036='"+ descriere3036+ "',analize3036='"+ analize3036 + "',adaugafoto3036='"+ fileNameForFieldAppend(markedDel.adaugafoto3036, oldRecord.adaugafoto3036, files.adaugafoto3036, idfoaie,"adaugafoto3036",oldFiles.adaugafoto3036) + "',spital3036='"+ Global.transformCheckboxField(spital3036) + "',online3036='"+ Global.transformCheckboxField(online3036) + "', " +
+                                            "arsuri='"+ JSON.stringify(arsuri) +"', evolutii='" + JSON.stringify(evolutii) + "', adaugafoto0='"+  fileNameForFieldAppend(markedDel.adaugafoto0, oldRecord.adaugafoto0, files.adaugafoto0, idfoaie,"adaugafoto0",oldFiles.adaugafoto0) + "', greutateactuala='"+ greutateactuala + "', zi='"+ zi+"', luna='" + luna + "', an='" + an + "', indiceponderal='" + indiceponderal +"', salon='" + salon +"',pat='" +pat +
                                             "', status= '" + status + "', lunaext='" + lunaext +"', ziext = '" + ziext + "', anext='" + anext + "' where idfoaie_observatie="+idfoaie;
                                             if (action!="")
                                                 Global.insertIntoAudit(con, idfoaie, action, req.session.userid, new Date(),'foaie');
@@ -406,6 +433,17 @@ router.post('/', (req, res) => {
         return;
     };
     var formData = new formidable.IncomingForm();
+    newFilesVar = {};
+
+    formData.on('file', function(field, file) {
+            var t = {};
+
+            if (newFilesVar[field]==undefined) {
+                    newFilesVar[field] = [];
+                }
+            newFilesVar[field].push(file);
+        });
+    console.log(JSON.stringify(newFilesVar));
     const query = url.parse(req.url, true).query;
     const data = query.data;
     pacientId = query.pacient;
@@ -413,9 +451,9 @@ router.post('/', (req, res) => {
 
 
 
-
     //+ "." + file.originalFilename.split('.').pop()
     formData.parse(req, async (err, fields, files) => {
+
     errors = [];
     if (fields.idExtern=='') {
                   errors.push ({"text": "Numărul de înregistrare SC nu este completat."});
@@ -468,8 +506,9 @@ router.post('/', (req, res) => {
         markedDel.adaugafoto1824 = fields.markedDel1824;
         markedDel.adaugafoto2430 = fields.markedDel2430;
         markedDel.adaugafoto3036 = fields.markedDel3036;
-
-        insertOrUpdateInDB(req, fields, files, oldFiles);
+        console.log(JSON.stringify(newFilesVar));
+        insertOrUpdateInDB(req, fields, newFilesVar, oldFiles);
+        //insertOrUpdateInDB(req, fields, files, oldFiles);
 
         if (err) {
             console.log("Error parsing the files");
@@ -531,18 +570,24 @@ var con = Global.createConnection(mysql);
 });
 function deleteOldFile(value,files, oldFiles, idfoaie, markedDel) {
         if (oldFiles[value]!=undefined) {
-        oldFileName = Global.getUploadFolder() + "\\" + encodeURIComponent(oldFiles[value].replace(/\s/g, "-"));
-
         if ((markedDel[value])==1) {
+            var oldFileList = oldFiles[value].split(",");
+            for (var j=0;j<oldFileList.length;j++)
+                {
+                oldFileName = Global.getUploadFolder() + "\\" + encodeURIComponent(oldFileList[j].replace(/\s/g, "-"));
                 fs.unlink(oldFileName,function(err){
-                                                    if(err) return console.log("error during deleteOldFile: " + err);
-                                               });
+                       if(err) return console.log("error during deleteOldFile: " + err + "(" + oldFileName + ")");
+                       });
+            }
         }
+
+        /*
         else if (files[value].originalFilename.localeCompare("")!=0 ) {
             fs.unlink(oldFileName,function(err){
                                     if(err) return console.log("error during localeCompare of deleteOldFile: " + err + ", original filename: " + files[value].originalFilename + ", old file name: " + oldFileName);
                                });
         }
+        */
         }
 }
 function deleteOldFiles(files, oldFiles, idfoaie,markedDel){
