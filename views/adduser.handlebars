@@ -69,6 +69,7 @@
     }
     const urlParams = new URLSearchParams(window.location.search);
     var idParam = urlParams.get('iduser');
+
     if (idParam!=null){
       document.getElementById("editButton").style.visibility="visible";
       document.getElementById("ispasswchanged").value="false";
@@ -86,8 +87,8 @@
     $('input, select').each(function () {
        $(this).prop('disabled', false);
     });
-      document.getElementById("ispasswchanged").value="true";
-      document.getElementById("passwchangediv").style.display="inline";
+      document.getElementById("ispasswchanged").value="false";
+      document.getElementById("passwchangediv").style.display="none";
       document.getElementById("passwchange").style.visibility="hidden";
       document.getElementById("cancelButton").style.visibility="visible";
       $(".requiredclass").attr("style", "visibility: visible; color:red");
