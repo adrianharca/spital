@@ -54,7 +54,7 @@
     "python-shell": "^2.0.2",
     "routemap": "^1.0.0",
     "sendmail": "^1.6.1",
-    "sequelize": "^5.19.2",
+    "sequelize": "^6.29.0",
     "sequelize-cli": "^5.5.1",
     "shelljs": "^0.8.3",
     "smtp-server": "^3.6.0",
